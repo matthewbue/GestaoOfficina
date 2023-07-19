@@ -1,7 +1,7 @@
-﻿using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Interface;
-using GestaoOfficinaProj.Infra.Repository;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Interface;
+using GestaoOfficina.Infra.Repository;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Aplicattion.Service
+namespace GestaoOfficina.Aplicattion.Service
 {
     public class ClientService : IClientService
     {
@@ -21,9 +21,10 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         {
             _clientRepository = clientRepository;
         }
-        public async Task<ReturnDefault> CreateClient(ClientCreateDTO client)
+        public async Task<ReturnDefault> Create(ClientCreateDTO client)
         {
 
+            // Melhorar Mensagem de erro
             if (client.automovel.Count() == 0)
             {
                 throw new Exception("erro");
@@ -38,6 +39,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             list.CPF = client.CPF;
             list.Automoveis = new List<Automovel>();
             
+            // fazer teste com 2 veiculos 
             foreach (var Automovel in client.automovel)
             {
                
@@ -51,6 +53,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             }
             
             var result = await _clientRepository.CreateClient(list);
+            // melhorar mensagem de retorno, esse caso e uma criacao nao uma busca
             return new ReturnDefault("Dados encontrados", result);
         }
     }

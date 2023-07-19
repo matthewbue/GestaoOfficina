@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infra\GestaoOfficinaProj.Infra.csproj" />
   </ItemGroup>
 
 </Project>

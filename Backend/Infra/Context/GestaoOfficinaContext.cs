@@ -1,4 +1,4 @@
-﻿using GestaoOfficinaProj.Domain.Model;
+﻿using GestaoOfficina.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Infra.Context
+namespace GestaoOfficina.Infra.Context
 {
     public class GestaoOfficinaContext : DbContext
     {

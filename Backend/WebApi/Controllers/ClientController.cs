@@ -1,12 +1,12 @@
-﻿using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Interface;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Controllers
+namespace GestaoOfficina.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
@@ -17,9 +17,10 @@ namespace GestaoOfficinaProj.Controllers
             _clientService = clientService;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> cadastrar([FromBody]ClientCreateDTO client)
+        public async Task<IActionResult> Create([FromBody]ClientCreateDTO client)
         {
-            var result = await _clientService.CreateClient(client);
+            //Try/Catch
+            var result = await _clientService.Create(client);
             return Ok(result);
         }
     }

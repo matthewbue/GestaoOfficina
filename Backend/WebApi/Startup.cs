@@ -1,6 +1,6 @@
-using GestaoOfficinaProj.Aplicattion.DependecyInject;
-using GestaoOfficinaProj.Infra.Context;
-using GestaoOfficinaProj.Infra.DependecyInject;
+using GestaoOfficina.Aplicattion.DependecyInject;
+using GestaoOfficina.Infra.Context;
+using GestaoOfficina.Infra.DependecyInject;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj
+namespace GestaoOfficina
 {
     public class Startup
     {
@@ -37,7 +37,7 @@ namespace GestaoOfficinaProj
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestaoOfficinaProj", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestaoOfficina", Version = "v1" });
             });
         }
 
@@ -48,7 +48,7 @@ namespace GestaoOfficinaProj
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GestaoOfficinaProj v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GestaoOfficina v1"));
             }
 
             app.UseHttpsRedirection();

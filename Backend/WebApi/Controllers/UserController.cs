@@ -1,11 +1,13 @@
-﻿using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Interface;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Controllers
+namespace GestaoOfficina.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -13,16 +15,18 @@ namespace GestaoOfficinaProj.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("logar")]
-        public async Task<IActionResult> logar([FromBody]LoginDTO login)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody]LoginDTO login)
         {
+            //Try/Catch
             var result = await _userService.login(login);
             return Ok(result);
         }
-        [HttpPost("UserCreate")]
-        public async Task<IActionResult> CriarUsuario([FromBody]User user)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody]User user)
         {
-            var result = await _userService.CreateUser(user);
+            //Try/Catch
+            var result = await _userService.Create(user);
             return Ok(result);
         }
     }

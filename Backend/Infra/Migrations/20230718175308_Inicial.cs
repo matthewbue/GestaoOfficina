@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GestaoOfficinaProj.Infra.Migrations
+namespace GestaoOfficina.Infra.Migrations
 {
     public partial class Inicial : Migration
     {

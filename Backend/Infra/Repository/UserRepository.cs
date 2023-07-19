@@ -1,7 +1,7 @@
-﻿using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Context;
-using GestaoOfficinaProj.Infra.Interface;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Context;
+using GestaoOfficina.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Infra.Repository
+namespace GestaoOfficina.Infra.Repository
 {
     public class UserRepository : IUserRepository
     {
@@ -24,6 +24,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 var result = await _gestaoOfficinaContext.user.Where(x => x.Email == login.Email && x.Password == login.Password).FirstOrDefaultAsync();
 
+                // teste fica no service 
                 if (result == null)
                 {
                     throw new Exception("senha errada");
@@ -40,6 +41,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         }
         public async Task<User> CreateUser(User user)
         {
+            //try/catch
             await _gestaoOfficinaContext.user.AddAsync(user);
             await _gestaoOfficinaContext.SaveChangesAsync();
             return user;

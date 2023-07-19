@@ -1,0 +1,15 @@
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.csproj.AssemblyReference.cache
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.GeneratedMSBuildEditorConfig.editorconfig
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.AssemblyInfoInputs.cache
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.AssemblyInfo.cs
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.csproj.CoreCompileInputs.cache
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\bin\Debug\net5.0\GestaoOfficinaProj.Infra.deps.json
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\bin\Debug\net5.0\GestaoOfficinaProj.Infra.dll
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\bin\Debug\net5.0\GestaoOfficinaProj.Infra.pdb
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\bin\Debug\net5.0\GestaoOfficinaProj.Domain.dll
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\bin\Debug\net5.0\GestaoOfficinaProj.Domain.pdb
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.csproj.CopyComplete
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.dll
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\refint\GestaoOfficinaProj.Infra.dll
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\GestaoOfficinaProj.Infra.pdb
+C:\Desenvolvimento\MB\GestaoOfficina\Backend\Infra\obj\Debug\net5.0\ref\GestaoOfficinaProj.Infra.dll

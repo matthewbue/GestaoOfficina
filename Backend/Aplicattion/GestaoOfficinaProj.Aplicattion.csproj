@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\GestaoOfficinaProj.Domain.csproj" />
-    <ProjectReference Include="..\GestaoOfficinaProj.Infra\GestaoOfficinaProj.Infra.csproj" />
     <ProjectReference Include="..\Infra\GestaoOfficinaProj.Infra.csproj" />
   </ItemGroup>
 

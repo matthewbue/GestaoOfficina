@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj": {}
+    "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj": {}
   },
   "projects": {
-    "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj": {
+    "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj",
+        "projectUniqueName": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj",
         "projectName": "GestaoOfficinaProj.Aplicattion",
-        "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj",
-        "packagesPath": "C:\\Users\\matheus\\.nuget\\packages\\",
-        "outputPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Aplicattion\\obj\\",
+        "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj",
+        "packagesPath": "C:\\Users\\matheusbueno.silva_s\\.nuget\\packages\\",
+        "outputPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Aplicattion\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\matheus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\matheusbueno.silva_s\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,21 +26,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://devops.mercantil.com.br/Tecnologia_MB/_packaging/MBLib/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj"
+              "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
+                "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj"
               },
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\GestaoOfficinaProj.Infra\\GestaoOfficinaProj.Infra.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\GestaoOfficinaProj.Infra\\GestaoOfficinaProj.Infra.csproj"
-              },
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj"
+              "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
+                "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj"
               }
             }
           }
@@ -66,8 +63,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -76,24 +72,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.313\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
+    "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj",
+        "projectUniqueName": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj",
         "projectName": "GestaoOfficinaProj.Domain",
-        "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj",
-        "packagesPath": "C:\\Users\\matheus\\.nuget\\packages\\",
-        "outputPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\obj\\",
+        "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj",
+        "packagesPath": "C:\\Users\\matheusbueno.silva_s\\.nuget\\packages\\",
+        "outputPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\matheus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\matheusbueno.silva_s\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -102,17 +98,13 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://devops.mercantil.com.br/Tecnologia_MB/_packaging/MBLib/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -140,8 +132,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -150,24 +141,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.313\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
+    "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj",
+        "projectUniqueName": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj",
         "projectName": "GestaoOfficinaProj.Infra",
-        "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj",
-        "packagesPath": "C:\\Users\\matheus\\.nuget\\packages\\",
-        "outputPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\obj\\",
+        "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj",
+        "packagesPath": "C:\\Users\\matheusbueno.silva_s\\.nuget\\packages\\",
+        "outputPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\matheus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\matheusbueno.silva_s\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -176,15 +167,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://devops.mercantil.com.br/Tecnologia_MB/_packaging/MBLib/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\GestaoOfficinaProj.Domain\\GestaoOfficinaProj.Domain.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\GestaoOfficinaProj.Domain\\GestaoOfficinaProj.Domain.csproj"
+              "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
+                "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj"
               }
             }
           }
@@ -214,8 +205,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -224,24 +214,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.313\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj": {
+    "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj",
+        "projectUniqueName": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj",
         "projectName": "GestaoOfficinaProj",
-        "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj",
-        "packagesPath": "C:\\Users\\matheus\\.nuget\\packages\\",
-        "outputPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\WebApi\\obj\\",
+        "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\WebApi\\GestaoOfficinaProj.csproj",
+        "packagesPath": "C:\\Users\\matheusbueno.silva_s\\.nuget\\packages\\",
+        "outputPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\matheus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\matheusbueno.silva_s\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -250,21 +240,21 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://devops.mercantil.com.br/Tecnologia_MB/_packaging/MBLib/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj"
+              "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj": {
+                "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Aplicattion\\GestaoOfficinaProj.Aplicattion.csproj"
               },
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj"
+              "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj": {
+                "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Domain\\GestaoOfficinaProj.Domain.csproj"
               },
-              "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
-                "projectPath": "C:\\Desenvolvimento\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj"
+              "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj": {
+                "projectPath": "C:\\Desenvolvimento\\MB\\GestaoOfficina\\Backend\\Infra\\GestaoOfficinaProj.Infra.csproj"
               }
             }
           }
@@ -306,17 +296,10 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.17, 5.0.17]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -325,7 +308,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.313\\RuntimeIdentifierGraph.json"
         }
       }
     }
