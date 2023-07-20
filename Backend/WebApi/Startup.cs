@@ -1,4 +1,8 @@
+using FluentValidation.AspNetCore;
 using GestaoOfficina.Aplicattion.DependecyInject;
+using GestaoOfficina.Domain.ClientValidators;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Domain.Validators;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Infra.DependecyInject;
 using Microsoft.AspNetCore.Builder;
@@ -34,7 +38,9 @@ namespace GestaoOfficina
                 opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAplication()
             .AddInfrastruture();
-            services.AddControllers();
+            services.AddControllers()
+            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<ClientValidators>()); 
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestaoOfficina", Version = "v1" });

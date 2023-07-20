@@ -10,6 +10,7 @@ namespace GestaoOfficina.Infra.Interface
     public interface IClientRepository
     {
         Task<Client> CreateClient(Client client);
+        Task<Client> GetCPF(string entrada);
         
     }
 }

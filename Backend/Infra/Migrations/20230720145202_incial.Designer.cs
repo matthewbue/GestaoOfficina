@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace GestaoOfficina.Infra.Migrations
+namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    [Migration("20230718175308_Inicial")]
-    partial class Inicial
+    [Migration("20230720145202_incial")]
+    partial class incial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace GestaoOfficina.Infra.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.Automovel", b =>
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,16 +30,22 @@ namespace GestaoOfficina.Infra.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Cor")
+                    b.Property<string>("anoVeiculo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Marca")
+                    b.Property<string>("corVeiculo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Modelo")
+                    b.Property<string>("kmVeiculo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Placa")
+                    b.Property<string>("marcaVeiculo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("modeloVeiculo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("placaVeiculo")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -49,7 +55,7 @@ namespace GestaoOfficina.Infra.Migrations
                     b.ToTable("Automovel");
                 });
 
-            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.Client", b =>
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,19 +65,34 @@ namespace GestaoOfficina.Infra.Migrations
                     b.Property<int>("AutomovelId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CPF")
+                    b.Property<string>("CPFcpfCliente")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("bairro")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("cidade")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("dataNascimento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("endereco")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nomeCliente")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("numeroWhatsapp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("telefoneContato")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("uf")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -79,7 +100,7 @@ namespace GestaoOfficina.Infra.Migrations
                     b.ToTable("client");
                 });
 
-            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.User", b =>
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,16 +127,16 @@ namespace GestaoOfficina.Infra.Migrations
                     b.ToTable("user");
                 });
 
-            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.Automovel", b =>
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
                 {
-                    b.HasOne("GestaoOfficinaProj.Domain.Model.Client", null)
+                    b.HasOne("GestaoOfficina.Domain.Model.Client", null)
                         .WithMany("Automoveis")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.Client", b =>
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
                 {
                     b.Navigation("Automoveis");
                 });
