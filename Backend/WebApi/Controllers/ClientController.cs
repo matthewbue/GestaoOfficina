@@ -1,12 +1,14 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace GestaoOfficina.Controllers
 {
+    [AllowAnonymous]
     [Route("[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
