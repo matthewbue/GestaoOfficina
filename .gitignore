@@ -458,3 +458,10 @@ Backend/src/FourC.Api/appsettings.Development.json
 *.orig
 
 /.angular/cache
+/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.dll
+/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.Domain.dll
+/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.Infra.dll
+/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.Aplicattion.dll
+/Backend/Aplicattion/bin/Debug/net5.0/GestaoOfficinaProj.Aplicattion.dll
+/Backend/Aplicattion/bin/Debug/net5.0/GestaoOfficinaProj.Domain.pdb
+/Backend/Aplicattion/bin/Debug/net5.0/GestaoOfficinaProj.Infra.dll

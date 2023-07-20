@@ -31,6 +31,11 @@ namespace GestaoOfficina.Infra.Repository
             }
         }
 
+        public async Task<List<Client>> GetAll()
+        {
+            return _gestaoOfficinaContext.client.ToList();
+        }
+
         public async Task<Client> GetCPF(string entrada)
         {
             return _gestaoOfficinaContext.client.Where(x => x.CPFcpfCliente == entrada).FirstOrDefault();

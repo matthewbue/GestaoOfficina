@@ -39,8 +39,10 @@ namespace GestaoOfficina
             services.AddAplication()
             .AddInfrastruture();
             services.AddControllers()
-            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<ClientValidators>()); 
-            
+            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<ClientValidators>())
+            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<AutomovelValidators>());
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestaoOfficina", Version = "v1" });

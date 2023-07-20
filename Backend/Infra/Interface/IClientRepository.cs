@@ -11,6 +11,7 @@ namespace GestaoOfficina.Infra.Interface
     {
         Task<Client> CreateClient(Client client);
         Task<Client> GetCPF(string entrada);
+        Task<List<Client>> GetAll();
         
     }
 }
