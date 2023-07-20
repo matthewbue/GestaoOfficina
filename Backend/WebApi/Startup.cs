@@ -69,6 +69,10 @@ namespace GestaoOfficina
             {
                 endpoints.MapControllers();
             });
+            app.UseCors(x => x
+          .AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
         }
     }
 }
