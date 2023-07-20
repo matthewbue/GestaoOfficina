@@ -2,12 +2,12 @@
 
 namespace GestaoOfficinaProj.Infra.Migrations
 {
-    public partial class incial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "client",
+                name: "Client",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -26,11 +26,11 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_client", x => x.Id);
+                    table.PrimaryKey("PK_Client", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "user",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +43,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,9 +64,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 {
                     table.PrimaryKey("PK_Automovel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Automovel_client_ClientId",
+                        name: "FK_Automovel_Client_ClientId",
                         column: x => x.ClientId,
-                        principalTable: "client",
+                        principalTable: "Client",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -83,10 +83,10 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 name: "Automovel");
 
             migrationBuilder.DropTable(
-                name: "user");
+                name: "User");
 
             migrationBuilder.DropTable(
-                name: "client");
+                name: "Client");
         }
     }
 }

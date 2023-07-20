@@ -14,8 +14,8 @@ namespace GestaoOfficina.Infra.Context
         {
             Database.EnsureCreated();
         }
-        public DbSet<Client> client { get; set; }
-        public DbSet<User> user { get; set; }
+        public DbSet<Client> Client { get; set; }
+        public DbSet<User> User { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

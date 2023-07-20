@@ -95,7 +95,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("client");
+                    b.ToTable("Client");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.User", b =>
@@ -122,7 +122,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("user");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>

@@ -30,8 +30,8 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpGet("GettAll")]
-        public async Task<IActionResult> GEtAll()
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
             try
             {

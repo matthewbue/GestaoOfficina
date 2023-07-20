@@ -22,7 +22,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                var result = await _gestaoOfficinaContext.user.Where(x => x.Email == login.Email && x.Password == login.Password).FirstOrDefaultAsync();
+                var result = await _gestaoOfficinaContext.User.Where(x => x.Email == login.Email && x.Password == login.Password).FirstOrDefaultAsync();
                 return result;
             }
             catch(Exception ex)
@@ -34,7 +34,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                await _gestaoOfficinaContext.user.AddAsync(user);
+                await _gestaoOfficinaContext.User.AddAsync(user);
                 await _gestaoOfficinaContext.SaveChangesAsync();
                 return user;
             }

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    [Migration("20230720145202_incial")]
-    partial class incial
+    [Migration("20230720194944_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,7 +97,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("client");
+                    b.ToTable("Client");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.User", b =>
@@ -124,7 +124,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("user");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>

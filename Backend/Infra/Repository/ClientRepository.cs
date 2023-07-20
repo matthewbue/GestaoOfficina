@@ -21,7 +21,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                await _gestaoOfficinaContext.client.AddAsync(client);
+                await _gestaoOfficinaContext.Client.AddAsync(client);
                 await _gestaoOfficinaContext.SaveChangesAsync();
                 return client;
             }
@@ -33,12 +33,12 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<List<Client>> GetAll()
         {
-            return _gestaoOfficinaContext.client.ToList();
+            return _gestaoOfficinaContext.Client.ToList();
         }
 
         public async Task<Client> GetCPF(string entrada)
         {
-            return _gestaoOfficinaContext.client.Where(x => x.CPFcpfCliente == entrada).FirstOrDefault();
+            return _gestaoOfficinaContext.Client.Where(x => x.CPFcpfCliente == entrada).FirstOrDefault();
         }
     }
 }
