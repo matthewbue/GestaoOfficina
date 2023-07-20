@@ -1,0 +1,133 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="content-header">{{"account.header.MAIN" | translate}}</div>
+    <p class="content-sub-header mb-1">{{"account.header.SUB" | translate}}</p>
+  </div>
+</div>
+<!-- Filter Datatables -->
+<section id="ngx-datatable-filter">
+  <div class="row">
+    <div class="col-12">
+      <!-- Filter starts -->
+      <div class="users-list-filter px-2">
+        <!-- <form>
+          <div class="row border rounded py-2 mb-2 mx-n2">
+             <div class="col-12 col-sm-6 col-lg-3">
+              <label for="list-falicity">{{"account.label.FACILITY" | translate |  uppercase }}</label>
+              <fieldset class="form-group">
+                <select id="list-falicity" class="form-control">
+                  <option value="">{{"account.label.ALL" | translate | uppercase}}</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </fieldset>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="users-list-role">Role</label>
+              <fieldset class="form-group">
+                <select id="users-list-role" class="form-control">
+                  <option value="">Any</option>
+                  <option value="User">User</option>
+                  <option value="Staff">Staff</option>
+                </select>
+              </fieldset>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="users-list-status">Status</label>
+              <fieldset class="form-group">
+                <select id="users-list-status" class="form-control">
+                  <option value="">Any</option>
+                  <option value="Active">Active</option>
+                  <option value="Close">Close</option>
+                  <option value="Banned">Banned</option>
+                </select>
+              </fieldset>
+            </div>
+             <div class="bg-info clearfix">
+              <button type="button" class="btn btn-danger float-left">Example Button floated left</button>
+              <button type="button" class="btn btn-dark float-right">Example Button floated right</button>
+          </div>
+
+
+
+          </div>
+        </form> -->
+        <div class="border rounded py-2 mb-2 mx-n2 clearfix">
+          <button type="button" class="btn btn-primary mr-2 float-right" (click)="new()">
+            {{"account.button.NEW" | translate}}
+          </button>
+        </div>
+      </div>
+      <!-- Filter ends -->
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <!-- ngx-datatable-filter -->
+            <fieldset class="form-group">
+              <label>{{"account.datatable.SHOW" | translate | uppercase}}
+                <select name="users-list-select"
+                  class="form-control form-control-sm d-inline-block width-100 p-right-25 pl-4 mx-1"
+                  (click)="updateLimit($event)">
+                  <option value="10">10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                {{"account.datatable.RESULT" | translate | uppercase}}</label>
+              <label for="ngx-filter-ref" class="float-right">{{'account.datatable.SEARCH' | translate | uppercase}}:
+                <input id="ngx-filter-ref" class="form-control form-control-sm d-inline-block width-200 ml-1"
+                  type="text" (keyup)="filterUpdate($event)" />
+              </label>
+            </fieldset>
+            <ngx-datatable class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="50"
+              [footerHeight]="50" rowHeight="auto" [limit]="limitRef" [rows]="rows" [scrollbarH]="true"
+              [columns]="columns">
+              <!-- <ngx-datatable-column name="ID" prop="Id" [width]="50"></ngx-datatable-column> -->
+              <ngx-datatable-column name="{{'account.label.USERNAME' | translate | uppercase}}" prop="userName" [width]="150">
+                <!-- <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                  <div class="d-flex align-items-center">
+                    <img class="rounded-circle mr-1" src="assets/img/portrait/small/{{
+                        row.avatar
+                      }}" height="32" width="32" alt="datatable-avatar" />
+
+                    <div class="cell-line-height">
+                      <a class="line-height-1 mb-0" routerLink="/pages/users-view">{{ name }}</a>
+                    </div>
+                  </div>
+                </ng-template> -->
+              </ngx-datatable-column>
+              <ngx-datatable-column name="{{'account.label.FULLNAME' | translate | uppercase}}" prop="fullname" [width]="150"></ngx-datatable-column>
+              <!-- <ngx-datatable-column name="Role" prop="role" [width]="70"></ngx-datatable-column> -->
+              <ngx-datatable-column name="{{'account.label.STATUS' | translate | uppercase}}" prop="status" [width]="50">
+                <ng-template let-status="value" ngx-datatable-cell-template>
+                  <div class="badge" [ngClass]="{
+                      'bg-light-success': status == true,
+                      'bg-light-danger': status == false
+                    }">
+                    {{ (status == true ?'account.label.ACTIVE': 'account.label.INACTIVE') | translate | uppercase }}
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column  name="{{'account.datatable.ACTION' | translate | uppercase}}" [width]="50">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- routerLink="{{row.id}}/edit"  -->
+                  <button (click)="edit(row)" class="btn btn-sm btn-outline-primary mr-2" title="{{'account.datatable.EDIT' | translate | uppercase}}"  ><i class="ft-edit  cursor-pointer"></i></button>
+
+                  <button (click)="reset(row)" class="btn btn-sm btn-outline-dark" title="{{'account.datatable.RESET' | translate | uppercase}}" ><i class="ft-user-check cursor-pointer"></i></button>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+            <!-- (click)="edit(row)" -->
+            <!-- ngx-datatable-filter -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ Filter Datatables -->

@@ -1,0 +1,423 @@
+{
+  "Home": "Home",
+  "MenuTopSetting": "Administração",
+  "MenuTopSource": "Fontes",
+  "MenuTopEvent": "Dashboards",
+  "MenuTopAgendamento": "Gerenciamento",
+  "MenuItemOs": "Ordem de serviço",
+  "MenuItemOrçamento": "Orçamento",
+  "MenuItemClientes": "Clientes",
+  "MenuItemSubClientes": "Listagem",
+  "MenuTopReport":"Comunicações",
+  "MenuItemUserAccount": "Conta Usuários",
+  "SettingFacility": "Instalações",
+  "Source": "Fontes",
+  "SourceList": "Lista",
+  "Adminstrador": "Admin",
+  "YES": "Sim",
+  "NO": "Não",
+  "ATTENTION": "Atenção",
+  "select": {
+    "notFound": "Lista vazia"
+  },
+  "navbar": {
+    "label": {
+      "LOGOUT": "Sair",
+      "PROFILE": "Minha Conta"
+    }
+  },
+  "home":{
+    "header": {
+      "MAIN": "Início",
+      "SUB": "Pagina início do sistema."
+    },
+    "label": {
+      "WELCOME" : ", Bem-vindo ao nosso Sistema de Oficinas",
+      "HELLO": "Olá"
+    }
+
+  },
+  "login": {
+    "label": {
+      "WELCOME": "Bem-vindo, por favor faça o login de sua conta",
+      "LOGIN": "Entrar",
+      "ACCESS": "Acesso ao Sistema",
+      "USERNAME": "Usuário",
+      "PASSWORD": "Senha",
+      "REMEMBERME": "Lembrar-me",
+      "FORGOTPASSWORD": "Esqueceu a Senha?",
+      "REGISTER": "Cadastrar",
+      "LOGINWITH": "Ou como"
+    },
+    "message": {
+      "FAILED": "Acesso ao sistema falhou!",
+      "USERINACTIVE": "Usuário Inativo",
+      "INVALID": "Usuário e/ou senha invalido(s).",
+      "USER_INVALID": "Usuário invalido.",
+      "USERNAME_REQUIRED": "Usuário é obrigatório",
+      "PASSWORD_REQUIRED": "Senha é obrigatório"
+    }
+  },
+  "account": {
+    "header": {
+      "MAIN": "Conta do Usuário",
+      "SUB": "Lista de usuários cadastrados."
+    },
+    "label": {
+      "PHOTO": "Foto",
+      "EDIT": "Editar",
+      "ADD": "Criar",
+      "USERNAME": "Usuário",
+      "FULLNAME": "Nome Completo",
+      "ROLE": "Perfil",
+      "EMAIL": "E-mail",
+      "FACILITY": "Instalação",
+      "STATUS": "Situação",
+      "INACTIVE": "Inativo",
+      "ACTIVE": "Ativo",
+      "SELSITUATION": "Selecione a Situação",
+      "SELROLE": "Selecione um perfil",
+      "SELFACILITY": "Selecione as instalações",
+      "ALL": "Todos"
+    },
+    "datatable": {
+      "SHOW": "Mostrar",
+      "RESULT": "Resultados",
+      "TOTAL": "Total Registros",
+      "ACTION": "Ação",
+      "SEARCH": "Pesquisar",
+      "EDIT": "Alterar Conta",
+      "RESET": "Resetar Senha"
+    },
+    "message": {
+      "USERNAME_REQUIRED": "Usuário é obrigatório",
+      "FULLNAME_REQUIRED": "Nome completo é obrigatório",
+      "EMAIL_REQUIRED": "E-mail é obrigatório",
+      "EMAILINVALID": "E-mail invalido",
+      "USERNAMEMIN": "Precisa ter no mínimo 10 caracteres",
+      "FULLNAMEMIN": "Precisa ter no mínimo 10 caracteres",
+      "UPDATESUCESS": "Conta de usuário alterada com sucesso",
+      "CREATESUCESS": "Conta de usuário criada com sucesso",
+      "UNAUTHORIZE": "Operação não autorizada",
+      "ROLEREQUIRED": "É obrigatório no mimino um perfil",
+      "FACILITYREQUIRED": "É obrigatório no mimino uma instalação",
+      "RESETPASSSUCESS": "Senha Resetada com sucesso"
+    },
+    "roles": {
+      "ADMIN": "Administrador",
+      "MANAGER": "Gestão",
+      "STAFF": "Operacional",
+      "VIEW": "Consulta"
+    },
+    "button": {
+      "SAVE": "Salvar Mudanças",
+      "CANCEL": "Cancelar",
+      "CHANGE": "Mudar",
+      "RESET": "Resetar",
+      "NEW": "Nova Conta",
+      "UPLOAD": "Upload Foto"
+    },
+    "setting": {
+      "header": {
+        "MAIN": "Minha Conta",
+        "SUB": "Informações referente ao seu cadastrado."
+      },
+      "ALERT": "ATENÇÃO. A senha deve conter letras, números, uma letra maiscula e de 6 a 12 digitos.",
+      "ALLOWEDPHOTO": "Permitido JPG, GIF or PNG. Tamanho maxímo de 800kB",
+      "CURRENTPASSWORD": "Senha Atual",
+      "NEWPASSWORD": "Senha Nova",
+      "CONFIRNPASSWORD": "Confirma Senha Nova",
+      "SAVE": "Confirmar Passowrd",
+      "message":
+      {
+        "CURRENTPASSWORDREQUERID" : "Senha atual é requerida",
+        "CURRENTPASSWORDMIN":"Senha no minimo 6 digitos",
+        "CURRENTPASSWORDMAX":"Senha no maximo 12 digitos",
+        "NEWPASSWORDREQUERID" : "Senha nova é requerida",
+        "NEWPASSWORDMIN":"Senha nova no minimo 6 digitos",
+        "NEWPASSWORDMAX":"Senha nova maximo 12 digitos",
+        "NEWPASSWORDCONFIRMNOTEQUAL": "Confirma senha não é igual senha nova",
+        "CHANGEPASSWORDSUCCESS" : "Senha Modificada com sucesso"
+
+      }
+    },
+    "showConfirmResetPassword": {
+      "TITLE": "Resetar Senha",
+      "BODY": "Tem certeza que deseja resetar a senha de",
+      "CONFIRM": "Sim",
+      "CANCEL": "Não"
+    }
+
+  },
+  "agenda": {
+    "name": "Instalação",
+    "header": {
+      "MAIN": "Instalações",
+      "SUB": "Lista de instalações cadastradas"
+    },
+    "placeholders": {
+      "FACILITY_RESPONSIBLE_VALIDATION": "Digite nome ou e-mail do responsável",
+      "FACILITY_RESPONSIBLE_APPROVAL": "Digite nome ou e-mail do responsável",
+      "NEW_RESPONSIBLE": "+ Tag"
+    },
+    "button": {
+      "SAVE": "Salvar Mudanças",
+      "CANCEL": "Cancelar",
+      "CHANGE": "Mudar",
+      "RESET": "Resetar",
+      "NEW": "Cadastrar instalação",
+      "UPLOAD": "Upload Foto"
+    },
+    "datatable": {
+      "SHOW": "Mostrar",
+      "RESULT": "Resultados",
+      "TOTAL": "Total Registros",
+      "ACTION": "Ação",
+      "SEARCH": "Pesquisar",
+      "EDIT": "Alterar instalação",
+      "RESET": "Resetar Senha",
+      "DELETE": "Apagar instalação",
+      "ACTIVATE": "Ativar instalação",
+      "DEACTIVATE": "Desativar instalação",
+      "DETAILS": "Visualizar instalação",
+      "SEARCH_PLACEHOLDER": "Procure por nome, código ou uf da instalação"
+    },
+    "label": {
+      "FACILITY_NAME": "Nome",
+      "FACILITY_CODE": "Código",
+      "FACILITY_STATE": "UF",
+      "FACILITY_ADDRESS": "Endereço",
+      "FACILITY_RESPONSIBLE_VALIDATION": "Responsáveis que receberão e-mail de validação",
+      "FACILITY_RESPONSIBLE_APPROVAL": "Responsáveis que receberão e-mail após aprovação",
+      "FACILITY_GEOMETRY": "Geometria da instalação"
+    },
+    "message": {
+      "FACILITY_NAME_REQUIRED": "Nome da instalação é obrigatório",
+      "FACILITY_STATE_REQUIRED": "UF da instalação é obrigatória",
+      "FACILITY_ADDRESS_REQUIRED": "Endereço da instalação é obrigatório",
+      "FACILITY_GEOMETRY_REQUIRED": "Geometria da instalação é obrigatória",
+      "FACILITY_DELETED": "Instalação removida",
+      "FACILITY_CONFIRM_DELETION": "Deseja remover essa instalação?. Depois de removida uma instalação não poderá ser recuperada.",
+      "FACILITY_VALIDATORS_REQUIRED": "Adicione pelo menos um validador",
+      "FACILITY_APPROVERS_REQUIRED": "Adicione pelo menos um aprovador",
+      "FACILITY_CREATED": "Instalação criada.",
+      "CONFIRM_DEACTIVATE": "Deseja desativar a instalação?",
+      "CONFIRM_ACTIVATE": "Deseja ativar a instalação?",
+      "UNAUTHORIZE": "Você não possui autorização para remover uma instalação",
+      "CHECK_REQUIRED_FIELDS": "Verifique se os campos obrigatórios foram preenchidos"
+    }
+  },
+  "subagenda": {
+    "name": "Sub-instalação",
+    "header": {
+      "MAIN": "Sub-instalações",
+      "SUB": "Lista das sub-instalações cadastradas"
+    },
+    "placeholders": {
+      "FACILITY_RESPONSIBLE_VALIDATION": "Digite nome ou e-mail do responsável",
+      "FACILITY_RESPONSIBLE_APPROVAL": "Digite nome ou e-mail do responsável",
+      "NEW_RESPONSIBLE": "+ Tag"
+    },
+    "button": {
+      "SAVE": "Salvar Mudanças",
+      "CANCEL": "Cancelar",
+      "CHANGE": "Mudar",
+      "RESET": "Resetar",
+      "NEW": "Cadastrar instalação",
+      "UPLOAD": "Upload Foto"
+    },
+    "datatable": {
+      "SHOW": "Mostrar",
+      "RESULT": "Resultados",
+      "TOTAL": "Total Registros",
+      "ACTION": "Ação",
+      "SEARCH": "Pesquisar",
+      "EDIT": "Alterar instalação",
+      "RESET": "Resetar Senha",
+      "DELETE": "Apagar instalação",
+      "ACTIVATE": "Ativar instalação",
+      "DEACTIVATE": "Desativar instalação",
+      "DETAILS": "Visualizar instalação",
+      "SEARCH_PLACEHOLDER": "Procure por nome, código ou uf da instalação"
+    },
+    "label": {
+      "FACILITY_NAME": "Nome",
+      "FACILITY_CODE": "Código",
+      "FACILITY_STATE": "UF",
+      "FACILITY_ADDRESS": "Endereço",
+      "FACILITY_RESPONSIBLE_VALIDATION": "Responsáveis que receberão e-mail de validação",
+      "FACILITY_RESPONSIBLE_APPROVAL": "Responsáveis que receberão e-mail após aprovação",
+      "FACILITY_GEOMETRY": "Geometria da instalação"
+    },
+    "message": {
+      "FACILITY_NAME_REQUIRED": "Nome da instalação é obrigatório",
+      "FACILITY_STATE_REQUIRED": "UF da instalação é obrigatória",
+      "FACILITY_ADDRESS_REQUIRED": "Endereço da instalação é obrigatório",
+      "FACILITY_GEOMETRY_REQUIRED": "Geometria da instalação é obrigatória",
+      "FACILITY_DELETED": "Instalação removida",
+      "FACILITY_CONFIRM_DELETION": "Deseja remover essa instalação?. Depois de removida uma instalação não poderá ser recuperada.",
+      "FACILITY_VALIDATORS_REQUIRED": "Adicione pelo menos um validador",
+      "FACILITY_APPROVERS_REQUIRED": "Adicione pelo menos um aprovador",
+      "FACILITY_CREATED": "Instalação criada.",
+      "CONFIRM_DEACTIVATE": "Deseja desativar a instalação?",
+      "CONFIRM_ACTIVATE": "Deseja ativar a instalação?",
+      "UNAUTHORIZE": "Você não possui autorização para remover uma instalação",
+      "CHECK_REQUIRED_FIELDS": "Verifique se os campos obrigatórios foram preenchidos"
+    }
+  },
+  "sources": {
+    "header": {
+      "MAIN": "Fontes",
+      "SUB": "Lista das fontes cadastradas"
+    },
+    "placeholders": {
+    },
+    "button": {
+      "SAVE": "Salvar Mudanças",
+      "CANCEL": "Cancelar",
+      "CHANGE": "Mudar",
+      "RESET": "Resetar",
+      "NEW": "Cadastrar fonte",
+      "UPLOAD": "Upload Foto"
+    },
+    "datatable": {
+      "SHOW": "Mostrar",
+      "RESULT": "Resultados",
+      "TOTAL": "Total Registros",
+      "ACTION": "Ação",
+      "SEARCH": "Pesquisar",
+      "EDIT": "Alterar fonte",
+      "DELETE": "Apagar fonte",
+      "ACTIVATE": "Ativar fonte",
+      "DEACTIVATE": "Desativar fonte",
+      "DETAILS": "Visualizar fonte",
+      "SEARCH_PLACEHOLDER": "Nome, código ou status",
+      "MANAGE_PICTURES": "Gerenciar fotos",
+      "MANAGE_STATE": "Cadastrar status",
+      "NEW_ACTION_PLAN": "Cadastrar plano de ação"
+    },
+    "label": {
+      "NAME": "Nome",
+      "CODE": "Código",
+      "STATE": "UF",
+      "IDENTIFICATION_DATE": "Data de identificação",
+      "IDENTIFICATION_TIME": "Hora de identificação",
+      "START_DATE": "Data de início",
+      "START_TIME": "Hora de inicio",
+      "ADDRESS": "Endereço",
+      "GEOMETRY": "Geometria da fonte",
+      "CAUSE": "Causa da fonte",
+      "CLASSIFICATION": "Classificação de origem",
+      "IDENTIFICATION_METHOD": "Métdo de identificação da fonte",
+      "COMMENTS": "Comentários gerais",
+      "DESCRIPTION": "Descrição da fonte",
+      "STATUS": "Status"
+    },
+    "message": {
+      "FACILITY_REQUIRED": "Instalação é obrigatória",
+      "SUB_FACILITY_REQUIRED": "Sub-instalação é obrigatória",
+      "NAME_REQUIRED": "Nome da instalação é obrigatório",
+      "STATE_REQUIRED": "UF da instalação é obrigatória",
+      "ADDRESS_REQUIRED": "Endereço da instalação é obrigatório",
+      "GEOMETRY_REQUIRED": "Geometria da instalação é obrigatória",
+      "IDENTIFICATION_DATE_REQUIRED": "Data de identificação é obrigatória",
+      "IDENTIFICATION_TIME_REQUIRED": "Hora de identificação é obrigatória",
+      "IDENTIFICATION_METHOD_REQUIRED": "Método de identificação da fonte é obrigatório",
+      "DESCRIPTION_REQUIRED": "Descrição da fonte é obrigatória",
+      "START_DATE_REQUIRED": "Data de início é obrigatória",
+      "START_TIME_REQUIRED": "Hora de início é obrigatória",
+      "CAUSE_REQUIRED": "Causa da fonte é obrigatória",
+      "CLASSIFICATION_REQUIRED": "Classificação de origem da fonte é obrigatória",
+      "DELETED": "Instalação removida",
+      "CONFIRM_DELETION": "Deseja remover essa instalação?. Depois de removida uma instalação não poderá ser recuperada.",
+      "VALIDATORS_REQUIRED": "Adicione pelo menos um validador",
+      "APPROVERS_REQUIRED": "Adicione pelo menos um aprovador",
+      "CREATED": "Instalação criada.",
+      "CONFIRM_DEACTIVATE": "Deseja desativar a instalação?",
+      "CONFIRM_ACTIVATE": "Deseja ativar a instalação?",
+      "UNAUTHORIZE": "Você não possui autorização para remover uma instalação",
+      "CHECK_REQUIRED_FIELDS": "Verifique se os campos obrigatórios foram preenchidos"
+    },
+
+    "status": {
+      "name": "Status da fonte",
+
+      "header": {
+        "MAIN": "Lista de status",
+        "SUB": "Listagem de status para a fonte: "
+      },
+
+      "button": {
+        "NEW": "Cadastrar status"
+      },
+
+      "label" : {
+        "UPDATE_DATE": "Data de atualização do status",
+        "UPDATE_TIME": "Horário",
+        "SOURCE_STATUS": "Status da fonte",
+        "SOURCE_CLASS": "Classificação da fonte",
+        "COMMENTS": "Comentários gerais",
+        "REASON": "Justificativa",
+        "BAD_ACTORS": "Bad actor"
+      },
+
+      "table": {
+          "STATUS_CLASSIFICATION": "Classificação",
+          "BAD_ACTOR": "Bad Actor",
+          "STATUS_NAME": "Status",
+          "UPDATE_DATE": "Data de atualização"
+      },
+
+      "message" : {
+        "UPDATE_DATE_REQUIRED": "A data de atualização é obrigatória",
+        "STATUS_REQUIRED": "O status da fonte é obrigatório",
+        "CLASSIFICATION_REQUIRED": "A classificação da fonte é obrigatória",
+        "BAD_ACTOR_REQUIRED": "O bad actor é obrigatório",
+        "UPDATE_TIME_REQUIRED": "A hora de atualização é obrigatória",
+        "CONFIRM_DELETION": "Deseja remover esse status? Depois de removido um status não poderá ser recuperado."
+
+      },
+
+      "datatable" : {
+        "EDIT": "Alterar status",
+        "DELETE": "Apagar status"
+      }
+
+    }
+  },
+  "plans": {
+    "header": {
+      "MAIN": "Lista de planos de ação",
+      "SUB": "Planos de ação para a fonte:"
+    },
+
+    "button": {
+      "NEW": "Cadastrar plano de ação"
+    },
+
+    "datatable": {
+      "NAME": "Nome",
+      "TYPE": "Tipo",
+      "DESCRIPTION": "Descrição",
+      "EDIT": "Editar plano de ação",
+      "DELETE": "Apagar plano de ação",
+      "CUSTOM_ID": "Codigo personalizado",
+      "ADD_ACTION": "Adicionar ação"
+    },
+
+    "label": {
+      "TYPE": "Tipo",
+      "NAME": "Nome",
+      "DESCRIPTION": "Descrição do plano",
+      "CUSTOM_ID": "Codigo personalizado"
+    },
+
+    "message": {
+      "TYPE_REQUIRED": "O tipo do plano é obrigatório",
+      "NAME_REQUIRED": "O nome do plano é obrigatório",
+      "DESCRIPTION_REQUIRED": "A descrição é obrigatória",
+      "CUSTOM_ID_REQUIRED": "O código é obrigatório",
+      "CONFIRM_DELETION": "Deseja remover esse plano de ação?"
+    }
+  }
+}

@@ -1,0 +1,145 @@
+<section class="users-edit">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <!-- Nav-tabs -->
+            <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs justify-content-left">
+              <li [ngbNavItem]="1">
+                <a ngbNavLink class="nav-link d-flex align-items-center">
+                  <i class="ft-user mr-1"></i>
+                  <span class="d-none d-sm-block">{{title | translate | uppercase}}</span>
+                </a>
+                <ng-template ngbNavContent>
+                  <!-- Account content starts -->
+                  <div class="mt-2" id="account">
+                    <!-- Media object starts -->
+                    <div class="media">
+                      <img src="assets/img/portrait/small/foto_1.jpg" alt="user edit avatar"
+                        class="users-avatar-shadow avatar mr-3 rounded-circle" height="64" width="64">
+                      <div class="media-body">
+                        <h4>{{"account.label.PHOTO"|translate}}</h4>
+                        <div class="d-flex flex-sm-row flex-column justify-content-start px-0 mb-sm-2">
+                          <button class="btn btn-sm btn-primary mb-1 mb-sm-0">{{"account.button.CHANGE" |
+                            translate}}</button>
+                          <button class="btn btn-sm bg-light-secondary ml-sm-2">{{"account.button.RESET" |
+                            translate}}</button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Media object ends -->
+
+                    <!-- Account form starts -->
+                    <form [formGroup]="oform" name="oform" (ngSubmit)="onSubmit()"  novalidate>
+                      <div class="row">
+                        <div class="col-12 col-md-6">
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-username">{{"account.label.USERNAME" | translate |
+                                uppercase}}</label>
+                              <input type="text" maxlength="50" id="users-edit-username" class="form-control" placeholder="" formControlName="userName"
+                                required aria-invalid="false"
+                                [ngClass]="{'is-invalid':  f.userName.invalid, 'is-valid': !f.userName.invalid }">
+                                <app-error-msg [control]="oform.get('userName')" label="account.message.USERNAME_REQUIRED">
+                                </app-error-msg>
+                                <app-error-msg [control]="oform.get('userName')" label="account.message.USERNAMEMIN">
+                                </app-error-msg>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-name">{{"account.label.FULLNAME" | translate | uppercase}}</label>
+                              <input type="text" maxlength="100" id="users-edit-name" class="form-control" placeholder="" formControlName="fullname"
+                                 aria-invalid="false"
+                                 [ngClass]="{'is-invalid':  f.fullname.invalid, 'is-valid': !f.fullname.invalid }">
+                                 <app-error-msg [control]="oform.get('fullname')" label="account.message.FULLNAME_REQUIRED">
+                                 </app-error-msg>
+                                 <app-error-msg [control]="oform.get('userName')" label="account.message.FULLNAMEMIN">
+                                </app-error-msg>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="users-edit-email">{{"account.label.EMAIL" | translate | uppercase}}</label>
+                              <input type="email" maxlength="100" id="users-edit-email" class="form-control" placeholder="" formControlName="email"
+                                 aria-invalid="false"
+                                 [ngClass]="{'is-invalid':  f.email.invalid, 'is-valid': !f.email.invalid }">
+                                <app-error-msg [control]="oform.get('email')" label="account.message.EMAIL_REQUIRED">
+                                </app-error-msg>
+                                <app-error-msg [control]="oform.get('email')" label="account.message.EMAILINVALID">
+                                </app-error-msg>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                          <div class="form-group">
+                              <label for="user-role">{{"account.label.ROLE" | translate | uppercase}}</label>
+                              <ng-select id="user-role" [multiple]="false" formControlName="userRoleIds" [ngModelOptions]="{standalone: true}" placeholder="{{'account.label.SELROLE' | translate}}">
+                                <ng-option *ngFor="let r of roles$ | async" [value]="r.id">{{ "account.roles."+ r.normalizedName | translate}}
+                                </ng-option>
+                              </ng-select>
+                              <app-error-msg [control]="oform.get('userRoleIds')" label="account.message.ROLEREQUIRED">
+                              </app-error-msg>
+
+                              <!-- <select class="form-control" id="user-role" formControlName="userRoleIds" >
+                                <option value="">{{"account.label.SELROLE" | translate}}</option>
+                                <option *ngFor="let role of roles$ | async" [value]="role.id">{{ "account.roles."+ role.normalizedName | translate}}</option>
+                              </select>
+                              <app-error-msg [control]="oform.get('userRoleIds')" label="account.message.ROLEREQUIRED">
+                              </app-error-msg> -->
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="user-status">{{"account.label.STATUS" | translate | uppercase}}</label>
+                              <select id="status" class="form-control" required formControlName="status">
+                                <option value="1">{{"account.label.ACTIVE" | translate}}</option>
+                                <option value="0">{{"account.label.INACTIVE"| translate}}</option>
+                              </select>
+                              <app-error-msg [control]="oform.get('status')" label="account.message.STATUS">
+                              </app-error-msg>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="controls">
+                              <label for="user-facility">{{"account.label.FACILITY" | translate | uppercase}}</label>
+                              <!-- <ng-select id="user-facility" [multiple]="true" formControlName="userFacilityIds"
+                               placeholder="{{'account.label.SELFACILITY' | translate}}">
+                                <ng-option *ngFor="let f of facilities$ | async" [value]="f.id">{{f.commonName | translate}}
+                                </ng-option>
+                              </ng-select> -->
+                              <ng-select [items]="facilities$ | async" bindLabel="commonName" bindValue="id" [multiple]="true" [closeOnSelect]="true"
+                              placeholder="{{'account.label.SELFACILITY' | translate}}" formControlName="userFacilityIds">
+                            </ng-select>
+                              <!-- <select class="form-control" id="user-facility" formControlName="userFacilityIds">
+                                <option value="">{{"account.label.SELFACILITY" | translate}}</option>
+                                <option *ngFor="let facility of facilities$ | async" [value]="facility.id">{{ facility.commonName}} </option>
+                              </select> -->
+                              <app-error-msg [control]="oform.get('userFacilityIds')" label="account.message.FACILITYREQUIRED">
+                              </app-error-msg>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
+                          <button type="submit" class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">{{"account.button.SAVE" | translate}}</button>
+                          <button type="button" (click)="onCancel()" class="btn btn-secondary">{{"account.button.CANCEL" | translate}}</button>
+                        </div>
+                      </div>
+                    </form>
+                    <!-- Account form ends -->
+                  </div>
+                  <!-- Account content ends -->
+                </ng-template>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div [ngbNavOutlet]="nav"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

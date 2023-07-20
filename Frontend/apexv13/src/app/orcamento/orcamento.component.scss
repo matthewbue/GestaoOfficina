@@ -1,0 +1,40 @@
+.datatable-body-row:hover {
+  background-color: rgb(223, 217, 217);
+  -webkit-transition: background-color 0.5s ease-out;
+-moz-transition: background-color 0.5s ease-out;
+-o-transition: background-color 0.5s ease-out;
+transition: background-color 0.5s ease-out;
+}
+
+.datatable-body-row {
+padding-top: 5px;
+padding-bottom: 5px;
+}
+.content-header h1 {
+color: #005E93;
+font-weight: bold;
+font-size: 40px;
+margin-left: 15px;
+}
+#card-agendamentos h2 {
+color: #005E93;
+font-size: 25px;
+padding-bottom: 20px;
+}
+
+#button-cadastro {
+border: none;
+margin-left: 15px;
+background-color: transparent;
+}
+
+#button-buscar {
+background-color: #005E93;
+margin-top: 35px;
+}
+
+#button-agendaconfig:hover {
+color: white;
+background-color: #005E93;
+border-radius: 4px;
+}

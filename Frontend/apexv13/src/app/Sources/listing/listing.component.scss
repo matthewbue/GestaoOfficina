@@ -1,0 +1,12 @@
+.datatable-body-row:hover {
+    background-color: rgb(223, 217, 217);
+    -webkit-transition: background-color 0.5s ease-out;
+  -moz-transition: background-color 0.5s ease-out;
+  -o-transition: background-color 0.5s ease-out;
+  transition: background-color 0.5s ease-out;
+}
+
+.datatable-body-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

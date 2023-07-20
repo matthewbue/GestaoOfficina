@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+.custom-is-invalid {
+  border: 1px solid #F55252 !important;
+}
+
+.datatable-footer-inner {
+  display: flex !important;
+  justify-content: center;
+  width: 30% !important
+}
+
+.datatable-footer {
+  display: flex !important;
+  justify-content: center;
+
+}
+
+.page-count, .datatable-pager {
+  flex: 1 1 50% !important;
+}
+
+.datatable-pager {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+
+  .pager {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+  }
+  li {
+      margin: 3px !important;
+  }
+
+
+  .active {
+      font-weight: bolder;
+  }
+}
+
+.btn-primary {
+  background-color: #005E93 !important;
+  border: none !important
+}
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+@import '../node_modules/angular-archwizard/styles/archwizard.css';
+
+
+.custom-switch .custom-control-label::before {
+  width: 2rem;
+}
+
+.custom-switch input[type="checkbox"] ~ label::after {
+  left: -2.1rem;
+}
+
+.custom-switch input[type="checkbox"]:checked ~ label::after {
+  left: -2.2rem;
+}

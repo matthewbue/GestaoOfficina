@@ -1,0 +1,269 @@
+<section>
+  <div class="card">
+    <div class="card-content">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-8">
+            <form #form="ngForm" novalidate (ngSubmit)="save(form)">
+              
+              <div class="form-group">
+                <label for="facility">UNIDADE *</label>
+                <ng-select
+                  id="facility"
+                  name="facility"
+                  #facility="ngModel" 
+                  required
+                  (change)="filterSubfacilities($event)"
+                  [(ngModel)]="model.facility" 
+                  [disabled]="isDetail"
+                  [ngClass]="{'custom-is-invalid': (form.submitted || facility.touched) && facility.invalid, 'is-valid': !facility.invalid }"
+                >
+                  <ng-option *ngFor="let facility of facilities" [value]="facility.id">{{facility.name}}
+                  </ng-option>
+                </ng-select>
+                <app-error-msg [control]="facility" label="sources.message.FACILITY_REQUIRED">
+                </app-error-msg>
+              </div>
+
+              <div class="form-group">
+                <label for="subfacility">ÁREA *</label>
+                <ng-select
+                  id="subfacility"
+                  name="subfacility"
+                  #subfacility="ngModel" 
+                  [(ngModel)]="model.subFacilities"
+                  required
+                  [multiple]="true"
+                  [disabled]="isDetail"
+                  [ngClass]="{'custom-is-invalid': (form.submitted || subfacility.touched) && subfacility.invalid, 'is-valid': !subfacility.invalid }"
+                >
+                  <ng-option *ngFor="let subfacility of subFacilities" [value]="subfacility.id">{{subfacility.name}}
+                  </ng-option>
+                </ng-select>
+                <app-error-msg [control]="subfacility" label="sources.message.SUB_FACILITY_REQUIRED">
+                </app-error-msg>
+              </div>              
+
+              <div class="form-group">
+                <label for="name">{{ "sources.label.NAME" | translate }} *</label>
+                <input 
+                  maxlength="100"
+                  id="name" 
+                  name="name" 
+                  type="text" 
+                  [disabled]="isDetail"
+                  class="form-control" 
+                  required 
+                  [(ngModel)]="model.name" 
+                  #name="ngModel" 
+                  [ngClass]="{'is-invalid': (form.submitted || name.touched) && name.invalid, 'is-valid': !name.invalid }"
+                />
+                <app-error-msg [control]="name" label="sources.message.NAME_REQUIRED">
+                </app-error-msg>
+              </div>
+              
+              <div class="form-group">
+                <label for="code">{{ "sources.label.CODE" | translate }}</label>
+                <input id="code" name="code" type="text" class="form-control" [(ngModel)]="model.code" [disabled]="isDetail" />
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="idTime">{{ "sources.label.IDENTIFICATION_DATE" | translate }} *</label>
+                    <div class="input-group">
+                      <input 
+                        required 
+                        id="idDate" 
+                        name="idDate" 
+                        class="form-control" 
+                        type="text" 
+                        ngbDatepicker 
+                        #d1="ngbDatepicker" 
+                        [(ngModel)]="model.identificationDay" 
+                        #idDate="ngModel"
+                        [ngClass]="{'is-invalid': (form.submitted || idDate.touched) && idDate.invalid, 'is-valid': !idDate.invalid }"
+                      />
+                      <button class="btn btn-outline-secondary" (click)="d1.toggle()" type="button">
+                        <i class="ft-calendar"></i>
+                      </button>
+                    </div>
+                    <app-error-msg [control]="idDate" label="sources.message.IDENTIFICATION_DATE_REQUIRED">
+                    </app-error-msg>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{ "sources.label.IDENTIFICATION_TIME" | translate }} *</label>
+                    <ngb-timepicker 
+                      required 
+                      name="idTime" 
+                      id="idTime" 
+                      #idTime="ngModel" 
+                      [(ngModel)]="model.identificationTime"
+                      [ngClass]="{'is-invalid': (form.submitted || idTime.touched) && idTime.invalid, 'is-valid': !idTime.invalid }" 
+                      [spinners]="false">
+                    </ngb-timepicker>
+                    <app-error-msg [control]="idTime" label="sources.message.IDENTIFICATION_TIME_REQUIRED">
+                    </app-error-msg>                    
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="idTime">{{ "sources.label.START_DATE" | translate }} *</label>
+                    <div class="input-group">
+                      <input 
+                        required 
+                        id="startDate" 
+                        name="startDate" 
+                        class="form-control" 
+                        type="text" 
+                        ngbDatepicker 
+                        #d2="ngbDatepicker" 
+                        [(ngModel)]="model.startDay" 
+                        #startDate="ngModel"
+                        [ngClass]="{'is-invalid': (form.submitted || startDate.touched) && startDate.invalid, 'is-valid': !startDate.invalid }"
+                      />
+                      <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button">
+                        <i class="ft-calendar"></i>
+                      </button>
+                    </div>
+                    <app-error-msg [control]="startDate" label="sources.message.START_DATE_REQUIRED">
+                    </app-error-msg>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>{{ "sources.label.START_TIME" | translate }} *</label>
+                    <ngb-timepicker 
+                      required 
+                      name="startTime" 
+                      id="startTime" 
+                      #startTime="ngModel" 
+                      [(ngModel)]="model.startTime"
+                      [ngClass]="{'is-invalid': (form.submitted || startTime.touched) && startTime.invalid, 'is-valid': !startTime.invalid }" 
+                      [spinners]="false">
+                    </ngb-timepicker>
+                    <app-error-msg [control]="startTime" label="sources.message.START_TIME_REQUIRED">
+                    </app-error-msg>                    
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name">{{ "sources.label.CAUSE" | translate }} *</label>
+                <ng-select
+                  id="cause"
+                  name="cause"
+                  #cause="ngModel" 
+                  [(ngModel)]="model.cause"
+                  multiple
+                  [disabled]="isDetail"
+                  [ngClass]="{'custom-is-invalid': (form.submitted || cause.touched) && cause.invalid, 'is-valid': !cause.invalid }"
+                >
+                  <ng-option *ngFor="let cause of sourceCauses" [value]="cause.id">{{cause.name}}
+                  </ng-option>
+                </ng-select>
+                <app-error-msg [control]="cause" label="sources.message.CAUSE_REQUIRED">
+                </app-error-msg>
+              </div>
+              
+              <div class="form-group">
+                <label for="name">{{ "sources.label.CLASSIFICATION" | translate }} *</label>
+                <ng-select
+                  id="classification"
+                  name="classification"
+                  #classification="ngModel" 
+                  [(ngModel)]="model.originClassification"
+                  required
+                  multiple
+                  [disabled]="isDetail"
+                  [ngClass]="{'custom-is-invalid': (form.submitted || classification.touched) && classification.invalid, 'is-valid': !classification.invalid }"
+                >
+                  <ng-option *ngFor="let classification of classfications" [value]="classification.id">{{classification.name}}
+                  </ng-option>
+                </ng-select>
+                <app-error-msg [control]="classification" label="sources.message.CLASSIFICATION_REQUIRED">
+                </app-error-msg>
+              </div>
+              
+              <div class="form-group">
+                <label for="name">{{ "sources.label.IDENTIFICATION_METHOD" | translate }} *</label>
+                <ng-select
+                  id="identificationMethod"
+                  name="identificationMethod"
+                  #identificationMethod="ngModel" 
+                  [(ngModel)]="model.identificationMethod"
+                  required
+                  multiple
+                  [disabled]="isDetail"
+                  [ngClass]="{'custom-is-invalid': (form.submitted || identificationMethod.touched) && identificationMethod.invalid, 'is-valid': !identificationMethod.invalid }"
+                >
+                  <ng-option *ngFor="let identificationMethod of methods" [value]="identificationMethod.id">{{identificationMethod.name}}
+                  </ng-option>
+                </ng-select>
+                <app-error-msg [control]="identificationMethod" label="sources.message.IDENTIFICATION_METHOD_REQUIRED">
+                </app-error-msg>
+              </div>             
+              
+              <div class="form-group">
+                <label for="description">{{ "sources.label.DESCRIPTION" | translate }} *</label>
+                <textarea 
+                  maxlength="255"
+                  id="description" 
+                  name="description" 
+                  type="text" 
+                  [disabled]="isDetail"
+                  class="form-control" 
+                  required 
+                  [(ngModel)]="model.description" 
+                  #description="ngModel" 
+                  [ngClass]="{'is-invalid': (form.submitted || description.touched) && description.invalid, 'is-valid': !description.invalid }"
+                ></textarea>
+                <app-error-msg [control]="description" label="sources.message.DESCRIPTION_REQUIRED">
+                </app-error-msg>
+              </div>                
+
+              <div class="form-group">
+                <label for="comments">{{ "sources.label.COMMENTS" | translate }}</label>
+                <textarea 
+                  maxlength="255"
+                  id="comments" 
+                  name="comments" 
+                  type="text" 
+                  [disabled]="isDetail"
+                  class="form-control" 
+                  [(ngModel)]="model.comments" 
+                  #comments="ngModel" 
+                ></textarea>
+              </div>            
+
+              <div class="form-group" *ngIf="!isDetail">
+                <label for="">{{ "sources.label.GEOMETRY" | translate }} (kml, wkt, shp)*</label>
+                <input type="file" class="form-control" accept=".wkt, .kml, .shp, .zip" (change)="parseWkt($event)" />
+              </div>              
+
+              <div>
+                <div style="height: 300px;"
+                  leaflet
+                  [leafletOptions]="options"
+                  (leafletMapReady)="onMapReady($event)" 
+                >
+                  <div [leafletLayer]="geometry"></div>
+                </div>              
+              </div>
+
+              <div *ngIf="!isDetail" class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
+                <button type="submit" class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">{{"sources.button.SAVE" | translate}}</button>
+                <button type="button" (click)="back()" class="btn btn-secondary">{{"sources.button.CANCEL" | translate}}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

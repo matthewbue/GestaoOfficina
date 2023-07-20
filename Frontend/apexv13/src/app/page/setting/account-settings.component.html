@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-12">
+    <div class="content-header">{{"account.setting.header.MAIN" | translate}}</div>
+    <p class="content-sub-header mb-1">{{"account.setting.header.SUB" | translate}}</p>
+  </div>
+</div>
+<!-- Account Settings starts -->
+<div class="row">
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="media">
+            <img src="assets/img/portrait/small/avatar-s-8.png" alt="profile-img" class="rounded mr-3" height="64"
+              width="64">
+            <div class="media-body">
+              <div class="col-12 d-flex flex-sm-row flex-column justify-content-start px-0 mb-sm-2">
+                <label class="btn btn-sm bg-light-primary mb-sm-0" for="select-files">{{"account.button.UPLOAD" | translate}}</label>
+                <input type="file" id="select-files" hidden>
+                <button class="btn btn-sm bg-light-secondary ml-sm-2">{{"account.button.RESET" | translate}}</button>
+              </div>
+              <p class="text-muted mb-0 mt-1 mt-sm-0">
+                <small>{{"account.setting.ALLOWEDPHOTO" | translate}}</small>
+              </p>
+            </div>
+          </div>
+          <hr class="mt-1 mt-sm-2">
+          <div class="col-12">
+            <ngb-alert type="light-warning" class="mb-2">
+              <p class="mb-0">{{"account.setting.ALERT" | translate}}</p>
+            </ngb-alert>
+          </div>
+          <form [formGroup]="oform" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-12 form-group">
+                <label for="username">{{"account.label.USERNAME" | translate}}</label>
+                <div class="controls">
+                  <input disabled type="text" formControlName="userName" class="form-control">
+                </div>
+
+              </div>
+              <div class="col-12 form-group">
+                <label for="name">{{"account.label.FULLNAME" | translate}}</label>
+                <div class="controls">
+                  <input type="text" maxlength="100" formControlName="fullname" class="form-control">
+
+                </div>
+              </div>
+              <div class="col-12 form-group">
+                <label for="email">{{"account.label.EMAIL" | translate}}</label>
+                <div class="controls">
+                  <input type="text" maxlength="200" formControlName="email" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-12 form-group">
+                <label for="current-password">{{"account.setting.CURRENTPASSWORD" | translate}}</label>
+                <div class="controls">
+                  <input type="password" maxlength="12" id="current-password" formControlName="password" class="form-control">
+                </div>
+                <app-error-msg [control]="oform.get('password')" label="account.setting.message.CURRENTPASSWORDREQUERID">
+                </app-error-msg>
+                <app-error-msg [control]="oform.get('password')" label="account.setting.message.CURRENTPASSWORDMIN">
+                </app-error-msg>
+                <app-error-msg [control]="oform.get('password')" label="account.setting.message.CURRENTPASSWORDMAX">
+                </app-error-msg>
+              </div>
+              <div class="col-12 form-group">
+                <label for="new-password">{{"account.setting.NEWPASSWORD" | translate}}</label>
+                <div class="controls">
+                  <input type="password" maxlength="12" id="new-password" formControlName="newPassword" class="form-control">
+                </div>
+                <app-error-msg [control]="oform.get('password')" label="account.setting.message.NEWPASSWORDREQUERID">
+                </app-error-msg>
+                <app-error-msg [control]="oform.get('password')" label="account.setting.message.NEWPASSWORDMIN">
+                </app-error-msg>
+                <app-error-msg [control]="oform.get('password')" label="account.setting.message.NEWPASSWORDMAX">
+                </app-error-msg>
+              </div>
+              <div class="col-12 form-group">
+                <label for="cofirm-new-password">{{"account.setting.CONFIRNPASSWORD" | translate}}</label>
+                <div class="controls">
+                  <input type="password" maxlength="12" formControlName="newPasswordConfirm" class="form-control">
+                </div>
+                <app-error-msg [control]="oform.get('newPasswordConfirm')" label="account.setting.message.NEWPASSWORDCONFIRMNOTEQUAL">
+                </app-error-msg>
+              </div>
+              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end">
+                <button [disabled]="!oform.valid" type="submit" class="btn btn-primary mr-sm-2 mb-1">{{"account.setting.SAVE" | translate}}</button>
+                <!-- <button type="reset" class="btn btn-secondary mb-1">{{"account.button.CANCEL" | translate}}</button> -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Account Settings ends -->

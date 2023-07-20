@@ -1,0 +1,29 @@
+{
+  "Home": "Home",
+  "MenuTopSetting": "Administration",
+  "MenuTopSource": "Sources",
+  "MenuTopEvent": "Envents",
+  "MenuItemFacility": "agenda",
+  "MenuTopReport":"Dashboard",
+  "MenuItemUserAccount": "User Account",
+  "SettingFacility": "agenda",
+  "Source": "Sources",
+  "SourceList": "List",
+  "Adminstrador": "Admin",
+  "navbar": {
+    "label": {
+      "LOGOUT": "Logout",
+      "PROFILE": "My Account"
+    }
+  },
+  "home":{
+    "header": {
+      "MAIN": "Home",
+      "SUB": "Page home system."
+    },
+    "label": {
+      "WELCOME" : "Hi, Welcome, "
+    }
+
+  }
+}

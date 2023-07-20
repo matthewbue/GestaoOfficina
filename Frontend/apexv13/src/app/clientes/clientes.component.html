@@ -1,0 +1,156 @@
+<section>
+  <div>
+    <div class="col-12">
+      <div class="card">
+        <div class="content-header">
+          <h1>Consultar Clientes</h1>
+        </div>
+        <form>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+
+                  <fieldset class="form-group">
+                    <label for="numeroAgendamento">Nome:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nomeCliente"
+                      formControlName="nomeCliente"
+                      placeholder="Nome do cliente"
+                    />
+                  </fieldset>
+
+                  <!-- <fieldset class="form-group">
+                    <label for="dataAgendamento">Data:</label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="dataAgendamento"
+                      formControlName="dataAgendamento"
+                    />
+                  </fieldset> -->
+
+                  <fieldset class="form-group">
+                    <label for="cpfcnpj">CPF / CNPJ</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cpfcnpj"
+                      formControlName="cpfcnpj"
+                      placeholder="CPF / CNPJ"
+                    />
+                  </fieldset>
+
+                </div>
+                <div class="col-md-6">
+                  <!-- <fieldset class="form-group">
+                    <label for="statusAgendamento">Status:</label>
+                    <select
+                      class="form-control"
+                      id="statusAgendamento"
+                      formControlName="statusAgendamento"
+                    >
+                      <option></option>
+                    </select>
+                  </fieldset> -->
+
+                  <fieldset class="form-group">
+                    <label for="cpfcnpj">PLACA:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cpfcnpj"
+                      formControlName="cpfcnpj"
+                      placeholder="Placa do veículo"
+                    />
+                  </fieldset>
+
+                  <button type="submit" class="btn btn-light mt-4 float-right">
+                    Limpar
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary mt-4 mr-2 float-right"
+                  >
+                    Buscar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="py-2 mb-2 mx-n2 clearfix" id="card-agendamentos">
+            <h2>Lista de Clientes</h2>
+            <button type="button" class="btn btn-primary mr-1 mb-1 float-right" (click)="new()">
+              Novo Cliente
+            </button>
+          </div>
+          <div class="card-body table-responsive">
+            <table class="table text-center m-0">
+              <thead>
+                <tr>
+                  <th id="table-p">Nome</th>
+                  <th id="table-p">Veículo</th>
+                  <th id="table-p">Placa</th>
+                  <th id="table-p">Status</th>
+                  <th id="table-p">Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td class="text-truncate" id="nomeCliente"></td>
+                  <td class="text-truncate"></td>
+                  <td></td>
+                  <td class="text-truncate"></td>
+
+                  <td class="text-truncate">
+                    <a class="info p-0" title="Visualizar cliente"
+                      ><i class="ft-search font-medium-3 mr-2"></i
+                    ></a>
+
+                    <a class="success p-0" title="Editar cliente"
+                      ><i class="ft-edit font-medium-3 mr-2"></i
+                    ></a>
+
+                    <a
+                      href="javascript:;"
+                      title="Excluir cliente"
+                      class="danger p-0"
+                      ><i class="ft-x font-medium-3 mr-2"></i
+                    ></a>
+
+                    <a
+                      href="javascript:;"
+                      title="Nova Ordem de Serviço"
+                      class="dark p-0 mr-2"
+                      ><i class="ft-file-text font-medium-3"> </i
+                    ></a>
+
+                    <a
+                      href="javascript:;"
+                      title="Novo Orçamento"
+                      class="dark p-0"
+                      ><i class="ft-clipboard font-medium-3"></i
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

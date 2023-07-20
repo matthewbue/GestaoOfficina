@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-12">
+    <div class="content-header">{{"sources.header.MAIN" | translate}}</div>
+    <p class="content-sub-header mb-1">{{"sources.header.SUB" | translate}}</p>
+  </div>
+</div>
+
+<section id="ngx-datatable-filter">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <!-- Filter starts -->
+            <div class="px-2">
+              <div class="border rounded py-2 mb-2 mx-n2 clearfix">
+                <button type="button" class="btn btn-primary mr-2 float-right" (click)="new()">
+                  {{"sources.button.NEW" | translate}}
+                </button>
+              </div>
+
+              <form>
+                <fieldset>
+                  <legend>Filtros</legend>
+                  <div class="form-row">
+                    <div class="col">
+                      <label>Unidade</label>
+                      <ng-select (change)="filterSubfacilities($event)" (clear)="clearFacilities()" id="facility"
+                        [(ngModel)]="selectedFacilities" [ngModelOptions]="{standalone: true}">
+                        <ng-option *ngFor="let facility of facilities" [value]="facility.id">{{facility.name}}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="col">
+                      <label>Área</label>
+                      <ng-select id="subfacility" [multiple]="true" (change)="setSubFacilitiesId($event)"
+                        [(ngModel)]="selectedSubfacilities" [ngModelOptions]="{standalone: true}">
+                        <ng-option *ngFor="let subfacility of subFacilities"
+                          [value]="subfacility.id">{{subfacility.name}}
+                        </ng-option>
+                      </ng-select>
+                    </div>
+                    <div class="col">
+                      <label>Nome: </label>
+                      <input id="ngx-filter-ref" class="form-control" type="text" placeholder="Nome da fonte"
+                        [(ngModel)]="sourceName" [ngModelOptions]="{standalone: true}" />
+                    </div>
+
+                    <div class="col">
+                      <label>Codigo: </label>
+                      <input id="ngx-filter-ref" class="form-control" type="text" placeholder="Código da fonte"
+                        [(ngModel)]="sourceCode" [ngModelOptions]="{standalone: true}" />
+                    </div>
+
+                    <div class="col">
+                      <label style="height: 20px; display: block"></label>
+                      <button class="btn btn-secondary ml-1" (click)="search()">Pesquisar</button>
+                      <button class="btn btn-secondary ml-1" (click)="clearFilters()">Limpar filtros</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+            <!-- Filter ends -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <ngx-datatable [rows]="sources.data" class="bootstrap core-bootstrap" footerHeight="50" rowHeight="auto"
+              columnMode="force" [externalPaging]="true" [count]="sources.totalDados" (page)="changePage($event)"
+              [messages]="{emptyMessage: 'Nenhuma fonte foi encontrada'}" [limit]="10">
+              <ngx-datatable-column name="{{'sources.label.CODE' | translate | uppercase}}"
+                prop="codigoPersonalizado"></ngx-datatable-column>
+              <ngx-datatable-column name="{{'sources.label.NAME' | translate | uppercase}}"
+                prop="name"></ngx-datatable-column>
+              <ngx-datatable-column name="UNIDADE" prop="facility">
+              </ngx-datatable-column>
+
+              <ngx-datatable-column name="ÁREA" prop="subFacilities"> </ngx-datatable-column>
+
+              <ngx-datatable-column name="{{'sources.label.STATUS' | translate | uppercase}}"
+                prop="status"></ngx-datatable-column>
+              <ngx-datatable-column name="{{'sources.datatable.ACTION' | translate | uppercase}}">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <!-- <button (click)="edit(row)" class="btn btn-sm btn-outline-primary mr-2" title="{{'sources.datatable.EDIT' | translate | uppercase}}"  ><i class="ft-edit  cursor-pointer"></i></button>
+                  <button (click)="delete(row)" class="btn btn-sm btn-outline-dark mr-2" title="{{'sources.datatable.DELETE' | translate | uppercase}}" ><i class="ft-trash cursor-pointer"></i></button> -->
+                  <!-- <button (click)="managePhotos(row)" class="btn btn-sm btn-outline-dark mr-2" title="{{'sources.datatable.MANAGE_PICTURES' | translate | uppercase}}" ><i class="ft-camera cursor-pointer"></i></button> -->
+                  <button (click)="manageState(row)" class="btn btn-sm btn-outline-dark mr-2"
+                    title="{{'sources.datatable.MANAGE_STATE' | translate | uppercase}}"><i
+                      class="ft-tag cursor-pointer"></i></button>
+                  <button (click)="newActionPlan(row)" class="btn btn-sm btn-outline-dark mr-2"
+                    title="{{'sources.datatable.NEW_ACTION_PLAN' | translate | uppercase}}"><i
+                      class="ft-trending-up cursor-pointer"></i></button>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
