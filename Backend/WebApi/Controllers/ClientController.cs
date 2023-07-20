@@ -17,11 +17,12 @@ namespace GestaoOfficina.Controllers
             _clientService = clientService;
         }
         [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody]ClientCreateDTO client)
+        public async Task<IActionResult> Create([FromBody] ClientCreateDTO client)
         {
             //Try/Catch
             var result = await _clientService.Create(client);
             return Ok(result);
         }
+        
     }
 }
