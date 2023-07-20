@@ -23,38 +23,38 @@ namespace GestaoOfficina.Aplicattion.Service
         }
         public async Task<ReturnDefault> Create(ClientCreateDTO client)
         {
+            var CPF = await _clientRepository.GetCPF(client.CPFcpfCliente);
+            if(CPF != null)
+            {
+                throw new Exception("esse cpf ja existe");
+            }
 
-            // Melhorar Mensagem de erro
-            if (client.automovel.Count() == 0)
+                // Melhorar Mensagem de erro
+            if (client.automovel.Count() > 1)
             {
-                throw new Exception("erro");
+                throw new Exception("so pode cadastrar apenas um");
             }
             
-            Client list = new Client();
-            list.Email = client.Email;
-            list.Id = client.Id;
-            list.Password = client.Password;
-            list.Name = client.Name;
-            list.Username = client.Username;
-            list.CPF = client.CPF;
-            list.Automoveis = new List<Automovel>();
-            
-            // fazer teste com 2 veiculos 
-            foreach (var Automovel in client.automovel)
-            {
-               
-                var objetoresult = new Automovel();
-                objetoresult.Placa = Automovel.Placa;
-                objetoresult.Cor = Automovel.Cor;
-                objetoresult.Modelo = Automovel.Modelo;
-                objetoresult.Id = Automovel.Id;
-                objetoresult.Marca = Automovel.Marca;
-                
-            }
-            
-            var result = await _clientRepository.CreateClient(list);
+            Client objetoclient = new Client();
+            objetoclient.Email = client.Email;
+            objetoclient.Id = client.Id;
+            objetoclient.telefoneContato = client.telefoneContato;
+            objetoclient.nomeCliente = client.nomeCliente;
+            objetoclient.uf = client.uf;
+            objetoclient.CPFcpfCliente = client.CPFcpfCliente;
+            objetoclient.Automoveis = client.automovel;
+            objetoclient.numeroWhatsapp = client.numeroWhatsapp;
+            objetoclient.endereco = client.endereco;
+            objetoclient.dataNascimento = client.dataNascimento;
+            objetoclient.cidade = client.cidade;
+            objetoclient.bairro = client.bairro;
+
+
+            var result = await _clientRepository.CreateClient(objetoclient);
             // melhorar mensagem de retorno, esse caso e uma criacao nao uma busca
-            return new ReturnDefault("Dados encontrados", result);
+            return new ReturnDefault("criação feita", result);
         }
+
+       
     }
 }

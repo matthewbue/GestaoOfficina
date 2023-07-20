@@ -19,11 +19,21 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<Client> CreateClient(Client client)
         {
-            //try/catch
-             await _gestaoOfficinaContext.client.AddAsync(client);
-             await _gestaoOfficinaContext.SaveChangesAsync();
-            return client;
+            try
+            {
+                await _gestaoOfficinaContext.client.AddAsync(client);
+                await _gestaoOfficinaContext.SaveChangesAsync();
+                return client;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-        
+
+        public async Task<Client> GetCPF(string entrada)
+        {
+            return _gestaoOfficinaContext.client.Where(x => x.CPFcpfCliente == entrada).FirstOrDefault();
+        }
     }
 }

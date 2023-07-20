@@ -26,8 +26,19 @@ namespace GestaoOfficina.Aplicattion.Service
 
         public async Task<ReturnDefault> login(LoginDTO login)
         {
+            if(login.Password.Length == 0 && login.Email.Length == 0)
+            {
+                throw new Exception("esqueceu um campo");
+            }
             var result = await _userRepository.login(login);
-            return new ReturnDefault("Dados encontrados", result);
+            if (result == null)
+            {
+                return new ReturnDefault("dados nao encotrado", result);
+            }
+            else
+            {
+                return new ReturnDefault("login feito", result);
+            }
         }
     }
 }

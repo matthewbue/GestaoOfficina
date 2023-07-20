@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace GestaoOfficina.Infra.Migrations
+namespace GestaoOfficinaProj.Infra.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class incial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,11 +12,16 @@ namespace GestaoOfficina.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    bairro = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    cidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    dataNascimento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    endereco = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    uf = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    nomeCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    numeroWhatsapp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    telefoneContato = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CPFcpfCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AutomovelId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -47,10 +52,12 @@ namespace GestaoOfficina.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Placa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    marcaVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    placaVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    corVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    modeloVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    anoVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    kmVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
