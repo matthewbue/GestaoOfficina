@@ -1,0 +1,81 @@
+<section>
+  <div class="col-12">
+    <div class="content-header">
+      <h1>Cadastro de ordem de serviço</h1>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <div class="card-body">
+        <div class="row" id="cliente-cadastro">
+          <div class="col-12" id="cliente-info">
+            <h2>Dados do Cliente</h2>
+            <form [formGroup]="" novalidate>
+              <div class="form-row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="nomeCliente">Nome:</label>
+                    <input maxlength="100" id="nomeCliente" type="text" class="form-control"
+                      formControlName="nomeCliente" [ngModel]="null" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="cpfcnpj">CPF / CNPJ:</label>
+                    <input maxlength="100" id="cpfCliente" type="text" class="form-control" formControlName="cpfCliente"
+                      [ngModel]="null" />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="endereco">Endereço(Rua):</label>
+                    <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco" />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="bairro">Bairro:</label>
+                    <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="numeroWhatsapp">Número Whatsapp:</label>
+                    <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
+                      formControlName="numeroWhatsapp" />
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="telefoneContato">Telefone para contato:</label>
+                    <input maxlength="100" id="telefoneContato" name="telefoneContato" type="text" class="form-control"
+                      formControlName="telefoneContato" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input maxlength="100" id="email" name="email" type="text" class="form-control"
+                      formControlName="email" />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="marcaVeiculo">Veículo:</label>
+                    <ng-select>
+                      <ng-option>Civic</ng-option>
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

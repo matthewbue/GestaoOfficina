@@ -32,7 +32,7 @@ export class EditClientesComponent implements OnInit {
       anoVeiculo: [null],
       modeloVeiculo: [null],
       kmVeiculo: [null],
-      
+
     });
 
     this.formCliente = this.fb.group({
@@ -144,5 +144,10 @@ export class EditClientesComponent implements OnInit {
 
   goBack() {
     this.router.navigate(["clientes"]);
+  }
+
+  newOS(){
+    this.router.navigate(["ordemdeservico/new"]);
+
   }
 }
