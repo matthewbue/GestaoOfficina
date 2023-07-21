@@ -32,9 +32,9 @@ namespace GestaoOfficina.Aplicattion.Service
                 throw new Exception("CPF existente na nossa base de dados.");
             }
 
-            if (client.Automoveis.Count() > 1)
+            if (client.Automoveis.Count() < 1)
             {
-                throw new Exception("Só é permitido um veiculo a cada cadastro.");
+                throw new Exception("Necessario ter pelo menos 1 Veiculo para Cadastro");
             }
 
             Client objetoclient = new Client();
