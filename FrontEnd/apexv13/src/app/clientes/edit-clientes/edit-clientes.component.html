@@ -178,6 +178,7 @@
               <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
                 Salvar
               </button>
+
               <table class="table text-center m-0">
                 <thead>
                   <tr>
@@ -206,8 +207,11 @@
               </table>
             </div>
 
-            <button type="button" class="btn btn-secondary m-2 float-right" (click)="goBack()">
+            <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
               Voltar
+            </button>
+            <button class="btn btn-info mr-2 float-right mb-2"  type="submit" (click)="newOS()">
+              Nova OS
             </button>
           </div>
         </form>

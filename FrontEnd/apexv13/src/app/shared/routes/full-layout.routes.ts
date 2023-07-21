@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { EditClientesComponent } from 'app/clientes/edit-clientes/edit-clientes.component';
+import { EditOrdemdeservicoComponent } from 'app/ordemdeservico/edit-ordemdeservico/edit-ordemdeservico.component';
 
 
 
@@ -32,6 +33,9 @@ export const Full_ROUTES: Routes = [
   },
   {
     path: 'clientes/new', component: EditClientesComponent
+  },
+  {
+    path: 'ordemdeservico/new', component: EditOrdemdeservicoComponent
   },
 
 
