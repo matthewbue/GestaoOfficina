@@ -13,7 +13,7 @@ namespace GestaoOfficina.Domain.Validators
     {
         public AutomovelValidators()
         {
-            RuleFor(x => x.placaVeiculo).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.Placa).NotEmpty().WithMessage("preencha o campo");
         }
     }
 }

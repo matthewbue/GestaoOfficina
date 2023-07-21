@@ -9,11 +9,11 @@ namespace GestaoOfficina.Domain.DTO
     public class EntryDtoAutomovel
     {
         public int Id { get; set; }
-        public string marcaVeiculo { get; set; }
-        public string placaVeiculo { get; set; }
-        public string corVeiculo { get; set; }
-        public string modeloVeiculo { get; set; }
-        public string anoVeiculo { get; set; }
-        public string kmVeiculo { get; set; }
+        public string Marca { get; set; }
+        public string Placa { get; set; }
+        public string Cor { get; set; }
+        public string Modelo { get; set; }
+        public string Ano { get; set; }
+        public string Km { get; set; }
     }
 }

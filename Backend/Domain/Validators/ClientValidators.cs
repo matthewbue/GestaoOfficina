@@ -14,15 +14,15 @@ namespace GestaoOfficina.Domain.ClientValidators
         public ClientValidators()
         {
             RuleFor(x => x.Email).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.uf).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.telefoneContato).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.numeroWhatsapp).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.nomeCliente).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.endereco).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.dataNascimento).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.CPFcpfCliente).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.cidade).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.bairro).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.Uf).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.NumeroContato).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.NumeroWhatsApp).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.Nome).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.Endereco).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.DataNascimento).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.CPF).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.Cidade).NotEmpty().WithMessage("preencha o campo");
+            RuleFor(x => x.Bairro).NotEmpty().WithMessage("preencha o campo");
             
         }
     }

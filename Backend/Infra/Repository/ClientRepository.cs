@@ -38,7 +38,7 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<Client> GetCPF(string entrada)
         {
-            return _gestaoOfficinaContext.Client.Where(x => x.CPFcpfCliente == entrada).FirstOrDefault();
+            return _gestaoOfficinaContext.Client.Where(x => x.CPF == entrada).FirstOrDefault();
         }
     }
 }

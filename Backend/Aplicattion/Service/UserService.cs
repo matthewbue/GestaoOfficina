@@ -28,16 +28,16 @@ namespace GestaoOfficina.Aplicattion.Service
         {
             if(login.Password.Length == 0 && login.Email.Length == 0)
             {
-                throw new Exception("esqueceu um campo");
+                throw new Exception("Esqueceu um ou mais de um campo.");
             }
             var result = await _userRepository.login(login);
             if (result == null)
             {
-                return new ReturnDefault("dados nao encotrado", result);
+                return new ReturnDefault("Dados nao encotrado.", result);
             }
             else
             {
-                return new ReturnDefault("login feito", result);
+                return new ReturnDefault("Sucesso.", result);
             }
         }
     }

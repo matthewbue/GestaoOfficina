@@ -10,16 +10,16 @@ namespace GestaoOfficina.Domain.DTO
     public class ClientCreateDTO
     {
         public int Id { get; set; }
-        public string bairro { get; set; }
-        public string cidade { get; set; }
-        public string dataNascimento { get; set; }
-        public string endereco { get; set; }
-        public string uf { get; set; }
-        public string nomeCliente { get; set; }
-        public string numeroWhatsapp { get; set; }
+        public string Bairro { get; set; }
+        public string Cidade { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public string Endereco { get; set; }
+        public string Uf { get; set; }
+        public string Nome { get; set; }
+        public string NumeroWhatsApp { get; set; }
         public string Email { get; set; }
-        public string telefoneContato { get; set; }
-        public string CPFcpfCliente { get; set; }
-        public ICollection<Automovel> automovel { get; set; }
+        public string NumeroContato { get; set; }
+        public string CPF { get; set; }
+        public ICollection<Automovel> Automoveis { get; set; }
     }
 }
