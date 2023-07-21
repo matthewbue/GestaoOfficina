@@ -230,6 +230,14 @@ _pkginfo.txt
 *.[Cc]ache
 # but keep track of directories ending in .cache
 !?*.[Cc]ache/
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+bld/
+[Bb]in/
+[Oo]bj/
 
 # Others
 ClientBin/
@@ -457,11 +465,6 @@ Backend/src/FourC.Api/appsettings.Development.json
 
 *.orig
 
-/.angular/cache
-/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.dll
-/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.Domain.dll
-/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.Infra.dll
-/Backend/WebApi/bin/Debug/net5.0/GestaoOfficinaProj.Aplicattion.dll
-/Backend/Aplicattion/bin/Debug/net5.0/GestaoOfficinaProj.Aplicattion.dll
-/Backend/Aplicattion/bin/Debug/net5.0/GestaoOfficinaProj.Domain.pdb
-/Backend/Aplicattion/bin/Debug/net5.0/GestaoOfficinaProj.Infra.dll
+# Artefatos de compilação do .NET Core
+bin/
+obj/
