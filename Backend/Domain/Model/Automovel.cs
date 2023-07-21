@@ -21,7 +21,7 @@ namespace GestaoOfficina.Domain.Model
         public int ClientId { get; set; }
 
         [ForeignKey("Manutence")]
-        public int ManutenceId { get; set; }
+        public int? ManutenceId { get; set; }
         public virtual ICollection<Manutence> Manutences { get; set; }
     }
 }

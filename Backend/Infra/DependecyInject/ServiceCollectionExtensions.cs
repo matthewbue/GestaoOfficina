@@ -1,5 +1,7 @@
 ﻿using GestaoOfficina.Infra.Interface;
 using GestaoOfficina.Infra.Repository;
+using GestaoOfficinaProj.Infra.Interface;
+using GestaoOfficinaProj.Infra.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ namespace GestaoOfficina.Infra.DependecyInject
         {
             services.AddScoped <IClientRepository ,ClientRepository> ();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IManutenceRepository, ManutenceRepository>();
             return services;
         }
     }

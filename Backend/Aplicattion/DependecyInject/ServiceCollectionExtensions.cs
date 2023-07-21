@@ -1,5 +1,7 @@
 ﻿using GestaoOfficina.Aplicattion.Service;
 using GestaoOfficina.Infra.Interface;
+using GestaoOfficinaProj.Aplicattion.Service;
+using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,7 @@ namespace GestaoOfficina.Aplicattion.DependecyInject
         {
             services.AddScoped<IClientService ,ClientService>();
             services.AddScoped<IUserService ,UserService>();
+            services.AddScoped<IManutenceService ,ManutenceService>();
             return services; 
         }
     }

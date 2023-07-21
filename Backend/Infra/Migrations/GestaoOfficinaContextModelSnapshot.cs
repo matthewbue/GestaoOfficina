@@ -42,6 +42,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Km")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ManutenceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Marca")
                         .HasColumnType("nvarchar(max)");
 
@@ -87,6 +90,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Endereco")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ManutenceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
@@ -102,6 +108,47 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AutomovelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Defeito")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdCarro")
+                        .HasColumnType("int");
+
+                    b.Property<string>("KMAtual")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Produto")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Valor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AutomovelId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Manutences");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.User", b =>
@@ -141,9 +188,29 @@ namespace GestaoOfficinaProj.Infra.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
+                {
+                    b.HasOne("GestaoOfficina.Domain.Model.Automovel", null)
+                        .WithMany("Manutences")
+                        .HasForeignKey("AutomovelId");
+
+                    b.HasOne("GestaoOfficina.Domain.Model.Client", null)
+                        .WithMany("Manutences")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
+                {
+                    b.Navigation("Manutences");
+                });
+
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
                 {
                     b.Navigation("Automoveis");
+
+                    b.Navigation("Manutences");
                 });
 #pragma warning restore 612, 618
         }
