@@ -41,11 +41,6 @@
                       formControlName="cpfcnpj"
                       placeholder="CPF / CNPJ"
                     />
-
-
-
-
-                    
                   </fieldset>
 
                 </div>
@@ -114,9 +109,9 @@
               </thead>
 
               <tbody>
-                <tr>
-                  <td class="text-truncate" id="nomeCliente"></td>
-                  <td class="text-truncate"></td>
+                <tr *ngFor="let cliente of clientes">
+                  <td class="text-truncate" id="nomeCliente">  {{ cliente.nomeCliente }} </td>
+                  <td class="text-truncate">{{ cliente.nomeVeiculo }}</td>
                   <td></td>
                   <td class="text-truncate"></td>
 

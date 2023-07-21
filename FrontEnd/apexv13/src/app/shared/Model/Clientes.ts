@@ -8,9 +8,9 @@ export class Clientes implements Identity {
   constructor(
     public id: number = 0,
     public veiculos: Veiculos[] = [],
-    public nomeCliente: string | null = null,
-    public cpfCliente: string | null = null,
-    public dataNascimento: string | null = null,
+    public nomeCliente: string = "",
+    public cpfCliente: string = "",
+    public dataNascimento: Date = new Date(),
     public endereco: string = "",
     public bairro: string = "",
     public cidade: string = "",
