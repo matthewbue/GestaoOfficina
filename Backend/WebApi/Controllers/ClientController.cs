@@ -45,6 +45,31 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        
+        [HttpPost]
+        public async Task<IActionResult> Update(ClientCreateDTO client)
+        {
+            try
+            {
+                 _clientService.Update(client);
+                return Ok(client);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int entrada)
+        {
+            try
+            {
+                var result = _clientService.Delete(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

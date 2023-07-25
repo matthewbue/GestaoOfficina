@@ -1,9 +1,12 @@
-﻿using GestaoOfficina.Domain.Model;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Infra.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,14 +34,43 @@ namespace GestaoOfficina.Infra.Repository
             }
         }
 
+        public void Delete(int entrada)
+         {
+            try
+            {
+                var formulario = _gestaoOfficinaContext.Client.Where(r => r.Id == entrada).FirstOrDefault();
+                _gestaoOfficinaContext.Client.Remove(formulario);
+                _gestaoOfficinaContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<Client>> GetAll()
         {
             return _gestaoOfficinaContext.Client.ToList();
         }
 
+        public async Task<Client> GetByIdClient(ClientCreateDTO entrada)
+        {
+            var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada.Id).FirstOrDefault();
+            return result;
+        }
+
         public async Task<Client> GetCPF(string entrada)
         {
             return _gestaoOfficinaContext.Client.Where(x => x.CPF == entrada).FirstOrDefault();
+        }
+
+        public async Task<ClientCreateDTO> Update(ClientCreateDTO entrada)
+        {
+            var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada.Id).FirstOrDefault();
+            _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
+            await _gestaoOfficinaContext.SaveChangesAsync();
+            return entrada;
+  
         }
     }
 }
