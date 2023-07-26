@@ -1,6 +1,7 @@
 ﻿using GestaoOfficinaProj.Domain.DTO;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Controllers
@@ -17,8 +18,15 @@ namespace GestaoOfficinaProj.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateManutence(ManutenceCreateDTO entrada)
         {
-            var result = await _manutenceService.CreateManutence(entrada);
-            return Ok(result);
+            try
+            {
+                var result = await _manutenceService.CreateManutence(entrada);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
     }

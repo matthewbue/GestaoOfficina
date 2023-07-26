@@ -15,7 +15,7 @@ namespace GestaoOfficina.Infra.DependecyInject
     {
         public static IServiceCollection AddInfrastruture(this IServiceCollection services)
         {
-            services.AddScoped <IClientRepository ,ClientRepository> ();
+            services.AddScoped <IClientRepository ,ClientRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IManutenceRepository, ManutenceRepository>();
             return services;

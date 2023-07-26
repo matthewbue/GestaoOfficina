@@ -13,8 +13,8 @@ namespace GestaoOfficina.Infra.Interface
         Task<Client> CreateClient(Client client);
         Task<Client> GetCPF(string entrada);
         Task<List<Client>> GetAll();
-        Task<ClientCreateDTO> Update(ClientCreateDTO entrada);
+        void Update(Client entrada);
+        Task<Client> GetByIdClient(int entrada);
         void Delete(int entrada);
-        Task<Client> GetByIdClient(ClientCreateDTO entrada);
     }
 }
