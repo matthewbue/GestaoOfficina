@@ -17,5 +17,9 @@ getAllClient(){
 
 }
 
+getClienteById(Id){
+  return this.httpClient.get<Clientes>(`${environment.API}/Client/GetClienteById`, Id)
+}
+
 }
 

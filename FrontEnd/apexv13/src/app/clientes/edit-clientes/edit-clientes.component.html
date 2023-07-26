@@ -1,221 +1,669 @@
-<section>
-  <div class="col-12">
-    <div class="content-header">
-      <h1>Cadastro de novo cliente</h1>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-content">
-      <div class="card-body">
-        <div class="row" id="cliente-cadastro">
-          <div class="col-12" id="cliente-info">
-            <h2>Dados do Cliente</h2>
-            <form [formGroup]="formCliente" novalidate>
-              <div class="form-row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input maxlength="100" id="nome" type="text" class="form-control"
-                      formControlName="nome" [ngModel]="null" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="cpf">CPF / CNPJ:</label>
-                    <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                      [ngModel]="null" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="dataNascimento">Data de Nascimento:</label>
-                    <input maxlength="50" id="dataNascimento" type="date" class="form-control"
-                      formControlName="dataNascimento" [ngModel]="null" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="endereco">Endereço(Rua):</label>
-                    <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="bairro">Bairro:</label>
-                    <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="cidade">Cidade:</label>
-                    <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade" />
-                  </div>
-                </div>
-
-                <div class="col-md-1">
-                  <div class="form-group">
-                    <label for="uf">UF:</label>
-                    <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf" />
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="numeroWhatsapp">Número Whatsapp:</label>
-                    <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                      formControlName="numeroWhatsapp" />
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="numeroContato">Telefone para contato:</label>
-                    <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                      formControlName="numeroContato" />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="email">E-mail:</label>
-                    <input maxlength="100" id="email" name="email" type="text" class="form-control"
-                      formControlName="email" />
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="col-12"></div>
-  <div class="card">
-    <div class="card-content">
-      <div class="card-body">
-        <div class="row" id="cliente-cadastro">
-          <div class="col-12" id="cliente-info">
-            <h2>Informações do Veículo</h2>
-
-            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-            <form [formGroup]="formVeiculo" novalidate>
-              <div class="form-row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="marca">Marca:</label>
-                    <input maxlength="100" id="marca" name="marca" type="text" class="form-control"
-                      formControlName="marca" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="placa">Placa:</label>
-                    <input maxlength="100" id="placa" name="placa" type="text" class="form-control"
-                      formControlName="placa" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="cor">Cor:</label>
-                    <input maxlength="100" id="cor" name="cor" type="text" class="form-control"
-                      formControlName="cor" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="ano">Ano:</label>
-                    <input maxlength="100" id="ano" name="ano" type="text" class="form-control"
-                      formControlName="ano" />
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="modelo">Modelo:</label>
-                    <input maxlength="100" id="modelo" name="modelo" type="text" class="form-control"
-                      formControlName="modelo" />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="km">KM:</label>
-                    <input maxlength="100" id="km" name="km" type="text" class="form-control"
-                      formControlName="km" />
-                  </div>
-                </div>
-              </div>
-              <button class="btn btn-primary ml-1" style="float: right" type="submit" (click)="onSubmitVeiculos()">
-                Novo Veículo
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="loading-overlay">
-    <div class="loading-spinner"></div>
-  </div>
-</section>
-
-<section id="extended">
-  <div class="row">
+<!--------------------------------------------------CRIAR-CLIENTE--------------------------------------------------------->
+<div *ngIf=" tipo != 'visualizar' && tipo != 'editar'">
+  <section>
     <div class="col-12">
-      <div class="card">
-        <div class="card-header" id="cliente-info">
-          <h2 class="card-title">Listagem de Veículos</h2>
-        </div>
-        <form>
-          <div class="card-content">
-            <div class="card-body table-responsive">
-              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-              <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
-                Salvar
-              </button>
-
-              <table class="table text-center m-0">
-                <thead>
-                  <tr>
-                    <th id="table-p">Veículo</th>
-                    <th id="table-p">Placa</th>
-                    <th id="table-p">Cor</th>
-                    <th id="table-p">Ações</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr *ngFor="let veiculos of clientes.automoveis">
-                    <td class="text-truncate" id="marca"> {{ veiculos.marca }} </td>
-                    <td class="text-truncate" id="placa"> {{ veiculos.placa }} </td>
-                    <td class="text-truncate" id="cor"> {{ veiculos.cor }} </td>
-
-                    <td class="text-truncate">
-                      <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
-                          (click)="editVeiculo(0)"></i></a>
-                      <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
-                        <i class="ft-x font-medium-3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
-              Voltar
-            </button>
-            <button class="btn btn-info mr-2 float-right mb-2"  type="submit" (click)="newOS()">
-              Nova OS
-            </button>
-          </div>
-        </form>
+      <div class="content-header">
+        <h1>Cadastro de novo cliente</h1>
       </div>
     </div>
-  </div>
-</section>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="cliente-cadastro">
+            <div class="col-12" id="cliente-info">
+              <h2>Dados do Cliente</h2>
+              <form [formGroup]="formCliente" novalidate>
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nome">Nome:</label>
+                      <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
+                        [ngModel]="null" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cpf">CPF / CNPJ:</label>
+                      <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
+                        [ngModel]="null" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="dataNascimento">Data de Nascimento:</label>
+                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="endereco">Endereço(Rua):</label>
+                      <input maxlength="100" id="endereco" type="text" class="form-control"
+                        formControlName="endereco" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="bairro">Bairro:</label>
+                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="cidade">Cidade:</label>
+                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label for="uf">UF:</label>
+                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="numeroWhatsapp">Número Whatsapp:</label>
+                      <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
+                        formControlName="numeroWhatsapp" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="numeroContato">Telefone para contato:</label>
+                      <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
+                        formControlName="numeroContato" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="email">E-mail:</label>
+                      <input maxlength="100" id="email" name="email" type="text" class="form-control"
+                        formControlName="email" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="col-12"></div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="cliente-cadastro">
+            <div class="col-12" id="cliente-info">
+              <h2>Informações do Veículo</h2>
+
+              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
+              <form [formGroup]="formVeiculo" novalidate>
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="marca">Marca:</label>
+                      <input maxlength="100" id="marca" name="marca" type="text" class="form-control"
+                        formControlName="marca" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="placa">Placa:</label>
+                      <input maxlength="100" id="placa" name="placa" type="text" class="form-control"
+                        formControlName="placa" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cor">Cor:</label>
+                      <input maxlength="100" id="cor" name="cor" type="text" class="form-control"
+                        formControlName="cor" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ano">Ano:</label>
+                      <input maxlength="100" id="ano" name="ano" type="text" class="form-control"
+                        formControlName="ano" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="modelo">Modelo:</label>
+                      <input maxlength="100" id="modelo" name="modelo" type="text" class="form-control"
+                        formControlName="modelo" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="km">KM:</label>
+                      <input maxlength="100" id="km" name="km" type="text" class="form-control" formControlName="km" />
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary ml-1" style="float: right" type="submit" (click)="onSubmitVeiculos()">
+                  Novo Veículo
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+  </section>
+
+  <section id="extended">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header" id="cliente-info">
+            <h2 class="card-title">Listagem de Veículos</h2>
+          </div>
+          <form>
+            <div class="card-content">
+              <div class="card-body table-responsive">
+                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
+                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
+                  Salvar
+                </button>
+
+                <table class="table text-center m-0">
+                  <thead>
+                    <tr>
+                      <th id="table-p">Veículo</th>
+                      <th id="table-p">Placa</th>
+                      <th id="table-p">Cor</th>
+                      <th id="table-p">Ações</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let veiculos of clientes.automoveis">
+                      <td class="text-truncate" id="marca"> {{ veiculos.marca }} </td>
+                      <td class="text-truncate" id="placa"> {{ veiculos.placa }} </td>
+                      <td class="text-truncate" id="cor"> {{ veiculos.cor }} </td>
+
+                      <td class="text-truncate">
+                        <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
+                            (click)="editVeiculo(0)"></i></a>
+                        <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
+                          <i class="ft-x font-medium-3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
+                Voltar
+              </button>
+              <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
+                Nova OS
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!--------------------------------------------------VISUALIZAR-CLIENTE--------------------------------------------------------->
+<div *ngIf=" tipo == 'visualizar'">
+  <section>
+    <div class="col-12">
+      <div class="content-header">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="cliente-cadastro">
+            <div class="col-12" id="cliente-info">
+              <h2>Dados do Cliente</h2>
+              <form [formGroup]="formCliente" novalidate>
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nome">Nome:</label>
+                      <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
+                        [ngModel]="null" disabled />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cpf">CPF / CNPJ:</label>
+                      <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
+                        [ngModel]="null" disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="dataNascimento">Data de Nascimento:</label>
+                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="endereco">Endereço(Rua):</label>
+                      <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco"
+                        disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="bairro">Bairro:</label>
+                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="cidade">Cidade:</label>
+                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade"
+                        disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label for="uf">UF:</label>
+                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf"
+                        disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="numeroWhatsapp">Número Whatsapp:</label>
+                      <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
+                        formControlName="numeroWhatsapp" disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="numeroContato">Telefone para contato:</label>
+                      <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
+                        formControlName="numeroContato" disabled />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="email">E-mail:</label>
+                      <input maxlength="100" id="email" name="email" type="text" class="form-control"
+                        formControlName="email" disabled />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="col-12"></div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="cliente-cadastro">
+            <div class="col-12" id="cliente-info">
+              <h2>Informações do Veículo</h2>
+
+              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
+              <form [formGroup]="formVeiculo" novalidate>
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="marca">Marca:</label>
+                      <input maxlength="100" id="marca" name="marca" type="text" class="form-control"
+                        formControlName="marca" disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="placa">Placa:</label>
+                      <input maxlength="100" id="placa" name="placa" type="text" class="form-control"
+                        formControlName="placa" disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cor">Cor:</label>
+                      <input maxlength="100" id="cor" name="cor" type="text" class="form-control" formControlName="cor"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ano">Ano:</label>
+                      <input maxlength="100" id="ano" name="ano" type="text" class="form-control" formControlName="ano"
+                        disabled />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="modelo">Modelo:</label>
+                      <input maxlength="100" id="modelo" name="modelo" type="text" class="form-control"
+                        formControlName="modelo" disabled />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="km">KM:</label>
+                      <input maxlength="100" id="km" name="km" type="text" class="form-control" formControlName="km"
+                        disabled />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+  </section>
+
+  <section id="extended">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header" id="cliente-info">
+            <h2 class="card-title">Listagem de Veículos</h2>
+          </div>
+          <form>
+            <div class="card-content">
+              <div class="card-body table-responsive">
+                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
+                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
+                  Salvar
+                </button>
+
+                <table class="table text-center m-0">
+                  <thead>
+                    <tr>
+                      <th id="table-p">Veículo</th>
+                      <th id="table-p">Placa</th>
+                      <th id="table-p">Cor</th>
+                      <th id="table-p">Ações</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let veiculos of clientes.automoveis">
+                      <td class="text-truncate" id="marca"> {{ veiculos.marca }} </td>
+                      <td class="text-truncate" id="placa"> {{ veiculos.placa }} </td>
+                      <td class="text-truncate" id="cor"> {{ veiculos.cor }} </td>
+
+                      <td class="text-truncate">
+                        <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
+                            (click)="editVeiculo(0)"></i></a>
+                        <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
+                          <i class="ft-x font-medium-3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
+                Voltar
+              </button>
+              <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
+                Nova OS
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!--------------------------------------------------EDITAR-CLIENTE--------------------------------------------------------->
+<div *ngIf=" tipo == 'editar'">
+  <section>
+    <div class="col-12">
+      <div class="content-header">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="cliente-cadastro">
+            <div class="col-12" id="cliente-info">
+              <h2>Dados do Cliente</h2>
+              <form [formGroup]="formCliente" novalidate>
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="nome">Nome:</label>
+                      <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
+                        [ngModel]="null" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cpf">CPF / CNPJ:</label>
+                      <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
+                        [ngModel]="null" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="dataNascimento">Data de Nascimento:</label>
+                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="endereco">Endereço(Rua):</label>
+                      <input maxlength="100" id="endereco" type="text" class="form-control"
+                        formControlName="endereco" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="bairro">Bairro:</label>
+                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="cidade">Cidade:</label>
+                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label for="uf">UF:</label>
+                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="numeroWhatsapp">Número Whatsapp:</label>
+                      <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
+                        formControlName="numeroWhatsapp" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label for="numeroContato">Telefone para contato:</label>
+                      <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
+                        formControlName="numeroContato" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="email">E-mail:</label>
+                      <input maxlength="100" id="email" name="email" type="text" class="form-control"
+                        formControlName="email" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="col-12"></div>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="cliente-cadastro">
+            <div class="col-12" id="cliente-info">
+              <h2>Informações do Veículo</h2>
+
+              <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
+              <form [formGroup]="formVeiculo" novalidate>
+                <div class="form-row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="marca">Marca:</label>
+                      <input maxlength="100" id="marca" name="marca" type="text" class="form-control"
+                        formControlName="marca" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="placa">Placa:</label>
+                      <input maxlength="100" id="placa" name="placa" type="text" class="form-control"
+                        formControlName="placa" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="cor">Cor:</label>
+                      <input maxlength="100" id="cor" name="cor" type="text" class="form-control"
+                        formControlName="cor" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="ano">Ano:</label>
+                      <input maxlength="100" id="ano" name="ano" type="text" class="form-control"
+                        formControlName="ano" />
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="modelo">Modelo:</label>
+                      <input maxlength="100" id="modelo" name="modelo" type="text" class="form-control"
+                        formControlName="modelo" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="km">KM:</label>
+                      <input maxlength="100" id="km" name="km" type="text" class="form-control" formControlName="km" />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+  </section>
+
+  <section id="extended">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header" id="cliente-info">
+            <h2 class="card-title">Listagem de Veículos</h2>
+          </div>
+          <form>
+            <div class="card-content">
+              <div class="card-body table-responsive">
+                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
+                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
+                  Salvar
+                </button>
+
+                <table class="table text-center m-0">
+                  <thead>
+                    <tr>
+                      <th id="table-p">Veículo</th>
+                      <th id="table-p">Placa</th>
+                      <th id="table-p">Cor</th>
+                      <th id="table-p">Ações</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let veiculos of clientes.automoveis">
+                      <td class="text-truncate" id="marca"> {{ veiculos.marca }} </td>
+                      <td class="text-truncate" id="placa"> {{ veiculos.placa }} </td>
+                      <td class="text-truncate" id="cor"> {{ veiculos.cor }} </td>
+
+                      <td class="text-truncate">
+                        <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
+                            (click)="editVeiculo(0)"></i></a>
+                        <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
+                          <i class="ft-x font-medium-3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
+                Voltar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

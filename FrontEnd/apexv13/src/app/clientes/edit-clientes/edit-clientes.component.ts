@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Clientes } from "app/shared/Model/Clientes";
-import { Veiculos } from "app/shared/Model/Veiculos";
+import { Automovel } from "app/shared/Model/Automovel";
 import { AlertModalService } from "app/shared/services/alert-modal.service";
 import { switchMap, take } from "rxjs/operators";
 import { ClientesService } from "../clientes.service";
@@ -18,13 +18,25 @@ export class EditClientesComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private alertService: AlertModalService,
-    private clienteService: ClientesService
+    private clienteService: ClientesService,
+    private route: ActivatedRoute,
+
   ) {}
   formVeiculo: FormGroup;
   formCliente: FormGroup;
   clientes = new Clientes();
+  tipo: string;
+  clienteId: number;
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.clientes.id = params.clienteId;
+      this.tipo = params.tipo;
+    });
+
+    this.clienteId = this.clientes.id;
+    
+
     this.formVeiculo = this.fb.group({
       marca: [null],
       placa: [null],
@@ -49,7 +61,7 @@ export class EditClientesComponent implements OnInit {
   }
 
   onSubmitVeiculos() {
-    const veiculos = new Veiculos();
+    const veiculos = new Automovel();
     veiculos.ano = this.formVeiculo.value.ano;
     veiculos.cor = this.formVeiculo.value.cor;
     veiculos.km = this.formVeiculo.value.km;
@@ -84,10 +96,10 @@ export class EditClientesComponent implements OnInit {
 
   onSave() {
 
-      this.clientes.nome = this.formCliente.value.nome;
-      this.clientes.cpf = this.formCliente.value.cpf;
-      this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
-      this.clientes.endereco = this.formCliente.value.endereco;
+    this.clientes.nome = this.formCliente.value.nome;
+    this.clientes.cpf = this.formCliente.value.cpf;
+    this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
+    this.clientes.endereco = this.formCliente.value.endereco;
       this.clientes.bairro = this.formCliente.value.bairro;
       this.clientes.cidade = this.formCliente.value.cidade;
       this.clientes.uf = this.formCliente.value.uf;
@@ -95,11 +107,11 @@ export class EditClientesComponent implements OnInit {
       this.clientes.numeroContato = this.formCliente.value.numeroContato;
       this.clientes.email = this.formCliente.value.email;
 
+      console.log("DADOS PARA SALVAR:", this.clientes);
 this.clienteService.createClient(this.clientes).subscribe((data)=> {
   console.log(data)
 })
 
-      console.log("DADOS PARA SALVAR:", this.clientes);
 
     //   console.log("CLIENTES", this.clientes);
     //   const result$ = this.alertService.showConfirm(

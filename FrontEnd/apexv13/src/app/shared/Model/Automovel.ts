@@ -1,6 +1,6 @@
 import { Identity } from "../crud/Identity";
 
-export class Veiculos implements Identity {
+export class Automovel implements Identity {
   constructor(
     public id: number = 0,
     public marca: string = "",
