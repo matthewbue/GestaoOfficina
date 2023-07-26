@@ -46,12 +46,12 @@ namespace GestaoOfficina.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Update(ClientCreateDTO client)
+        public async Task<IActionResult> Update(EntryDtoClient entrada)
         {
             try
             {
-                 _clientService.Update(client);
-                return Ok(client);
+                 _clientService.GetByIdClient(entrada);
+                return Ok(entrada);
             }
             catch(Exception ex)
             {

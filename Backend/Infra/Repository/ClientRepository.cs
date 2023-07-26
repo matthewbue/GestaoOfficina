@@ -50,27 +50,53 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<List<Client>> GetAll()
         {
-            return _gestaoOfficinaContext.Client.ToList();
+            try
+            {
+                return _gestaoOfficinaContext.Client.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
 
-        public async Task<Client> GetByIdClient(ClientCreateDTO entrada)
+        public async Task<Client> GetByIdClient(int entrada)
         {
-            var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada.Id).FirstOrDefault();
-            return result;
+            try
+            {
+                var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada).FirstOrDefault();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<Client> GetCPF(string entrada)
         {
-            return _gestaoOfficinaContext.Client.Where(x => x.CPF == entrada).FirstOrDefault();
+            try
+            {
+                return _gestaoOfficinaContext.Client.Where(x => x.CPF == entrada).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public async Task<ClientCreateDTO> Update(ClientCreateDTO entrada)
+        public async void Update(Client entrada)
         {
-            var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada.Id).FirstOrDefault();
-            _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
-            await _gestaoOfficinaContext.SaveChangesAsync();
-            return entrada;
-  
+            try
+            {
+                _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
+                await _gestaoOfficinaContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

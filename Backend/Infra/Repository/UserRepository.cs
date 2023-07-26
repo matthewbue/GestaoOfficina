@@ -43,6 +43,5 @@ namespace GestaoOfficina.Infra.Repository
                 throw new Exception(ex.Message);
             }
         }
-
     }
 }

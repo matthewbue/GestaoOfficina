@@ -12,8 +12,8 @@ namespace GestaoOfficina.Infra.Interface
     {
         Task<ReturnDefault> Create(ClientCreateDTO create);
         Task<ReturnDefault> GetAll();
-        void Update(ClientCreateDTO entrada);
         ReturnDefault Delete(int entrada);
-        Task<ReturnDefault> GetByIdClient(ClientCreateDTO entrada);
+        Task<ReturnDefault> GetByIdClient(EntryDtoClient entrada);
+        
     }
 }

@@ -70,64 +70,60 @@ namespace GestaoOfficina.Aplicattion.Service
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 
-        public async Task<ReturnDefault> GetByIdClient(ClientCreateDTO entrada)
+        public async Task<ReturnDefault> GetByIdClient(EntryDtoClient entrada)
         {
-            var result = _clientRepository.GetByIdClient(entrada);
-            ClientCreateDTO objeto = new ClientCreateDTO();
+            var result = await _clientRepository.GetByIdClient(entrada.Id);
+            
             if (!String.IsNullOrEmpty(entrada.Nome))
             {
-                objeto.Nome = entrada.Nome;
+               result.Nome = entrada.Nome;
             }
             if(!String.IsNullOrEmpty(entrada.Uf))
             {
-                objeto.Uf = entrada.Uf;
+                result.Uf = entrada.Uf;
             }
             if(!String.IsNullOrEmpty(entrada.NumeroWhatsApp))
             {
-                objeto.NumeroWhatsApp = entrada.NumeroWhatsApp;
+                result.NumeroWhatsapp = entrada.NumeroWhatsApp;
             }
             if(!String.IsNullOrEmpty(entrada.NumeroContato))
             {
-                objeto.NumeroContato = entrada.NumeroContato;
+                result.NumeroContato = entrada.NumeroContato;
             }
             if(!String.IsNullOrEmpty(entrada.Endereco))
             {
-                objeto.Endereco = entrada.Endereco;
+                result.Endereco = entrada.Endereco;
             }
             if(!String.IsNullOrEmpty(entrada.Email))
             {
-                objeto.Email = entrada.Email;
+                result.Email = entrada.Email;
             }
             if(!String.IsNullOrEmpty(entrada.CPF))
             {
-                objeto.CPF = entrada.CPF;
+                result.CPF = entrada.CPF;
             }
             if(!String.IsNullOrEmpty(entrada.Cidade))
             {
-                objeto.Cidade = entrada.Cidade;
+                result.Cidade = entrada.Cidade;
             }
             if(!String.IsNullOrEmpty(entrada.Bairro))
             {
-                objeto.Bairro = entrada.Bairro;
+                result.Bairro = entrada.Bairro;
             }
             if (entrada.Id > 0)
             {
-                objeto.Id = entrada.Id;
+                result.Id = entrada.Id;
             }
-            if (Convert.ToDateTime(entrada.DataNascimento) == null)
+            if (Convert.ToDateTime(entrada.DataNascimento) != null)
             {
-                objeto.DataNascimento = entrada.DataNascimento;
+                result.DataNascimento = entrada.DataNascimento;
             }
-            if (entrada.Automoveis == null)
+            if (entrada.Automoveis != null)
             {
-                objeto.Automoveis = entrada.Automoveis;
+                result.Automoveis = entrada.Automoveis;
             }
-                    _clientRepository.Update(entrada);
+                  _clientRepository.Update(result);
             return new ReturnDefault("Dados modificados com sucesso.", result);
-        }
-        public void Update(ClientCreateDTO entrada)
-        {
-            _clientRepository.Update(entrada);
         }
     }
 }

@@ -2,6 +2,7 @@
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace GestaoOfficina.Controllers
@@ -18,16 +19,29 @@ namespace GestaoOfficina.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody]LoginDTO login)
         {
-            //Try/Catch
-            var result = await _userService.login(login);
-            return Ok(result);
+            try
+            {
+                var result = await _userService.login(login);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+           
         }
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody]User user)
         {
-            //Try/Catch
-            var result = await _userService.Create(user);
-            return Ok(result);
+            try
+            {
+                var result = await _userService.Create(user);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
