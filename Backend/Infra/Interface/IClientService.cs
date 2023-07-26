@@ -13,7 +13,7 @@ namespace GestaoOfficina.Infra.Interface
         Task<ReturnDefault> Create(ClientCreateDTO create);
         Task<ReturnDefault> GetAll();
         ReturnDefault Delete(int entrada);
-        Task<ReturnDefault> GetByIdClient(EntryDtoClient entrada);
-        
+        Task<ReturnDefault> Update(ClientUpdateDTO entrada);
+        Task<ReturnDefault> GetClientById(int identificador);
     }
 }

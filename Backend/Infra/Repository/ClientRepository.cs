@@ -61,11 +61,11 @@ namespace GestaoOfficina.Infra.Repository
             
         }
 
-        public async Task<Client> GetByIdClient(int entrada)
+        public async Task<Client> GetClientById(int entrada)
         {
             try
             {
-                var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada).FirstOrDefault();
+                var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada).Include(a => a.Automoveis).FirstOrDefault();
                 return result;
             }
             catch (Exception ex)

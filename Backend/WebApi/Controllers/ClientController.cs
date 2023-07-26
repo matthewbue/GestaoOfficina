@@ -46,14 +46,28 @@ namespace GestaoOfficina.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Update(EntryDtoClient entrada)
+        public async Task<IActionResult> Update(ClientUpdateDTO entrada)
         {
             try
             {
-                 _clientService.GetByIdClient(entrada);
+                 await _clientService.Update(entrada);
                 return Ok(entrada);
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet(Name = "GetClientById")]
+        public async Task<IActionResult> GetClientById(int identificador)
+        {
+            try
+            {
+               var resultado =  await _clientService.GetClientById(identificador);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

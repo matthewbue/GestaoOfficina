@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficina.Domain.DTO
 {
-    public class EntryDtoClient
+    public class ClientUpdateDTO
     {
         public int Id { get; set; }
         public string Bairro { get; set; }

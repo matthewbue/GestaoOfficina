@@ -14,7 +14,7 @@ namespace GestaoOfficina.Infra.Interface
         Task<Client> GetCPF(string entrada);
         Task<List<Client>> GetAll();
         void Update(Client entrada);
-        Task<Client> GetByIdClient(int entrada);
+        Task<Client> GetClientById(int entrada);
         void Delete(int entrada);
     }
 }
