@@ -1,6 +1,6 @@
 <section>
   <div>
-    
+
     <div class="col-12">
       <div class="card">
         <div class="content-header">
@@ -17,8 +17,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="nomeCliente"
-                      formControlName="nomeCliente"
+                      id="nome"
+                      formControlName="nome"
                       placeholder="Nome do cliente"
                     />
                   </fieldset>
@@ -38,8 +38,8 @@
                     <input
                       type="text"
                       class="form-control"
-                      id="cpfcnpj"
-                      formControlName="cpfcnpj"
+                      id="cpf"
+                      formControlName="cpf"
                       placeholder="CPF / CNPJ"
                     />
                   </fieldset>
@@ -58,12 +58,12 @@
                   </fieldset> -->
 
                   <fieldset class="form-group">
-                    <label for="cpfcnpj">PLACA:</label>
+                    <label for="placa">PLACA:</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="cpfcnpj"
-                      formControlName="cpfcnpj"
+                      id="placa"
+                      formControlName="placa"
                       placeholder="Placa do veículo"
                     />
                   </fieldset>
@@ -111,8 +111,8 @@
 
               <tbody>
                 <tr *ngFor="let cliente of clientes">
-                  <td class="text-truncate" id="nomeCliente">  {{ cliente.nomeCliente }} </td>
-                  <td class="text-truncate">{{ cliente.nomeVeiculo }}</td>
+                  <td class="text-truncate" id="nome">  {{ cliente.nome }} </td>
+                  <td class="text-truncate">{{ cliente.marca }}</td>
                   <td></td>
                   <td class="text-truncate"></td>
 

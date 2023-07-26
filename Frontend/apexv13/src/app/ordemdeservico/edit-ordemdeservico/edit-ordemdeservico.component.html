@@ -14,15 +14,15 @@
               <div class="form-row">
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="nomeCliente">Nome:</label>
-                    <input maxlength="100" id="nomeCliente" type="text" class="form-control"
-                      formControlName="nomeCliente" [ngModel]="null" />
+                    <label for="nome">Nome:</label>
+                    <input maxlength="100" id="nome" type="text" class="form-control"
+                      formControlName="nome" [ngModel]="null" />
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="cpfcnpj">CPF / CNPJ:</label>
-                    <input maxlength="100" id="cpfCliente" type="text" class="form-control" formControlName="cpfCliente"
+                    <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
                       [ngModel]="null" />
                   </div>
                 </div>
@@ -51,9 +51,9 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="telefoneContato">Telefone para contato:</label>
-                    <input maxlength="100" id="telefoneContato" name="telefoneContato" type="text" class="form-control"
-                      formControlName="telefoneContato" />
+                    <label for="numeroContato">Telefone para contato:</label>
+                    <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
+                      formControlName="numeroContato" />
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="marcaVeiculo">Veículo:</label>
+                    <label for="marca">Veículo:</label>
                     <ng-select>
                       <ng-option>Civic</ng-option>
                     </ng-select>
