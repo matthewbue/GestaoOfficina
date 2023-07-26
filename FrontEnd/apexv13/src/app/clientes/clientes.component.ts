@@ -22,8 +22,20 @@ clientes: Clientes[];
       console.log(data);
     });
   }
-//TESTE
+
   new() {
     this.router.navigate(["clientes/new"]);
+  }
+
+  openById(id) {
+    this.router.navigate(["clientes/new"], {
+      queryParams: { clienteId: id, tipo: "visualizar" },
+    });
+  }
+
+  openEditById(id) {
+    this.router.navigate(["clientes/new"], {
+      queryParams: { clienteId: id, tipo: "editar" },
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { Identity } from "../crud/Identity";
-import { Veiculos } from "./Veiculos";
+import { Automovel } from "./Automovel";
 
 export class Clientes implements Identity {
   forEach() {
@@ -7,17 +7,17 @@ export class Clientes implements Identity {
   }
   constructor(
     public id: number = 0,
-    public bairro: string = "",
-    public cidade: string = "",
+    public nome: string = "", // Renomeie a propriedade para "nome"
+    public cpf: string = "",
     public dataNascimento: Date = new Date(),
     public endereco: string = "",
+    public bairro: string = "",
+    public cidade: string = "",
     public uf: string = "",
-    public nome: string = "",
     public numeroWhatsapp: string = "",
+    public numeroContato: string = "", // Renomeie a propriedade para "numeroContato"
     public email: string = "",
-    public numeroContato: string = "",
-    public cpf: string = "",
-    public automoveis: Veiculos[] = [],
+    public automoveis: Automovel[] = [] // Inicializa a lista de automóveis vazia
   ) {}
 
   toJSON(): Object {
@@ -33,6 +33,7 @@ export class Clientes implements Identity {
       numeroWhatsapp: this.numeroWhatsapp,
       numeroContato: this.numeroContato,
       email: this.email,
+      automoveis: this.automoveis
     };
   }
 }
