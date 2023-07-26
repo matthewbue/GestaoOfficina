@@ -7,31 +7,31 @@ export class Clientes implements Identity {
   }
   constructor(
     public id: number = 0,
-    public veiculos: Veiculos[] = [],
-    public nomeCliente: string = "",
-    public cpfCliente: string = "",
-    public dataNascimento: Date = new Date(),
-    public endereco: string = "",
     public bairro: string = "",
     public cidade: string = "",
+    public dataNascimento: Date = new Date(),
+    public endereco: string = "",
     public uf: string = "",
+    public nome: string = "",
     public numeroWhatsapp: string = "",
-    public telefoneContato: string = "",
-    public email: string = ""
+    public email: string = "",
+    public numeroContato: string = "",
+    public cpf: string = "",
+    public automoveis: Veiculos[] = [],
   ) {}
 
   toJSON(): Object {
     return {
       id: this.id,
-      nomeCliente: this.nomeCliente,
-      cpfCliente: this.cpfCliente,
+      nome: this.nome,
+      cpf: this.cpf,
       dataNascimento: this.dataNascimento,
       endereco: this.endereco,
       bairro: this.bairro,
       cidade: this.cidade,
       uf: this.uf,
       numeroWhatsapp: this.numeroWhatsapp,
-      telefoneContato: this.telefoneContato,
+      numeroContato: this.numeroContato,
       email: this.email,
     };
   }

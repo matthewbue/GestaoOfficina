@@ -22,7 +22,7 @@ clientes: Clientes[];
       console.log(data);
     });
   }
-
+//TESTE
   new() {
     this.router.navigate(["clientes/new"]);
   }
