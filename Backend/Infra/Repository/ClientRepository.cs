@@ -65,7 +65,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                var result = _gestaoOfficinaContext.Client.Where(x => x.Id == entrada).Include(a => a.Automoveis).FirstOrDefault();
+                var result = await _gestaoOfficinaContext.Client.Where(x => x.Id == entrada).Include(a => a.Automoveis).FirstOrDefaultAsync();
                 return result;
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace GestaoOfficina.Infra.Repository
             try
             {
                 _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
-                await _gestaoOfficinaContext.SaveChangesAsync();
+                 _gestaoOfficinaContext.SaveChanges();
             }
             catch (Exception ex)
             {
