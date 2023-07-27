@@ -45,12 +45,12 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpPost("")]
-        public async Task<IActionResult> UpdateAutomovel(EntryDtoClient entrada)
+        [HttpPost("UpdateClient")]
+        public async Task<IActionResult> Update(ClientUpdateDTO entrada)
         {
             try
             {
-                 _clientService.GetByIdClient(entrada);
+                 await _clientService.Update(entrada);
                 return Ok(entrada);
             }
             catch(Exception ex)
@@ -58,7 +58,21 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpDelete("Delete")]
+
+        [HttpGet("GetClientById")]
+        public async Task<IActionResult> GetClientById(int identificador)
+        {
+            try
+            {
+               var resultado =  await _clientService.GetClientById(identificador);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteClient")]
         public async Task<IActionResult> Delete(int entrada)
         {
             try

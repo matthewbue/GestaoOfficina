@@ -70,9 +70,15 @@ namespace GestaoOfficina.Aplicattion.Service
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 
-        public async Task<ReturnDefault> GetByIdClient(EntryDtoClient entrada)
+        public async Task<ReturnDefault> GetClientById(int identificador)
         {
-            var result = await _clientRepository.GetByIdClient(entrada.Id);
+            var result = await _clientRepository.GetClientById(identificador);
+            return new ReturnDefault("Dados retornado com sucesso.", result);
+        }
+
+        public async Task<ReturnDefault> Update(ClientUpdateDTO entrada)
+        {
+            var result = await _clientRepository.GetClientById(entrada.Id);
             
             if (!String.IsNullOrEmpty(entrada.Nome))
             {
@@ -110,8 +116,11 @@ namespace GestaoOfficina.Aplicattion.Service
             {
                 result.Bairro = entrada.Bairro;
             }
-           
-            if (Convert.ToDateTime(entrada.DataNascimento) != null)
+          
+            //if (Convert.ToDateTime(entrada.DataNascimento) != null)
+            //{
+            //    result.DataNascimento = entrada.DataNascimento;
+            //}
             {
                 result.DataNascimento = entrada.DataNascimento;
             }
