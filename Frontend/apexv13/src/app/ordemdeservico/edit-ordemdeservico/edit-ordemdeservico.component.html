@@ -10,64 +10,67 @@
         <div class="row" id="cliente-cadastro">
           <div class="col-12" id="cliente-info">
             <h2>Dados do Cliente</h2>
-            <form [formGroup]="" novalidate>
+            <form [formGroup]="formCliente" novalidate>
               <div class="form-row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="nome">Nome:</label>
-                    <input maxlength="100" id="nome" type="text" class="form-control"
-                      formControlName="nome" [ngModel]="null" />
+                    <input maxlength="100" id="nome" type="text" class="form-control" value=" {{ cliente.nome }} "
+                      disabled />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="cpfcnpj">CPF / CNPJ:</label>
                     <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                      [ngModel]="null" />
+                      value=" {{ cliente.cpf }} " disabled />
                   </div>
                 </div>
-
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="endereco">Endereço(Rua):</label>
-                    <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco" />
+                    <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco"
+                      value=" {{ cliente.endereco }} " disabled />
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="bairro">Bairro:</label>
-                    <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
+                    <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro"
+                      value=" {{ cliente.bairro }} " disabled />
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="numeroWhatsapp">Número Whatsapp:</label>
                     <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                      formControlName="numeroWhatsapp" />
+                      formControlName="numeroWhatsapp" value=" {{ cliente.numeroWhatsapp }} " disabled />
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="numeroContato">Telefone para contato:</label>
                     <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                      formControlName="numeroContato" />
+                      formControlName="numeroContato" value=" {{ cliente.numeroContato }} " disabled />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="email">E-mail:</label>
                     <input maxlength="100" id="email" name="email" type="text" class="form-control"
-                      formControlName="email" />
+                      formControlName="email" value=" {{ cliente.email }} " disabled />
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="marca">Veículo:</label>
-                    <ng-select>
-                      <ng-option>Civic</ng-option>
+                    <ng-select [(ngModel)]="marcaSelecionada" (change)="onSelectMarca($event)">
+                      <ng-option *ngFor="let automovel of cliente.automoveis" [value]="automovel.marca">
+                        {{ automovel.marca }}
+                      </ng-option>
                     </ng-select>
                   </div>
                 </div>
@@ -75,7 +78,138 @@
             </form>
           </div>
         </div>
+        <form [formGroup]="formVeiculo" novalidate>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="placa">Placa:</label>
+                <input maxlength="100" id="placa" name="placa" type="text" class="form-control" formControlName="placa"
+                  disabled />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="cor">Cor:</label>
+                <input maxlength="100" id="cor" name="cor" type="text" class="form-control" formControlName="cor"
+                  disabled />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="ano">Ano:</label>
+                <input maxlength="100" id="ano" name="ano" type="text" class="form-control" formControlName="ano"
+                  disabled />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <input maxlength="100" id="modelo" name="modelo" type="text" class="form-control"
+                  formControlName="modelo" disabled />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="km">KM:</label>
+                <input maxlength="100" id="km" name="km" type="text" class="form-control" formControlName="km"
+                  disabled />
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </section>
+
+
+
+<section>
+  <div class="card">
+    <div class="card-content">
+      <div class="card-body">
+        <div class="row" id="ordem-servico-cadastro">
+          <div class="col-md-12 mt-4">
+            <h3>Adicionar Serviços</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="servico">Serviço:</label>
+                  <input maxlength="100" id="servico" type="text" class="form-control" [(ngModel)]="novoServico" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="valorServico">Valor do Serviço (R$):</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">R$</span>
+                    </div>
+                    <input maxlength="100" id="valorServico" type="number" class="form-control" [(ngModel)]="novoValor" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary" (click)="adicionarServico()">Adicionar Serviço</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 mt-4">
+            <h3>Lista de Serviços</h3>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Valor (R$)</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let servico of servicos">
+                  <td>{{ servico.nome }}</td>
+                  <td>{{ servico.valor }}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-sm"
+                      (click)="removerServico(servico)">Remover</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-md-2 mt-4">
+            <div class="form-group">
+              <label for="valorTotal">Valor Total (R$):</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">R$</span>
+                </div>
+                <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" value="{{ calcularValorTotal() }}"
+                  disabled />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 mt-4">
+            <div class="form-group">
+              <label for="observacoes">Observações:</label>
+              <textarea maxlength="500" id="observacoes" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Gerar Ordem de Serviço</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

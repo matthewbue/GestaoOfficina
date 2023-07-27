@@ -12,21 +12,21 @@ import { environment } from 'environments/environment';
 })
 
 export class PageComponent {
-  fullname: string="";
+  fullname: string="Damon";
 
   /**
    *
    */
   constructor(private accountService: AccountService, private router: Router) {
     this.accountService.getUserAuthenticaded();
-    this.fullname = localStorage.getItem("fullname");
+    // this.fullname = localStorage.getItem("fullname");
 
     let situacaoSenha = localStorage.getItem("situacaoSenha");
 
     if (situacaoSenha == '1') {
       this.router.navigate(['/pages/forgot-password'])
     }
-    
+
   }
 
 

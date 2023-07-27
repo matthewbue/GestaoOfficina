@@ -72,7 +72,9 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.cpfcnpj = localStorage.getItem("CPFCNPJ");
-    this.fullname = localStorage.getItem("fullname");
+    // this.fullname = localStorage.getItem("fullname");
+    this.fullname = "Damon Pinheiro";
+
 
 
     this.listItems = LISTITEMS;
