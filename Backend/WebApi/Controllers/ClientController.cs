@@ -45,7 +45,7 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPost("UpdateClient")]
         public async Task<IActionResult> Update(ClientUpdateDTO entrada)
         {
             try
@@ -72,7 +72,7 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpDelete]
+        [HttpDelete("DeleteClient")]
         public async Task<IActionResult> Delete(int entrada)
         {
             try
