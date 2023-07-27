@@ -14,6 +14,6 @@ namespace GestaoOfficina.Infra.Interface
         Task<ReturnDefault> GetAll();
         ReturnDefault Delete(int entrada);
         Task<ReturnDefault> GetByIdClient(EntryDtoClient entrada);
-        
+      
     }
 }

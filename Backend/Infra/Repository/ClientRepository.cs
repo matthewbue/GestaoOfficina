@@ -60,7 +60,6 @@ namespace GestaoOfficina.Infra.Repository
             }
             
         }
-
         public async Task<Client> GetByIdClient(int entrada)
         {
             try

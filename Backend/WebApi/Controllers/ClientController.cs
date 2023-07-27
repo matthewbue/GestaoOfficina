@@ -45,8 +45,8 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpPost]
-        public async Task<IActionResult> Update(EntryDtoClient entrada)
+        [HttpPost("")]
+        public async Task<IActionResult> UpdateAutomovel(EntryDtoClient entrada)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpDelete]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(int entrada)
         {
             try

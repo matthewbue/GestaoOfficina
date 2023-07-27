@@ -110,10 +110,7 @@ namespace GestaoOfficina.Aplicattion.Service
             {
                 result.Bairro = entrada.Bairro;
             }
-            if (entrada.Id > 0)
-            {
-                result.Id = entrada.Id;
-            }
+           
             if (Convert.ToDateTime(entrada.DataNascimento) != null)
             {
                 result.DataNascimento = entrada.DataNascimento;
