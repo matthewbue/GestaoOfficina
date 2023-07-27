@@ -18,6 +18,7 @@ namespace GestaoOfficina.Infra.DependecyInject
             services.AddScoped <IClientRepository ,ClientRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IManutenceRepository, ManutenceRepository>();
+            services.AddScoped<IAutomovelRepository, AutomovelRepository>();
             return services;
         }
     }
