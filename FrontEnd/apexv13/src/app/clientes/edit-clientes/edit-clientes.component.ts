@@ -21,13 +21,14 @@ export class EditClientesComponent implements OnInit {
     private clienteService: ClientesService,
     private route: ActivatedRoute,
 
-    ) {}
-    formVeiculo: FormGroup;
-    formCliente: FormGroup;
-    clientes = new Clientes();
-    tipo: string;
-    clienteId: number;
-    veiculoId: any;
+  ) { }
+  formVeiculo: FormGroup;
+  formCliente: FormGroup;
+  clientes = new Clientes();
+  EditClientes = new Clientes();
+  tipo: string;
+  clienteId: number;
+  veiculoId: any;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -36,9 +37,9 @@ export class EditClientesComponent implements OnInit {
     });
 
     this.clienteId = this.clientes.id;
-    this.clienteService.getClienteById(this.clienteId).subscribe((data)=> {
-    this.clientes = data.data;
-    console.log("Clientes",this.clientes)
+    this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
+      this.clientes = data.data;
+      console.log("Clientes", this.clientes)
     })
 
     this.formVeiculo = this.fb.group({
@@ -98,24 +99,107 @@ export class EditClientesComponent implements OnInit {
     this.clientes.automoveis.splice(index, 1);
   }
 
-  showVeiculos(veiculos){
-  this.veiculoId = veiculos.id;
-  this.formVeiculo = this.fb.group({
-    ano: veiculos.ano,
-    cor: veiculos.cor,
-    km: veiculos.km,
-    marca: veiculos.marca,
-    modelo: veiculos.modelo,
-    placa: veiculos.placa,
-  })
+  showVeiculos(veiculos) {
+    this.veiculoId = veiculos.id;
+    this.formVeiculo = this.fb.group({
+      ano: veiculos.ano,
+      cor: veiculos.cor,
+      km: veiculos.km,
+      marca: veiculos.marca,
+      modelo: veiculos.modelo,
+      placa: veiculos.placa,
+    })
+  }
+
+  showEditVeiculos(veiculos) {
+    this.veiculoId = veiculos.id;
+    this.formVeiculo = this.fb.group({
+      ano: veiculos.ano,
+      cor: veiculos.cor,
+      km: veiculos.km,
+      marca: veiculos.marca,
+      modelo: veiculos.modelo,
+      placa: veiculos.placa,
+    })
+  }
+
+  AlterarDados() {
+    this.EditClientes.id = this.clienteId;
+    this.EditClientes.bairro = this.formCliente.value.bairro == null ? "" : this.formCliente.value.bairro;
+    this.EditClientes.cidade = this.formCliente.value.cidade == null ? "" : this.formCliente.value.cidade;
+    this.EditClientes.cpf = this.formCliente.value.cidade == null ? "" : this.formCliente.value.cpf;
+    this.EditClientes.dataNascimento = this.formCliente.value.dataNascimento == null ? "" : this.formCliente.value.dataNascimento;
+    this.EditClientes.email = this.formCliente.value.email == null ? "" : this.formCliente.value.email;
+    this.EditClientes.endereco = this.formCliente.value.email == null ? "" : this.formCliente.value.endereco;
+    this.EditClientes.nome = this.formCliente.value.nome == null ? "" : this.formCliente.value.nome;
+    this.EditClientes.numeroContato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
+    this.EditClientes.numeroWhatsapp = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+
+    this.EditClientes.automoveis = []
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja alterar os dados do residuo?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.clienteService.updateClienteById(this.EditClientes)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (agendamentos) => {
+          window.location.reload();
+        },
+        (error) => console.error(error)
+      );
+  }
+
+  alterarVeiculo() {
+    const veiculos = new Automovel();
+
+    veiculos.id = this.veiculoId;
+    veiculos.ano = this.formVeiculo.value.ano == null ? "" : this.formVeiculo.value.ano;
+    veiculos.cor = this.formVeiculo.value.cor == null ? "" : this.formVeiculo.value.cor;
+    veiculos.km = this.formVeiculo.value.km == null ? "" : this.formVeiculo.value.km;
+    veiculos.marca = this.formVeiculo.value.marca == null ? "" : this.formVeiculo.value.marca;
+    veiculos.modelo = this.formVeiculo.value.modelo == null ? "" : this.formVeiculo.value.modelo;
+    veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
+
+    this.EditClientes.automoveis.push(veiculos)
+    console.log("Veiculos alterar", this.EditClientes.automoveis)
+
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja alterar os dados do residuo?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.clienteService.updateClienteById(this.EditClientes)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (agendamentos) => {
+          window.location.reload();
+        },
+        (error) => console.error(error)
+      );
   }
 
   onSave() {
     if (this.formCliente.valid && this.formCliente.touched) {
-    this.clientes.nome = this.formCliente.value.nome;
-    this.clientes.cpf = this.formCliente.value.cpf;
-    this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
-    this.clientes.endereco = this.formCliente.value.endereco;
+      this.clientes.nome = this.formCliente.value.nome;
+      this.clientes.cpf = this.formCliente.value.cpf;
+      this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
+      this.clientes.endereco = this.formCliente.value.endereco;
       this.clientes.bairro = this.formCliente.value.bairro;
       this.clientes.cidade = this.formCliente.value.cidade;
       this.clientes.uf = this.formCliente.value.uf;
@@ -132,31 +216,31 @@ export class EditClientesComponent implements OnInit {
         "Deseja confirmar o agendamento?"
       );
       result$
-      .asObservable()
-      .pipe(
-        take(1),
-        switchMap((result) =>
-          result ? this.clienteService.createClient(this.clientes) : EMPTY
+        .asObservable()
+        .pipe(
+          take(1),
+          switchMap((result) =>
+            result ? this.clienteService.createClient(this.clientes) : EMPTY
+          )
         )
-      )
-      .subscribe(
-        (clientes) => console.log(clientes),
-        (error) => console.error(error)
-      );
+        .subscribe(
+          (clientes) => console.log(clientes),
+          (error) => console.error(error)
+        );
       this.router.navigate(["clientes"]);
 
-  } else {
-    this.alertService.showAlertDanger(
-      "Preencha todos os campos obrigatórios."
-    );
-  }
+    } else {
+      this.alertService.showAlertDanger(
+        "Preencha todos os campos obrigatórios."
+      );
+    }
   }
 
   goBack() {
     this.router.navigate(["clientes"]);
   }
 
-  newOS(){
+  newOS() {
     this.router.navigate(["ordemdeservico/new"]);
 
   }
