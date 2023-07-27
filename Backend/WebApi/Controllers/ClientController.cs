@@ -59,7 +59,7 @@ namespace GestaoOfficina.Controllers
             }
         }
 
-        [HttpGet(Name = "GetClientById")]
+        [HttpGet("GetClientById")]
         public async Task<IActionResult> GetClientById(int identificador)
         {
             try

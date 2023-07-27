@@ -243,22 +243,23 @@
                     <div class="form-group">
                       <label for="nome">Nome:</label>
                       <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
-                        [ngModel]="null" disabled />
+                        [ngModel]="null" value="{{ clientes.nome }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        [ngModel]="null" disabled />
+                        [ngModel]="null" value="{{ clientes.cpf }}" disabled />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="dataNascimento">Data de Nascimento:</label>
-                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
-                        formControlName="dataNascimento" [ngModel]="null" disabled />
+                      <input maxlength="50" id="dataNascimento" type="text" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" value="{{ clientes.dataNascimento }}"
+                        disabled />
                     </div>
                   </div>
 
@@ -266,7 +267,7 @@
                     <div class="form-group">
                       <label for="endereco">Endereço(Rua):</label>
                       <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco"
-                        disabled />
+                        value="{{ clientes.endereco }}" disabled />
                     </div>
                   </div>
 
@@ -274,14 +275,14 @@
                     <div class="form-group">
                       <label for="bairro">Bairro:</label>
                       <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro"
-                        disabled />
+                        value="{{ clientes.bairro }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="cidade">Cidade:</label>
                       <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade"
-                        disabled />
+                        value="{{ clientes.cidade }}" disabled />
                     </div>
                   </div>
 
@@ -289,7 +290,7 @@
                     <div class="form-group">
                       <label for="uf">UF:</label>
                       <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf"
-                        disabled />
+                        value="{{ clientes.uf }}" disabled />
                     </div>
                   </div>
 
@@ -297,7 +298,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" disabled />
+                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" disabled />
                     </div>
                   </div>
 
@@ -305,14 +306,14 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" disabled />
+                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="email">E-mail:</label>
                       <input maxlength="100" id="email" name="email" type="text" class="form-control"
-                        formControlName="email" disabled />
+                        formControlName="email" value="{{ clientes.email }}" disabled />
                     </div>
                   </div>
                 </div>
@@ -424,11 +425,8 @@
                       <td class="text-truncate" id="cor"> {{ veiculos.cor }} </td>
 
                       <td class="text-truncate">
-                        <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
-                            (click)="editVeiculo(0)"></i></a>
-                        <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
-                          <i class="ft-x font-medium-3"></i>
-                        </a>
+                        <a class="info p-0" title="Visualizar cliente" (click)="showVeiculos(veiculos)"><i
+                            class="ft-search font-medium-3 mr-2"></i></a>
                       </td>
                     </tr>
                   </tbody>
@@ -469,50 +467,54 @@
                     <div class="form-group">
                       <label for="nome">Nome:</label>
                       <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
-                        [ngModel]="null" />
+                        [ngModel]="null" value="{{ clientes.nome }}"  />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        [ngModel]="null" />
+                        [ngModel]="null" value="{{ clientes.cpf }}"  />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="dataNascimento">Data de Nascimento:</label>
-                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
-                        formControlName="dataNascimento" [ngModel]="null" />
+                      <input maxlength="50" id="dataNascimento" type="text" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" value="{{ clientes.dataNascimento }}"
+                         />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="endereco">Endereço(Rua):</label>
-                      <input maxlength="100" id="endereco" type="text" class="form-control"
-                        formControlName="endereco" />
+                      <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco"
+                        value="{{ clientes.endereco }}"  />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="bairro">Bairro:</label>
-                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
+                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro"
+                        value="{{ clientes.bairro }}"  />
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="cidade">Cidade:</label>
-                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade" />
+                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade"
+                        value="{{ clientes.cidade }}"  />
                     </div>
                   </div>
 
                   <div class="col-md-1">
                     <div class="form-group">
                       <label for="uf">UF:</label>
-                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf" />
+                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf"
+                        value="{{ clientes.uf }}"  />
                     </div>
                   </div>
 
@@ -520,7 +522,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" />
+                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}"  />
                     </div>
                   </div>
 
@@ -528,14 +530,14 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" />
+                        formControlName="numeroContato" value="{{ clientes.numeroContato }}"  />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="email">E-mail:</label>
                       <input maxlength="100" id="email" name="email" type="text" class="form-control"
-                        formControlName="email" />
+                        formControlName="email" value="{{ clientes.email }}"  />
                     </div>
                   </div>
                 </div>
@@ -562,7 +564,7 @@
                     <div class="form-group">
                       <label for="marca">Marca:</label>
                       <input maxlength="100" id="marca" name="marca" type="text" class="form-control"
-                        formControlName="marca" />
+                        formControlName="marca"  />
                     </div>
                   </div>
 
@@ -570,36 +572,37 @@
                     <div class="form-group">
                       <label for="placa">Placa:</label>
                       <input maxlength="100" id="placa" name="placa" type="text" class="form-control"
-                        formControlName="placa" />
+                        formControlName="placa"  />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cor">Cor:</label>
-                      <input maxlength="100" id="cor" name="cor" type="text" class="form-control"
-                        formControlName="cor" />
+                      <input maxlength="100" id="cor" name="cor" type="text" class="form-control" formControlName="cor"
+                         />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="ano">Ano:</label>
-                      <input maxlength="100" id="ano" name="ano" type="text" class="form-control"
-                        formControlName="ano" />
+                      <input maxlength="100" id="ano" name="ano" type="text" class="form-control" formControlName="ano"
+                         />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="modelo">Modelo:</label>
                       <input maxlength="100" id="modelo" name="modelo" type="text" class="form-control"
-                        formControlName="modelo" />
+                        formControlName="modelo"  />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="km">KM:</label>
-                      <input maxlength="100" id="km" name="km" type="text" class="form-control" formControlName="km" />
+                      <input maxlength="100" id="km" name="km" type="text" class="form-control" formControlName="km"
+                         />
                     </div>
                   </div>
                 </div>
@@ -647,7 +650,7 @@
 
                       <td class="text-truncate">
                         <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
-                            (click)="editVeiculo(0)"></i></a>
+                            (click)="editAgendamentoVeiculo(0)"></i></a>
                         <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
                           <i class="ft-x font-medium-3"></i>
                         </a>

@@ -1,8 +1,10 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Clientes } from 'app/shared/Model/Clientes';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class ClientesService {
@@ -18,7 +20,11 @@ getAllClient(){
 }
 
 getClienteById(Id){
-  return this.httpClient.get<Clientes>(`${environment.API}/Client/GetClienteById`, Id)
+  return this.httpClient.get<any>(`${environment.API}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
+}
+
+private handleError(err: HttpErrorResponse) {
+  return throwError(err);
 }
 
 }

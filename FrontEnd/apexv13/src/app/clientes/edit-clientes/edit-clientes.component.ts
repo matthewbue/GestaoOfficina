@@ -21,12 +21,13 @@ export class EditClientesComponent implements OnInit {
     private clienteService: ClientesService,
     private route: ActivatedRoute,
 
-  ) {}
-  formVeiculo: FormGroup;
-  formCliente: FormGroup;
-  clientes = new Clientes();
-  tipo: string;
-  clienteId: number;
+    ) {}
+    formVeiculo: FormGroup;
+    formCliente: FormGroup;
+    clientes = new Clientes();
+    tipo: string;
+    clienteId: number;
+    veiculoId: any;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -35,7 +36,10 @@ export class EditClientesComponent implements OnInit {
     });
 
     this.clienteId = this.clientes.id;
-    
+    this.clienteService.getClienteById(this.clienteId).subscribe((data)=> {
+    this.clientes = data.data;
+    console.log("Clientes",this.clientes)
+    })
 
     this.formVeiculo = this.fb.group({
       marca: [null],
@@ -94,8 +98,20 @@ export class EditClientesComponent implements OnInit {
     this.clientes.automoveis.splice(index, 1);
   }
 
-  onSave() {
+  showVeiculos(veiculos){
+  this.veiculoId = veiculos.id;
+  this.formVeiculo = this.fb.group({
+    ano: veiculos.ano,
+    cor: veiculos.cor,
+    km: veiculos.km,
+    marca: veiculos.marca,
+    modelo: veiculos.modelo,
+    placa: veiculos.placa,
+  })
+  }
 
+  onSave() {
+    if (this.formCliente.valid && this.formCliente.touched) {
     this.clientes.nome = this.formCliente.value.nome;
     this.clientes.cpf = this.formCliente.value.cpf;
     this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
@@ -108,35 +124,32 @@ export class EditClientesComponent implements OnInit {
       this.clientes.email = this.formCliente.value.email;
 
       console.log("DADOS PARA SALVAR:", this.clientes);
-this.clienteService.createClient(this.clientes).subscribe((data)=> {
-  console.log(data)
-})
 
 
-    //   console.log("CLIENTES", this.clientes);
-    //   const result$ = this.alertService.showConfirm(
-    //     "Confirmação",
-    //     "Deseja confirmar o agendamento?"
-    //   );
-    //   result$
-    //   .asObservable()
-    //   .pipe(
-    //     take(1),
-    //     switchMap((result) =>
-    //       result ? this.clienteService.createClient(this.clientes) : EMPTY
-    //     )
-    //   )
-    //   .subscribe(
-    //     (clientes) => console.log(clientes),
-    //     (error) => console.error(error)
-    //   );
+      console.log("CLIENTES", this.clientes);
+      const result$ = this.alertService.showConfirm(
+        "Confirmação",
+        "Deseja confirmar o agendamento?"
+      );
+      result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result ? this.clienteService.createClient(this.clientes) : EMPTY
+        )
+      )
+      .subscribe(
+        (clientes) => console.log(clientes),
+        (error) => console.error(error)
+      );
+      this.router.navigate(["clientes"]);
 
-    // this.router.navigate(["clientes"]);
-  // } else {
-  //   this.alertService.showAlertDanger(
-  //     "Preencha todos os campos obrigatórios."
-  //   );
-  // }
+  } else {
+    this.alertService.showAlertDanger(
+      "Preencha todos os campos obrigatórios."
+    );
+  }
   }
 
   goBack() {
