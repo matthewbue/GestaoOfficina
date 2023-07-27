@@ -38,7 +38,7 @@ export class LoginPageComponent {
 
     // Chama o método signinUser do AuthService (login sem a verificação de credenciais)
     const { username, password } = this.loginForm.value;
-    if (username === 'damon@example.com' && password === '123456') {
+    if (username === 'damon' && password === '123456') {
       // Login bem-sucedido
       this.authService.isAuthenticated(); // Define a autenticação como verdadeira
 

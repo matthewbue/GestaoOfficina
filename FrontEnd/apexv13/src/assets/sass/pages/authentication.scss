@@ -4,7 +4,7 @@
 
 // Full page background
 .auth-page:not(.layout-dark) {
-  background-image: linear-gradient(90deg, #005E93 50%, #69696905 50%);
+  background-image: linear-gradient(90deg, #166cddcb 100%, #f0ebeb05 50%);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -14,7 +14,7 @@
     padding: 0;
 
     .auth-img-bg {
-      background-color: map-get($grey-color, lighten-4);
+      background-color: white;
     }
   }
 }

@@ -17,6 +17,7 @@ namespace GestaoOfficina.Infra.Context
         public DbSet<Client> Client { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Manutence> Manutences { get; set; }
+        public DbSet<Automovel> automovels { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

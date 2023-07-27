@@ -2,6 +2,7 @@
 using GestaoOfficina.Infra.Interface;
 using GestaoOfficinaProj.Aplicattion.Service;
 using GestaoOfficinaProj.Infra.Interface;
+using GestaoOfficinaProj.Infra.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace GestaoOfficina.Aplicattion.DependecyInject
             services.AddScoped<IClientService ,ClientService>();
             services.AddScoped<IUserService ,UserService>();
             services.AddScoped<IManutenceService ,ManutenceService>();
+            services.AddScoped<IAutomovelService, AutomovelService>();
             return services; 
         }
     }

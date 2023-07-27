@@ -16,5 +16,6 @@ namespace GestaoOfficina.Infra.Interface
         void Update(Client entrada);
         Task<Client> GetClientById(int entrada);
         void Delete(int entrada);
+        
     }
 }

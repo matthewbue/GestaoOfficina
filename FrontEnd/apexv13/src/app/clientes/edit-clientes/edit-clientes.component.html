@@ -177,9 +177,7 @@
             <div class="card-content">
               <div class="card-body table-responsive">
                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
-                  Salvar
-                </button>
+
 
                 <table class="table text-center m-0">
                   <thead>
@@ -212,8 +210,11 @@
               <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
                 Voltar
               </button>
-              <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
+              <!-- <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
                 Nova OS
+              </button> -->
+              <button class="btn btn-primary mb-3 mr-2 float-right" type="submit" (click)="onSave()">
+                Salvar
               </button>
             </div>
           </form>
@@ -243,22 +244,23 @@
                     <div class="form-group">
                       <label for="nome">Nome:</label>
                       <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
-                        [ngModel]="null" disabled />
+                        [ngModel]="null" value="{{ clientes.nome }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        [ngModel]="null" disabled />
+                        [ngModel]="null" value="{{ clientes.cpf }}" disabled />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="dataNascimento">Data de Nascimento:</label>
-                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
-                        formControlName="dataNascimento" [ngModel]="null" disabled />
+                      <input maxlength="50" id="dataNascimento" type="text" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" value="{{ clientes.dataNascimento }}"
+                        disabled />
                     </div>
                   </div>
 
@@ -266,7 +268,7 @@
                     <div class="form-group">
                       <label for="endereco">Endereço(Rua):</label>
                       <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco"
-                        disabled />
+                        value="{{ clientes.endereco }}" disabled />
                     </div>
                   </div>
 
@@ -274,14 +276,14 @@
                     <div class="form-group">
                       <label for="bairro">Bairro:</label>
                       <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro"
-                        disabled />
+                        value="{{ clientes.bairro }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="cidade">Cidade:</label>
                       <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade"
-                        disabled />
+                        value="{{ clientes.cidade }}" disabled />
                     </div>
                   </div>
 
@@ -289,7 +291,7 @@
                     <div class="form-group">
                       <label for="uf">UF:</label>
                       <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf"
-                        disabled />
+                        value="{{ clientes.uf }}" disabled />
                     </div>
                   </div>
 
@@ -297,7 +299,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" disabled />
+                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" disabled />
                     </div>
                   </div>
 
@@ -305,14 +307,14 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" disabled />
+                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="email">E-mail:</label>
                       <input maxlength="100" id="email" name="email" type="text" class="form-control"
-                        formControlName="email" disabled />
+                        formControlName="email" value="{{ clientes.email }}" disabled />
                     </div>
                   </div>
                 </div>
@@ -403,9 +405,7 @@
             <div class="card-content">
               <div class="card-body table-responsive">
                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
-                  Salvar
-                </button>
+
 
                 <table class="table text-center m-0">
                   <thead>
@@ -424,11 +424,8 @@
                       <td class="text-truncate" id="cor"> {{ veiculos.cor }} </td>
 
                       <td class="text-truncate">
-                        <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
-                            (click)="editVeiculo(0)"></i></a>
-                        <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
-                          <i class="ft-x font-medium-3"></i>
-                        </a>
+                        <a class="info p-0" title="Visualizar cliente" (click)="showVeiculos(veiculos)"><i
+                            class="ft-search font-medium-3 mr-2"></i></a>
                       </td>
                     </tr>
                   </tbody>
@@ -438,9 +435,12 @@
               <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
                 Voltar
               </button>
-              <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
-                Nova OS
+              <button class="btn btn-primary mb-3 mr-2 float-right" type="submit" (click)="onSave()">
+                Salvar
               </button>
+              <!-- <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
+                Nova OS
+              </button> -->
             </div>
           </form>
         </div>
@@ -469,50 +469,53 @@
                     <div class="form-group">
                       <label for="nome">Nome:</label>
                       <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
-                        [ngModel]="null" />
+                        [ngModel]="null" value="{{ clientes.nome }}" />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        [ngModel]="null" />
+                        [ngModel]="null" value="{{ clientes.cpf }}" />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="dataNascimento">Data de Nascimento:</label>
-                      <input maxlength="50" id="dataNascimento" type="date" class="form-control"
-                        formControlName="dataNascimento" [ngModel]="null" />
+                      <input maxlength="50" id="dataNascimento" type="text" class="form-control"
+                        formControlName="dataNascimento" [ngModel]="null" value="{{ clientes.dataNascimento }}" />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="endereco">Endereço(Rua):</label>
-                      <input maxlength="100" id="endereco" type="text" class="form-control"
-                        formControlName="endereco" />
+                      <input maxlength="100" id="endereco" type="text" class="form-control" formControlName="endereco"
+                        value="{{ clientes.endereco }}" />
                     </div>
                   </div>
 
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="bairro">Bairro:</label>
-                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro" />
+                      <input maxlength="100" id="bairro" type="text" class="form-control" formControlName="bairro"
+                        value="{{ clientes.bairro }}" />
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="cidade">Cidade:</label>
-                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade" />
+                      <input maxlength="100" id="cidade" type="text" class="form-control" formControlName="cidade"
+                        value="{{ clientes.cidade }}" />
                     </div>
                   </div>
 
                   <div class="col-md-1">
                     <div class="form-group">
                       <label for="uf">UF:</label>
-                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf" />
+                      <input maxlength="100" id="uf" name="uf" type="text" class="form-control" formControlName="uf"
+                        value="{{ clientes.uf }}" />
                     </div>
                   </div>
 
@@ -520,7 +523,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" />
+                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" />
                     </div>
                   </div>
 
@@ -528,14 +531,14 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" />
+                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="email">E-mail:</label>
                       <input maxlength="100" id="email" name="email" type="text" class="form-control"
-                        formControlName="email" />
+                        formControlName="email" value="{{ clientes.email }}" />
                     </div>
                   </div>
                 </div>
@@ -604,6 +607,14 @@
                   </div>
                 </div>
               </form>
+              <button _ngcontent-hht-c319="" type="submit" class="btn btn-info mr-1 mb-1" id="button-aplicar"
+                style="float: right" (click)="adicionarVeiculo()">
+                Add. Veículo
+              </button>
+              <button _ngcontent-hht-c319="" type="submit" class="btn btn-primary mr-1 mb-1" id="button-aplicar"
+                style="float: right" (click)="alterarVeiculo()">
+                Alterar
+              </button>
             </div>
           </div>
         </div>
@@ -625,9 +636,6 @@
             <div class="card-content">
               <div class="card-body table-responsive">
                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
-                  Salvar
-                </button>
 
                 <table class="table text-center m-0">
                   <thead>
@@ -647,7 +655,7 @@
 
                       <td class="text-truncate">
                         <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
-                            (click)="editVeiculo(0)"></i></a>
+                            (click)="showEditVeiculos(veiculos)"></i></a>
                         <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(0)">
                           <i class="ft-x font-medium-3"></i>
                         </a>
@@ -659,6 +667,9 @@
 
               <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
                 Voltar
+              </button>
+              <button class="btn btn-primary mb-3 mr-2 float-right" type="submit" (click)="AlterarDados()">
+                Salvar
               </button>
             </div>
           </form>

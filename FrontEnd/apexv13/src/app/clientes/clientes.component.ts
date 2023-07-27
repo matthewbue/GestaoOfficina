@@ -12,9 +12,9 @@ export class ClientesComponent implements OnInit {
   constructor(
     private router: Router,
     private clienteService: ClientesService
-  ) {}
+  ) { }
 
-clientes: Clientes[];
+  clientes: Clientes[];
 
   ngOnInit(): void {
     this.clienteService.getAllClient().subscribe((data) => {
@@ -30,6 +30,12 @@ clientes: Clientes[];
   openById(id) {
     this.router.navigate(["clientes/new"], {
       queryParams: { clienteId: id, tipo: "visualizar" },
+    });
+  }
+
+  novaOS(id) {
+    this.router.navigate(["ordemdeservico/new"], {
+      queryParams: { clienteId: id}
     });
   }
 
