@@ -79,7 +79,13 @@ export class AddOrdemServicoModalComponent implements OnInit {
       queryParams: { clienteId: id}
     });
     this.modalService.hide();
+  }
 
+  novoOrc(id) {
+    this.router.navigate(["orcamento/new"], {
+      queryParams: { clienteId: id}
+    });
+    this.modalService.hide();
   }
 
   goTo() {

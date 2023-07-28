@@ -3,12 +3,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { Full_ROUTES } from 'app/shared/routes/full-layout.routes';
 import { OrcamentoComponent } from './orcamento.component';
+import { EditOrcamentoComponent } from './edit-orcamento/edit-orcamento.component';
 
 const routes: Routes = [
   {
     path: '',
     component: OrcamentoComponent,
   },
+  {
+    path: '',
+    component: EditOrcamentoComponent,
+  },
+
 
 ];
 

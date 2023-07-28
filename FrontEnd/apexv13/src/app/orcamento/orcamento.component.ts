@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Clientes } from 'app/shared/Model/Clientes';
+import { AlertModalService } from 'app/shared/services/alert-modal.service';
 
 @Component({
   selector: 'app-orcamento',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrcamentoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private alertService: AlertModalService,) { }
+  clientes = new Clientes();
 
   ngOnInit(): void {
+  }
+
+  addOS(){
+    const result$ = this.alertService.addOSModal(this.clientes);
   }
 
 }
