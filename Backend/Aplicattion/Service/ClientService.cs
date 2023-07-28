@@ -52,6 +52,8 @@ namespace GestaoOfficina.Aplicattion.Service
             objetoclient.DataNascimento = entrada.DataNascimento;
             objetoclient.Cidade = entrada.Cidade;
             objetoclient.Bairro = entrada.Bairro;
+            
+            
 
             var result = await _clientRepository.CreateClient(objetoclient);
             return new ReturnDefault("Criação feita com sucesso.", result);

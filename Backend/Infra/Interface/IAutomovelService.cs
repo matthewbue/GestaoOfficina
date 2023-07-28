@@ -1,5 +1,6 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
+using GestaoOfficinaProj.Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace GestaoOfficinaProj.Infra.Interface
 {
     public interface IAutomovelService
     {
-        Task<ReturnDefault> GetByIdAutomovel(EntryDtoAutomovel entrada);
+        Task<ReturnDefault> UpdateAutomovel(EntryAutomovelDTO entrada);
+        Task<ReturnDefault> CreateAutomovel(AutomovelAddDTO entrada);
     }
 }

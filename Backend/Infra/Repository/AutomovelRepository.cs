@@ -18,16 +18,30 @@ namespace GestaoOfficinaProj.Infra.Repository
             _gestaoOfficinaContext = gestaoOfficinaContext;
         }
 
+        public void CreateAutomovel(Automovel entrada)
+        {
+            try
+            {
+                 _gestaoOfficinaContext.automovel.Add(entrada);
+                 _gestaoOfficinaContext.SaveChanges();
+                
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Automovel> GetByIdAutomovel(int entrada)
         {
-            var result = _gestaoOfficinaContext.automovels.Where(x => x.Id == entrada).FirstOrDefault();
+            var result = _gestaoOfficinaContext.automovel.Where(x => x.Id == entrada).FirstOrDefault();
             return result;
         }
 
-        public async void UpdateAutomovel(Automovel entrada)
+        public  void UpdateAutomovel(Automovel entrada)
         {
             _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
-            await _gestaoOfficinaContext.SaveChangesAsync();
+            _gestaoOfficinaContext.SaveChanges();
         }
     }
 }

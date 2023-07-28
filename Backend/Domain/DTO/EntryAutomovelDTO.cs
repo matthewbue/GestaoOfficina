@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficina.Domain.DTO
 {
-    public class EntryDtoAutomovel
+    public class EntryAutomovelDTO
     {
         public int Id { get; set; }
         public string Marca { get; set; }

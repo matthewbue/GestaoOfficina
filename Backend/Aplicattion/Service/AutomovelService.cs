@@ -1,5 +1,6 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
+using GestaoOfficinaProj.Domain.DTO;
 using GestaoOfficinaProj.Infra.Interface;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,22 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             _automovelRepository = automovelRepository;
         }
 
-        public async Task<ReturnDefault> GetByIdAutomovel(EntryDtoAutomovel entrada)
+        public async Task<ReturnDefault> CreateAutomovel(AutomovelAddDTO entrada)
+        {
+
+            Automovel objeto = new Automovel();
+            objeto.Placa = entrada.Placa;
+            objeto.Modelo = entrada.Modelo;
+            objeto.Marca = entrada.Marca;
+            objeto.Km = entrada.Km;
+            objeto.Cor = entrada.Cor;
+            objeto.Ano = entrada.Ano;
+            objeto.ClientId = entrada.ClientId;
+            _automovelRepository.CreateAutomovel(objeto);
+            return new ReturnDefault("Criação feita com sucesso.", objeto);
+        }
+
+        public async Task<ReturnDefault> UpdateAutomovel(EntryAutomovelDTO entrada)
         {
             var result = await _automovelRepository.GetByIdAutomovel(entrada.Id);
             if (!String.IsNullOrEmpty(entrada.Ano))
@@ -45,4 +61,5 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Dados modificados com sucesso.", result);
         }
     }
+    
 }

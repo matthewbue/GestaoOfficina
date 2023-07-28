@@ -3,6 +3,7 @@ using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using GestaoOfficinaProj.Domain.DTO;
 
 namespace GestaoOfficinaProj.Controllers
 {
@@ -16,14 +17,27 @@ namespace GestaoOfficinaProj.Controllers
             _automovelService = automovelService;
         }
         [HttpPost("UpdateAutomovel")]
-        public async Task<IActionResult> UpdateAutomovel(EntryDtoAutomovel entrada)
+        public async Task<IActionResult> UpdateAutomovel(EntryAutomovelDTO entrada)
         {
             try
             {
-                _automovelService.GetByIdAutomovel(entrada);
+                _automovelService.UpdateAutomovel(entrada);
                 return Ok(entrada);
             }
             catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPost("CreateAutomovel")]
+        public async Task<IActionResult> CreateAutomovel(AutomovelAddDTO entrada)
+        {
+            try
+            {
+                _automovelService.CreateAutomovel(entrada);
+                return Ok(entrada);
+            }
+             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
