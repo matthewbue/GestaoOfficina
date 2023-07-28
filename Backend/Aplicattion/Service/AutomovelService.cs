@@ -16,7 +16,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         {
             _automovelRepository = automovelRepository;
         }
-
+        //nome service errado 
         public async Task<ReturnDefault> GetByIdAutomovel(EntryDtoAutomovel entrada)
         {
             var result = await _automovelRepository.GetByIdAutomovel(entrada.Id);
