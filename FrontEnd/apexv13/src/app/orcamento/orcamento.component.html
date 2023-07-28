@@ -12,24 +12,14 @@
                 <div class="col-md-6">
                   <fieldset class="form-group">
                     <label for="numeroAgendamento">Orçamento Número:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nome"
-                      formControlName="nome"
-                      placeholder="Número do Orçamento"
-                    />
+                    <input type="text" class="form-control" id="nome" formControlName="nome"
+                      placeholder="Número do Orçamento" />
                   </fieldset>
 
                   <fieldset class="form-group">
                     <label for="cpfcnpj">Nome do cliente:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cpfcnpj"
-                      formControlName="cpfcnpj"
-                      placeholder="Nome do cliente"
-                    />
+                    <input type="text" class="form-control" id="cpfcnpj" formControlName="cpfcnpj"
+                      placeholder="Nome do cliente" />
                   </fieldset>
                   <!-- <fieldset class="form-group">
                     <label for="dataAgendamento">Data:</label>
@@ -55,11 +45,7 @@
 
                   <fieldset class="form-group">
                     <label for="cpfcnpj">Status:</label>
-                    <ng-select
-                      [clearable]="false"
-                      id="residuoContrato"
-                      formControlName="statusOS"
-                    >
+                    <ng-select [clearable]="false" id="residuoContrato" formControlName="statusOS">
                       <ng-option> Em aberto </ng-option>
                       <ng-option> Finalizado </ng-option>
                     </ng-select>
@@ -68,10 +54,7 @@
                   <button type="submit" class="btn btn-light mt-4 float-right">
                     Limpar
                   </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary mt-4 mr-2 float-right"
-                  >
+                  <button type="submit" class="btn btn-primary mt-4 mr-2 float-right">
                     Buscar
                   </button>
                 </div>
@@ -90,8 +73,8 @@
         <div class="card-body">
           <div class="py-2 mb-2 mx-n2 clearfix" id="card-agendamentos">
             <h2>Lista de Orçamentos</h2>
-            <button type="button" class="btn btn-primary mr-1 mb-1 float-right">
-              Novo<br>Orçamento
+            <button type="button" class="btn btn-primary mr-1 mb-1 float-right" (click)=" addOS()">
+              Novo Orçamento
             </button>
           </div>
           <div class="card-body table-responsive">
@@ -116,24 +99,15 @@
                   <td class="text-truncate"></td>
 
                   <td class="text-truncate">
-                    <a class="info p-0" title="Visualizar Orçamento"
-                      ><i class="ft-search font-medium-3 mr-2"></i
-                    ></a>
+                    <a class="info p-0" title="Visualizar Orçamento"><i class="ft-search font-medium-3 mr-2"></i></a>
 
-                    <a class="success p-0" title="Editar Orçamento"
-                      ><i class="ft-edit font-medium-3 mr-2"></i
-                    ></a>
+                    <a class="success p-0" title="Editar Orçamento"><i class="ft-edit font-medium-3 mr-2"></i></a>
 
-                    <a href="javascript:;" title="Reprovar Orçamento" class="danger p-0"
-                      ><i class="ft-x font-medium-3 mr-2"></i
-                    ></a>
+                    <a href="javascript:;" title="Reprovar Orçamento" class="danger p-0"><i
+                        class="ft-x font-medium-3 mr-2"></i></a>
 
-                    <a
-                      href="javascript:;"
-                      title="Aprovar Orçamento"
-                      class="dark p-0 mr-2"
-                      ><i class="ft-check font-medium-3"></i
-                    ></a>
+                    <a href="javascript:;" title="Aprovar Orçamento" class="dark p-0 mr-2"><i
+                        class="ft-check font-medium-3"></i></a>
                   </td>
                 </tr>
               </tbody>

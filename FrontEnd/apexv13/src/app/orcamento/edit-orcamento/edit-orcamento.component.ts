@@ -8,11 +8,11 @@ import { AlertModalService } from 'app/shared/services/alert-modal.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: 'app-edit-ordemdeservico',
-  templateUrl: './edit-ordemdeservico.component.html',
-  styleUrls: ['./edit-ordemdeservico.component.scss']
+  selector: 'app-edit-orcamento',
+  templateUrl: './edit-orcamento.component.html',
+  styleUrls: ['./edit-orcamento.component.scss']
 })
-export class EditOrdemdeservicoComponent implements OnInit {
+export class EditOrcamentoComponent implements OnInit {
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -23,7 +23,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) { }
-
   clientes: Clientes[];
   cliente = new Clientes();
   tipo: string;
@@ -41,11 +40,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.cliente.id = params.clienteId;
       this.tipo = params.tipo;
-    });
-
-    this.clienteService.getAllClient().subscribe((data) => {
-      this.clientes = data.data;
-      console.log(data);
     });
 
     this.clienteId = this.cliente.id;
@@ -81,7 +75,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
       valor: [null]
     });
   }
-
   onSelectMarca(event: any) {
     this.marcaSelecionada = event;
     console.log('Marca selecionada:', this.marcaSelecionada);
@@ -117,5 +110,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
   calcularValorTotal(): number {
     return this.servicos.reduce((total, servico) => total + servico.valor, 0);
   }
+
 
 }

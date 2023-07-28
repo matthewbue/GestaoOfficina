@@ -177,9 +177,7 @@
             <div class="card-content">
               <div class="card-body table-responsive">
                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
-                  Salvar
-                </button>
+
 
                 <table class="table text-center m-0">
                   <thead>
@@ -212,8 +210,11 @@
               <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
                 Voltar
               </button>
-              <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
+              <!-- <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
                 Nova OS
+              </button> -->
+              <button class="btn btn-primary mb-3 mr-2 float-right" type="submit" (click)="onSave()">
+                Salvar
               </button>
             </div>
           </form>
@@ -404,9 +405,7 @@
             <div class="card-content">
               <div class="card-body table-responsive">
                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="onSave()">
-                  Salvar
-                </button>
+
 
                 <table class="table text-center m-0">
                   <thead>
@@ -436,9 +435,10 @@
               <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
                 Voltar
               </button>
-              <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
+
+              <!-- <button class="btn btn-info mr-2 float-right mb-2" type="submit" (click)="newOS()">
                 Nova OS
-              </button>
+              </button> -->
             </div>
           </form>
         </div>
@@ -605,6 +605,10 @@
                   </div>
                 </div>
               </form>
+              <button _ngcontent-hht-c319="" type="submit" class="btn btn-info mr-1 mb-1" id="button-aplicar"
+                style="float: right" (click)="adicionarVeiculo()">
+                Add. Veículo
+              </button>
               <button _ngcontent-hht-c319="" type="submit" class="btn btn-primary mr-1 mb-1" id="button-aplicar"
                 style="float: right" (click)="alterarVeiculo()">
                 Alterar
@@ -630,9 +634,6 @@
             <div class="card-content">
               <div class="card-body table-responsive">
                 <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2"></div>
-                <button class="btn btn-primary mb-3 float-right" type="submit" (click)="AlterarDados()">
-                  Salvar
-                </button>
 
                 <table class="table text-center m-0">
                   <thead>
@@ -664,6 +665,9 @@
 
               <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
                 Voltar
+              </button>
+              <button class="btn btn-primary mb-3 mr-2 float-right" type="submit" (click)="AlterarDados()">
+                Salvar
               </button>
             </div>
           </form>
