@@ -1,5 +1,6 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
+using GestaoOfficinaProj.Domain.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace GestaoOfficina.Infra.Interface
         ReturnDefault Delete(int entrada);
         Task<ReturnDefault> Update(ClientUpdateDTO entrada);
         Task<ReturnDefault> GetClientById(int identificador);
+        Task<ReturnDefault> GetClientFilter(ClientFilterDTO entrada);
     }
 }

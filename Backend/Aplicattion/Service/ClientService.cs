@@ -2,6 +2,7 @@
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
 using GestaoOfficina.Infra.Repository;
+using GestaoOfficinaProj.Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
@@ -75,6 +76,13 @@ namespace GestaoOfficina.Aplicattion.Service
         public async Task<ReturnDefault> GetClientById(int identificador)
         {
             var result = await _clientRepository.GetClientById(identificador);
+            return new ReturnDefault("Dados retornado com sucesso.", result);
+        }
+
+        public async Task<ReturnDefault> GetClientFilter(ClientFilterDTO entrada)
+        {
+            var result = await _clientRepository.GetClientFilter(entrada);
+
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 

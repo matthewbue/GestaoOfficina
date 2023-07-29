@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
+using GestaoOfficinaProj.Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -65,6 +66,19 @@ namespace GestaoOfficina.Controllers
             try
             {
                var resultado =  await _clientService.GetClientById(identificador);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet("GetClientFilter")]
+        public async Task<IActionResult> GetClientFilter(ClientFilterDTO entrada)
+        {
+            try
+            {
+                var resultado = await _clientService.GetClientFilter(entrada);
                 return Ok(resultado);
             }
             catch (Exception ex)

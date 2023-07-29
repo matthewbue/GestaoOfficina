@@ -2,6 +2,7 @@
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Infra.Interface;
+using GestaoOfficinaProj.Domain.DTO;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,23 @@ namespace GestaoOfficina.Infra.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada)
+        {
+            var queryResult = _gestaoOfficinaContext.Client.AsQueryable();
+
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(_ => _.Nome == entrada.NomeCliente);
+            }
+            if (!String.IsNullOrEmpty(entrada.CPF))
+            {
+                queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
+            }
+
+            var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
+            return paginatedResult;
         }
 
         public async Task<Client> GetCPF(string entrada)
