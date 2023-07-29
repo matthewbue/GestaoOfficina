@@ -126,10 +126,10 @@ namespace GestaoOfficina.Aplicattion.Service
             {
                 result.DataNascimento = entrada.DataNascimento;
             }
-            if (entrada.Automoveis != null)
-            {
-                result.Automoveis = entrada.Automoveis;
-            }
+            //if (entrada.Automoveis != null)
+            //{
+            //    result.Automoveis = entrada.Automoveis;
+            //}
                   _clientRepository.Update(result);
             return new ReturnDefault("Dados modificados com sucesso.", result);
         }
