@@ -81,7 +81,7 @@ namespace GestaoOfficina.Infra.Repository
 
             if (!String.IsNullOrEmpty(entrada.NomeCliente))
             {
-                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
+                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente)s);
             }
             if (!String.IsNullOrEmpty(entrada.CPF))
             {
@@ -106,7 +106,7 @@ namespace GestaoOfficina.Infra.Repository
             }
 
            
-            return queryResult.Count();
+            return await queryResult.CountAsync();
         }
 
         public async Task<Client> GetCPF(string entrada)
