@@ -32,6 +32,15 @@ namespace GestaoOfficinaProj.Infra.Repository
             }
         }
 
+        public void DeleteAutomovel(int identificador)
+        {
+            var formulario = _gestaoOfficinaContext.automovel.Where(r => r.Id == identificador).FirstOrDefault();
+            _gestaoOfficinaContext.automovel.Remove(formulario);
+            _gestaoOfficinaContext.SaveChanges();
+        }
+
+   
+
         public async Task<Automovel> GetByIdAutomovel(int entrada)
         {
             var result = _gestaoOfficinaContext.automovel.Where(x => x.Id == entrada).FirstOrDefault();

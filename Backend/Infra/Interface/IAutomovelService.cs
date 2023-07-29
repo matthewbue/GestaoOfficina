@@ -13,5 +13,6 @@ namespace GestaoOfficinaProj.Infra.Interface
     {
         Task<ReturnDefault> UpdateAutomovel(EntryAutomovelDTO entrada);
         Task<ReturnDefault> CreateAutomovel(AutomovelAddDTO entrada);
+        ReturnDefault DeleteAutomovel(int Identificador);
     }
 }

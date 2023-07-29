@@ -123,9 +123,7 @@ namespace GestaoOfficina.Aplicattion.Service
             //{
             //    result.DataNascimento = entrada.DataNascimento;
             //}
-            {
-                result.DataNascimento = entrada.DataNascimento;
-            }
+         
             //if (entrada.Automoveis != null)
             //{
             //    result.Automoveis = entrada.Automoveis;

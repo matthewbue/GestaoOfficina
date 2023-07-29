@@ -42,5 +42,18 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpDelete("DeleteAutomovel")]
+        public async Task<IActionResult> Delete(int ID)
+        {
+            try
+            {
+                var result = _automovelService.DeleteAutomovel(ID);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

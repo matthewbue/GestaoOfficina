@@ -33,6 +33,14 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Criação feita com sucesso.", objeto);
         }
 
+
+        public ReturnDefault DeleteAutomovel(int Identificador)
+        {
+            _automovelRepository.DeleteAutomovel(Identificador);
+
+            return new ReturnDefault("Criação feita com sucesso.", "Sucess");
+        }
+
         public async Task<ReturnDefault> UpdateAutomovel(EntryAutomovelDTO entrada)
         {
             var result = await _automovelRepository.GetByIdAutomovel(entrada.Id);
