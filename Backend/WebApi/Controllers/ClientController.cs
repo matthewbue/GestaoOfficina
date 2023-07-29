@@ -73,7 +73,7 @@ namespace GestaoOfficina.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpGet("GetClientFilter")]
+        [HttpPost("GetClientFilter")]
         public async Task<IActionResult> GetClientFilter(ClientFilterDTO entrada)
         {
             try

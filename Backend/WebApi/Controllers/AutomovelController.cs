@@ -43,11 +43,11 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
         [HttpDelete("DeleteAutomovel")]
-        public async Task<IActionResult> Delete(int ID)
+        public async Task<IActionResult> Delete(int Id)
         {
             try
             {
-                var result = _automovelService.DeleteAutomovel(ID);
+                var result = _automovelService.DeleteAutomovel(Id);
                 return Ok(result);
             }
             catch (Exception ex)

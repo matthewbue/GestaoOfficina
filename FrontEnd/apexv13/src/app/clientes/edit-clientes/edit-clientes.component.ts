@@ -28,7 +28,7 @@ export class EditClientesComponent implements OnInit {
   EditClientes = new Clientes();
   tipo: string;
   clienteId: number;
-  veiculoId: any;
+  veiculoId: number;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -82,8 +82,28 @@ export class EditClientesComponent implements OnInit {
     this.alertService.showAlertSuccess("Veículo adicionado à lista");
   }
 
-  deleteVeiculo(index: number) {
-    this.clientes.automoveis.splice(index, 1);
+  deleteVeiculo(veiculos) {
+    this.veiculoId = veiculos.id;
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja realmente excluir esse veículo?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.clienteService.deleteVeiculo(this.veiculoId)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (agendamentos) => {
+          window.location.reload();
+        },
+        (error) => console.error(error)
+      );
   }
 
   editVeiculo(index: number) {
@@ -128,7 +148,7 @@ export class EditClientesComponent implements OnInit {
     this.EditClientes.bairro = this.formCliente.value.bairro == null ? "" : this.formCliente.value.bairro;
     this.EditClientes.cidade = this.formCliente.value.cidade == null ? "" : this.formCliente.value.cidade;
     this.EditClientes.cpf = this.formCliente.value.cidade == null ? "" : this.formCliente.value.cpf;
-    this.EditClientes.dataNascimento = this.formCliente.value.dataNascimento == null ? "" : this.formCliente.value.dataNascimento;
+    this.EditClientes.dataNascimento = this.formCliente.value.dataNascimento == null ? Date : this.formCliente.value.dataNascimento;
     this.EditClientes.email = this.formCliente.value.email == null ? "" : this.formCliente.value.email;
     this.EditClientes.endereco = this.formCliente.value.email == null ? "" : this.formCliente.value.endereco;
     this.EditClientes.nome = this.formCliente.value.nome == null ? "" : this.formCliente.value.nome;
@@ -235,7 +255,9 @@ export class EditClientesComponent implements OnInit {
     if (this.formCliente.valid && this.formCliente.touched) {
       this.clientes.id = 0
       this.clientes.nome = this.formCliente.value.nome;
-      this.clientes.cpf = this.formCliente.value.cpf;
+      const cpfSemFormato = this.formCliente.value.cpf;
+      const cpfFormatado = cpfSemFormato.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      this.clientes.cpf = cpfFormatado;
       this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
       this.clientes.endereco = this.formCliente.value.endereco;
       this.clientes.bairro = this.formCliente.value.bairro;
