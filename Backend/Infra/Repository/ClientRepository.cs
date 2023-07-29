@@ -87,7 +87,25 @@ namespace GestaoOfficina.Infra.Repository
             {
                 queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
             }
+
             var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
+           
+
+            if (!String.IsNullOrEmpty(entrada.Placa))
+            {
+   
+                foreach(var item in paginatedResult)
+                {
+                  var Veiculo = item.Automoveis.Where(c => c.Placa == entrada.Placa).FirstOrDefault();
+                    if(Veiculo != null)
+                    {
+                        var clientes = new List<Client>();
+                        clientes.Add(item);
+                        return clientes;
+                    }
+                }
+
+            }
             return paginatedResult;
         }
 
