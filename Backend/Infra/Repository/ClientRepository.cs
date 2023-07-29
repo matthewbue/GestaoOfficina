@@ -81,7 +81,7 @@ namespace GestaoOfficina.Infra.Repository
 
             if (!String.IsNullOrEmpty(entrada.NomeCliente))
             {
-                queryResult = queryResult.Where(_ => _.Nome == entrada.NomeCliente);
+                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
             }
             if (!String.IsNullOrEmpty(entrada.CPF))
             {
