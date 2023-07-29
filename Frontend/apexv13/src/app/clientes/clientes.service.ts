@@ -11,15 +11,19 @@ export class ClientesService {
   constructor(private httpClient: HttpClient) { }
 
   createClient(clientes) {
-    return this.httpClient.post(`${environment.API}/Client/Create`, clientes);
+    return this.httpClient.post(`${environment.API2}/Client/Create`, clientes);
   }
 
   getAllClient() {
-    return this.httpClient.get<any>(`${environment.API}/Client/GetAll`);
+    return this.httpClient.get<any>(`${environment.API2}/Client/GetAll`);
   }
 
   getClienteById(Id) {
-    return this.httpClient.get<any>(`${environment.API}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
+    return this.httpClient.get<any>(`${environment.API2}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
+  }
+
+  deleteCliente(Id) {
+    return this.httpClient.delete<any>(`${environment.API2}/Client/DeleteClient?entrada=${Id}`).pipe(catchError(this.handleError));
   }
 
   updateClienteById(cliente) {

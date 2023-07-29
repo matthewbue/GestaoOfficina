@@ -79,7 +79,7 @@ export class EditClientesComponent implements OnInit {
     console.warn(this.formVeiculo.value);
     this.formVeiculo.reset();
 
-    this.alertService.showAlertSuccess("Resíduo adicionado à lista");
+    this.alertService.showAlertSuccess("Veículo adicionado à lista");
   }
 
   deleteVeiculo(index: number) {
@@ -138,7 +138,7 @@ export class EditClientesComponent implements OnInit {
     this.EditClientes.automoveis = []
     const result$ = this.alertService.showConfirm(
       "Confirmação",
-      "Deseja alterar os dados do residuo?"
+      "Deseja alterar os dados do cliente?"
     );
     result$
       .asObservable()
@@ -175,7 +175,7 @@ export class EditClientesComponent implements OnInit {
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
-      "Deseja alterar os dados do residuo?"
+      "Deseja criar um novo veículo?"
     );
     result$
       .asObservable()
@@ -211,7 +211,7 @@ export class EditClientesComponent implements OnInit {
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
-      "Deseja alterar os dados do residuo?"
+      "Deseja alterar os dados do veículo?"
     );
     result$
       .asObservable()
@@ -250,7 +250,7 @@ export class EditClientesComponent implements OnInit {
       console.log("CLIENTES", this.clientes);
       const result$ = this.alertService.showConfirm(
         "Confirmação",
-        "Deseja confirmar o agendamento?"
+        "Deseja criar esse cliente?"
       );
       result$
         .asObservable()
