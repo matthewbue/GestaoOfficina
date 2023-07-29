@@ -92,6 +92,23 @@ namespace GestaoOfficina.Infra.Repository
             return paginatedResult;
         }
 
+        public async Task<int> CountClient(ClientFilterDTO entrada)
+        {
+            var queryResult = _gestaoOfficinaContext.Client.AsQueryable();
+
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(_ => _.Nome == entrada.NomeCliente);
+            }
+            if (!String.IsNullOrEmpty(entrada.CPF))
+            {
+                queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
+            }
+
+           
+            return queryResult.Count();
+        }
+
         public async Task<Client> GetCPF(string entrada)
         {
             try

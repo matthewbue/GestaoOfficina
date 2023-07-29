@@ -82,8 +82,13 @@ namespace GestaoOfficina.Aplicattion.Service
         public async Task<ReturnDefault> GetClientFilter(ClientFilterDTO entrada)
         {
             var result = await _clientRepository.GetClientFilter(entrada);
+            var count = await _clientRepository.CountClient(entrada);
+            var TotalperPag = (count % entrada.PageSize).Equals(0) ? (count / entrada.PageSize) : (count / entrada.PageSize) + 1 ;
 
-            return new ReturnDefault("Dados retornado com sucesso.", result);
+            var response = new ReturnDefault("Dados retornado com sucesso.", result);
+            response.totalDados = count;
+            response.totalPagina = TotalperPag.Value;
+            return response;
         }
 
         public async Task<ReturnDefault> Update(ClientUpdateDTO entrada)

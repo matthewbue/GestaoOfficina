@@ -18,5 +18,7 @@ namespace GestaoOfficina.Infra.Interface
         Task<Client> GetClientById(int entrada);
         void Delete(int entrada);
         Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada);
+
+        Task<int> CountClient(ClientFilterDTO entrada);
     }
 }
