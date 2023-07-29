@@ -11,31 +11,31 @@ export class ClientesService {
   constructor(private httpClient: HttpClient) { }
 
   createClient(clientes) {
-    return this.httpClient.post(`${environment.API2}/Client/Create`, clientes);
+    return this.httpClient.post(`${environment.API}/Client/Create`, clientes);
   }
 
   getAllClient() {
-    return this.httpClient.get<any>(`${environment.API2}/Client/GetAll`);
+    return this.httpClient.get<any>(`${environment.API}/Client/GetAll`);
   }
 
   getClienteById(Id) {
-    return this.httpClient.get<any>(`${environment.API2}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
+    return this.httpClient.get<any>(`${environment.API}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
   }
 
   deleteCliente(Id) {
-    return this.httpClient.delete<any>(`${environment.API2}/Client/DeleteClient?entrada=${Id}`).pipe(catchError(this.handleError));
+    return this.httpClient.delete<any>(`${environment.API}/Client/DeleteClient?entrada=${Id}`).pipe(catchError(this.handleError));
   }
 
   updateClienteById(cliente) {
-    return this.httpClient.post(`${environment.API2}/Client/UpdateClient`, cliente);
+    return this.httpClient.post(`${environment.API}/Client/UpdateClient`, cliente);
   }
 
   createVeiculoById(automovel) {
-    return this.httpClient.post(`${environment.API2}/Automovel/CreateAutomovel`, automovel);
+    return this.httpClient.post(`${environment.API}/Automovel/CreateAutomovel`, automovel);
   }
 
   updateVeiculoById(automovel) {
-    return this.httpClient.post(`${environment.API2}/Automovel/UpdateAutomovel`, automovel);
+    return this.httpClient.post(`https://localhost:44391/Automovel/UpdateAutomovel`, automovel);
   }
 
   private handleError(err: HttpErrorResponse) {

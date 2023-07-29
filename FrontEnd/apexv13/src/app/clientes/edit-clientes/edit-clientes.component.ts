@@ -39,7 +39,7 @@ export class EditClientesComponent implements OnInit {
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Clientes",this.clienteId)
+      console.log("Clientes", this.clienteId)
     })
 
     this.formVeiculo = this.fb.group({
@@ -233,6 +233,7 @@ export class EditClientesComponent implements OnInit {
 
   onSave() {
     if (this.formCliente.valid && this.formCliente.touched) {
+      this.clientes.id = 0
       this.clientes.nome = this.formCliente.value.nome;
       this.clientes.cpf = this.formCliente.value.cpf;
       this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
@@ -245,7 +246,6 @@ export class EditClientesComponent implements OnInit {
       this.clientes.email = this.formCliente.value.email;
 
       console.log("DADOS PARA SALVAR:", this.clientes);
-
 
       console.log("CLIENTES", this.clientes);
       const result$ = this.alertService.showConfirm(
@@ -261,10 +261,11 @@ export class EditClientesComponent implements OnInit {
           )
         )
         .subscribe(
-          (clientes) => console.log(clientes),
+          (clientes) => {
+            this.router.navigate(["clientes"]);
+          },
           (error) => console.error(error)
         );
-      this.router.navigate(["clientes"]);
 
     } else {
       this.alertService.showAlertDanger(
