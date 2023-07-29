@@ -78,8 +78,33 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     this.formOrdemServico = this.fb.group({
       servico: [null],
-      valor: [null]
+      valor: [null],
+      KmAtual: [null],
+      KmServico: [null],
+      mediaKm: [null],
+      observacoes: [null]
     });
+  }
+
+  gerarOrdemServico() {
+    // Crie um objeto contendo os dados da ordem de serviço a serem enviados para o backend
+    const ordemServicoData = {
+      clienteId: this.cliente.id,
+      veiculo: {
+        marca: this.marcaSelecionada,
+        placa: this.formVeiculo.get('placa')?.value,
+        cor: this.formVeiculo.get('cor')?.value,
+        ano: this.formVeiculo.get('ano')?.value,
+        modelo: this.formVeiculo.get('modelo')?.value,
+        km: this.formVeiculo.get('km')?.value,
+      },
+      servicos: this.servicos,
+      kmAtual: this.formOrdemServico.get('KmAtual')?.value,
+      kmServico: this.formOrdemServico.get('KmServico')?.value,
+      mediaKm: this.formOrdemServico.get('mediaKm')?.value,
+      observacoes: this.formOrdemServico.get('observacoes')?.value
+    };
+    console.log(ordemServicoData)
   }
 
   onSelectMarca(event: any) {

@@ -16,7 +16,6 @@ export class ClientesService {
 
   getAllClient() {
     return this.httpClient.get<any>(`${environment.API}/Client/GetAll`);
-
   }
 
   getClienteById(Id) {
@@ -24,7 +23,15 @@ export class ClientesService {
   }
 
   updateClienteById(cliente) {
-    return this.httpClient.post(`${environment.API}/Client/UpdateClient`, cliente);
+    return this.httpClient.post(`${environment.API2}/Client/UpdateClient`, cliente);
+  }
+
+  createVeiculoById(automovel) {
+    return this.httpClient.post(`${environment.API2}/Automovel/CreateAutomovel`, automovel);
+  }
+
+  updateVeiculoById(automovel) {
+    return this.httpClient.post(`${environment.API2}/Automovel/UpdateAutomovel`, automovel);
   }
 
   private handleError(err: HttpErrorResponse) {

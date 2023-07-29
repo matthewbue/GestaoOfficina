@@ -131,6 +131,7 @@
     <div class="card-content">
       <div class="card-body">
         <div class="row" id="ordem-servico-cadastro">
+
           <div class="col-md-12 mt-4">
             <h3>Adicionar Serviços</h3>
             <div class="row">
@@ -159,6 +160,8 @@
               </div>
             </div>
           </div>
+
+
 
           <div class="col-md-12 mt-4">
             <h3>Lista de Serviços</h3>
@@ -195,43 +198,48 @@
               </div>
             </div>
           </div>
-
-          <div class="col-md-12 mt-4">
-            <div class="row">
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="kmAtual">Km Atual Veículo:</label>
-                  <div class="input-group">
-                    <input maxlength="100" id="kmAtual" type="text" class="form-control"/>
+          <form [formGroup]="formOrdemServico" class="col-md-12 mt-4" novalidate>
+            <div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="kmAtual">Km Atual Veículo:</label>
+                    <div class="input-group">
+                      <input maxlength="100" id="kmAtual" type="text" class="form-control" formControlName="KmAtual" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="KmServico">Km do Serviço:</label>
+                    <input maxlength="100" id="KmServico" type="text" class="form-control"
+                      formControlName="KmServico" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="mediaKm">Média por dia:</label>
+                    <div class="input-group">
+                      <input maxlength="100" id="mediaKm" type="text" class="form-control" formControlName="mediaKm" />
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="KmServico">Km do Serviço:</label>
-                  <input maxlength="100" id="KmServico" type="text" class="form-control"/>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label for="mediaKm">Média por dia:</label>
-                  <div class="input-group">
-                    <input maxlength="100" id="mediaKm" type="text" class="form-control"/>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-group">
-              <label for="observacoes">Observações:</label>
-              <textarea maxlength="500" id="observacoes" class="form-control" rows="3"></textarea>
+              <div class="form-group">
+                <label for="observacoes">Observações:</label>
+                <textarea maxlength="500" id="observacoes" class="form-control" formControlName="observacoes"
+                  rows="3"></textarea>
+              </div>
             </div>
-          </div>
+          </form>
+
 
 
           <div class="col-md-12">
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">Gerar Ordem de Serviço</button>
+              <button type="submit" class="btn btn-primary" (click)="gerarOrdemServico()">Gerar Ordem de
+                Serviço</button>
             </div>
           </div>
         </div>

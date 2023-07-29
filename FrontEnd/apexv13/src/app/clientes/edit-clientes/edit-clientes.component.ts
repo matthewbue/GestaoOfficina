@@ -32,14 +32,14 @@ export class EditClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.clientes.id = params.clienteId;
+      this.clientes.id = Number(params.clienteId);
       this.tipo = params.tipo;
     });
 
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Clientes", this.clientes)
+      console.log("Clientes",this.clienteId)
     })
 
     this.formVeiculo = this.fb.group({
@@ -158,6 +158,43 @@ export class EditClientesComponent implements OnInit {
       );
   }
 
+  adicionarVeiculo() {
+    const veiculos = new Automovel();
+
+    veiculos.id = this.veiculoId;
+    veiculos.clienteId = this.clienteId;
+    veiculos.ano = this.formVeiculo.value.ano == null ? "" : this.formVeiculo.value.ano;
+    veiculos.cor = this.formVeiculo.value.cor == null ? "" : this.formVeiculo.value.cor;
+    veiculos.km = this.formVeiculo.value.km == null ? "" : this.formVeiculo.value.km;
+    veiculos.marca = this.formVeiculo.value.marca == null ? "" : this.formVeiculo.value.marca;
+    veiculos.modelo = this.formVeiculo.value.modelo == null ? "" : this.formVeiculo.value.modelo;
+    veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
+
+    this.EditClientes.automoveis.push(veiculos)
+    console.log("Veiculos add", veiculos)
+
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja alterar os dados do residuo?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.clienteService.createVeiculoById(veiculos)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (agendamentos) => {
+          window.location.reload();
+        },
+        (error) => console.error(error)
+      );
+  }
+
   alterarVeiculo() {
     const veiculos = new Automovel();
 
@@ -182,7 +219,7 @@ export class EditClientesComponent implements OnInit {
         take(1),
         switchMap((result) =>
           result
-            ? this.clienteService.updateClienteById(this.EditClientes)
+            ? this.clienteService.updateVeiculoById(veiculos)
             : EMPTY
         )
       )

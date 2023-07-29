@@ -5,5 +5,6 @@
 
 export const environment = {
   API: 'https://deploy-back-officinaferreira.azurewebsites.net',
+  API2: 'https://localhost:44391',
   production: false
 };
