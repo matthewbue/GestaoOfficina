@@ -16,15 +16,26 @@ export class ClientesService {
 
   getAllClient() {
     return this.httpClient.get<any>(`${environment.API}/Client/GetAll`);
-
   }
 
   getClienteById(Id) {
     return this.httpClient.get<any>(`${environment.API}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
   }
 
+  deleteCliente(Id) {
+    return this.httpClient.delete<any>(`${environment.API}/Client/DeleteClient?entrada=${Id}`).pipe(catchError(this.handleError));
+  }
+
   updateClienteById(cliente) {
     return this.httpClient.post(`${environment.API}/Client/UpdateClient`, cliente);
+  }
+
+  createVeiculoById(automovel) {
+    return this.httpClient.post(`${environment.API}/Automovel/CreateAutomovel`, automovel);
+  }
+
+  updateVeiculoById(automovel) {
+    return this.httpClient.post(`https://localhost:44391/Automovel/UpdateAutomovel`, automovel);
   }
 
   private handleError(err: HttpErrorResponse) {

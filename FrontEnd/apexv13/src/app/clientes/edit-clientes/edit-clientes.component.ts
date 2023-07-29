@@ -32,14 +32,14 @@ export class EditClientesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.clientes.id = params.clienteId;
+      this.clientes.id = Number(params.clienteId);
       this.tipo = params.tipo;
     });
 
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Clientes", this.clientes)
+      console.log("Clientes", this.clienteId)
     })
 
     this.formVeiculo = this.fb.group({
@@ -79,7 +79,7 @@ export class EditClientesComponent implements OnInit {
     console.warn(this.formVeiculo.value);
     this.formVeiculo.reset();
 
-    this.alertService.showAlertSuccess("Resíduo adicionado à lista");
+    this.alertService.showAlertSuccess("Veículo adicionado à lista");
   }
 
   deleteVeiculo(index: number) {
@@ -138,7 +138,7 @@ export class EditClientesComponent implements OnInit {
     this.EditClientes.automoveis = []
     const result$ = this.alertService.showConfirm(
       "Confirmação",
-      "Deseja alterar os dados do residuo?"
+      "Deseja alterar os dados do cliente?"
     );
     result$
       .asObservable()
@@ -147,6 +147,43 @@ export class EditClientesComponent implements OnInit {
         switchMap((result) =>
           result
             ? this.clienteService.updateClienteById(this.EditClientes)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (agendamentos) => {
+          window.location.reload();
+        },
+        (error) => console.error(error)
+      );
+  }
+
+  adicionarVeiculo() {
+    const veiculos = new Automovel();
+
+    veiculos.id = this.veiculoId;
+    veiculos.clienteId = this.clienteId;
+    veiculos.ano = this.formVeiculo.value.ano == null ? "" : this.formVeiculo.value.ano;
+    veiculos.cor = this.formVeiculo.value.cor == null ? "" : this.formVeiculo.value.cor;
+    veiculos.km = this.formVeiculo.value.km == null ? "" : this.formVeiculo.value.km;
+    veiculos.marca = this.formVeiculo.value.marca == null ? "" : this.formVeiculo.value.marca;
+    veiculos.modelo = this.formVeiculo.value.modelo == null ? "" : this.formVeiculo.value.modelo;
+    veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
+
+    this.EditClientes.automoveis.push(veiculos)
+    console.log("Veiculos add", veiculos)
+
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja criar um novo veículo?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.clienteService.createVeiculoById(veiculos)
             : EMPTY
         )
       )
@@ -174,7 +211,7 @@ export class EditClientesComponent implements OnInit {
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
-      "Deseja alterar os dados do residuo?"
+      "Deseja alterar os dados do veículo?"
     );
     result$
       .asObservable()
@@ -182,7 +219,7 @@ export class EditClientesComponent implements OnInit {
         take(1),
         switchMap((result) =>
           result
-            ? this.clienteService.updateClienteById(this.EditClientes)
+            ? this.clienteService.updateVeiculoById(veiculos)
             : EMPTY
         )
       )
@@ -196,6 +233,7 @@ export class EditClientesComponent implements OnInit {
 
   onSave() {
     if (this.formCliente.valid && this.formCliente.touched) {
+      this.clientes.id = 0
       this.clientes.nome = this.formCliente.value.nome;
       this.clientes.cpf = this.formCliente.value.cpf;
       this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
@@ -209,11 +247,10 @@ export class EditClientesComponent implements OnInit {
 
       console.log("DADOS PARA SALVAR:", this.clientes);
 
-
       console.log("CLIENTES", this.clientes);
       const result$ = this.alertService.showConfirm(
         "Confirmação",
-        "Deseja confirmar o agendamento?"
+        "Deseja criar esse cliente?"
       );
       result$
         .asObservable()
@@ -224,10 +261,11 @@ export class EditClientesComponent implements OnInit {
           )
         )
         .subscribe(
-          (clientes) => console.log(clientes),
+          (clientes) => {
+            this.router.navigate(["clientes"]);
+          },
           (error) => console.error(error)
         );
-      this.router.navigate(["clientes"]);
 
     } else {
       this.alertService.showAlertDanger(

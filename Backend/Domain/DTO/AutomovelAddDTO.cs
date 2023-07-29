@@ -15,6 +15,6 @@ namespace GestaoOfficinaProj.Domain.DTO
         public string Modelo { get; set; }
         public string Ano { get; set; }
         public string Km { get; set; }
-        public int ClientId { get; set; }
+        public int ClienteId { get; set; }
     }
 }

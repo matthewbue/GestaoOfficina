@@ -28,7 +28,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objeto.Km = entrada.Km;
             objeto.Cor = entrada.Cor;
             objeto.Ano = entrada.Ano;
-            objeto.ClientId = entrada.ClientId;
+            objeto.ClientId = entrada.ClienteId;
             _automovelRepository.CreateAutomovel(objeto);
             return new ReturnDefault("Criação feita com sucesso.", objeto);
         }

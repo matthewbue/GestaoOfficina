@@ -6,7 +6,7 @@ export class Clientes implements Identity {
     throw new Error("Method not implemented.");
   }
   constructor(
-    public id: number = 0,
+    public id: number = null,
     public nome: string = "", // Renomeie a propriedade para "nome"
     public cpf: string = "",
     public dataNascimento: Date = new Date(),
