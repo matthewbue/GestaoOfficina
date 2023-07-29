@@ -77,35 +77,33 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Client.AsQueryable();
+            var queryResult = _gestaoOfficinaContext.Client.Include(a => a.Automoveis).AsQueryable();
 
             if (!String.IsNullOrEmpty(entrada.NomeCliente))
             {
-                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente)s);
+                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
             }
             if (!String.IsNullOrEmpty(entrada.CPF))
             {
                 queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
             }
-
             var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
             return paginatedResult;
         }
 
         public async Task<int> CountClient(ClientFilterDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Client.AsQueryable();
+            var queryResult = _gestaoOfficinaContext.Client.Include(a => a.Automoveis).AsQueryable();
 
             if (!String.IsNullOrEmpty(entrada.NomeCliente))
             {
-                queryResult = queryResult.Where(_ => _.Nome == entrada.NomeCliente);
+                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
             }
             if (!String.IsNullOrEmpty(entrada.CPF))
             {
                 queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
             }
-
-           
+  
             return await queryResult.CountAsync();
         }
 
