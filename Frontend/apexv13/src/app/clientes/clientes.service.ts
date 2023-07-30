@@ -28,23 +28,23 @@ export class ClientesService {
   }
 
   updateClienteById(cliente) {
-    return this.httpClient.post(`${environment.API}/Client/UpdateClient`, cliente);
+    return this.httpClient.post(`https://localhost:44391/Client/UpdateClient`, cliente);
   }
 
   createVeiculoById(automovel) {
-    return this.httpClient.post(`${environment.API}/Automovel/CreateAutomovel`, automovel);
+    return this.httpClient.post(`https://localhost:44391/Automovel/CreateAutomovel`, automovel);
   }
 
   updateVeiculoById(automovel) {
-    return this.httpClient.post(`${environment.API}/Automovel/UpdateAutomovel`, automovel);
+    return this.httpClient.post(`https://localhost:44391/Automovel/UpdateAutomovel`, automovel);
   }
 
   deleteVeiculo(Id) {
-    return this.httpClient.delete<any>(`${environment.API}/Automovel/DeleteAutomovel?Id=${Id}`).pipe(catchError(this.handleError));
+    return this.httpClient.delete<any>(`https://localhost:44391/Automovel/DeleteAutomovel?Id=${Id}`).pipe(catchError(this.handleError));
   }
 
   getFilterClientes(filterClientes: FilterClientes){
-    return this.httpClient.post<any>(`${environment.API}/Client/GetClientFilter`, filterClientes)
+    return this.httpClient.post<any>(`https://localhost:44391/Client/GetClientFilter`, filterClientes)
   }
 
   private handleError(err: HttpErrorResponse) {
