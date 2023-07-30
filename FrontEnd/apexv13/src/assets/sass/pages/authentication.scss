@@ -4,10 +4,11 @@
 
 // Full page background
 .auth-page:not(.layout-dark) {
-  background-image: linear-gradient(90deg, #005E93 100%, #f0ebeb05 50%);
+  background-image: url('../../img/img1.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 }
+
 
 .auth-page {
   .auth-img {

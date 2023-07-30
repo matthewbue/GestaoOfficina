@@ -1,5 +1,5 @@
 export const environment = {
-  API: '',
+  API: 'https://deploy-back-officinaferreira.azurewebsites.net',
   production: true
 };
 
