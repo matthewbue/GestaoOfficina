@@ -10,12 +10,17 @@ namespace GestaoOfficina.Domain.Model
     public class Manutence
     {
         public int Id { get; set; }
-        public string Descricao { get; set; }
-        public string Defeito { get; set; }
-        public string Produto { get; set; }
-        public string KMAtual { get; set; }
+        public string Nome { get; set; }
+        public string Kmatual { get; set; }
+        public string Kmservico { get; set; }
         public string Valor { get; set; }
+
+        [ForeignKey("Automovel")]
         public int IdCarro { get; set; }
+        public virtual ICollection<Automovel> Automovels { get; set; }
+
+        [ForeignKey("Client")]
         public int ClientId { get; set; }
+        public virtual ICollection<Client> Clients { get; set; }
     }
 }

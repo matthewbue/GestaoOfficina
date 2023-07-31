@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficinaProj.Infra.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
         }
-        public async Task<Manutence> CreateManutence(Manutence entrada)
+        public async Task<Manutence> Create(Manutence entrada)
         {
             try
             {
@@ -28,6 +29,33 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public void Delete(int entrada)
+        {
+            var resultdelete = _gestaoOfficinaContext.Manutences.Where(r => r.Id == entrada).FirstOrDefault();
+            _gestaoOfficinaContext.Manutences.Remove(resultdelete);
+            _gestaoOfficinaContext.SaveChanges();
+        }
+
+        public async Task<Manutence> GetById(int entrada)
+        {
+            var result = await _gestaoOfficinaContext.Manutences.Where(x => x.Id == entrada).FirstOrDefaultAsync();
+            return result;
+        }
+
+        public void Update(Manutence entrada)
+        {
+            try
+            {
+                _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
+                _gestaoOfficinaContext.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+           
         }
     }
 }

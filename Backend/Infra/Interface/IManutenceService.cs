@@ -1,4 +1,5 @@
-﻿using GestaoOfficina.Domain.Model;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
 using GestaoOfficinaProj.Domain.DTO;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,10 @@ namespace GestaoOfficinaProj.Infra.Interface
 {
     public interface IManutenceService
     {
-        Task<ReturnDefault> CreateManutence(ManutenceCreateDTO entrada);
+        Task<ReturnDefault> Create(ManutenceCreateDTO entrada);
+        Task<ReturnDefault> GetById(int entrada);
+        ReturnDefault Delete(int entrada);
+        Task<ReturnDefault> Update(ManutenceUpdateDTO entrada);
+        
     }
 }
