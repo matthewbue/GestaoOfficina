@@ -19,6 +19,7 @@ namespace GestaoOfficina.Controllers
         public ClientController(IClientService clientService)
         {
             _clientService = clientService;
+            //teste
         }
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] ClientCreateDTO client)
