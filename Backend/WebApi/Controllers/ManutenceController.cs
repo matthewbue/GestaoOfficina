@@ -15,7 +15,7 @@ namespace GestaoOfficinaProj.Controllers
         {
             _manutenceService = manutenceService;
         }
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create(ManutenceCreateDTO entrada)
         {
             try
@@ -28,23 +28,44 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpPost("GetClientById")]
-        public async Task<IActionResult> Update(ManutenceUpdateDTO entrada)
+        [HttpPost("Update")] 
+        public async Task<IActionResult> UpdateManutence(ManutenceUpdateDTO entrada)
         {
-            var result = _manutenceService.Update(entrada);
-            return Ok(result);
+            try
+            {
+                var result = _manutenceService.UpdateManutence(entrada);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-        [HttpDelete("DeleteClient")]
+        [HttpDelete("Delete")]
         public IActionResult Delete(int entrada)
         {
-            var result = _manutenceService.Delete(entrada);
-            return Ok(result);
+            try
+            {
+                var result = _manutenceService.Delete(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-        [HttpGet("UpdateClient")]
+        [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int entrada)
         {
-            var result = await _manutenceService.GetById(entrada);
-            return Ok(result);
+            try
+            {
+                var result = _manutenceService.GetById(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

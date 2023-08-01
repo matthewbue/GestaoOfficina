@@ -9,14 +9,11 @@ namespace GestaoOfficinaProj.Domain.DTO
 {
     public class ManutenceCreateDTO
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Kmatual { get; set; }
-        public string Kmservico { get; set; }
-        public string Valor { get; set; }
-        public int IdCarro { get; set; }
-        
-        public int ClientId { get; set; }
-        
+        public int Clientid { get; set; }
+
+        public int Veiculoid { get; set; }
+        public ICollection<OSCreateDTO> manutences { get; set; } // criar lista com campos do trello 
+        public string Observacoes { get; set; }
+
     }
 }

@@ -17,13 +17,13 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
         }
-        public async Task<Manutence> Create(Manutence entrada)
+        public void Create(Manutence entrada)
         {
             try
             {
-                await _gestaoOfficinaContext.Manutences.AddAsync(entrada);
-                await _gestaoOfficinaContext.SaveChangesAsync();
-                return entrada;
+                 _gestaoOfficinaContext.Manutences.AddRange(entrada);
+                 _gestaoOfficinaContext.SaveChanges();
+               
             }
             catch (Exception ex)
             {
@@ -40,11 +40,18 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public async Task<Manutence> GetById(int entrada)
         {
-            var result = await _gestaoOfficinaContext.Manutences.Where(x => x.Id == entrada).FirstOrDefaultAsync();
-            return result;
+            try
+            {
+                var result = await _gestaoOfficinaContext.Manutences.Where(x => x.Id == entrada).FirstOrDefaultAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public void Update(Manutence entrada)
+        public void UpdateManutence(Manutence entrada)
         {
             try
             {

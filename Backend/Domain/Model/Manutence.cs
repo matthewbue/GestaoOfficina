@@ -14,13 +14,15 @@ namespace GestaoOfficina.Domain.Model
         public string Kmatual { get; set; }
         public string Kmservico { get; set; }
         public string Valor { get; set; }
+        public string Mediakm { get; set;}
+        public string Observacoes { get; set; }
 
         [ForeignKey("Automovel")]
         public int IdCarro { get; set; }
-        public virtual ICollection<Automovel> Automovels { get; set; }
+        public virtual Automovel automovels { get; set; }
 
         [ForeignKey("Client")]
         public int ClientId { get; set; }
-        public virtual ICollection<Client> Clients { get; set; }
+        public virtual Client Clients { get; set; }
     }
 }
