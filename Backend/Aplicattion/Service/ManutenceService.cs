@@ -23,7 +23,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             {
                 List<Manutence> listaresult = new List<Manutence>();
                 objeto.Valor = lista.Valor;
-                objeto.Nome = lista.Nome;
+                objeto.Nome = lista.NomeServico;
                 objeto.Valor = lista.Valor;
                 objeto.Kmservico = lista.Kmservico;
                 objeto.Kmatual = lista.Kmatual;
