@@ -19,15 +19,21 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         public async Task<ReturnDefault> Create(ManutenceCreateDTO entrada)
         {
             Manutence objeto = new Manutence();
-            objeto.Valor = entrada.Valor;
-            objeto.Nome = entrada.NomeServico;
-            objeto.Valor = entrada.Valor;
-            objeto.Kmservico = entrada.Kmservico;
-            objeto.Kmatual = entrada.Kmatual;
-            objeto.Id = entrada.Id;
-            objeto.IdCarro = entrada.IdCarro;
-            objeto.ClientId = entrada.ClientId;
-            await _manutenceRepository.Create(objeto);
+            foreach (var lista in entrada.manutences)
+            {
+                List<Manutence> listaresult = new List<Manutence>();
+                objeto.Valor = lista.Valor;
+                objeto.Nome = lista.Nome;
+                objeto.Valor = lista.Valor;
+                objeto.Kmservico = lista.Kmservico;
+                objeto.Kmatual = lista.Kmatual;
+                objeto.Mediakm = lista.Mediakm;
+                objeto.ClientId = entrada.Clientid;
+                objeto.IdCarro = entrada.Veiculoid;
+                objeto.Observacoes = entrada.Observacoes;
+                listaresult.Add(objeto);
+            }
+             _manutenceRepository.Create(objeto);
             return new ReturnDefault("Dados retornado com sucesso.", objeto);
         }
 
@@ -42,10 +48,9 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 
-        public async Task<ReturnDefault> Update(ManutenceUpdateDTO entrada)
+        public async Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada)
         {
             var result = await _manutenceRepository.GetById(entrada.Id);
-
             if (!String.IsNullOrEmpty(entrada.Nome))
             {
                 result.Nome = entrada.Nome;
@@ -53,6 +58,14 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             if (!String.IsNullOrEmpty(entrada.Valor))
             {
                 result.Valor = entrada.Valor;
+            }
+            if (!String.IsNullOrEmpty(entrada.Observacoes))
+            {
+                result.Observacoes = entrada.Observacoes;
+            }
+            if (!String.IsNullOrEmpty(entrada.Mediakm))
+            {
+                result.Mediakm = entrada.Mediakm;
             }
             if (!String.IsNullOrEmpty(entrada.Kmservico))
             {
@@ -62,13 +75,9 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             {
                 result.Kmatual = entrada.Kmatual;
             }
-            if ((entrada.Id > 0))
-            {
-                result.Id = entrada.Id;
-            }
-            _manutenceRepository.Update(result);
+            
+            _manutenceRepository.UpdateManutence(result);
             return new ReturnDefault("Dados modificados com sucesso.", result);
-
         }
     }
 }

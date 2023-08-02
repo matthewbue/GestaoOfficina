@@ -9,8 +9,8 @@ namespace GestaoOfficinaProj.Infra.Interface
 {
     public interface IManutenceRepository
     {
-        Task<Manutence> Create(Manutence entrada);
-        void Update(Manutence entrada);
+        void Create(Manutence entrada);
+        void UpdateManutence(Manutence entrada);
         Task<Manutence> GetById(int entrada);
         void Delete(int entrada);
     }

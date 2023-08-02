@@ -51,6 +51,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Modelo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Observacoes")
+                        .HasColumnType("int");
+
                     b.Property<string>("Placa")
                         .HasColumnType("nvarchar(max)");
 
@@ -58,7 +61,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Automovel");
+                    b.ToTable("automovel");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
@@ -118,35 +121,38 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AutomovelId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Defeito")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IdCarro")
                         .HasColumnType("int");
 
-                    b.Property<string>("KMAtual")
+                    b.Property<string>("Kmatual")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Produto")
+                    b.Property<string>("Kmservico")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mediakm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Observacoes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Valor")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("automovelsId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AutomovelId");
-
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("automovelsId");
 
                     b.ToTable("Manutences");
                 });
@@ -190,15 +196,19 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
                 {
-                    b.HasOne("GestaoOfficina.Domain.Model.Automovel", null)
-                        .WithMany("Manutences")
-                        .HasForeignKey("AutomovelId");
-
-                    b.HasOne("GestaoOfficina.Domain.Model.Client", null)
+                    b.HasOne("GestaoOfficina.Domain.Model.Client", "Clients")
                         .WithMany("Manutences")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("GestaoOfficina.Domain.Model.Automovel", "automovels")
+                        .WithMany("Manutences")
+                        .HasForeignKey("automovelsId");
+
+                    b.Navigation("Clients");
+
+                    b.Navigation("automovels");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>

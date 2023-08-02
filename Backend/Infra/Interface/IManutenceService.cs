@@ -14,7 +14,7 @@ namespace GestaoOfficinaProj.Infra.Interface
         Task<ReturnDefault> Create(ManutenceCreateDTO entrada);
         Task<ReturnDefault> GetById(int entrada);
         ReturnDefault Delete(int entrada);
-        Task<ReturnDefault> Update(ManutenceUpdateDTO entrada);
+        Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada);
         
     }
 }
