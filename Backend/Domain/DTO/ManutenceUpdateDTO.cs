@@ -13,10 +13,10 @@ namespace GestaoOfficinaProj.Domain.DTO
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string Kmatual { get; set; }
-        public string Kmservico { get; set; }
-        public string Valor { get; set; }
-        public string Mediakm { get; set; }
+        public decimal Kmatual { get; set; }
+        public decimal Kmservico { get; set; }
+        public double Valor { get; set; }
+        public decimal Mediakm { get; set; }
         public int Clientid { get; set; }
         public int Veiculoid { get; set; }
         public string Observacoes { get; set; }

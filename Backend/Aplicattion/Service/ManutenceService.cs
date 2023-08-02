@@ -55,26 +55,26 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             {
                 result.Nome = entrada.Nome;
             }
-            if (!String.IsNullOrEmpty(entrada.Valor))
-            {
-                result.Valor = entrada.Valor;
-            }
+            //if (!String.IsNullOrEmpty(entrada.Valor))
+            //{
+            //    result.Valor = entrada.Valor;
+            //}
             if (!String.IsNullOrEmpty(entrada.Observacoes))
             {
                 result.Observacoes = entrada.Observacoes;
             }
-            if (!String.IsNullOrEmpty(entrada.Mediakm))
-            {
-                result.Mediakm = entrada.Mediakm;
-            }
-            if (!String.IsNullOrEmpty(entrada.Kmservico))
-            {
-                result.Kmservico = entrada.Kmservico;
-            }
-            if (!String.IsNullOrEmpty(entrada.Kmatual))
-            {
-                result.Kmatual = entrada.Kmatual;
-            }
+            //if (!String.IsNullOrEmpty(entrada.Mediakm))
+            //{
+            //    result.Mediakm = entrada.Mediakm;
+            //}
+            //if (!String.IsNullOrEmpty(entrada.Kmservico))
+            //{
+            //    result.Kmservico = entrada.Kmservico;
+            //}
+            //if (!String.IsNullOrEmpty(entrada.Kmatual))
+            //{
+            //    result.Kmatual = entrada.Kmatual;
+            //}
             
             _manutenceRepository.UpdateManutence(result);
             return new ReturnDefault("Dados modificados com sucesso.", result);

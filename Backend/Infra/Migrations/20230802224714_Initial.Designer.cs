@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    [Migration("20230801184406_inicial1")]
-    partial class inicial1
+    [Migration("20230802224714_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,14 +130,14 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<int>("IdCarro")
                         .HasColumnType("int");
 
-                    b.Property<string>("Kmatual")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Kmatual")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Kmservico")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Kmservico")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Mediakm")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Mediakm")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
@@ -145,8 +145,11 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Observacoes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Valor")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Valor")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ValorTotal")
+                        .HasColumnType("float");
 
                     b.Property<int?>("automovelsId")
                         .HasColumnType("int");

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial1 : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,10 +86,11 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kmatual = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kmservico = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Valor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Mediakm = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Kmatual = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Kmservico = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Valor = table.Column<double>(type: "float", nullable: false),
+                    ValorTotal = table.Column<double>(type: "float", nullable: false),
+                    Mediakm = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdCarro = table.Column<int>(type: "int", nullable: false),
                     automovelsId = table.Column<int>(type: "int", nullable: true),

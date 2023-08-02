@@ -9,9 +9,10 @@ namespace GestaoOfficinaProj.Domain.DTO
     public class OSCreateDTO
     {
         public string NomeServico { get; set; }
-        public string Kmatual { get; set; }
-        public string Kmservico { get; set; }
-        public string Valor { get; set; }
-        public string Mediakm { get; set; }
+        public decimal Kmatual { get; set; }
+        public decimal Kmservico { get; set; }
+        public double Valor { get; set; }
+        public double ValorTotal { get; set; }
+        public decimal Mediakm { get; set; }
     }
 }
