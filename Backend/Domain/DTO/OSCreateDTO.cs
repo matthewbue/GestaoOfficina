@@ -12,7 +12,7 @@ namespace GestaoOfficinaProj.Domain.DTO
         public decimal Kmatual { get; set; }
         public decimal Kmservico { get; set; }
         public double Valor { get; set; }
-        public double ValorTotal { get; set; }
+
         public decimal Mediakm { get; set; }
     }
 }
