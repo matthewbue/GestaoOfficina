@@ -17,6 +17,19 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
         }
+
+        public void CheckoutOS(int identificadorOS)
+        {
+            var produto = _gestaoOfficinaContext.Manutences.Find(identificadorOS);
+
+            if (produto != null)
+            {
+                 produto.Status = "Concluido";
+                _gestaoOfficinaContext.SaveChanges();
+            }
+             
+        }
+
         public void Create(Manutence entrada)
         {
             try
@@ -36,6 +49,19 @@ namespace GestaoOfficinaProj.Infra.Repository
             var resultdelete = _gestaoOfficinaContext.Manutences.Where(r => r.Id == entrada).FirstOrDefault();
             _gestaoOfficinaContext.Manutences.Remove(resultdelete);
             _gestaoOfficinaContext.SaveChanges();
+        }
+
+        public List<Manutence> GetAllOS()
+        {
+            try
+            {
+                var result = _gestaoOfficinaContext.Manutences.Include(c => c.Clients).OrderBy(c => c.Id).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<Manutence> GetById(int entrada)

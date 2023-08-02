@@ -67,5 +67,33 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
+    
+    [HttpGet("GetAllOS")]
+    public async Task<IActionResult> GetAllOS()
+    {
+        try
+        {
+            var result = _manutenceService.GetAllOS();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
+    }
+
+        [HttpGet("CheckoutOS")]
+        public async Task<IActionResult> CheckoutOS(int identificadorOS)
+        {
+            try
+            {
+                var result = _manutenceService.CheckoutOS(identificadorOS);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

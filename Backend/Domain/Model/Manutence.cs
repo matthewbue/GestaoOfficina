@@ -17,6 +17,8 @@ namespace GestaoOfficina.Domain.Model
         public double ValorTotal { get; set; }
         public decimal Mediakm { get; set;}
         public string Observacoes { get; set; }
+        public string Status { get; set; }
+        public DateTime DataOS { get; set; }
 
         [ForeignKey("Automovel")]
         public int IdCarro { get; set; }

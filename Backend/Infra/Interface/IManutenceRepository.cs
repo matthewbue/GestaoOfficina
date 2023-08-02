@@ -13,5 +13,7 @@ namespace GestaoOfficinaProj.Infra.Interface
         void UpdateManutence(Manutence entrada);
         Task<Manutence> GetById(int entrada);
         void Delete(int entrada);
+        List<Manutence> GetAllOS();
+        void CheckoutOS(int identificadorOS);
     }
 }

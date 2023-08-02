@@ -124,6 +124,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DataOS")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdCarro")
                         .HasColumnType("int");
 
@@ -140,6 +143,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observacoes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Valor")

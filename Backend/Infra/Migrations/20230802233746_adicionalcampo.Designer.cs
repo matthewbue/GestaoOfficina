@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    [Migration("20230802224714_Initial")]
-    partial class Initial
+    [Migration("20230802233746_adicionalcampo")]
+    partial class adicionalcampo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,6 +127,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DataOS")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdCarro")
                         .HasColumnType("int");
 
@@ -143,6 +146,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observacoes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Valor")

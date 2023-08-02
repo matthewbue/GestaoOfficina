@@ -31,6 +31,8 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 objeto.ClientId = entrada.Clientid;
                 objeto.IdCarro = entrada.Veiculoid;
                 objeto.Observacoes = entrada.Observacoes;
+                objeto.DataOS = DateTime.Now;
+                objeto.Status = "Em Andamento";
                 listaresult.Add(objeto);
             }
              _manutenceRepository.Create(objeto);
@@ -48,6 +50,12 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 
+        public async Task<ReturnDefault> GetAllOS()
+        {
+            var result =  _manutenceRepository.GetAllOS();
+            return new ReturnDefault("Dados retornado com sucesso.", result);
+        }
+
         public async Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada)
         {
             var result = await _manutenceRepository.GetById(entrada.Id);
@@ -55,29 +63,35 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             {
                 result.Nome = entrada.Nome;
             }
-            //if (!String.IsNullOrEmpty(entrada.Valor))
-            //{
-            //    result.Valor = entrada.Valor;
-            //}
+            if (entrada.Valor > 0)
+            {
+                result.Valor = entrada.Valor;
+            }
             if (!String.IsNullOrEmpty(entrada.Observacoes))
             {
                 result.Observacoes = entrada.Observacoes;
             }
-            //if (!String.IsNullOrEmpty(entrada.Mediakm))
-            //{
-            //    result.Mediakm = entrada.Mediakm;
-            //}
-            //if (!String.IsNullOrEmpty(entrada.Kmservico))
-            //{
-            //    result.Kmservico = entrada.Kmservico;
-            //}
-            //if (!String.IsNullOrEmpty(entrada.Kmatual))
-            //{
-            //    result.Kmatual = entrada.Kmatual;
-            //}
-            
+            if (entrada.Mediakm > 0)
+            {
+                result.Mediakm = entrada.Mediakm;
+            }
+            if (entrada.Kmservico > 0)
+            {
+                result.Kmservico = entrada.Kmservico;
+            }
+            if (entrada.Kmatual > 0 )
+            {
+                result.Kmatual = entrada.Kmatual;
+            }
+
             _manutenceRepository.UpdateManutence(result);
             return new ReturnDefault("Dados modificados com sucesso.", result);
+        }
+
+        public ReturnDefault CheckoutOS(int IdentificadorOS)
+        {
+            _manutenceRepository.CheckoutOS(IdentificadorOS);
+            return new ReturnDefault("Dados modificados com sucesso.", "sucess");
         }
     }
 }

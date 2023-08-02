@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class adicionalcampo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,6 +92,8 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     ValorTotal = table.Column<double>(type: "float", nullable: false),
                     Mediakm = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataOS = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdCarro = table.Column<int>(type: "int", nullable: false),
                     automovelsId = table.Column<int>(type: "int", nullable: true),
                     ClientId = table.Column<int>(type: "int", nullable: false)
