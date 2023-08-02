@@ -8,7 +8,7 @@ namespace GestaoOfficinaProj.Domain.DTO
 {
     public class OSCreateDTO
     {
-        public string Nome { get; set; }
+        public string NomeServico { get; set; }
         public string Kmatual { get; set; }
         public string Kmservico { get; set; }
         public string Valor { get; set; }
