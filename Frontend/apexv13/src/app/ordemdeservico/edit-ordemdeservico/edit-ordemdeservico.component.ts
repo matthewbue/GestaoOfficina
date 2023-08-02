@@ -88,24 +88,25 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   gerarOrdemServico() {
     // Crie um objeto contendo os dados da ordem de serviço a serem enviados para o backend
+    const valorTotal = this.calcularValorTotal(); // Calcular o valor total dos serviços
     const ordemServicoData = {
       clienteId: this.cliente.id,
-      veiculo: {
-        marca: this.marcaSelecionada,
-        placa: this.formVeiculo.get('placa')?.value,
-        cor: this.formVeiculo.get('cor')?.value,
-        ano: this.formVeiculo.get('ano')?.value,
-        modelo: this.formVeiculo.get('modelo')?.value,
-        km: this.formVeiculo.get('km')?.value,
-      },
-      servicos: this.servicos,
-      kmAtual: this.formOrdemServico.get('KmAtual')?.value,
-      kmServico: this.formOrdemServico.get('KmServico')?.value,
-      mediaKm: this.formOrdemServico.get('mediaKm')?.value,
-      observacoes: this.formOrdemServico.get('observacoes')?.value
+      veiculoId: this.veiculoSelecionado.id,
+      manutences: this.servicos.map(servico => {
+        return {
+          nome: servico.nome,
+          kmatual: this.formOrdemServico.get('KmAtual')?.value,
+          kmservico: this.formOrdemServico.get('KmServico')?.value,
+          mediakm: this.formOrdemServico.get('mediaKm')?.value,
+          valor: servico.valor,
+        };
+      }),
+      observacoes: this.formOrdemServico.get('observacoes')?.value,
+      valortotal: valorTotal // Adicionar o valor total ao objeto
     };
     console.log(ordemServicoData)
   }
+
 
   onSelectMarca(event: any) {
     this.marcaSelecionada = event;
@@ -114,6 +115,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     if (this.veiculoSelecionado) {
       this.formVeiculo.patchValue({
+        veiculoId: this.veiculoSelecionado.id,
         placa: this.veiculoSelecionado.placa,
         cor: this.veiculoSelecionado.cor,
         ano: this.veiculoSelecionado.ano,
