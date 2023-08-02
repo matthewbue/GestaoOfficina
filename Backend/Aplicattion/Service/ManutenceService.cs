@@ -20,7 +20,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         {
             Manutence objeto = new Manutence();
             objeto.Valor = entrada.Valor;
-            objeto.Nome = entrada.Nome;
+            objeto.Nome = entrada.NomeServico;
             objeto.Valor = entrada.Valor;
             objeto.Kmservico = entrada.Kmservico;
             objeto.Kmatual = entrada.Kmatual;
