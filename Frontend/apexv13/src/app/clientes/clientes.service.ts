@@ -44,7 +44,7 @@ export class ClientesService {
   }
 
   getFilterClientes(filterClientes: FilterClientes){
-    return this.httpClient.post<any>(`${environment.API}/Client/GetClientFilter`, filterClientes)
+    return this.httpClient.post<any>(`https://localhost:44391/Client/GetClientFilter`, filterClientes)
   }
 
   private handleError(err: HttpErrorResponse) {

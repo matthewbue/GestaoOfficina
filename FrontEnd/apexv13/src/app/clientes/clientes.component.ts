@@ -108,17 +108,17 @@ export class ClientesComponent implements OnInit {
     const nomeCliente = this.formCliente.value.nome;
     const placa = this.formCliente.value.placa;
 
-    const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, 1, 10);
+    const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, 1, 5);
     console.log(requestData);
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
-      this.totalPages = data.totalPagina
-      console.log("Filtro", this.totalPages);
+      console.log("Filtro", data.data);
 
       this.changeDetectorRef.detectChanges();
     });
   }
+
 
 
   getPaginationRange(): number[] {
