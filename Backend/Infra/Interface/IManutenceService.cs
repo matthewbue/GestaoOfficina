@@ -15,7 +15,7 @@ namespace GestaoOfficinaProj.Infra.Interface
         Task<ReturnDefault> GetById(int entrada);
         ReturnDefault Delete(int entrada);
         Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada);
-        Task<ReturnDefault> GetAllOS();
+        Task<ReturnDefault> GetFilterOS(OSFilterDTO FilterDTO);
         ReturnDefault CheckoutOS(int IdentificadorOS);
     }
 }

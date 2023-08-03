@@ -29,7 +29,7 @@ namespace GestaoOfficina.Domain.Model
         [ForeignKey("Manutence")]
 
         public int? ManutenceId { get; set; }
-        public virtual ICollection<Manutence> Manutences { get; set; }
+    //    public virtual ICollection<Manutence> Manutences { get; set; }
 
     }
 }

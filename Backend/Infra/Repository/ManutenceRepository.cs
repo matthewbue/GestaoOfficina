@@ -1,5 +1,6 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
+using GestaoOfficinaProj.Domain.DTO;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -51,12 +52,37 @@ namespace GestaoOfficinaProj.Infra.Repository
             _gestaoOfficinaContext.SaveChanges();
         }
 
-        public List<Manutence> GetAllOS()
+        public async Task<List<Manutence>> GetFilterOS(OSFilterDTO entrada)
         {
             try
             {
-                var result = _gestaoOfficinaContext.Manutences.Include(c => c.Clients).OrderBy(c => c.Id).ToList();
-                return result;
+                var queryResult = _gestaoOfficinaContext.Manutences.Include(C => C.Clients).AsQueryable();
+
+                if (!String.IsNullOrEmpty(entrada.NomeCliente))
+                {
+                    queryResult = queryResult.Where(_ => _.Clients.Nome.Contains(entrada.NomeCliente));
+                }
+                if (entrada.NumeroOS > 0)
+                {
+                    queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
+                }
+                if (entrada.NumeroOS > 0)
+                {
+                    queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
+                }
+                if (entrada.DataAberturaOS != null)
+                {
+                    queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
+                }
+                if (!String.IsNullOrEmpty(entrada.Placa))
+                {
+                    queryResult = queryResult.Where(_ => _.automovels.Placa == entrada.Placa);
+                }
+                var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
+
+
+
+                return paginatedResult;
             }
             catch (Exception ex)
             {
@@ -89,6 +115,33 @@ namespace GestaoOfficinaProj.Infra.Repository
                 throw new Exception(ex.Message);
             }
            
+        }
+
+        public async Task<int> CountOS(OSFilterDTO entrada)
+        {
+            var queryResult = _gestaoOfficinaContext.Manutences.Include(C => C.Clients).AsQueryable();
+
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
+            }
+            if (entrada.NumeroOS > 0)
+            {
+                queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
+            }
+            if (entrada.NumeroOS > 0)
+            {
+                queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
+            }
+            if (entrada.DataAberturaOS != null)
+            {
+                queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
+            }
+            if (!String.IsNullOrEmpty(entrada.Placa))
+            {
+                queryResult = queryResult.Where(_ => _.automovels.Placa == entrada.Placa);
+            }
+            return queryResult.Count();
         }
     }
 }

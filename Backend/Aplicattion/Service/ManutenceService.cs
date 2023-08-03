@@ -50,9 +50,18 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 
-        public async Task<ReturnDefault> GetAllOS()
+        public async Task<ReturnDefault> GetFilterOS(OSFilterDTO FilterDTO)
         {
-            var result =  _manutenceRepository.GetAllOS();
+            var result = await _manutenceRepository.GetFilterOS(FilterDTO);
+            int count = await _manutenceRepository.CountOS(FilterDTO);
+            var TotalperPag = (count % FilterDTO.PageSize).Equals(0) ? (count / FilterDTO.PageSize) : (count / FilterDTO.PageSize) + 1;
+
+            var response = new ReturnDefault("Dados retornado com sucesso.", result);
+            response.totalDados = count;
+            response.totalPagina = TotalperPag.Value;
+            return response;
+         
+            
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
 
