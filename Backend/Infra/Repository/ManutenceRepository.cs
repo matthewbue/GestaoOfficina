@@ -58,10 +58,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 var queryResult = _gestaoOfficinaContext.Manutences.Include(C => C.Clients).AsQueryable();
 
-                if (!String.IsNullOrEmpty(entrada.NomeCliente))
-                {
-                    queryResult = queryResult.Where(_ => _.Clients.Nome.Contains(entrada.NomeCliente));
-                }
+          
                 if (entrada.NumeroOS > 0)
                 {
                     queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
@@ -82,6 +79,10 @@ namespace GestaoOfficinaProj.Infra.Repository
 
                 foreach (var item in paginatedResult)
                 {
+                    if (!String.IsNullOrEmpty(entrada.NomeCliente))
+                    {
+                        item.Clients = await _gestaoOfficinaContext.Client.Where(n => n.Nome == entrada.NomeCliente).FirstOrDefaultAsync();
+                    }
                     item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId); 
 
                 }
