@@ -80,7 +80,11 @@ namespace GestaoOfficinaProj.Infra.Repository
                 }
                 var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
 
+                foreach (var item in paginatedResult)
+                {
+                    item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId); 
 
+                }
 
                 return paginatedResult;
             }
