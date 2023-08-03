@@ -81,11 +81,17 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     if (!String.IsNullOrEmpty(entrada.NomeCliente))
                     {
-                        item.Clients = await _gestaoOfficinaContext.Client.Where(n => n.Nome == entrada.NomeCliente).FirstOrDefaultAsync();
+                        item.Clients = await _gestaoOfficinaContext.Client.Where(_ => _.Nome.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
                     }
-                    item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId); 
+                    if (!String.IsNullOrEmpty(entrada.Placa))
+                    {
+                        item.Clients = await _gestaoOfficinaContext.Client.Where(_ => _.Nome.Contains(entrada.Placa)).FirstOrDefaultAsync();
+                    }
+                    item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
+                    item.automovels = await _gestaoOfficinaContext.automovel.FindAsync(item.ClientId);
 
                 }
+                
 
                 return paginatedResult;
             }
