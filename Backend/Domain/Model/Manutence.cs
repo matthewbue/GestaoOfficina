@@ -11,11 +11,11 @@ namespace GestaoOfficina.Domain.Model
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public decimal Kmatual { get; set; }
-        public decimal Kmservico { get; set; }
+        public double Kmatual { get; set; }
+        public double Kmservico { get; set; }
         public double Valor { get; set; }
         public double ValorTotal { get; set; }
-        public decimal Mediakm { get; set;}
+        public double Mediakm { get; set;}
         public string Observacoes { get; set; }
         public string Status { get; set; }
         public DateTime DataOS { get; set; }

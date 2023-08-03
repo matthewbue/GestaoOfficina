@@ -73,7 +73,7 @@ namespace GestaoOfficinaProj.Controllers
     {
         try
         {
-            var result = _manutenceService.GetAllOS();
+            var result = await _manutenceService.GetAllOS();
             return Ok(result);
         }
         catch (Exception ex)
