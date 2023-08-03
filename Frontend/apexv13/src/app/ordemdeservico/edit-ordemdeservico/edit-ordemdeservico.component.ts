@@ -40,6 +40,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   servicos: any[] = [];
   novoServico: string;
   novoValor: number;
+  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
