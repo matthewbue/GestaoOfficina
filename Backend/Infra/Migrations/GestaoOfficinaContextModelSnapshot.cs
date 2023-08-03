@@ -124,6 +124,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ClientsId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DataOS")
                         .HasColumnType("datetime2");
 
@@ -159,7 +162,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientsId");
 
                     b.HasIndex("automovelsId");
 
@@ -206,10 +209,8 @@ namespace GestaoOfficinaProj.Infra.Migrations
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
                 {
                     b.HasOne("GestaoOfficina.Domain.Model.Client", "Clients")
-                        .WithMany("Manutences")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ClientsId");
 
                     b.HasOne("GestaoOfficina.Domain.Model.Automovel", "automovels")
                         .WithMany("Manutences")
@@ -228,8 +229,6 @@ namespace GestaoOfficinaProj.Infra.Migrations
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
                 {
                     b.Navigation("Automoveis");
-
-                    b.Navigation("Manutences");
                 });
 #pragma warning restore 612, 618
         }

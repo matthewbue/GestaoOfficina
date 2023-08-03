@@ -68,12 +68,12 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
     
-    [HttpGet("GetAllOS")]
-    public async Task<IActionResult> GetAllOS()
+    [HttpPost("GetFilterOS")]
+    public async Task<IActionResult> GetFilterOS(OSFilterDTO FilterDTO)
     {
         try
         {
-            var result = await _manutenceService.GetAllOS();
+            var result = await _manutenceService.GetFilterOS(FilterDTO);
             return Ok(result);
         }
         catch (Exception ex)
