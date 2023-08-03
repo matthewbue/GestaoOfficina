@@ -5,73 +5,39 @@
         <div class="content-header">
           <h1>Consultar Ordens de Serviço</h1>
         </div>
-        <form>
+        <form [formGroup]="formSearchOs" >
           <div class="card-content">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
                   <fieldset class="form-group">
-                    <label for="numeroAgendamento">Ordem Número:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nome"
-                      formControlName="nome"
-                      placeholder="Número da OS"
-                    />
+                    <label for="ordemNumero">Ordem Número:</label>
+                    <input type="number" class="form-control" id="ordemNumero" formControlName="ordemNumero"
+                      placeholder="Número da OS" />
                   </fieldset>
 
                   <fieldset class="form-group">
-                    <label for="cpfcnpj">Nome do cliente:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cpfcnpj"
-                      formControlName="cpfcnpj"
-                      placeholder="Nome do cliente"
-                    />
+                    <label for="nomeCliente">Nome do cliente:</label>
+                    <input type="text" class="form-control" id="nomeCliente" formControlName="nomeCliente"
+                      placeholder="Nome do cliente" />
                   </fieldset>
-                  <!-- <fieldset class="form-group">
-                    <label for="dataAgendamento">Data:</label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="dataAgendamento"
-                      formControlName="dataAgendamento"
-                    />
-                  </fieldset> -->
+                  
                 </div>
                 <div class="col-md-6">
-                  <!-- <fieldset class="form-group">
-                    <label for="statusAgendamento">Status:</label>
-                    <select
-                      class="form-control"
-                      id="statusAgendamento"
-                      formControlName="statusAgendamento"
-                    >
-                      <option></option>
-                    </select>
-                  </fieldset> -->
+                  
 
                   <fieldset class="form-group">
-                    <label for="cpfcnpj">Status:</label>
-                    <ng-select
-                      [clearable]="false"
-                      id="residuoContrato"
-                      formControlName="statusOS"
-                    >
-                      <ng-option> Em aberto </ng-option>
-                      <ng-option> Finalizado </ng-option>
+                    <label for="statusOs">Status:</label>
+                    <ng-select [clearable]="false" id="statusOs" (change)="onSelectStatus($event)">
+                      <ng-option>Em andamento</ng-option>
+                      <ng-option>Finalizado</ng-option>
                     </ng-select>
                   </fieldset>
 
                   <button type="submit" class="btn btn-light mt-4 float-right">
                     Limpar
                   </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary mt-4 mr-2 float-right"
-                  >
+                  <button type="submit" class="btn btn-primary mt-4 mr-2 float-right" (click)="searchOs()" >
                     Buscar
                   </button>
                 </div>
@@ -107,33 +73,19 @@
                 </tr>
               </thead>
 
-              <tbody>
-                <tr>
-                  <td class="text-truncate" id="numeroOS"></td>
-                  <td class="text-truncate"></td>
-                  <td class="text-truncate"></td>
-                  <td class="text-truncate"></td>
-                  <td class="text-truncate"></td>
-
+              <tbody >
+                <tr *ngFor="let os of data">
+                  <td class="text-truncate"> {{ os.id }} </td>
+                  <td class="text-truncate"> {{ os.clients.nome }} </td>
+                  <td class="text-truncate"> Marca </td>
+                  <td class="text-truncate"> Placa </td>
+                  <td class="text-truncate"> {{ os.status }} </td>
+                  
                   <td class="text-truncate">
-                    <a class="info p-0" title="Visualizar OS"
-                      ><i class="ft-search font-medium-3 mr-2"></i
-                    ></a>
-
-                    <a class="success p-0" title="Editar OS"
-                      ><i class="ft-edit font-medium-3 mr-2"></i
-                    ></a>
-
-                    <a href="javascript:;" title="Excluir OS" class="danger p-0"
-                      ><i class="ft-x font-medium-3 mr-2"></i
-                    ></a>
-
-                    <a
-                      href="javascript:;"
-                      title="Finalizar OS"
-                      class="dark p-0 mr-2"
-                      ><i class="ft-check font-medium-3"></i
-                    ></a>
+                    <a class="info p-0" title="Visualizar OS"><i class="ft-search font-medium-3 mr-2"></i></a>                    
+                    <a class="success p-0" title="Editar OS"><i class="ft-edit font-medium-3 mr-2"></i></a>                    
+                    <a href="javascript:;" title="Excluir OS" class="danger p-0"><i class="ft-x font-medium-3 mr-2"></i></a>                      
+                    <a href="javascript:;" title="Finalizar OS" class="dark p-0 mr-2"><i class="ft-check font-medium-3"></i></a>
                   </td>
                 </tr>
               </tbody>
