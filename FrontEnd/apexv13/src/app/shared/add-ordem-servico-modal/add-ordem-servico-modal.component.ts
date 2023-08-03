@@ -74,6 +74,11 @@ export class AddOrdemServicoModalComponent implements OnInit {
     });
   }
 
+  new() {
+    this.router.navigate(["clientes/new"]);
+    this.modalService.hide();
+  }
+
   novaOS(id) {
     this.router.navigate(["ordemdeservico/new"], {
       queryParams: { clienteId: id}
