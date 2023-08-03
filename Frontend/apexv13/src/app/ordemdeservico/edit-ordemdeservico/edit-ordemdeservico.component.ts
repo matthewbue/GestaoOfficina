@@ -6,6 +6,9 @@ import { Automovel } from 'app/shared/Model/Automovel';
 import { Clientes } from 'app/shared/Model/Clientes';
 import { AlertModalService } from 'app/shared/services/alert-modal.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { OrdemdeServicoService } from '../ordemdeservico.service';
+import { switchMap, take } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-edit-ordemdeservico',
@@ -19,6 +22,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private router: Router,
     private alertService: AlertModalService,
     private clienteService: ClientesService,
+    private osService: OrdemdeServicoService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
     private fb: FormBuilder
@@ -87,10 +91,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
 
   gerarOrdemServico() {
-    // Crie um objeto contendo os dados da ordem de serviço a serem enviados para o backend
-    const valorTotal = this.calcularValorTotal(); // Calcular o valor total dos serviços
+    const valorTotal = this.calcularValorTotal();
     const ordemServicoData = {
-      clienteId: this.cliente.id,
+      clientId: this.cliente.id,
       veiculoId: this.veiculoSelecionado.id,
       manutences: this.servicos.map(servico => {
         return {
@@ -102,9 +105,29 @@ export class EditOrdemdeservicoComponent implements OnInit {
         };
       }),
       observacoes: this.formOrdemServico.get('observacoes')?.value,
-      valortotal: valorTotal // Adicionar o valor total ao objeto
+      valortotal: valorTotal
     };
     console.log(ordemServicoData)
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja criar essa Ordem de Serviço?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.osService.createOrdemServico(ordemServicoData)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (os) => {
+          window.location.reload();
+        },
+        (error) => console.error(error)
+      );
   }
 
 

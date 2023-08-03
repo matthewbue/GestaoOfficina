@@ -12,7 +12,7 @@ export class ClientesService {
   constructor(private httpClient: HttpClient) { }
 
   createClient(clientes) {
-    return this.httpClient.post(`${environment.API}/Client/Create`, clientes);
+    return this.httpClient.post(`https://localhost:44391/Client/Create`, clientes);
   }
 
   getAllClient() {
