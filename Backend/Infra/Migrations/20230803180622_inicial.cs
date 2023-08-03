@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class adicionalcampo : Migration
+    public partial class inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,19 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Client", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "servicoManutences",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_servicoManutences", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,11 +99,11 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kmatual = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Kmservico = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Kmatual = table.Column<double>(type: "float", nullable: false),
+                    Kmservico = table.Column<double>(type: "float", nullable: false),
                     Valor = table.Column<double>(type: "float", nullable: false),
                     ValorTotal = table.Column<double>(type: "float", nullable: false),
-                    Mediakm = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Mediakm = table.Column<double>(type: "float", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataOS = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -135,6 +148,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Manutences");
+
+            migrationBuilder.DropTable(
+                name: "servicoManutences");
 
             migrationBuilder.DropTable(
                 name: "User");

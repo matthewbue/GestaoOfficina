@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficina.Controllers
 {
-    [AllowAnonymous]
     [Route("[controller]")]
     [ApiController]
     public class ClientController : ControllerBase

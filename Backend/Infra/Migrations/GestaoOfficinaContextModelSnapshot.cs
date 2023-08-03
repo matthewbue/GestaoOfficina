@@ -194,6 +194,22 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.ServicoManutence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("servicoManutences");
+                });
+
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
                 {
                     b.HasOne("GestaoOfficina.Domain.Model.Client", null)
