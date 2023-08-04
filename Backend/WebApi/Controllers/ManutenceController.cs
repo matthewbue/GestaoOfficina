@@ -59,7 +59,7 @@ namespace GestaoOfficinaProj.Controllers
         {
             try
             {
-                var result = _manutenceService.GetById(entrada);
+                var result = await _manutenceService.GetById(entrada);
                 return Ok(result);
             }
             catch (Exception ex)
