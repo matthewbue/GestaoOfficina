@@ -1,4 +1,5 @@
 ﻿using GestaoOfficina.Domain.Model;
+using GestaoOfficinaProj.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace GestaoOfficinaProj.Domain.DTO
         public int Clientid { get; set; }
 
         public int Veiculoid { get; set; }
-        public ICollection<OSCreateDTO> manutences { get; set; } // criar lista com campos do trello 
+        public ICollection<ManutenceServico> manutences { get; set; } // criar lista com campos do trello 
 
         public double ValorTotal { get; set; }
         public string Observacoes { get; set; }

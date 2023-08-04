@@ -36,7 +36,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "servicoManutences",
+                name: "Servico",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -45,7 +45,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_servicoManutences", x => x.Id);
+                    table.PrimaryKey("PK_Servico", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +66,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "automovel",
+                name: "Automovel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -83,9 +83,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_automovel", x => x.Id);
+                    table.PrimaryKey("PK_Automovel", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_automovel_Client_ClientId",
+                        name: "FK_Automovel_Client_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Client",
                         principalColumn: "Id",
@@ -98,65 +98,92 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Kmatual = table.Column<double>(type: "float", nullable: false),
-                    Kmservico = table.Column<double>(type: "float", nullable: false),
-                    Valor = table.Column<double>(type: "float", nullable: false),
                     ValorTotal = table.Column<double>(type: "float", nullable: false),
-                    Mediakm = table.Column<double>(type: "float", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataOS = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdCarro = table.Column<int>(type: "int", nullable: false),
-                    automovelsId = table.Column<int>(type: "int", nullable: true),
+                    AutomovelId = table.Column<int>(type: "int", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
-                    ClientsId = table.Column<int>(type: "int", nullable: true)
+                    ClientsId = table.Column<int>(type: "int", nullable: true),
+                    ManutenceServicoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Manutences", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Manutences_Automovel_AutomovelId",
+                        column: x => x.AutomovelId,
+                        principalTable: "Automovel",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Manutences_Client_ClientsId",
                         column: x => x.ClientsId,
                         principalTable: "Client",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ManutenceServico",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Valor = table.Column<double>(type: "float", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Kmatual = table.Column<double>(type: "float", nullable: false),
+                    Kmservico = table.Column<double>(type: "float", nullable: false),
+                    Mediakm = table.Column<double>(type: "float", nullable: false),
+                    ManutenceId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ManutenceServico", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Manutences_automovel_automovelsId",
-                        column: x => x.automovelsId,
-                        principalTable: "automovel",
+                        name: "FK_ManutenceServico_Manutences_ManutenceId",
+                        column: x => x.ManutenceId,
+                        principalTable: "Manutences",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_automovel_ClientId",
-                table: "automovel",
+                name: "IX_Automovel_ClientId",
+                table: "Automovel",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Manutences_automovelsId",
+                name: "IX_Manutences_AutomovelId",
                 table: "Manutences",
-                column: "automovelsId");
+                column: "AutomovelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Manutences_ClientsId",
                 table: "Manutences",
                 column: "ClientsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ManutenceServico_ManutenceId",
+                table: "ManutenceServico",
+                column: "ManutenceId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Manutences");
+                name: "ManutenceServico");
 
             migrationBuilder.DropTable(
-                name: "servicoManutences");
+                name: "Servico");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "automovel");
+                name: "Manutences");
+
+            migrationBuilder.DropTable(
+                name: "Automovel");
 
             migrationBuilder.DropTable(
                 name: "Client");

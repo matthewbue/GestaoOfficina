@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Infra.Repository
 {
-    public class ServicoManutenceRepository : IServicoManutenceRepository
+    public class ServicoRepository : IServicoRepository
     {
         private readonly GestaoOfficinaContext _gestaoOfficinaContext;
-        public ServicoManutenceRepository(GestaoOfficinaContext gestaoOfficinaContext)
+        public ServicoRepository(GestaoOfficinaContext gestaoOfficinaContext)
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
         }
 
-        public async Task<ServicoManutence> CreateServicoManutence(ServicoManutence entrada)
+        public async Task<Servico> CreateServicoManutence(Servico entrada)
         {
-            await _gestaoOfficinaContext.servicoManutences.AddAsync(entrada);
+            await _gestaoOfficinaContext.Servico.AddAsync(entrada);
             await _gestaoOfficinaContext.SaveChangesAsync();
             return entrada;
         }
 
-        public async Task<List<ServicoManutence>> GetAll()
+        public async Task<List<Servico>> GetAll()
         {
-            return _gestaoOfficinaContext.servicoManutences.ToList();
+            return _gestaoOfficinaContext.Servico.ToList();
         }
     }
 }

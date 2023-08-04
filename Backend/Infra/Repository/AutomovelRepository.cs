@@ -22,7 +22,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             try
             {
-                 _gestaoOfficinaContext.automovel.Add(entrada);
+                 _gestaoOfficinaContext.Automovel.Add(entrada);
                  _gestaoOfficinaContext.SaveChanges();
                 
             }
@@ -34,8 +34,8 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public void DeleteAutomovel(int identificador)
         {
-            var formulario = _gestaoOfficinaContext.automovel.Where(r => r.Id == identificador).FirstOrDefault();
-            _gestaoOfficinaContext.automovel.Remove(formulario);
+            var formulario = _gestaoOfficinaContext.Automovel.Where(r => r.Id == identificador).FirstOrDefault();
+            _gestaoOfficinaContext.Automovel.Remove(formulario);
             _gestaoOfficinaContext.SaveChanges();
         }
 
@@ -43,7 +43,7 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public async Task<Automovel> GetByIdAutomovel(int entrada)
         {
-            var result = _gestaoOfficinaContext.automovel.Where(x => x.Id == entrada).FirstOrDefault();
+            var result = _gestaoOfficinaContext.Automovel.Where(x => x.Id == entrada).FirstOrDefault();
             return result;
         }
 

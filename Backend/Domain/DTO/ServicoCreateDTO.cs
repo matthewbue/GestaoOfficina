@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Domain.DTO
 {
-    public class ServicoManutenceCreateDTO
+    public class ServicoCreateDTO
     {
         public string Descricao { get; set; }
     }

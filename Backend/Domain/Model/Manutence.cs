@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoOfficinaProj.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -10,22 +11,21 @@ namespace GestaoOfficina.Domain.Model
     public class Manutence
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public double Kmatual { get; set; }
-        public double Kmservico { get; set; }
-        public double Valor { get; set; }
         public double ValorTotal { get; set; }
-        public double Mediakm { get; set;}
         public string Observacoes { get; set; }
         public string Status { get; set; }
         public DateTime DataOS { get; set; }
 
         [ForeignKey("Automovel")]
-        public int IdCarro { get; set; }
+        public int AutomovelId { get; set; }
         public virtual Automovel automovels { get; set; }
 
         [ForeignKey("Client")]
         public int ClientId { get; set; }
         public virtual Client Clients { get; set; }
+
+        [ForeignKey("ManutenceServico")]
+        public int ManutenceServicoId { get; set; }
+        public virtual ICollection<ManutenceServico> ManutecesServicos { get; set; }
     }
 }

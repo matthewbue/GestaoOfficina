@@ -20,7 +20,7 @@ namespace GestaoOfficina.Aplicattion.DependecyInject
             services.AddScoped<IUserService ,UserService>();
             services.AddScoped<IManutenceService ,ManutenceService>();
             services.AddScoped<IAutomovelService, AutomovelService>();
-            services.AddScoped<IServicoManutenceService, ServicoManutenceService>();
+            services.AddScoped<IServicoService, ServicoService>();
             return services; 
         }
     }

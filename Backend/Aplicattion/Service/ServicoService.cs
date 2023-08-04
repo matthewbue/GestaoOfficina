@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Aplicattion.Service
 {
-    public class ServicoManutenceService : IServicoManutenceService
+    public class ServicoService : IServicoService
     {
-        private readonly IServicoManutenceRepository _servicoManutenceRepository;
-        public ServicoManutenceService( IServicoManutenceRepository servicoManutenceRepository)
+        private readonly IServicoRepository _servicoRepository;
+        public ServicoService(IServicoRepository servicoRepository)
         {
-            _servicoManutenceRepository = servicoManutenceRepository;
+            _servicoRepository = servicoRepository;
         }
 
-        public async Task<ReturnDefault> CreateServicoManutence(ServicoManutenceCreateDTO entrada)
+        public async Task<ReturnDefault> CreateServicoManutence(ServicoCreateDTO entrada)
         {
-            ServicoManutence objeto = new ServicoManutence();
+            Servico objeto = new Servico();
             objeto.Descricao = entrada.Descricao;
-            var result = await _servicoManutenceRepository.CreateServicoManutence(objeto);
+            var result = await _servicoRepository.CreateServicoManutence(objeto);
             return new ReturnDefault("Criação feita com sucesso.", objeto);
         }
         public async Task<ReturnDefault> GetAll()
         {
 
-            var result = await _servicoManutenceRepository.GetAll();
+            var result = await _servicoRepository.GetAll();
             return new ReturnDefault("Dados retornado com sucesso.", result);
         }
     }

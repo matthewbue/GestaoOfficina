@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Domain.Model
+namespace GestaoOfficinaProj.Domain.DTO
 {
-    public class ServicoManutence
-    { 
+    public class ServicoUpdateDTO
+    {
         public int Id { get; set; }
         public string Descricao { get; set; }
     }

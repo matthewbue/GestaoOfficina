@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    [Migration("20230803191727_Initial")]
+    [Migration("20230804220838_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("automovel");
+                    b.ToTable("Automovel");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
@@ -124,6 +124,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AutomovelId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
@@ -133,20 +136,8 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<DateTime>("DataOS")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCarro")
+                    b.Property<int>("ManutenceServicoId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Kmatual")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Kmservico")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Mediakm")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Observacoes")
                         .HasColumnType("nvarchar(max)");
@@ -154,20 +145,14 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Valor")
-                        .HasColumnType("float");
-
                     b.Property<double>("ValorTotal")
                         .HasColumnType("float");
 
-                    b.Property<int?>("automovelsId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientsId");
+                    b.HasIndex("AutomovelId");
 
-                    b.HasIndex("automovelsId");
+                    b.HasIndex("ClientsId");
 
                     b.ToTable("Manutences");
                 });
@@ -200,7 +185,40 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.ServicoManutence", b =>
+            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.ManutenceServico", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<double>("Kmatual")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Kmservico")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("ManutenceId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Mediakm")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Valor")
+                        .HasColumnType("float");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ManutenceId");
+
+                    b.ToTable("ManutenceServico");
+                });
+
+            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.Servico", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,7 +231,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("servicoManutences");
+                    b.ToTable("Servico");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
@@ -227,17 +245,26 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
                 {
+                    b.HasOne("GestaoOfficina.Domain.Model.Automovel", "automovels")
+                        .WithMany("Manutences")
+                        .HasForeignKey("AutomovelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("GestaoOfficina.Domain.Model.Client", "Clients")
                         .WithMany()
                         .HasForeignKey("ClientsId");
 
-                    b.HasOne("GestaoOfficina.Domain.Model.Automovel", "automovels")
-                        .WithMany("Manutences")
-                        .HasForeignKey("automovelsId");
-
                     b.Navigation("Clients");
 
                     b.Navigation("automovels");
+                });
+
+            modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.ManutenceServico", b =>
+                {
+                    b.HasOne("GestaoOfficina.Domain.Model.Manutence", null)
+                        .WithMany("ManutecesServicos")
+                        .HasForeignKey("ManutenceId");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
@@ -248,6 +275,11 @@ namespace GestaoOfficinaProj.Infra.Migrations
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
                 {
                     b.Navigation("Automoveis");
+                });
+
+            modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
+                {
+                    b.Navigation("ManutecesServicos");
                 });
 #pragma warning restore 612, 618
         }

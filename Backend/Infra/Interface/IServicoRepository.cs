@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Infra.Interface
 {
-    public interface IServicoManutenceRepository
+    public interface IServicoRepository
     {
-        public Task<ServicoManutence> CreateServicoManutence(ServicoManutence entrada);
-        public Task<List<ServicoManutence>> GetAll();
+        public Task<Servico> CreateServicoManutence(Servico entrada);
+        public Task<List<Servico>> GetAll();
     }
 }

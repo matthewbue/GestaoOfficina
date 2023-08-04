@@ -35,7 +35,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             try
             {
-                 _gestaoOfficinaContext.Manutences.AddRange(entrada);
+                 _gestaoOfficinaContext.Manutences.Add(entrada);
                  _gestaoOfficinaContext.SaveChanges();
                
             }
@@ -88,7 +88,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                         item.Clients = await _gestaoOfficinaContext.Client.Where(_ => _.Nome.Contains(entrada.Placa)).FirstOrDefaultAsync();
                     }
                     item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
-                    item.automovels = await _gestaoOfficinaContext.automovel.FindAsync(item.ClientId);
+                    item.automovels = await _gestaoOfficinaContext.Automovel.FindAsync(item.ClientId);
 
                 }
                 
@@ -132,10 +132,10 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             var queryResult = _gestaoOfficinaContext.Manutences.Include(C => C.Clients).AsQueryable();
 
-            if (!String.IsNullOrEmpty(entrada.NomeCliente))
-            {
-                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
-            }
+            //if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            //{
+            //    queryResult = queryResult.Where(_ => _..Contains(entrada.NomeCliente));
+            //}
             if (entrada.NumeroOS > 0)
             {
                 queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
