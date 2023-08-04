@@ -1,5 +1,5 @@
 <!--------------------------------------------------CRIAR-ORDEM-DE-SERVIÇO------------------------------------------------------->
-<div>
+<div *ngIf=" tipo != 'visualizar' && tipo != 'editar'">
   <section>
     <div class="col-12">
       <div class="content-header">
@@ -133,13 +133,24 @@
 
             <div class="col-md-12 mt-4">
               <h3>Adicionar Serviços</h3>
+              <div class="col-md-3">
+                
+              </div>
               <div class="row">
                 <div class="col-md-6">
+                  <label for="servico">Serviço:</label>
+                  <ng-select (change)="onSelectServico($event)">
+                    <ng-option *ngFor="let listServicos of servicosList" [value]="listServicos.descricao">
+                      {{ listServicos.descricao }}
+                    </ng-option>
+                  </ng-select>
+                </div>
+                <!-- <div class="col-md-6">
                   <div class="form-group">
                     <label for="servico">Serviço:</label>
                     <input maxlength="100" id="servico" type="text" class="form-control" [(ngModel)]="novoServico" />
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="valorServico">Valor do Serviço (R$):</label>
@@ -243,6 +254,255 @@
             </div>
           </div>
         </div>
+        <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
+          Voltar
+        </button> 
+      </div>
+    </div>
+  </section>
+</div>
+
+<!--------------------------------------------------VISUALIZAR-ORDEM-DE-SERVIÇO-------------------------------------------------->
+<div *ngIf=" tipo == 'visualizar'">
+  <section>
+    <div class="col-12">
+      <div class="content-header">
+        <h1>Visualizar de Ordem de Serviço</h1>
+      </div>
+    </div>
+   
+  </section>
+  <section>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="ordem-servico-cadastro">
+
+            <!-- <div class="col-md-12 mt-4">
+              <h3>Adicionar Serviços</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="servico">Serviço:</label>
+                    <input maxlength="100" id="servico" type="text" class="form-control" disabled />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="valorServico">Valor do Serviço (R$):</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                      </div>
+                      <input maxlength="100" id="valorServico" type="number" class="form-control"
+                        [(ngModel)]="novoValor" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="adicionarServico()">Adicionar
+                      Serviço</button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-12 mt-4">
+              <h3>Lista de Serviços</h3>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Serviço</th>
+                    <th>Valor (R$)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> {{ ordemServico.nome }} </td>
+                    <td> {{ ordemServico.valor }} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+
+            <div class="col-md-2 mt-4">
+              <div class="form-group">
+                <label for="valorTotal">Valor Total (R$):</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">R$</span>
+                  </div>
+                  <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
+                    value="{{ ordemServico.valorTotal }}" disabled />
+                </div>
+              </div>
+            </div>
+            <form class="col-md-12 mt-4" novalidate>
+              <div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="kmAtual">Km Atual Veículo:</label>
+                      <div class="input-group">
+                        <input maxlength="100" id="kmAtual" type="number" class="form-control"
+                          formControlName="KmAtual" value="{{ ordemServico.kmatual }}" disabled/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="KmServico">Km do Serviço:</label>
+                      <input maxlength="100" id="KmServico" type="number" class="form-control"
+                        formControlName="KmServico" value="{{ ordemServico.kmservico }}"  disabled />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="mediaKm">Média por dia:</label>
+                      <div class="input-group">
+                        <input maxlength="100" id="mediaKm" type="number" class="form-control"
+                          formControlName="mediaKm" value="{{ ordemServico.mediakm }}" disabled/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="observacoes">Observações:</label>
+                  <textarea maxlength="500" id="observacoes" class="form-control" formControlName="observacoes"
+                    rows="3"  value="{{ ordemServico.observacoes }}" disabled></textarea>
+                </div>
+              </div>
+            </form>    
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
+          Voltar
+        </button> 
+      </div>
+    </div>
+  </section>
+</div>
+
+<!--------------------------------------------------EDITAR-ORDEM-DE-SERVIÇO------------------------------------------------------>
+<div *ngIf=" tipo == 'editar'">
+  <section>
+    <div class="col-12">
+      <div class="content-header">
+        <h1>Editar de Ordem de Serviço</h1>
+      </div>
+    </div>
+   
+  </section>
+  <section>
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <div class="row" id="ordem-servico-cadastro">
+
+            <!-- <div class="col-md-12 mt-4">
+              <h3>Adicionar Serviços</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="servico">Serviço:</label>
+                    <input maxlength="100" id="servico" type="text" class="form-control" disabled />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="valorServico">Valor do Serviço (R$):</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">R$</span>
+                      </div>
+                      <input maxlength="100" id="valorServico" type="number" class="form-control"
+                        [(ngModel)]="novoValor" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="adicionarServico()">Adicionar
+                      Serviço</button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-12 mt-4">
+              <h3>Lista de Serviços</h3>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Serviço</th>
+                    <th>Valor (R$)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td> {{ ordemServico.nome }} </td>
+                    <td> {{ ordemServico.valor }} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            
+
+            <div class="col-md-2 mt-4">
+              <div class="form-group">
+                <label for="valorTotal">Valor Total (R$):</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">R$</span>
+                  </div>
+                  <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
+                    value="{{ ordemServico.valorTotal }}"  />
+                </div>
+              </div>
+            </div>
+            <form class="col-md-12 mt-4" novalidate>
+              <div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="kmAtual">Km Atual Veículo:</label>
+                      <div class="input-group">
+                        <input maxlength="100" id="kmAtual" type="number" class="form-control"
+                          formControlName="KmAtual" value="{{ ordemServico.kmatual }}" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="KmServico">Km do Serviço:</label>
+                      <input maxlength="100" id="KmServico" type="number" class="form-control"
+                        formControlName="KmServico" value="{{ ordemServico.kmservico }}"   />
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label for="mediaKm">Média por dia:</label>
+                      <div class="input-group">
+                        <input maxlength="100" id="mediaKm" type="number" class="form-control"
+                          formControlName="mediaKm" value="{{ ordemServico.mediakm }}" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="observacoes">Observações:</label>
+                  <textarea maxlength="500" id="observacoes" class="form-control" formControlName="observacoes"
+                    rows="3"  value="{{ ordemServico.observacoes }}" ></textarea>
+                </div>
+              </div>
+            </form>    
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
+          Voltar
+        </button> 
       </div>
     </div>
   </section>

@@ -31,6 +31,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 objeto.ClientId = entrada.Clientid;
                 objeto.IdCarro = entrada.Veiculoid;
                 objeto.Observacoes = entrada.Observacoes;
+                objeto.ValorTotal = entrada.ValorTotal;
                 objeto.DataOS = DateTime.Now;
                 objeto.Status = "Em Andamento";
                 listaresult.Add(objeto);

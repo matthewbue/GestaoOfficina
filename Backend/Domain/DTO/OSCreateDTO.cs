@@ -12,7 +12,6 @@ namespace GestaoOfficinaProj.Domain.DTO
         public double Kmatual { get; set; }
         public double Kmservico { get; set; }
         public double Valor { get; set; }
-
         public double Mediakm { get; set; }
     }
 }

@@ -108,7 +108,7 @@ export class ClientesComponent implements OnInit {
     const nomeCliente = this.formCliente.value.nome;
     const placa = this.formCliente.value.placa;
 
-    const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, 1, 5);
+    const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, this.currentPage, 10);
     console.log(requestData);
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
@@ -119,8 +119,6 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-
-
   getPaginationRange(): number[] {
     return Array.from({ length: this.totalPages }, (_, index) => index + 1);
   }
@@ -128,7 +126,17 @@ export class ClientesComponent implements OnInit {
   goToPage(page: number) {
     this.currentPage = page;
     const requestData = new FilterClientes("", "", "", this.currentPage, 10);
+
+    this.clienteService.getFilterClientes(requestData).subscribe((data) => {
+      this.clientes = data.data;
+      console.log("Filtro", data.data);
+
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
+  limparFiltro(){
+    this.formCliente.reset()
+  }
 
 }
