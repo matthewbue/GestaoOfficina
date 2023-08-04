@@ -20,7 +20,7 @@ export class ClientesService {
   }
 
   getClienteById(Id) {
-    return this.httpClient.get<any>(`${environment.API}/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
+    return this.httpClient.get<any>(`https://localhost:44391/Client/GetClientById?identificador=${Id}`).pipe(catchError(this.handleError));
   }
 
   deleteCliente(Id) {

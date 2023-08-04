@@ -9,6 +9,10 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { OrdemdeServicoService } from '../ordemdeservico.service';
 import { switchMap, take } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { FilterOsDto } from 'app/shared/Model/filterOsDto';
+import { Location } from '@angular/common';
+import { Servicos } from 'app/shared/Model/Servicos';
+
 
 @Component({
   selector: 'app-edit-ordemdeservico',
@@ -25,11 +29,14 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private osService: OrdemdeServicoService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
   ) { }
 
   clientes: Clientes[];
   cliente = new Clientes();
+  ordemServico = new FilterOsDto();
+  osId: any;
   tipo: string;
   clienteId: any;
   formVeiculo: FormGroup;
@@ -38,9 +45,11 @@ export class EditOrdemdeservicoComponent implements OnInit {
   marcaSelecionada: string;
   veiculoSelecionado: Automovel;
   servicos: any[] = [];
+  servicosList: Servicos[] = []
+  servicoSelected: any
   novoServico: string;
   novoValor: number;
-  
+
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -58,6 +67,17 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.cliente = data.data;
       console.log("Cliente By ID", this.cliente);
     });
+
+    this.route.queryParams.subscribe((params) => {
+      this.ordemServico.id = Number(params.osId);
+      this.tipo = params.tipo;
+    });
+    this.osId = this.ordemServico.id
+
+    this.osService.getOsById(this.osId).subscribe((response) => {
+      this.ordemServico = response.data      
+      console.log("OS", this.ordemServico)
+    })
 
     this.formVeiculo = this.fb.group({
       marca: [null],
@@ -89,6 +109,11 @@ export class EditOrdemdeservicoComponent implements OnInit {
       mediaKm: [null],
       observacoes: [null]
     });
+
+    this.osService.getServico().subscribe((response) => {
+      this.servicosList = response.data
+      console.log("Lista Serviços", this.servicosList)
+    })
   }
 
   gerarOrdemServico() {
@@ -98,10 +123,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
       veiculoId: this.veiculoSelecionado.id,
       manutences: this.servicos.map(servico => {
         return {
-          nome: servico.nome,
-          kmatual: this.formOrdemServico.get('KmAtual')?.value,
-          kmservico: this.formOrdemServico.get('KmServico')?.value,
-          mediakm: this.formOrdemServico.get('mediaKm')?.value,
+          nomeServico: servico.nome,
+          kmatual: this.formOrdemServico.get('KmAtual')?.value  == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
+          kmservico: this.formOrdemServico.get('KmServico')?.value   == null ? 0 : this.formOrdemServico.get('KmServico')?.value,
+          mediakm: this.formOrdemServico.get('mediaKm')?.value  == null ? 0 : this.formOrdemServico.get('mediaKm')?.value,
           valor: servico.valor,
         };
       }),
@@ -125,12 +150,16 @@ export class EditOrdemdeservicoComponent implements OnInit {
       )
       .subscribe(
         (os) => {
-          window.location.reload();
+          this.router.navigate(["ordemdeservico"]);
         },
         (error) => console.error(error)
       );
   }
 
+  onSelectServico(event: any) {
+    this.servicoSelected = event
+    console.log("Servico Select", this.servicoSelected)
+  }
 
   onSelectMarca(event: any) {
     this.marcaSelecionada = event;
@@ -150,8 +179,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
 
   adicionarServico() {
-    if (this.novoServico && this.novoValor) {
-      const novoServico = { nome: this.novoServico, valor: this.novoValor };
+    if (this.servicoSelected && this.novoValor) {
+      const novoServico = { nome: this.servicoSelected, valor: this.novoValor };
       this.servicos.push(novoServico);
       this.novoServico = '';
       this.novoValor = null;
@@ -167,6 +196,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   calcularValorTotal(): number {
     return this.servicos.reduce((total, servico) => total + servico.valor, 0);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

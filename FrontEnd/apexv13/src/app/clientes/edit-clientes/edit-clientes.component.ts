@@ -7,6 +7,8 @@ import { AlertModalService } from "app/shared/services/alert-modal.service";
 import { switchMap, take } from "rxjs/operators";
 import { ClientesService } from "../clientes.service";
 import { EMPTY, forkJoin } from "rxjs";
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: "app-edit-clientes",
@@ -20,6 +22,7 @@ export class EditClientesComponent implements OnInit {
     private alertService: AlertModalService,
     private clienteService: ClientesService,
     private route: ActivatedRoute,
+    private location: Location
 
   ) { }
   formVeiculo: FormGroup;
@@ -284,7 +287,7 @@ export class EditClientesComponent implements OnInit {
         )
         .subscribe(
           (clientes) => {
-            this.router.navigate(["clientes"]);
+            this.location.back();
           },
           (error) => console.error(error)
         );
@@ -297,7 +300,7 @@ export class EditClientesComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(["clientes"]);
+    this.location.back();    
   }
 
   newOS() {
