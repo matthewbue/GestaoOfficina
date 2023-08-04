@@ -75,7 +75,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     queryResult = queryResult.Where(_ => _.automovels.Placa == entrada.Placa);
                 }
-                var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
+                var paginatedResult = await queryResult.OrderBy(i => i.Id).Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
 
                 foreach (var item in paginatedResult)
                 {
