@@ -30,9 +30,11 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private modalService: BsModalService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private location: Location
+    private location: Location,
+    
   ) { }
 
+  public isCollapsed = true;
   clientes: Clientes[];
   cliente = new Clientes();
   ordemServico = new FilterOsDto();
@@ -41,6 +43,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   clienteId: any;
   formVeiculo: FormGroup;
   formCliente: FormGroup;
+  formNewServico: FormGroup;
   formOrdemServico: FormGroup;
   marcaSelecionada: string;
   veiculoSelecionado: Automovel;
@@ -49,6 +52,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   servicoSelected: any
   novoServico: string;
   novoValor: number;
+  descricao: string
 
 
   ngOnInit(): void {
@@ -110,6 +114,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
       observacoes: [null]
     });
 
+    this.formNewServico = this.fb.group({
+      cadastrarServico: [null],      
+    });
+
     this.osService.getServico().subscribe((response) => {
       this.servicosList = response.data
       console.log("Lista Serviços", this.servicosList)
@@ -123,7 +131,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
       veiculoId: this.veiculoSelecionado.id,
       manutences: this.servicos.map(servico => {
         return {
-          nomeServico: servico.nome,
+          nome: servico.nome,
           kmatual: this.formOrdemServico.get('KmAtual')?.value  == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
           kmservico: this.formOrdemServico.get('KmServico')?.value   == null ? 0 : this.formOrdemServico.get('KmServico')?.value,
           mediakm: this.formOrdemServico.get('mediaKm')?.value  == null ? 0 : this.formOrdemServico.get('mediaKm')?.value,
@@ -176,6 +184,17 @@ export class EditOrdemdeservicoComponent implements OnInit {
         km: this.veiculoSelecionado.km,
       });
     }
+  }
+
+  cadastrarServico(){
+    this.descricao = this.formNewServico.value.cadastrarServico
+    const requestaData = {
+      descricao: this.descricao
+    }
+    this.osService.cadastrarServico(requestaData).subscribe((response)=>{
+      console.log(response)
+      window.location.reload()
+    })
   }
 
   adicionarServico() {

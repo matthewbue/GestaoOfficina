@@ -13,13 +13,8 @@
 
                   <fieldset class="form-group">
                     <label for="numeroAgendamento">Nome:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nome"
-                      formControlName="nome"
-                      placeholder="Nome do cliente"
-                    />
+                    <input type="text" class="form-control" id="nome" formControlName="nome"
+                      placeholder="Nome do cliente" />
                   </fieldset>
 
                   <!-- <fieldset class="form-group">
@@ -34,13 +29,8 @@
 
                   <fieldset class="form-group">
                     <label for="cpfcnpj">CPF / CNPJ</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cpfcnpj"
-                      formControlName="cpfcnpj"
-                      placeholder="CPF / CNPJ"
-                    />
+                    <input type="text" class="form-control" id="cpfcnpj" formControlName="cpfcnpj"
+                      placeholder="CPF / CNPJ" />
                   </fieldset>
 
                 </div>
@@ -58,22 +48,14 @@
 
                   <fieldset class="form-group">
                     <label for="cpfcnpj">PLACA:</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="cpfcnpj"
-                      formControlName="cpfcnpj"
-                      placeholder="Placa do veículo"
-                    />
+                    <input type="text" class="form-control" id="cpfcnpj" formControlName="cpfcnpj"
+                      placeholder="Placa do veículo" />
                   </fieldset>
 
                   <button type="submit" class="btn btn-light mt-4 float-right">
                     Limpar
                   </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary mt-4 mr-2 float-right"
-                  >
+                  <button type="submit" class="btn btn-primary mt-4 mr-2 float-right">
                     Buscar
                   </button>
                 </div>
@@ -110,7 +92,7 @@
 
               <tbody>
                 <tr *ngFor="let cliente of clientes">
-                  <td class="text-truncate" id="nome">  {{ cliente.nome }} </td>
+                  <td class="text-truncate" id="nome"> {{ cliente.nome }} </td>
                   <td class="text-truncate">{{ cliente.numeroWhatsapp }}</td>
                   <td class="text-truncate">{{ cliente.email }}</td>
 
@@ -118,19 +100,11 @@
 
 
 
-                    <a
-                      href="javascript:;"
-                      title="Nova Ordem de Serviço"
-                      class="dark p-0 mr-2"
-                      ><i class="ft-file-text font-medium-3" (click)="novaOS(cliente.id)"> </i
-                    ></a>
+                    <a href="javascript:;" title="Nova Ordem de Serviço" class="dark p-0 mr-2"><i
+                        class="ft-file-text font-medium-3" (click)="novaOS(cliente.id)"> </i></a>
 
-                    <a
-                      href="javascript:;"
-                      title="Novo Orçamento"
-                      class="dark p-0"
-                      ><i class="ft-clipboard font-medium-3" (click)="novoOrc(cliente.id)"></i
-                    ></a>
+                    <a href="javascript:;" title="Novo Orçamento" class="dark p-0"><i class="ft-clipboard font-medium-3"
+                        (click)="novoOrc(cliente.id)"></i></a>
                   </td>
                 </tr>
               </tbody>

@@ -29,6 +29,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.DataOS = DateTime.Now;
             objetoPai.Status = "Em Andamento";
             objetoPai.ManutecesServicos = entrada.manutences;
+            objetoPai.ValorTotal = entrada.ValorTotal;
             _manutenceRepository.Create(objetoPai);
             return new ReturnDefault("Dados retornado com sucesso.", objeto);
         }

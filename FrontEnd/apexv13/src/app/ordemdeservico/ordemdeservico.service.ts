@@ -33,7 +33,11 @@ finalizarOs(Id){
 }
 
 getServico(){
-  return this.httpClient.get<any>(`https://localhost:44391/ServicoManutence`)
+  return this.httpClient.get<any>(`https://localhost:44391/Servico/GetAll`)
+}
+
+cadastrarServico(descricao){
+  return this.httpClient.post<any>(`https://localhost:44391/Servico/CreateService`, descricao)
 }
 
 private handleError(err: HttpErrorResponse) {
