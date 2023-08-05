@@ -82,7 +82,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                         item.automovels = await _gestaoOfficinaContext.Automovel.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
                     }
                     item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
-                    item.automovels = await _gestaoOfficinaContext.Automovel.FindAsync(item.ClientId);
+                  //  item.automovels = await _gestaoOfficinaContext.Automovel.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
 
                 }
                 
