@@ -56,7 +56,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             try
             {
-                var queryResult = _gestaoOfficinaContext.Manutences.Include(C => C.Clients).AsQueryable();
+                var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
           
                 if (entrada.NumeroOS > 0)
@@ -77,11 +77,15 @@ namespace GestaoOfficinaProj.Infra.Repository
                     {
                         item.Clients = await _gestaoOfficinaContext.Client.Where(_ => _.Nome.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
                     }
+                    else
+                    {
+                        item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
+
+                    }
                     if (!String.IsNullOrEmpty(entrada.Placa))
                     {
                         item.automovels = await _gestaoOfficinaContext.Automovel.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
                     }
-                    item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
                   //  item.automovels = await _gestaoOfficinaContext.Automovel.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
 
                 }
