@@ -63,18 +63,12 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
                 }
-                if (entrada.NumeroOS > 0)
-                {
-                    queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
-                }
+   
                 if (entrada.DataAberturaOS != null)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
                 }
-                if (!String.IsNullOrEmpty(entrada.Placa))
-                {
-                    queryResult = queryResult.Where(_ => _.automovels.Placa == entrada.Placa);
-                }
+         
                 var paginatedResult = await queryResult.OrderByDescending(i => i.Id).Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
 
                 foreach (var item in paginatedResult)
@@ -85,7 +79,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                     }
                     if (!String.IsNullOrEmpty(entrada.Placa))
                     {
-                        item.Clients = await _gestaoOfficinaContext.Client.Where(_ => _.Nome.Contains(entrada.Placa)).FirstOrDefaultAsync();
+                        item.automovels = await _gestaoOfficinaContext.Automovel.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
                     }
                     item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
                     item.automovels = await _gestaoOfficinaContext.Automovel.FindAsync(item.ClientId);
