@@ -45,7 +45,8 @@
               "node_modules/@ng-select/ng-select/themes/default.theme.css"
             ],
             "scripts": [
-              "src/assets/vendor/pace/pace.min.js"
+              "src/assets/vendor/pace/pace.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

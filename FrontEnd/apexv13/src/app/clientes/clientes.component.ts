@@ -72,6 +72,12 @@ export class ClientesComponent implements OnInit {
     });
   }
 
+  novoOrc(id){
+    this.router.navigate(["orcamento/new"], {
+      queryParams: { clienteId: id }
+    });
+  }
+
   openEditById(id) {
     this.router.navigate(["clientes/new"], {
       queryParams: { clienteId: id, tipo: "editar" },

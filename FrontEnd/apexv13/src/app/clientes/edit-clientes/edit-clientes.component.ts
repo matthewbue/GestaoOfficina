@@ -39,6 +39,7 @@ export class EditClientesComponent implements OnInit {
       this.tipo = params.tipo;
     });
 
+    
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
