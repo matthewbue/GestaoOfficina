@@ -168,40 +168,54 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   gerarPDF() {
     const doc = new jsPDF();
-    const margin = 10;
 
     doc.setFontSize(18);
-    doc.text('Ordem de Serviço', margin, margin);
+    doc.text('FERREIRA\'S AUTOMOTIVO', 10, 20);
 
     doc.setFontSize(12);
-    let yPos = margin + 15;
+    doc.text('RUA FRAMBOESA - 23061-522 - (21)964169157', 10, 30);
 
-    doc.text(`OS Nº: ${this.ordemServico.id}`, margin, yPos);
+    doc.setFontSize(14);
+    doc.text('NOTA FISCAL', 10, 45);
+
+    let yPos = 60;
+
+    doc.setFontSize(12);
+    doc.text(`Número da Nota Fiscal: ${this.ordemServico.id}`, 10, yPos);
     yPos += 10;
-    doc.text(`Data: ${this.ordemServico.dataOS}`, margin, yPos);
+    doc.text(`Cliente: ${this.ordemServico.nome}`, 10, yPos);
+    doc.text(`CPF: ${"this.ordemServico.clients"}`, 90, yPos);
     yPos += 10;
-    doc.text(`Status: ${this.ordemServico.status}`, margin, yPos);
+    doc.text(`Endereço: ${"this.ordemServico.clients.endereco"}`, 10, yPos);
     yPos += 10;
-    doc.text(`Cliente: ${this.ordemServico.nome}`, margin, yPos);
+
+    doc.text(`Placa do Veículo: ${"this.ordemServico.automovels.placa"}`, 10, yPos);
+    doc.text(`Marca: ${"this.ordemServico.automovels.marca"}`, 90, yPos);
+    yPos += 10;
+    doc.text(`Modelo: ${"this.ordemServico.automovels.modelo"}`, 10, yPos);
+    doc.text(`Ano: ${"this.ordemServico.automovels.ano"}`, 90, yPos);
+    yPos += 10;
+    doc.text(`Cor: ${"this.ordemServico.automovels.cor"}`, 10, yPos);
+    doc.text(`Km Atual: ${"this.ordemServico.automovels.km"}`, 90, yPos);
     yPos += 15;
 
-    doc.setFontSize(14);
-    doc.text('Serviços Realizados:', margin, yPos);
+    doc.text('Descrição do Serviço:', 10, yPos);
     yPos += 10;
 
-    // doc.setFontSize(12);
-    // this.ordemServico.manutecesServicos.forEach(servico => {
-    //   doc.text(`${servico.nome}: R$ ${servico.valor}`, margin, yPos);
-    //   yPos += 10;
-    // });
+    doc.setFont('courier', 'normal');
+    doc.setFontSize(12);
+    // const servicosFeitos = this.ordemServico.manutecesServicos.map(servico => `- ${servico.nome}: R$ ${servico.valor}`).join('\n');
+    // doc.text(servicosFeitos, 10, yPos);
+    yPos += 10;
 
     doc.setFontSize(14);
-    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, margin, yPos + 10);
+    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal}`, 10, yPos + 10);
 
-    doc.save('ordem-servico.pdf');
+    doc.setFontSize(10);
+    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 10);
+
+    doc.save('nota-fiscal.pdf');
   }
-
-
 
   onSelectServico(event: any) {
     this.servicoSelected = event

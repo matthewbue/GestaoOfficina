@@ -101,7 +101,7 @@ export class ClientesComponent implements OnInit {
       )
       .subscribe(
         (agendamentos) => {
-          window.location.reload();
+           window.location.reload();
         },
         (error) => console.error(error)
       );
