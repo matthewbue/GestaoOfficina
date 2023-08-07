@@ -32,7 +32,7 @@ export class ClientesService {
   }
 
   createVeiculoById(automovel) {
-    return this.httpClient.post(`${environment.API}/Automovel/CreateAutomovel`, automovel);
+    return this.httpClient.post(`https://localhost:44391/Automovel/CreateAutomovel`, automovel);
   }
 
   updateVeiculoById(automovel) {
