@@ -81,7 +81,7 @@
             <table class="table text-center m-0">
               <thead>
                 <tr>
-                  <th id="table-p">Nº Orçamento</th>
+                  <th id="table-p">Nº OS</th>
                   <th id="table-p">Nome</th>
                   <th id="table-p">Veículo</th>
                   <th id="table-p">Placa</th>
@@ -91,24 +91,23 @@
               </thead>
 
               <tbody>
-                <tr>
-                  <td class="text-truncate" id="numeroOS"></td>
-                  <td class="text-truncate"></td>
-                  <td class="text-truncate"></td>
-                  <td class="text-truncate"></td>
-                  <td class="text-truncate"></td>
-
-                  <td class="text-truncate">
-                    <a class="info p-0" title="Visualizar Orçamento"><i class="ft-search font-medium-3 mr-2"></i></a>
-
-                    <!-- <a class="success p-0" title="Editar Orçamento"><i class="ft-edit font-medium-3 mr-2"></i></a> -->
-
-                    <a href="javascript:;" title="Reprovar Orçamento" class="danger p-0"><i
-                        class="ft-x font-medium-3 mr-2"></i></a>
-
-                    <a href="javascript:;" title="Aprovar Orçamento" class="dark p-0 mr-2"><i
-                        class="ft-check font-medium-3"></i></a>
-                  </td>
+                <tr *ngFor="let os of data">
+                  <!-- Use ngIf para verificar o tipoDoc -->
+                  <ng-container *ngIf="os.tipoDoc === 'Orçamento'">
+                    <td class="text-truncate"> {{ os.id }} </td>
+                    <td class="text-truncate"> {{ os.clients.nome }} </td>
+                    <td class="text-truncate"> {{ os.automovels.marca }} </td>
+                    <td class="text-truncate"> {{ os.automovels.placa }} </td>
+                    <td class="text-truncate"> {{ os.status }} </td>
+                    <td class="text-truncate">
+                      <a class="info p-0" title="Visualizar OS"><i class="ft-search font-medium-3 mr-2"
+                          (click)="openById(os.id)"></i></a>
+                      <a href="javascript:;" title="Excluir OS" class="danger p-0"><i class="ft-x font-medium-3 mr-2"
+                          (click)="deleteById(os.id)"></i></a>
+                      <a href="javascript:;" title="Finalizar OS" class="dark p-0 mr-2"><i
+                          class="ft-check font-medium-3" (click)="finalizarOs(os.id)"></i></a>
+                    </td>
+                  </ng-container>
                 </tr>
               </tbody>
             </table>
