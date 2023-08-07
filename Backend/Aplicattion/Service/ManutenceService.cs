@@ -26,6 +26,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.AutomovelId = entrada.Veiculoid;
             objetoPai.ClientId = entrada.Clientid;
             objetoPai.Observacoes = entrada.Observacoes;
+            objetoPai.TipoDoc = entrada.TipoDoc;
             objetoPai.DataOS = DateTime.Now;
             objetoPai.Status = "Em Andamento";
             objetoPai.ManutecesServicos = entrada.manutences;
