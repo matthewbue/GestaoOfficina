@@ -19,14 +19,14 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public async Task<Servico> CreateServicoManutence(Servico entrada)
         {
-            await _gestaoOfficinaContext.Servico.AddAsync(entrada);
+            await _gestaoOfficinaContext.Servicos.AddAsync(entrada);
             await _gestaoOfficinaContext.SaveChangesAsync();
             return entrada;
         }
 
         public async Task<List<Servico>> GetAll()
         {
-            return _gestaoOfficinaContext.Servico.ToList();
+            return _gestaoOfficinaContext.Servicos.ToList();
         }
     }
 }

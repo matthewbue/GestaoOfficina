@@ -75,18 +75,18 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     if (!String.IsNullOrEmpty(entrada.NomeCliente))
                     {
-                        item.Clients = await _gestaoOfficinaContext.Client.Where(_ => _.Nome.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
+                        item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
                     }
                     else
                     {
-                        item.Clients = await _gestaoOfficinaContext.Client.FindAsync(item.ClientId);
+                        item.Clients = await _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).Where(i => i.Id == item.ClientId).FirstOrDefaultAsync();
 
                     }
                     if (!String.IsNullOrEmpty(entrada.Placa))
                     {
-                        item.automovels = await _gestaoOfficinaContext.Automovel.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
+                        item.automovels = await _gestaoOfficinaContext.Automoveis.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
                     }
-                  //  item.automovels = await _gestaoOfficinaContext.Automovel.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
+                   item.automovels = await _gestaoOfficinaContext.Automoveis.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
 
                 }
                 

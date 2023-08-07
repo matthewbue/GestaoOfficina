@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    [Migration("20230804220838_Initial")]
-    partial class Initial
+    [Migration("20230807125416_Inital")]
+    partial class Inital
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,9 +45,6 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Km")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManutenceId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Marca")
                         .HasColumnType("nvarchar(max)");
 
@@ -64,7 +61,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Automovel");
+                    b.ToTable("Automoveis");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>
@@ -113,7 +110,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Client");
+                    b.ToTable("Clients");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
@@ -182,7 +179,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Useris");
                 });
 
             modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.ManutenceServico", b =>
@@ -246,7 +243,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Manutence", b =>
                 {
                     b.HasOne("GestaoOfficina.Domain.Model.Automovel", "automovels")
-                        .WithMany("Manutences")
+                        .WithMany()
                         .HasForeignKey("AutomovelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -265,11 +262,6 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.HasOne("GestaoOfficina.Domain.Model.Manutence", null)
                         .WithMany("ManutecesServicos")
                         .HasForeignKey("ManutenceId");
-                });
-
-            modelBuilder.Entity("GestaoOfficina.Domain.Model.Automovel", b =>
-                {
-                    b.Navigation("Manutences");
                 });
 
             modelBuilder.Entity("GestaoOfficina.Domain.Model.Client", b =>

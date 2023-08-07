@@ -25,7 +25,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                await _gestaoOfficinaContext.Client.AddAsync(client);
+                await _gestaoOfficinaContext.Clients.AddAsync(client);
                 await _gestaoOfficinaContext.SaveChangesAsync();
                 return client;
             }
@@ -39,8 +39,8 @@ namespace GestaoOfficina.Infra.Repository
          {
             try
             {
-                var formulario = _gestaoOfficinaContext.Client.Where(r => r.Id == entrada).FirstOrDefault();
-                _gestaoOfficinaContext.Client.Remove(formulario);
+                var formulario = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
+                _gestaoOfficinaContext.Clients.Remove(formulario);
                 _gestaoOfficinaContext.SaveChanges();
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                return _gestaoOfficinaContext.Client.ToList();
+                return _gestaoOfficinaContext.Clients.ToList();
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                var result = await _gestaoOfficinaContext.Client.Where(x => x.Id == entrada).Include(a => a.Automoveis).FirstOrDefaultAsync();
+                var result = await _gestaoOfficinaContext.Clients.Where(x => x.Id == entrada).Include(a => a.Automoveis).FirstOrDefaultAsync();
                 return result;
             }
             catch (Exception ex)
@@ -77,7 +77,7 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Client.Include(a => a.Automoveis).AsQueryable();
+            var queryResult = _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).AsQueryable();
 
             if (!String.IsNullOrEmpty(entrada.NomeCliente))
             {
@@ -111,7 +111,7 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<int> CountClient(ClientFilterDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Client.Include(a => a.Automoveis).AsQueryable();
+            var queryResult = _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).AsQueryable();
 
             if (!String.IsNullOrEmpty(entrada.NomeCliente))
             {
@@ -129,7 +129,7 @@ namespace GestaoOfficina.Infra.Repository
         {
             try
             {
-                return _gestaoOfficinaContext.Client.Where(x => x.CPF == entrada).FirstOrDefault();
+                return _gestaoOfficinaContext.Clients.Where(x => x.CPF == entrada).FirstOrDefault();
             }
             catch (Exception ex)
             {
