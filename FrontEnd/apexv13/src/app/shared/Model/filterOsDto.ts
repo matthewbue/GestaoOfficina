@@ -13,6 +13,7 @@ export class FilterOsDto {
   idCarro: number;
   clientId: number;
   clients: Client;
+  tipoDoc: string;
 }
 
 export class Client {

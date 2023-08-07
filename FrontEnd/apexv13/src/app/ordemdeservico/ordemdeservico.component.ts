@@ -31,13 +31,14 @@ export class OrdemdeservicoComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number;
   itemsPerPage: number;
-  tipoDoc: 'ordemServico'
+  tipoDoc: any;
 
   ngOnInit(): void {
     const requestData = new FilterOs("", "", 0, null, 1, 10)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
       this.totalPages = response.totalPagina
+      
       console.log(this.data);
       this.cdRef.detectChanges();
     });
