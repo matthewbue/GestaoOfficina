@@ -175,8 +175,9 @@
                 </button>
               </p>
               <div [ngbCollapse]="isCollapsed" id="collapseExample">
-                <form [formGroup]="formNewServico" >
-                  <input maxlength="100" id="cadastrarServico" type="text" formControlName="cadastrarServico" class="form-control col-md-6">
+                <form [formGroup]="formNewServico">
+                  <input maxlength="100" id="cadastrarServico" type="text" formControlName="cadastrarServico"
+                    class="form-control col-md-6">
                 </form>
                 <button type="button" class="btn btn-info mt-md-4" (click)="cadastrarServico()">Adicionar</button>
               </div>
@@ -287,36 +288,6 @@
       <div class="card-content">
         <div class="card-body">
           <div class="row" id="ordem-servico-cadastro">
-
-            <!-- <div class="col-md-12 mt-4">
-              <h3>Adicionar Serviços</h3>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="servico">Serviço:</label>
-                    <input maxlength="100" id="servico" type="text" class="form-control" disabled />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="valorServico">Valor do Serviço (R$):</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">R$</span>
-                      </div>
-                      <input maxlength="100" id="valorServico" type="number" class="form-control"
-                        [(ngModel)]="novoValor" />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <button type="button" class="btn btn-primary" (click)="adicionarServico()">Adicionar
-                      Serviço</button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
             <div class="col-md-12 mt-4">
               <h3>Lista de Serviços</h3>
               <table class="table table-bordered">
@@ -324,17 +295,25 @@
                   <tr>
                     <th>Serviço</th>
                     <th>Valor (R$)</th>
+                    <th>KM Atual Veiculo:</th>
+                    <th>KM Serviço:</th>
+                    <th>Média Km/dia:</th>
+
+
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td> {{ ordemServico.nome }} </td>
-                    <td> {{ ordemServico.valor }} </td>
+                  <!-- Use ngFor para percorrer manutenceServicos -->
+                  <tr *ngFor="let servico of ordemServico.manutecesServicos">
+                    <td>{{ servico.nome }}</td>
+                    <td>{{ servico.valor }}</td>
+                    <td>{{ servico.kmatual }}</td>
+                    <td> {{ servico.kmservico }} </td>
+                    <td> {{ servico.mediakm }} </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
 
             <div class="col-md-2 mt-4">
               <div class="form-group">
@@ -343,49 +322,14 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">R$</span>
                   </div>
+                  <!-- Use vinculação de propriedade [value] para vincular o valor -->
                   <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                    value="{{ ordemServico.valorTotal }}" disabled />
+                    [value]="ordemServico.valorTotal" disabled />
                 </div>
               </div>
             </div>
-            <form class="col-md-12 mt-4" novalidate>
-              <div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label for="kmAtual">Km Atual Veículo:</label>
-                      <div class="input-group">
-                        <input maxlength="100" id="kmAtual" type="number" class="form-control" formControlName="KmAtual"
-                          value="{{ ordemServico.kmatual }}" disabled />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label for="KmServico">Km do Serviço:</label>
-                      <input maxlength="100" id="KmServico" type="number" class="form-control"
-                        formControlName="KmServico" value="{{ ordemServico.kmservico }}" disabled />
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label for="mediaKm">Média por dia:</label>
-                      <div class="input-group">
-                        <input maxlength="100" id="mediaKm" type="number" class="form-control" formControlName="mediaKm"
-                          value="{{ ordemServico.mediakm }}" disabled />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="observacoes">Observações:</label>
-                  <textarea maxlength="500" id="observacoes" class="form-control" formControlName="observacoes" rows="3"
-                    value="{{ ordemServico.observacoes }}" disabled></textarea>
-                </div>
-              </div>
-            </form>
           </div>
+          <button type="button" class="btn btn-primary mb-2 mr-4"  (click)="gerarPDF()">Gerar PDF</button>
         </div>
         <button type="button" class="btn btn-secondary mb-2 mr-4 float-right" (click)="goBack()">
           Voltar

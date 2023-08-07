@@ -121,45 +121,46 @@ export class EditOrcamentoComponent implements OnInit {
     })    
   }
 
-  // gerarOrdemServico() {
-  //   const valorTotal = this.calcularValorTotal();
-  //   const ordemServicoData = {
-  //     clientId: this.cliente.id,
-  //     veiculoId: this.veiculoSelecionado.id,
-  //     manutences: this.servicos.map(servico => {
-  //       return {
-  //         nome: servico.nome,
-  //         kmatual: this.formOrdemServico.get('KmAtual')?.value  == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
-  //         kmservico: this.formOrdemServico.get('KmServico')?.value   == null ? 0 : this.formOrdemServico.get('KmServico')?.value,
-  //         mediakm: this.formOrdemServico.get('mediaKm')?.value  == null ? 0 : this.formOrdemServico.get('mediaKm')?.value,
-  //         valor: servico.valor,
-  //       };
-  //     }),
-  //     observacoes: this.formOrdemServico.get('observacoes')?.value,
-  //     valortotal: valorTotal
-  //   };
-  //   console.log(ordemServicoData)
-  //   const result$ = this.alertService.showConfirm(
-  //     "Confirmação",
-  //     "Deseja criar essa Ordem de Serviço?"
-  //   );
-  //   result$
-  //     .asObservable()
-  //     .pipe(
-  //       take(1),
-  //       switchMap((result) =>
-  //         result
-  //           ? this.osService.createOrdemServico(ordemServicoData)
-  //           : EMPTY
-  //       )
-  //     )
-  //     .subscribe(
-  //       (os) => {
-  //         this.router.navigate(["ordemdeservico"]);
-  //       },
-  //       (error) => console.error(error)
-  //     );
-  // }
+  gerarOrcamento() {
+    const valorTotal = this.calcularValorTotal();
+    const ordemServicoData = {
+      clientId: this.cliente.id,
+      veiculoId: this.veiculoSelecionado.id,
+      manutences: this.servicos.map(servico => {
+        return {
+          nome: servico.nome,
+          kmatual: this.formOrdemServico.get('KmAtual')?.value  == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
+          kmservico: this.formOrdemServico.get('KmServico')?.value   == null ? 0 : this.formOrdemServico.get('KmServico')?.value,
+          mediakm: this.formOrdemServico.get('mediaKm')?.value  == null ? 0 : this.formOrdemServico.get('mediaKm')?.value,
+          valor: servico.valor,
+        };
+      }),
+      observacoes: this.formOrdemServico.get('observacoes')?.value,
+      valortotal: valorTotal,
+      tipoDoc: "Orçamento"
+    };
+    console.log(ordemServicoData)
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja criar essa Ordem de Serviço?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.osService.createOrdemServico(ordemServicoData)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (os) => {
+          this.router.navigate(["ordemdeservico"]);
+        },
+        (error) => console.error(error)
+      );
+  }
 
   onSelectServico(event: any) {
     this.servicoSelected = event
