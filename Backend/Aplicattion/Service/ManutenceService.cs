@@ -22,7 +22,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             ManutenceServico objeto = new ManutenceServico();
             Manutence objetoPai = new Manutence();
 
-
             objetoPai.AutomovelId = entrada.Veiculoid;
             objetoPai.ClientId = entrada.Clientid;
             objetoPai.Observacoes = entrada.Observacoes;
