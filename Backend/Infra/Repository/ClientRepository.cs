@@ -57,6 +57,16 @@ namespace GestaoOfficina.Infra.Repository
                         _gestaoOfficinaContext.SaveChanges(); // Remover o cliente, se encontrado
                     }
                 }
+                else
+                {
+
+                    var client = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
+                    if (client != null)
+                    {
+                        _gestaoOfficinaContext.Clients.Remove(client);
+                        _gestaoOfficinaContext.SaveChanges(); // Remover o cliente, se encontrado
+                    }
+                }
             }
             catch (Exception ex)
             {
