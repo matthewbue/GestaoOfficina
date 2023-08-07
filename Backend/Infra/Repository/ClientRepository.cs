@@ -49,24 +49,15 @@ namespace GestaoOfficina.Infra.Repository
 
                     _gestaoOfficinaContext.Manutences.Remove(manutence);
                     _gestaoOfficinaContext.SaveChanges(); // Agora remover o registro principal
-
-                    var client = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
+                }
+                var client = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
                     if (client != null)
                     {
                         _gestaoOfficinaContext.Clients.Remove(client);
                         _gestaoOfficinaContext.SaveChanges(); // Remover o cliente, se encontrado
                     }
-                }
-                else
-                {
-
-                    var client = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
-                    if (client != null)
-                    {
-                        _gestaoOfficinaContext.Clients.Remove(client);
-                        _gestaoOfficinaContext.SaveChanges(); // Remover o cliente, se encontrado
-                    }
-                }
+          
+                
             }
             catch (Exception ex)
             {
