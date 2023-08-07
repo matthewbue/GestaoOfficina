@@ -31,6 +31,7 @@ export class OrdemdeservicoComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number;
   itemsPerPage: number;
+  tipoDoc: 'ordemServico'
 
   ngOnInit(): void {
     const requestData = new FilterOs("", "", 0, null, 1, 10)

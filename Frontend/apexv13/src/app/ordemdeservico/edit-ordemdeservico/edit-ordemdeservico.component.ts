@@ -12,6 +12,7 @@ import { EMPTY } from 'rxjs';
 import { FilterOsDto } from 'app/shared/Model/filterOsDto';
 import { Location } from '@angular/common';
 import { Servicos } from 'app/shared/Model/Servicos';
+import jsPDF from 'jspdf';
 
 
 @Component({
@@ -139,7 +140,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
         };
       }),
       observacoes: this.formOrdemServico.get('observacoes')?.value,
-      valortotal: valorTotal
+      valortotal: valorTotal,
+      tipoDoc: "OrdemServico"
     };
     console.log(ordemServicoData)
     const result$ = this.alertService.showConfirm(
@@ -157,12 +159,49 @@ export class EditOrdemdeservicoComponent implements OnInit {
         )
       )
       .subscribe(
-        (os) => {
+        (os) => {          
           this.router.navigate(["ordemdeservico"]);
         },
         (error) => console.error(error)
       );
   }
+
+  gerarPDF() {
+    const doc = new jsPDF();
+    const margin = 10;
+
+    doc.setFontSize(18);
+    doc.text('Ordem de Serviço', margin, margin);
+
+    doc.setFontSize(12);
+    let yPos = margin + 15;
+
+    doc.text(`OS Nº: ${this.ordemServico.id}`, margin, yPos);
+    yPos += 10;
+    doc.text(`Data: ${this.ordemServico.dataOS}`, margin, yPos);
+    yPos += 10;
+    doc.text(`Status: ${this.ordemServico.status}`, margin, yPos);
+    yPos += 10;
+    doc.text(`Cliente: ${this.ordemServico.nome}`, margin, yPos);
+    yPos += 15;
+
+    doc.setFontSize(14);
+    doc.text('Serviços Realizados:', margin, yPos);
+    yPos += 10;
+
+    // doc.setFontSize(12);
+    // this.ordemServico.manutecesServicos.forEach(servico => {
+    //   doc.text(`${servico.nome}: R$ ${servico.valor}`, margin, yPos);
+    //   yPos += 10;
+    // });
+
+    doc.setFontSize(14);
+    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, margin, yPos + 10);
+
+    doc.save('ordem-servico.pdf');
+  }
+
+
 
   onSelectServico(event: any) {
     this.servicoSelected = event
