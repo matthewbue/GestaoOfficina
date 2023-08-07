@@ -103,7 +103,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             try
             {
-                var result = await _gestaoOfficinaContext.Manutences.Where(x => x.Id == entrada).FirstOrDefaultAsync();
+                var result = await _gestaoOfficinaContext.Manutences.Include(m => m.ManutecesServicos).Where(x => x.Id == entrada).FirstOrDefaultAsync();
                 return result;
             }
             catch (Exception ex)
