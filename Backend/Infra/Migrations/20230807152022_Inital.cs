@@ -49,7 +49,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Useris",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -62,7 +62,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Useris", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,6 +101,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataOS = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TipoDoc = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AutomovelId = table.Column<int>(type: "int", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
                     ClientsId = table.Column<int>(type: "int", nullable: true),
@@ -123,7 +124,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ManutenceServico",
+                name: "ManutenceServicos",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -137,9 +138,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ManutenceServico", x => x.ID);
+                    table.PrimaryKey("PK_ManutenceServicos", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ManutenceServico_Manutences_ManutenceId",
+                        name: "FK_ManutenceServicos_Manutences_ManutenceId",
                         column: x => x.ManutenceId,
                         principalTable: "Manutences",
                         principalColumn: "Id");
@@ -161,8 +162,8 @@ namespace GestaoOfficinaProj.Infra.Migrations
                 column: "ClientsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ManutenceServico_ManutenceId",
-                table: "ManutenceServico",
+                name: "IX_ManutenceServicos_ManutenceId",
+                table: "ManutenceServicos",
                 column: "ManutenceId");
         }
 
@@ -170,13 +171,13 @@ namespace GestaoOfficinaProj.Infra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ManutenceServico");
+                name: "ManutenceServicos");
 
             migrationBuilder.DropTable(
                 name: "Servico");
 
             migrationBuilder.DropTable(
-                name: "Useris");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Manutences");

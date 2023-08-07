@@ -16,11 +16,11 @@ namespace GestaoOfficina.Infra.Context
             Database.EnsureCreated();
         }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<User> Useris { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Manutence> Manutences { get; set; }
         public DbSet<Automovel> Automoveis { get; set; }
         public DbSet<Servico> Servicos { get; set; }
-        public DbSet<ManutenceServico> ManutenceServico { get; set; }
+        public DbSet<ManutenceServico> ManutenceServicos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

@@ -139,6 +139,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TipoDoc")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("ValorTotal")
                         .HasColumnType("float");
 
@@ -176,7 +179,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Useris");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.ManutenceServico", b =>
@@ -209,7 +212,7 @@ namespace GestaoOfficinaProj.Infra.Migrations
 
                     b.HasIndex("ManutenceId");
 
-                    b.ToTable("ManutenceServico");
+                    b.ToTable("ManutenceServicos");
                 });
 
             modelBuilder.Entity("GestaoOfficinaProj.Domain.Model.Servico", b =>
