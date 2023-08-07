@@ -39,9 +39,24 @@ namespace GestaoOfficina.Infra.Repository
          {
             try
             {
-                var formulario = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
-                _gestaoOfficinaContext.Clients.Remove(formulario);
-                _gestaoOfficinaContext.SaveChanges();
+                var manutence = _gestaoOfficinaContext.Manutences.Where(r => r.ClientId == entrada).FirstOrDefault();
+
+                if (manutence != null)
+                {
+                    var manutenceservico = _gestaoOfficinaContext.ManutenceServicos.Where(r => r.ManutenceId == manutence.Id).ToList();
+                    _gestaoOfficinaContext.ManutenceServicos.RemoveRange(manutenceservico);
+                    _gestaoOfficinaContext.SaveChanges(); // Remover registros dependentes primeiro
+
+                    _gestaoOfficinaContext.Manutences.Remove(manutence);
+                    _gestaoOfficinaContext.SaveChanges(); // Agora remover o registro principal
+
+                    var client = _gestaoOfficinaContext.Clients.Where(r => r.Id == entrada).FirstOrDefault();
+                    if (client != null)
+                    {
+                        _gestaoOfficinaContext.Clients.Remove(client);
+                        _gestaoOfficinaContext.SaveChanges(); // Remover o cliente, se encontrado
+                    }
+                }
             }
             catch (Exception ex)
             {
