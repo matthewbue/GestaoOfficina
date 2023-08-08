@@ -86,7 +86,7 @@ namespace GestaoOfficina.Controllers
             }
         }
         [HttpDelete("DeleteClient")]
-        public async Task<IActionResult> Delete(int entrada)
+        public IActionResult Delete(int entrada)
         {
             try
             {
