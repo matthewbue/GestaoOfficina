@@ -32,7 +32,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private location: Location,
-    
+
   ) { }
 
   public isCollapsed = true;
@@ -80,7 +80,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     this.osId = this.ordemServico.id
 
     this.osService.getOsById(this.osId).subscribe((response) => {
-      this.ordemServico = response.data      
+      this.ordemServico = response.data
       console.log("OS", this.ordemServico)
     })
 
@@ -116,7 +116,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     });
 
     this.formNewServico = this.fb.group({
-      cadastrarServico: [null],      
+      cadastrarServico: [null],
     });
 
     this.osService.getServico().subscribe((response) => {
@@ -133,9 +133,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
       manutences: this.servicos.map(servico => {
         return {
           nome: servico.nome,
-          kmatual: this.formOrdemServico.get('KmAtual')?.value  == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
-          kmservico: this.formOrdemServico.get('KmServico')?.value   == null ? 0 : this.formOrdemServico.get('KmServico')?.value,
-          mediakm: this.formOrdemServico.get('mediaKm')?.value  == null ? 0 : this.formOrdemServico.get('mediaKm')?.value,
+          kmServico: servico.kmServico,
+          mediaKm: servico.mediaKm,
+          kmatual: this.formOrdemServico.get('KmAtual')?.value == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
           valor: servico.valor,
         };
       }),
@@ -159,11 +159,24 @@ export class EditOrdemdeservicoComponent implements OnInit {
         )
       )
       .subscribe(
-        (os) => {          
+        (os) => {
           this.router.navigate(["ordemdeservico"]);
         },
         (error) => console.error(error)
       );
+  }
+
+  editarOs() {
+    const requestData = {
+      nome: this.servicoSelected == null ? "" : this.servicoSelected,
+      kmatual: this.formOrdemServico.value.KmAtual == null ? 0 : this.formOrdemServico.value.KmAtual,
+      kmservico: this.formOrdemServico.value.KmServico == null ? 0 : this.formOrdemServico.value.KmServico,
+      valor: this.calcularValorTotal(),
+      mediakm: this.formOrdemServico.value.mediaKm == null ? 0 : this.formOrdemServico.value.mediaKm,
+      clientid: this.clienteId,
+      observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
+    };
+    console.log("resquestData", requestData)
   }
 
   gerarPDF() {
@@ -239,12 +252,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
     }
   }
 
-  cadastrarServico(){
+  cadastrarServico() {
     this.descricao = this.formNewServico.value.cadastrarServico
     const requestaData = {
       descricao: this.descricao
     }
-    this.osService.cadastrarServico(requestaData).subscribe((response)=>{
+    this.osService.cadastrarServico(requestaData).subscribe((response) => {
       console.log(response)
       window.location.reload()
     })
