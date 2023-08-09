@@ -56,7 +56,7 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
         [HttpPost("UpdateServico")]
-        public async Task<IActionResult> UpdateSerivco(ManutenceUpdateServicoDTO entrada)
+        public async Task<IActionResult> UpdateServico(ManutenceUpdateServicoDTO entrada)
         {
             try
             {
