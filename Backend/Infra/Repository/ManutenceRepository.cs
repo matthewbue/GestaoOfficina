@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.Model;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -151,6 +152,46 @@ namespace GestaoOfficinaProj.Infra.Repository
                 queryResult = queryResult.Where(_ => _.automovels.Placa == entrada.Placa);
             }
             return queryResult.Count();
+        }
+
+        public async Task<ManutenceServico> GetManutenceServicoById(int id)
+        {
+            try
+            {
+                var result = await _gestaoOfficinaContext.ManutenceServicos.Where(x => x.ID == id).FirstOrDefaultAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void UpdateServicoManutence(ManutenceServico result)
+        {
+            try
+            {
+                _gestaoOfficinaContext.Entry(result).State = EntityState.Modified;
+                _gestaoOfficinaContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void CreateManutenceServico(ManutenceServico entrada)
+        {
+            try
+            {
+                _gestaoOfficinaContext.ManutenceServicos.Add(entrada);
+                _gestaoOfficinaContext.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

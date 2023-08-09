@@ -34,6 +34,14 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Dados retornado com sucesso.", objeto);
         }
 
+        public async Task<ReturnDefault> CreateManutenceServico(ManutenceServico entrada)
+        {
+
+           
+            _manutenceRepository.CreateManutenceServico(entrada);
+            return new ReturnDefault("Dados retornado com sucesso.", entrada);
+        }
+
         public ReturnDefault Delete(int entrada)
         {
             _manutenceRepository.Delete(entrada);
@@ -63,35 +71,51 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         public async Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada)
         {
             var result = await _manutenceRepository.GetById(entrada.Id);
-            //if (!String.IsNullOrEmpty(entrada.Nome))
-            //{
-            //    result. = entrada.Nome;
-            //}
-            //if (entrada.Valor > 0)
-            //{
-            //    result.Valor = entrada.Valor;
-            //}
-            //if (!String.IsNullOrEmpty(entrada.Observacoes))
-            //{
-            //    result.Observacoes = entrada.Observacoes;
-            //}
-            //if (entrada.Mediakm > 0)
-            //{
-            //    result.Mediakm = entrada.Mediakm;
-            //}
-            //if (entrada.Kmservico > 0)
-            //{
-            //    result.Kmservico = entrada.Kmservico;
-            //}
-            //if (entrada.Kmatual > 0 )
-            //{
-            //    result.Kmatual = entrada.Kmatual;
-            //}
+            if (!String.IsNullOrEmpty(entrada.Observacoes))
+            {
+                result.Observacoes = entrada.Observacoes;
+            }
+            if (!String.IsNullOrEmpty(entrada.TipoDoc))
+            {
+                result.TipoDoc = entrada.TipoDoc;
+            }
+            if (entrada.ValorTotal > 0)
+            {
+                result.ValorTotal = entrada.ValorTotal;
+            }
+                
 
             _manutenceRepository.UpdateManutence(result);
             return new ReturnDefault("Dados modificados com sucesso.", result);
         }
 
+        public async Task<ReturnDefault> UpdateManutenceServico(ManutenceUpdateServicoDTO entrada)
+        {
+            var result = await _manutenceRepository.GetManutenceServicoById(entrada.ID);
+            if (!String.IsNullOrEmpty(entrada.Nome))
+            {
+                result.Nome = entrada.Nome;
+            }
+            if (entrada.Kmatual > 0)
+            {
+                result.Kmatual = entrada.Kmatual;
+            }
+            if (entrada.Mediakm > 0)
+            {
+                result.Mediakm = entrada.Mediakm;
+            }
+            if (entrada.Valor > 0)
+            {
+                result.Valor = entrada.Valor;
+            }
+            if (entrada.Kmservico > 0)
+            {
+                result.Kmservico = entrada.Kmservico;
+            }
+
+            _manutenceRepository.UpdateServicoManutence(result);
+            return new ReturnDefault("Dados modificados com sucesso.", result);
+        }
         public ReturnDefault CheckoutOS(int IdentificadorOS)
         {
             _manutenceRepository.CheckoutOS(IdentificadorOS);
