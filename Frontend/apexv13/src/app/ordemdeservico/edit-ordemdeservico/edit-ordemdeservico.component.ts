@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from 'app/clientes/clientes.service';
 import { Automovel } from 'app/shared/Model/Automovel';
@@ -54,6 +54,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
   novoServico: string;
   novoValor: number;
   descricao: string
+  formServicos: FormGroup;
+  servicosParaAlterar: FormArray;
+  editarCampos: boolean = false;
+  editarIndices: number[] = [];
+
+
 
 
   ngOnInit(): void {
@@ -123,7 +129,42 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.servicosList = response.data
       console.log("Lista Serviços", this.servicosList)
     })
+
+    this.formServicos = this.fb.group({
+      servicosParaAlterar: this.fb.array([])
+    });
+    this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as FormArray;
+
   }
+
+  adicionarParaAlterar(servico: any) {
+    // Crie um FormGroup para cada serviço que será adicionado
+    const novoServicoFormGroup = this.fb.group({
+      id: [servico.id],
+      nome: [servico.nome],
+      valor: [servico.valor],
+      kmServico: [servico.kmservico],
+      mediaKm: [servico.mediakm],
+      manutenceId: [servico.manutenceId],
+      kmAtual: [servico.kmatual]
+    });
+
+    this.servicosParaAlterar.push(novoServicoFormGroup);
+    this.enviarDadosAlterados()
+  }
+
+  enviarDadosAlterados() {
+    const dadosAlterados = this.servicosParaAlterar.value;
+    console.log('Dados a serem enviados:', dadosAlterados);
+  }
+  atualizarKmServico(servico: any, novoKmServico: any) {
+    servico.kmservico = novoKmServico;
+  }
+  atualizarMediaKm(servico: any, novoValor: any) {
+    servico.mediaKm = novoValor;
+  }
+
+
 
   gerarOrdemServico() {
     const valorTotal = this.calcularValorTotal();
@@ -285,6 +326,21 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  toggleEdicao(index: number) {
+    if (this.editarIndices.indexOf(index) === -1) {
+      this.editarIndices.push(index);
+    } else {
+      this.editarIndices.splice(this.editarIndices.indexOf(index), 1);
+    }
+  }
+
+  salvarEdicao(index: number) {
+    // Aqui você pode implementar a lógica para salvar as alterações do item específico.
+    // Por exemplo, você pode acessar this.ordemServico.manutecesServicos[index] para obter o item atual.
+    console.log("Salvando alterações para o item de índice:", index);
+    this.toggleEdicao(index);
   }
 
 }
