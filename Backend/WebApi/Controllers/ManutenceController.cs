@@ -1,4 +1,5 @@
 ﻿using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.Model;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,6 +29,19 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpPost("AddServico")]
+        public async Task<IActionResult> Create(ManutenceServico entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.CreateManutenceServico(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         [HttpPost("Update")] 
         public async Task<IActionResult> UpdateManutence(ManutenceUpdateDTO entrada)
         {
@@ -37,6 +51,19 @@ namespace GestaoOfficinaProj.Controllers
                 return Ok(result);
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPost("UpdateSerivco")]
+        public async Task<IActionResult> UpdateSerivco(ManutenceUpdateServicoDTO entrada)
+        {
+            try
+            {
+                var result = _manutenceService.UpdateManutenceServico(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

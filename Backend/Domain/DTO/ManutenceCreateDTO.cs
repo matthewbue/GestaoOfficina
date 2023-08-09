@@ -13,7 +13,7 @@ namespace GestaoOfficinaProj.Domain.DTO
         public int Clientid { get; set; }
 
         public int Veiculoid { get; set; }
-        public ICollection<ManutenceServico> manutences { get; set; } // criar lista com campos do trello 
+        public ICollection<ManutenceServico> manutences { get; set; } 
 
         public double ValorTotal { get; set; }
         public string Observacoes { get; set; }
