@@ -55,7 +55,7 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        [HttpPost("UpdateSerivco")]
+        [HttpPost("UpdateServico")]
         public async Task<IActionResult> UpdateSerivco(ManutenceUpdateServicoDTO entrada)
         {
             try
