@@ -47,7 +47,7 @@ namespace GestaoOfficinaProj.Controllers
         {
             try
             {
-                var result = _manutenceService.UpdateManutence(entrada);
+                var result = await _manutenceService.UpdateManutence(entrada);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -60,7 +60,7 @@ namespace GestaoOfficinaProj.Controllers
         {
             try
             {
-                var result = _manutenceService.UpdateManutenceServico(entrada);
+                var result = await _manutenceService.UpdateManutenceServico(entrada);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -95,19 +95,19 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
     
-    [HttpPost("GetFilterOS")]
-    public async Task<IActionResult> GetFilterOS(OSFilterDTO FilterDTO)
-    {
-        try
+        [HttpPost("GetFilterOS")]
+        public async Task<IActionResult> GetFilterOS(OSFilterDTO FilterDTO)
         {
-            var result = await _manutenceService.GetFilterOS(FilterDTO);
-            return Ok(result);
+            try
+            {
+                var result = await _manutenceService.GetFilterOS(FilterDTO);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-        }
-    }
 
         [HttpGet("CheckoutOS")]
         public async Task<IActionResult> CheckoutOS(int identificadorOS)
