@@ -46,6 +46,10 @@ updateServico(updateServico){
 
 addNovoServico(addNewServico){
   return this.httpClient.post<any>(`https://localhost:44391/Manutence/AddServico`, addNewServico) 
+} 
+
+saveEditOrdemServico(saveEditOrdemServico){
+  return this.httpClient.post<any>(`https://localhost:44391/Manutence/Update`, saveEditOrdemServico) 
 }
 
 private handleError(err: HttpErrorResponse) {

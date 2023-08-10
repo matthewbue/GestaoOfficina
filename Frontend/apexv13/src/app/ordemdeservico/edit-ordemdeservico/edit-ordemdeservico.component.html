@@ -521,16 +521,17 @@
 
             <div class="col-md-4 mt-4">
               <div class="form-group">
-                <label for="valorTotal">Valor Total (R$):</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">R$</span>
+                  <label for="valorTotal">Valor Total (R$):</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">R$</span>
+                      </div>
+                      <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
+                          [value]="valorTotal.toFixed(2)" />
                   </div>
-                  <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                    value="{{ ordemServico.valorTotal }},00" disabled />
-                </div>
               </div>
-            </div>
+          </div>
+          
             <form [formGroup]="formOrdemServico" class="col-md-12 mt-4" novalidate>
               <div>
                 <div class="row">

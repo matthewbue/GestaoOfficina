@@ -58,10 +58,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
   servicosParaAlterar: FormArray;
   editarCampos: boolean = false;
   editarIndices: number[] = [];
-  kmatualValue: number
-
-
-
+  kmatualValue: number;
+  valorTotal: number = 0;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -88,7 +86,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     this.osService.getOsById(this.osId).subscribe((response) => {
       this.ordemServico = response.data
-      this.kmatualValue = response.data.manutecesServicos[0].kmatual;      
+      this.kmatualValue = response.data.manutecesServicos[0].kmatual;
+      this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
       console.log("OS", this.ordemServico)
     })
 
@@ -166,7 +165,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     servico.mediaKm = novoValor;
   }
 
-  salvarNovoServico(servico){
+  salvarNovoServico(servico) {
     const novoServicoFormGroup = {
       id: 0,
       nome: servico.nome,
@@ -178,12 +177,26 @@ export class EditOrdemdeservicoComponent implements OnInit {
     };
     console.log(novoServicoFormGroup)
 
-    this.osService.addNovoServico(novoServicoFormGroup).subscribe((response)=> {
+    this.osService.addNovoServico(novoServicoFormGroup).subscribe((response) => {
       window.location.reload();
       console.log(response)
     })
   }
 
+  editarOs() {
+    const requestData = {
+      id: this.osId,
+      valorTotal: this.valorTotal,
+      tipoDoc: "OrdemServico",
+      observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
+    };
+    console.log("resquestData", requestData)
+
+    this.osService.saveEditOrdemServico(requestData).subscribe((response) => {
+      window.location.reload();
+      console.log(response)
+    })
+  }
   gerarOrdemServico() {
     const valorTotal = this.calcularValorTotal();
     const ordemServicoData = {
@@ -225,18 +238,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
       );
   }
 
-  editarOs() {
-    const requestData = {
-      nome: this.servicoSelected == null ? "" : this.servicoSelected,
-      kmatual: this.formOrdemServico.value.KmAtual == null ? 0 : this.formOrdemServico.value.KmAtual,
-      kmservico: this.formOrdemServico.value.KmServico == null ? 0 : this.formOrdemServico.value.KmServico,
-      valor: this.calcularValorTotal(),
-      mediakm: this.formOrdemServico.value.mediaKm == null ? 0 : this.formOrdemServico.value.mediaKm,
-      clientid: this.clienteId,
-      observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
-    };
-    console.log("resquestData", requestData)
-  }
+
 
   gerarPDF() {
     const doc = new jsPDF();
