@@ -453,6 +453,30 @@
                     </tr>
                   </ng-container>
                 </tbody>
+                <tbody>
+                  <tr *ngFor="let servico of servicos">
+                    <td>{{ servico.nome }}</td>
+                    <td>{{ servico.valor }}</td>
+                    <td>
+                      <div class="form-group">
+                        <input maxlength="100" type="number" class="form-control col-md-6"
+                          [(ngModel)]="servico.kmServico" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <input maxlength="100" type="number" class="form-control col-md-6"
+                          [(ngModel)]="servico.mediaKm" />
+                      </div>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger btn-sm mr-2"
+                        (click)="removerServico(servico)">Remover</button>
+                        <button type="button" class="btn btn-success btn-sm mt-2"
+                        (click)="salvarNovoServico(servico)">Adicionar</button>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
 
@@ -494,6 +518,7 @@
                 </tbody>
               </table>
             </div>
+
             <div class="col-md-4 mt-4">
               <div class="form-group">
                 <label for="valorTotal">Valor Total (R$):</label>

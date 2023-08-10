@@ -58,6 +58,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   servicosParaAlterar: FormArray;
   editarCampos: boolean = false;
   editarIndices: number[] = [];
+  kmatualValue: number
 
 
 
@@ -87,6 +88,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     this.osService.getOsById(this.osId).subscribe((response) => {
       this.ordemServico = response.data
+      this.kmatualValue = response.data.manutecesServicos[0].kmatual;      
       console.log("OS", this.ordemServico)
     })
 
@@ -139,23 +141,23 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   adicionarParaAlterar(servico: any) {
     // Crie um FormGroup para cada serviço que será adicionado
-    const novoServicoFormGroup = this.fb.group({
-      id: [servico.id],
-      nome: [servico.nome],
-      valor: [servico.valor],
-      kmServico: [servico.kmservico],
-      mediaKm: [servico.mediakm],
-      manutenceId: [servico.manutenceId],
-      kmAtual: [servico.kmatual]
-    });
+    const novoServicoFormGroup = {
+      id: servico.id,
+      nome: servico.nome,
+      valor: servico.valor,
+      kmServico: servico.kmservico,
+      mediaKm: servico.mediakm,
+      manutenceId: servico.manutenceId,
+      kmAtual: servico.kmatual
+    };
 
-    this.servicosParaAlterar.push(novoServicoFormGroup);
-    this.enviarDadosAlterados()
+    this.enviarDadosAlterados(novoServicoFormGroup)
   }
-
-  enviarDadosAlterados() {
-    const dadosAlterados = this.servicosParaAlterar.value;
-    console.log('Dados a serem enviados:', dadosAlterados);
+  enviarDadosAlterados(dadosAlterados) {
+    this.osService.updateServico(dadosAlterados).subscribe((data) => {
+      window.location.reload();
+      console.log(data)
+    })
   }
   atualizarKmServico(servico: any, novoKmServico: any) {
     servico.kmservico = novoKmServico;
@@ -164,7 +166,23 @@ export class EditOrdemdeservicoComponent implements OnInit {
     servico.mediaKm = novoValor;
   }
 
+  salvarNovoServico(servico){
+    const novoServicoFormGroup = {
+      id: 0,
+      nome: servico.nome,
+      valor: servico.valor,
+      kmServico: servico.kmServico,
+      mediaKm: servico.mediaKm,
+      manutenceId: this.osId,
+      kmAtual: this.kmatualValue
+    };
+    console.log(novoServicoFormGroup)
 
+    this.osService.addNovoServico(novoServicoFormGroup).subscribe((response)=> {
+      window.location.reload();
+      console.log(response)
+    })
+  }
 
   gerarOrdemServico() {
     const valorTotal = this.calcularValorTotal();

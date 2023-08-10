@@ -40,6 +40,14 @@ cadastrarServico(descricao){
   return this.httpClient.post<any>(`${environment.API}/Servico/CreateService`, descricao)
 }
 
+updateServico(updateServico){
+  return this.httpClient.post<any>(`https://localhost:44391/Manutence/UpdateServico`, updateServico)
+}
+
+addNovoServico(addNewServico){
+  return this.httpClient.post<any>(`https://localhost:44391/Manutence/AddServico`, addNewServico) 
+}
+
 private handleError(err: HttpErrorResponse) {
   return throwError(err);
 }
