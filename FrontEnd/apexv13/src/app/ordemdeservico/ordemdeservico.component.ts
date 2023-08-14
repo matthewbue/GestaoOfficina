@@ -38,7 +38,7 @@ export class OrdemdeservicoComponent implements OnInit {
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
       this.totalPages = response.totalPagina
-      
+
       console.log(this.data);
       this.cdRef.detectChanges();
     });
@@ -46,13 +46,17 @@ export class OrdemdeservicoComponent implements OnInit {
     this.formSearchOs = this.fb.group({
       ordemNumero: null,
       nomeCliente: null,
-      statusOs: null,      
+      statusOs: null,
     })
 
   }
 
   addOS() {
-    const result$ = this.alertService.addOSModal(this.clientes);
+  this.alertService.addOSModal(this.clientes);
+  }
+
+  gerarRelatorio(){
+    this.alertService.gerarRelatorioModal(this.clientes);
   }
 
   onSelectStatus(event: any) {

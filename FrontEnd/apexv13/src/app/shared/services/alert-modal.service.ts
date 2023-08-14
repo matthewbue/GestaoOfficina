@@ -3,6 +3,7 @@ import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { AlertModalComponent } from '../alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { AddOrdemServicoModalComponent } from '../add-ordem-servico-modal/add-ordem-servico-modal.component';
+import { GerarRelatorioModalComponent } from '../gerar-relatorio-modal/gerar-relatorio-modal.component';
 
 export enum AlertTypes {
   DANGER = 'danger',
@@ -77,6 +78,22 @@ export class AlertModalService {
     const bsModalRef: BsModalRef = this.modalService.show(AddOrdemServicoModalComponent, modalOptions);
 
     return (<AddOrdemServicoModalComponent>bsModalRef.content).confirmResult;
+  }
+
+  gerarRelatorioModal(oficina: any){
+    const initialState = {
+      oficina: oficina
+    };
+
+    // Use a classe "modal-xl" para aumentar o tamanho do modal
+    const modalOptions: ModalOptions = {
+      initialState,
+      class: 'modal-xl'
+    };
+
+    const bsModalRef: BsModalRef = this.modalService.show(GerarRelatorioModalComponent, modalOptions);
+
+    return (<GerarRelatorioModalComponent>bsModalRef.content).confirmResult;
   }
 
 }
