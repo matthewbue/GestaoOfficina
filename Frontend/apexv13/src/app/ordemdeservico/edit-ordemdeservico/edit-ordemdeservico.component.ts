@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from 'app/clientes/clientes.service';
 import { Automovel } from 'app/shared/Model/Automovel';
@@ -54,7 +54,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
   novoServico: string;
   novoValor: number;
   descricao: string
-
+  formServicos: FormGroup;
+  servicosParaAlterar: FormArray;
+  editarCampos: boolean = false;
+  editarIndices: number[] = [];
+  kmatualValue: number;
+  valorTotal: number = 0;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -81,6 +86,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     this.osService.getOsById(this.osId).subscribe((response) => {
       this.ordemServico = response.data
+      this.kmatualValue = response.data.manutecesServicos[0].kmatual;
+      this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
       console.log("OS", this.ordemServico)
     })
 
@@ -123,8 +130,73 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.servicosList = response.data
       console.log("Lista Serviços", this.servicosList)
     })
+
+    this.formServicos = this.fb.group({
+      servicosParaAlterar: this.fb.array([])
+    });
+    this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as FormArray;
+
   }
 
+  adicionarParaAlterar(servico: any) {
+    // Crie um FormGroup para cada serviço que será adicionado
+    const novoServicoFormGroup = {
+      id: servico.id,
+      nome: servico.nome,
+      valor: servico.valor,
+      kmServico: servico.kmservico,
+      mediaKm: servico.mediakm,
+      manutenceId: servico.manutenceId,
+      kmAtual: servico.kmatual
+    };
+
+    this.enviarDadosAlterados(novoServicoFormGroup)
+  }
+  enviarDadosAlterados(dadosAlterados) {
+    this.osService.updateServico(dadosAlterados).subscribe((data) => {
+      window.location.reload();
+      console.log(data)
+    })
+  }
+  atualizarKmServico(servico: any, novoKmServico: any) {
+    servico.kmservico = novoKmServico;
+  }
+  atualizarMediaKm(servico: any, novoValor: any) {
+    servico.mediaKm = novoValor;
+  }
+
+  salvarNovoServico(servico) {
+    const novoServicoFormGroup = {
+      id: 0,
+      nome: servico.nome,
+      valor: servico.valor,
+      kmServico: servico.kmServico,
+      mediaKm: servico.mediaKm,
+      manutenceId: this.osId,
+      kmAtual: this.kmatualValue
+    };
+    console.log(novoServicoFormGroup)
+
+    this.osService.addNovoServico(novoServicoFormGroup).subscribe((response) => {
+      window.location.reload();
+      console.log(response)
+    })
+  }
+
+  editarOs() {
+    const requestData = {
+      id: this.osId,
+      valorTotal: this.valorTotal,
+      tipoDoc: "OrdemServico",
+      observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
+    };
+    console.log("resquestData", requestData)
+
+    this.osService.saveEditOrdemServico(requestData).subscribe((response) => {
+      window.location.reload();
+      console.log(response)
+    })
+  }
   gerarOrdemServico() {
     const valorTotal = this.calcularValorTotal();
     const ordemServicoData = {
@@ -166,18 +238,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
       );
   }
 
-  editarOs() {
-    const requestData = {
-      nome: this.servicoSelected == null ? "" : this.servicoSelected,
-      kmatual: this.formOrdemServico.value.KmAtual == null ? 0 : this.formOrdemServico.value.KmAtual,
-      kmservico: this.formOrdemServico.value.KmServico == null ? 0 : this.formOrdemServico.value.KmServico,
-      valor: this.calcularValorTotal(),
-      mediakm: this.formOrdemServico.value.mediaKm == null ? 0 : this.formOrdemServico.value.mediaKm,
-      clientid: this.clienteId,
-      observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
-    };
-    console.log("resquestData", requestData)
-  }
+
 
   gerarPDF() {
     const doc = new jsPDF();
@@ -285,6 +346,21 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  toggleEdicao(index: number) {
+    if (this.editarIndices.indexOf(index) === -1) {
+      this.editarIndices.push(index);
+    } else {
+      this.editarIndices.splice(this.editarIndices.indexOf(index), 1);
+    }
+  }
+
+  salvarEdicao(index: number) {
+    // Aqui você pode implementar a lógica para salvar as alterações do item específico.
+    // Por exemplo, você pode acessar this.ordemServico.manutecesServicos[index] para obter o item atual.
+    console.log("Salvando alterações para o item de índice:", index);
+    this.toggleEdicao(index);
   }
 
 }
