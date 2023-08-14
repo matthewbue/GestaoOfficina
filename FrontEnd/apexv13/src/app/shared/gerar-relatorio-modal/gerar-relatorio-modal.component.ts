@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-gerar-relatorio-modal',
@@ -7,10 +8,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GerarRelatorioModalComponent implements OnInit {
   confirmResult: any;
+  formRelatorio: FormGroup;
+  statusSelected: string;
 
-  constructor() { }
+
+  constructor(
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
+    this.formRelatorio = this.fb.group({
+      ordemNumero: null,
+      nomeCliente: null,
+      statusOs: null,
+      dataInicial: null,
+      dataFinal: null,
+    })
+
   }
+
+  onSelectStatus(event: any) {
+    this.statusSelected = event
+    console.log('Marca selecionada:', this.statusSelected);
+
+  }
+
+  baixarRelatorio() {
+    const requestRelatorio = {
+      nomeCliente: this.formRelatorio.value.nomeCliente == null ? "" : this.formRelatorio.value.nomeCliente,
+      statusOs: this.statusSelected == null ? "" : this.statusSelected,
+      dataInicial: this.formRelatorio.value.dataInicial == null ? "" : this.formRelatorio.value.dataInicial,
+      dataFinal: this.formRelatorio.value.dataFinal == null ? "" : this.formRelatorio.value.dataFinal,
+    }
+    console.log(requestRelatorio)
+  }
+
+limparFiltro(){
+  this.formRelatorio.reset()
+}
 
 }

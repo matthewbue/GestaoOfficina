@@ -59,6 +59,11 @@ export class OrcamentoComponent implements OnInit {
     console.log('Marca selecionada:', this.statusSelected);
 
   }
+
+  gerarRelatorio(){
+    this.alertService.gerarRelatorioModal(this.clientes);
+  }
+
   searchOs() {
 
     const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;

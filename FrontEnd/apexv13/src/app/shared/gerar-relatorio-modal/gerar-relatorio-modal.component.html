@@ -1,55 +1,50 @@
 <section>
   <div>
-    <div class="col-12">
+    <div class="col-12 pb-5 pt-5">
       <div class="card">
         <div class="content-header">
           <h1>Gerar relatório de ordens de serviço</h1>
         </div>
-        <form>
+        <form [formGroup]="formRelatorio">
           <div class="card-content">
             <div class="card-body">
               <div class="row">
                 <div class="col-md-6">
-                  <fieldset class="form-group">
-                    <label for="ordemNumero">Ordem Número:</label>
-                    <input type="number" class="form-control" id="ordemNumero" formControlName="ordemNumero"
-                      placeholder="Número da OS" />
-                  </fieldset>
+
 
                   <fieldset class="form-group">
                     <label for="nomeCliente">Nome do cliente:</label>
                     <input type="text" class="form-control" id="nomeCliente" formControlName="nomeCliente"
                       placeholder="Nome do cliente" />
                   </fieldset>
-
-                </div>
-                <div class="col-md-6">
-
                   <fieldset class="form-group">
                     <label for="statusOs">Status:</label>
-                    <ng-select [clearable]="false" id="statusOs" formControlName="statusOs">
+                    <ng-select [clearable]="false" id="statusOs" formControlName="statusOs"
+                      (change)="onSelectStatus($event)">
                       <ng-option>Em andamento</ng-option>
-                      <ng-option>Concluidas</ng-option>
+                      <ng-option>Concluido</ng-option>
                     </ng-select>
                   </fieldset>
+                </div>
+                <div class="col-md-6">
 
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-6">
                         <label for="dataInicial">Data Inicial:</label>
-                        <input type="date" class="form-control" id="dataInicial" />
+                        <input type="date" class="form-control" id="dataInicial" formControlName="dataInicial" />
                       </div>
                       <div class="col-md-6">
                         <label for="dataFinal">Data Final:</label>
-                        <input type="date" class="form-control" id="dataFinal" />
+                        <input type="date" class="form-control" id="dataFinal" formControlName="dataFinal" />
                       </div>
                     </div>
                   </div>
 
-                  <button type="submit" class="btn btn-light mt-4 float-right">
+                  <button type="submit" class="btn btn-light mt-4 float-right" (click)="limparFiltro()">
                     Limpar
                   </button>
-                  <button type="submit" class="btn btn-primary mt-4 mr-2 float-right">
+                  <button type="submit" class="btn btn-primary mt-4 mr-2 float-right" (click)="baixarRelatorio()">
                     Buscar
                   </button>
                 </div>
