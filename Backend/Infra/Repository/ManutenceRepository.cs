@@ -48,7 +48,7 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public void Delete(int entrada)
         {
-            var resultdelete = _gestaoOfficinaContext.Manutences.Where(r => r.Id == entrada).FirstOrDefault();
+            var resultdelete = _gestaoOfficinaContext.Manutences.Where(r => r.Id == entrada).Include(m => m.ManutecesServicos).FirstOrDefault();
             _gestaoOfficinaContext.Manutences.Remove(resultdelete);
             _gestaoOfficinaContext.SaveChanges();
         }
