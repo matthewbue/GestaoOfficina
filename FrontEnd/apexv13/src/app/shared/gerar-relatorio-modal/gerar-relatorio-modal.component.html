@@ -21,8 +21,8 @@
                     <label for="statusOs">Status:</label>
                     <ng-select [clearable]="false" id="statusOs" formControlName="statusOs"
                       (change)="onSelectStatus($event)">
-                      <ng-option>Em andamento</ng-option>
-                      <ng-option>Concluido</ng-option>
+                      <ng-option [value]="'Em andamento'">Em andamento</ng-option>
+                      <ng-option [value]="'Concluido'">Concluido</ng-option>
                     </ng-select>
                   </fieldset>
                 </div>
@@ -40,6 +40,16 @@
                       </div>
                     </div>
                   </div>
+                  <fieldset class="form-group">
+                    <label for="statusOs">Tipo:</label>
+                    <ng-select [clearable]="false" id="statusOs" formControlName="statusOs"
+                      (ngModelChange)="onSelectTipo($event)">
+                      <ng-option [value]="'Ordem de Serviço'">Ordem de Serviço</ng-option>
+                      <ng-option [value]="'Orçamento'">Orçamento</ng-option>
+                    </ng-select>
+                  </fieldset>
+
+
 
                   <button type="submit" class="btn btn-light mt-4 float-right" (click)="limparFiltro()">
                     Limpar

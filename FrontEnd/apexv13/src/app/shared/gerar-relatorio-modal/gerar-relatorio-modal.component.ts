@@ -10,6 +10,7 @@ export class GerarRelatorioModalComponent implements OnInit {
   confirmResult: any;
   formRelatorio: FormGroup;
   statusSelected: string;
+  tipoSelected: string;
 
 
   constructor(
@@ -27,16 +28,21 @@ export class GerarRelatorioModalComponent implements OnInit {
 
   }
 
-  onSelectStatus(event: any) {
-    this.statusSelected = event
-    console.log('Marca selecionada:', this.statusSelected);
+  onSelectStatus(selectedValue: string) {
+    this.statusSelected =  selectedValue;
+    console.log('status Selecionado:', this.statusSelected);
+  }
 
+  onSelectTipo(selectedValue: string) {
+    this.tipoSelected = selectedValue;
+    console.log('tipo Selecionado:', this.tipoSelected);
   }
 
   baixarRelatorio() {
     const requestRelatorio = {
       nomeCliente: this.formRelatorio.value.nomeCliente == null ? "" : this.formRelatorio.value.nomeCliente,
       statusOs: this.statusSelected == null ? "" : this.statusSelected,
+      tipoDoc: this.tipoSelected == null ? "" : this.tipoSelected,
       dataInicial: this.formRelatorio.value.dataInicial == null ? "" : this.formRelatorio.value.dataInicial,
       dataFinal: this.formRelatorio.value.dataFinal == null ? "" : this.formRelatorio.value.dataFinal,
     }
