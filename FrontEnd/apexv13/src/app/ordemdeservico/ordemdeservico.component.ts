@@ -25,7 +25,7 @@ export class OrdemdeservicoComponent implements OnInit {
   ) { }
 
   clientes = new Clientes();
-  data: FilterOsDto[];
+  data: FilterOsDto;
   formSearchOs: FormGroup;
   statusSelected: string;
   currentPage: number = 1;
@@ -34,25 +34,29 @@ export class OrdemdeservicoComponent implements OnInit {
   tipoDoc: any;
 
   ngOnInit(): void {
-    const requestData = new FilterOs("", "", 0, null, 1, 10)
+    const requestData = new FilterOs("", "", 0, null, 1, 10, null, null)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
       this.totalPages = response.totalPagina
-      
-      console.log(this.data);
+
+      console.log("Data",this.data);
       this.cdRef.detectChanges();
     });
 
     this.formSearchOs = this.fb.group({
       ordemNumero: null,
       nomeCliente: null,
-      statusOs: null,      
+      statusOs: null,
     })
 
   }
 
   addOS() {
-    const result$ = this.alertService.addOSModal(this.clientes);
+  this.alertService.addOSModal(this.clientes);
+  }
+
+  gerarRelatorio(){
+    this.alertService.gerarRelatorioModal(this.clientes);
   }
 
   onSelectStatus(event: any) {
@@ -65,7 +69,7 @@ export class OrdemdeservicoComponent implements OnInit {
     const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
 
-    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10)
+    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, null, null)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
       console.log(this.data);
@@ -78,16 +82,16 @@ export class OrdemdeservicoComponent implements OnInit {
 
   goToPage(page: number) {
     this.currentPage = page;
-    const requestData = new FilterOs("", "", 0, null, this.currentPage, 10);
+    const requestData = new FilterOs("", "", 0, null, this.currentPage, 10, null, null);
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
       console.log(this.data);
     });
   }
 
-  openById(id) {
+  openById(id, clienteId) {
     this.router.navigate(["ordemdeservico/new"], {
-      queryParams: { osId: id, tipo: "visualizar" },
+      queryParams: { osId: id, clienteId: clienteId, tipo: "visualizar" },
     });
   }
 

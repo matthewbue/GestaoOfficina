@@ -25,7 +25,7 @@ getOsById(Id) {
 }
 
 deleteOrdemServico(Id){
-  return this.httpClient.delete<any>(`${environment.API}/Manutence/Delete?entrada=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.delete<any>(`https://localhost:44391/Manutence/Delete?entrada=${Id}`).pipe(catchError(this.handleError));
 }
 
 finalizarOs(Id){
@@ -45,11 +45,11 @@ updateServico(updateServico){
 }
 
 addNovoServico(addNewServico){
-  return this.httpClient.post<any>(`https://localhost:44391/Manutence/AddServico`, addNewServico) 
-} 
+  return this.httpClient.post<any>(`https://localhost:44391/Manutence/AddServico`, addNewServico)
+}
 
 saveEditOrdemServico(saveEditOrdemServico){
-  return this.httpClient.post<any>(`https://localhost:44391/Manutence/Update`, saveEditOrdemServico) 
+  return this.httpClient.post<any>(`https://localhost:44391/Manutence/Update`, saveEditOrdemServico)
 }
 
 private handleError(err: HttpErrorResponse) {

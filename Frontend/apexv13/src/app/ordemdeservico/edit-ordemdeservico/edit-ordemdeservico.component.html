@@ -304,7 +304,7 @@
                   <!-- Use ngFor para percorrer manutenceServicos -->
                   <tr *ngFor="let servico of ordemServico.manutecesServicos">
                     <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor }}</td>
+                    <td>{{ servico.valor.toFixed(2) }}</td>
                     <td>{{ servico.kmatual }}</td>
                     <td> {{ servico.kmservico }} </td>
                     <td> {{ servico.mediakm }} </td>
@@ -313,7 +313,7 @@
               </table>
             </div>
 
-            <div class="col-md-2 mt-4">
+            <div class="col-md-4 mt-4">
               <div class="form-group">
                 <label for="valorTotal">Valor Total (R$):</label>
                 <div class="input-group">
@@ -322,7 +322,7 @@
                   </div>
                   <!-- Use vinculação de propriedade [value] para vincular o valor -->
                   <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                    [value]="ordemServico.valorTotal" disabled />
+                    [value]="ordemServico.valorTotal.toFixed(2)" disabled />
                 </div>
               </div>
             </div>
@@ -456,7 +456,7 @@
                 <tbody>
                   <tr *ngFor="let servico of servicos">
                     <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor }}</td>
+                    <td>{{ servico.valor.toFixed(2) }}</td>
                     <td>
                       <div class="form-group">
                         <input maxlength="100" type="number" class="form-control col-md-6"
@@ -531,7 +531,7 @@
                   </div>
               </div>
           </div>
-          
+
             <form [formGroup]="formOrdemServico" class="col-md-12 mt-4" novalidate>
               <div>
                 <div class="row">

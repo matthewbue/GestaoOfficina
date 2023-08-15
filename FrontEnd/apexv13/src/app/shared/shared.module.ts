@@ -37,6 +37,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { AddOrdemServicoModalComponent } from './add-ordem-servico-modal/add-ordem-servico-modal.component';
+import { GerarRelatorioModalComponent } from './gerar-relatorio-modal/gerar-relatorio-modal.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -98,6 +99,7 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
         AlertModalComponent,
         ConfirmModalComponent,
         AddOrdemServicoModalComponent,
+        GerarRelatorioModalComponent,
     ],
     entryComponents: [AlertModalComponent, ConfirmModalComponent]
 })

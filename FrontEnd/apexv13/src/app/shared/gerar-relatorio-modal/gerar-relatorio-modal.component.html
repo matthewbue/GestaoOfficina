@@ -1,0 +1,68 @@
+<section>
+  <div>
+    <div class="col-12 pb-5 pt-5">
+      <div class="card">
+        <div class="content-header">
+          <h1>Gerar relatórios</h1>
+        </div>
+        <form [formGroup]="formRelatorio">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+
+
+                  <fieldset class="form-group">
+                    <label for="nomeCliente">Nome do cliente:</label>
+                    <input type="text" class="form-control" id="nomeCliente" formControlName="nomeCliente"
+                      placeholder="Nome do cliente" />
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <label for="statusOs">Status:</label>
+                    <ng-select [clearable]="false" id="statusOs" formControlName="statusOs"
+                      (change)="onSelectStatus($event)">
+                      <ng-option [value]="'Em andamento'">Em andamento</ng-option>
+                      <ng-option [value]="'Concluido'">Concluido</ng-option>
+                    </ng-select>
+                  </fieldset>
+                </div>
+                <div class="col-md-6">
+
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="dataInicial">Data Inicial:</label>
+                        <input type="date" class="form-control" id="dataInicial" formControlName="dataInicial" />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="dataFinal">Data Final:</label>
+                        <input type="date" class="form-control" id="dataFinal" formControlName="dataFinal" />
+                      </div>
+                    </div>
+                  </div>
+                  <fieldset class="form-group">
+                    <label for="statusOs">Tipo:</label>
+                    <ng-select [clearable]="false" id="statusOs" formControlName="statusOs"
+                      (ngModelChange)="onSelectTipo($event)">
+                      <ng-option [value]="'Ordem de Serviço'">Ordem de Serviço</ng-option>
+                      <ng-option [value]="'Orçamento'">Orçamento</ng-option>
+                    </ng-select>
+                  </fieldset>
+
+
+
+                  <button type="submit" class="btn btn-light mt-4 float-right" (click)="limparFiltro()">
+                    Limpar
+                  </button>
+                  <button type="submit" class="btn btn-primary mt-4 mr-2 float-right" (click)="baixarRelatorio()">
+                    Buscar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
