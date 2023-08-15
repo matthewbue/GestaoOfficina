@@ -21,7 +21,7 @@ getFilterOS(filterOs: FilterOs){
 }
 
 getOsById(Id) {
-  return this.httpClient.get<any>(`${environment.API}/Manutence/GetById?entrada=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.get<any>(`https://localhost:44391/Manutence/GetById?entrada=${Id}`).pipe(catchError(this.handleError));
 }
 
 deleteOrdemServico(Id){

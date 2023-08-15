@@ -60,7 +60,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
   editarIndices: number[] = [];
   kmatualValue: number;
   valorTotal: number = 0;
-  manutencesServico = []
+  manutencesServico = [];
+  automovel: any;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -90,9 +91,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.ordemServico = response.data
       this.kmatualValue = response.data.manutecesServicos[0].kmatual;
       this.manutencesServico = response.data.manutecesServicos;
+      this.automovel = response.data.automovels
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
       console.log("OS", this.ordemServico)
       console.log("MANUT", this.manutencesServico)
+      console.log("AUTO", this.automovel)
+
 
     })
 
@@ -243,18 +247,16 @@ export class EditOrdemdeservicoComponent implements OnInit {
       );
   }
 
-  
-
   gerarPDF() {
     const doc = new jsPDF();
 
     // Adicione a imagem como marca d'água
-    const imgData = '../../../assets/img/logo-oficina-op1.png';
-    const imgWidth = 100; // Largura da imagem (ajuste conforme necessário)
+    const imgData = '../../../assets/img/logo-oficina-peb.png';
+    const imgWidth = 150; // Largura da imagem (ajuste conforme necessário)
     const imgHeight = (imgWidth * 1.41); // Proporção de aspecto da imagem (ajuste conforme necessário)
     const xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2; // Posição horizontal central
     const yPos = (doc.internal.pageSize.getHeight() - imgHeight) / 2; // Posição vertical central
-    doc.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST', 0.1); // Ajuste o valor de transparência (0.3 neste caso)
+    doc.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST', 0.1); // Ajuste o valor de transparência (0.1 neste caso)
 
     doc.setFont('courier', 'normal'); // Defina a fonte padrão
     doc.setTextColor(0, 0, 0); // Defina a cor do texto (preto)
@@ -265,10 +267,15 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.setFont('courier', 'normal'); // Voltar à fonte normal
 
     doc.setFontSize(12);
-    doc.text('RUA FRAMBOESA - 23061-522 - (21)964169157', 105, 30, { align: 'center' });
+    doc.text('CNPJ: 20.388.818/0001-30', 105, 30, { align: 'center' }); // Adicione o campo CNPJ aqui
+
+    doc.setFontSize(12);
+    doc.text('Rua Framboesa LOTE 1 QUADRA S - 23061-522 - (21)964169157', 105, 40, { align: 'center' });
 
     doc.setFontSize(14);
-    doc.text('ORDEM DE SERVIÇO', 105, 45, { align: 'center' });
+    doc.setFont('courier', 'bold');
+    doc.text('ORDEM DE SERVIÇO', 105, 55, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
 
     let yPosValue = 70;
 
@@ -278,7 +285,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.text(`Data: ${this.ordemServico.dataOS}`, 20, yPosValue);
     yPosValue += 10;
 
-    
     doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);    
     doc.text(`CPF: ${this.cliente.cpf}`, 105, yPosValue);
     yPosValue += 10;
@@ -293,13 +299,13 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     yPosValue += 10;
     doc.setFontSize(12);
-    doc.text(`Placa: ${"LLS8D99"}`, 20, yPosValue);
-    doc.text(`Marca: ${"Civic"}`, 80, yPosValue);
-    doc.text(`Modelo: ${"2012"}`, 140, yPosValue);
+    doc.text(`Placa: ${this.automovel.placa}`, 20, yPosValue);
+    doc.text(`Marca: ${this.automovel.marca}`, 80, yPosValue);
+    doc.text(`Modelo: ${this.automovel.modelo}`, 140, yPosValue);
     yPosValue += 10;
-    doc.text(`Ano: ${"2012"}`, 20, yPosValue);
-    doc.text(`Cor: ${"Cinza"}`, 80, yPosValue);
-    doc.text(`Km Atual: ${"85000"}`, 140, yPosValue);
+    doc.text(`Ano: ${this.automovel.ano}`, 20, yPosValue);
+    doc.text(`Cor: ${this.automovel.cor}`, 80, yPosValue);
+    doc.text(`Km Atual: ${this.automovel.km}`, 140, yPosValue);
     yPosValue += 15;
 
     doc.setFontSize(14);
@@ -309,13 +315,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
     yPosValue += 10;
 
     doc.setFontSize(12);
-    const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor}`).join('\n');
+    const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor},00`).join('\n');
     doc.text(servicosFeitos, 20, yPosValue);
     yPosValue += 10;
 
     doc.setFontSize(14);
     doc.setFont('courier', 'bold');
-
     doc.text('Observações', 105, yPosValue, { align: 'center' });
     doc.setFont('courier', 'normal'); // Voltar à fonte normal
 
@@ -326,17 +331,30 @@ export class EditOrdemdeservicoComponent implements OnInit {
     yPosValue += 10;
 
     doc.setFontSize(14);
-    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal}`, 105, yPosValue + 10, { align: 'center' });
+    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
+
+    // Adicione campos de assinatura
+    yPosValue += 50; // Espaço entre o texto e as assinaturas
+
+    doc.setFontSize(12);
+    const assinaturaClienteY = yPosValue;
+    doc.text('Assinatura do Cliente:', 20, assinaturaClienteY);
+    doc.line(20, assinaturaClienteY + 10, 100, assinaturaClienteY + 10); // Linha para assinatura do cliente
+
+    const assinaturaResponsavelY = yPosValue;
+    doc.text('Assinatura do Responsável:', 105, assinaturaResponsavelY);
+    doc.line(105, assinaturaResponsavelY + 10, 200, assinaturaResponsavelY + 10); // Linha para assinatura do responsável
 
     doc.setFontSize(10);
-    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 15, { align: 'center' });
+
+    // Adicione a frase adicional
+    doc.setFontSize(10);
+    doc.text('Nunca foi sorte, sempre foi Deus!', 105, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
 
     doc.save('ordem-de-servico.pdf');
-}
 
-
-
-
+  }
 
 
 
