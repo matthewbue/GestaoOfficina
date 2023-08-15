@@ -212,16 +212,17 @@ namespace GestaoOfficinaProj.Infra.Repository
             }
             if(entrada.DataInicial != null)
             {
-                queryResult = queryResult.Where(_ => _.DataOS == entrada.DataInicial && _.DataOS == entrada.DataFinal);
+                queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicial && _.DataOS <= entrada.DataFinal);
             }
             var result = queryResult.ToList();
             foreach (var item in queryResult)
             {
                 if (!String.IsNullOrEmpty(entrada.NomeClient))
-                {
                     item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeClient)).FirstOrDefaultAsync();
-                }
-                
+                else
+                    item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Id == item.ClientId).FirstOrDefaultAsync();
+
+                item.automovels = await _gestaoOfficinaContext.Automoveis.Where(_ => _.Id == item.AutomovelId).FirstOrDefaultAsync();
             }
                 
             return result;
