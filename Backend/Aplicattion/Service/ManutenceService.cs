@@ -121,5 +121,22 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             _manutenceRepository.CheckoutOS(IdentificadorOS);
             return new ReturnDefault("Dados modificados com sucesso.", "sucess");
         }
+
+        public ReturnDefault GetRelatorio(EntryFilterRelatorioDTO entrada)
+        {
+
+            var result = _manutenceRepository.GetRelatorio(entrada);
+
+            var objetoSaida = new ResponseRelatorioDTO();
+            objetoSaida.Manutences = result.Result;
+            objetoSaida.QuantidadesTotalDeItens = result.Result.Count();
+            foreach (var item in result.Result)
+            {
+                objetoSaida.ValorTotalRelatorio = objetoSaida.ValorTotalRelatorio + item.ValorTotal;
+               
+            }
+            
+            return new ReturnDefault("Dados retornados com sucesso.", objetoSaida);
+        }
     }
 }

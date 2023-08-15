@@ -122,5 +122,11 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpPost("GetRelatorio")]
+        public IActionResult GetRelatorio(EntryFilterRelatorioDTO entrada)
+        {
+            var result = _manutenceService.GetRelatorio(entrada);
+            return Ok(result);
+        }
     }
 }

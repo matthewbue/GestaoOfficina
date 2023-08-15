@@ -198,5 +198,33 @@ namespace GestaoOfficinaProj.Infra.Repository
                 throw new Exception(ex.Message);
             }
         }
+
+        public async Task<List<Manutence>> GetRelatorio(EntryFilterRelatorioDTO entrada)
+        {
+            var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+            if (!String.IsNullOrEmpty(entrada.StatusOs))
+            {
+                queryResult = queryResult.Where(_ => _.Status == entrada.StatusOs);
+            }
+            if (!String.IsNullOrEmpty(entrada.TipoDoc))
+            {
+                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.TipoDoc);
+            }
+            if(entrada.DataInicial != null)
+            {
+                queryResult = queryResult.Where(_ => _.DataOS == entrada.DataInicial && _.DataOS == entrada.DataFinal);
+            }
+            var result = queryResult.ToList();
+            foreach (var item in queryResult)
+            {
+                if (!String.IsNullOrEmpty(entrada.NomeClient))
+                {
+                    item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeClient)).FirstOrDefaultAsync();
+                }
+                
+            }
+                
+            return result;
+        }
     }
 }
