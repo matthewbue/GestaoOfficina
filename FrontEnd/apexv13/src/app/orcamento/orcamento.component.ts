@@ -33,7 +33,7 @@ export class OrcamentoComponent implements OnInit {
   tipoDoc: any;
 
   ngOnInit(): void {
-    const requestData = new FilterOs("", "", 0, null, 1, 10)
+    const requestData = new FilterOs("", "", 0, null, 1, 10, null, null)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
       this.totalPages = response.totalPagina
@@ -69,7 +69,7 @@ export class OrcamentoComponent implements OnInit {
     const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
 
-    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10)
+    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, null, null)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
       console.log(this.data);
@@ -82,7 +82,7 @@ export class OrcamentoComponent implements OnInit {
 
   goToPage(page: number) {
     this.currentPage = page;
-    const requestData = new FilterOs("", "", 0, null, this.currentPage, 10);
+    const requestData = new FilterOs("", "", 0, null, this.currentPage, 10, null, null);
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
       console.log(this.data);

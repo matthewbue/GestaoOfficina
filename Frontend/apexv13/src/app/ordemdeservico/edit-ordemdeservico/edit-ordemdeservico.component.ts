@@ -249,7 +249,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     const doc = new jsPDF();
 
     // Adicione a imagem como marca d'água
-    const imgData = '../../../assets/img/logo.png';
+    const imgData = '../../../assets/img/logo-oficina-op1.png';
     const imgWidth = 100; // Largura da imagem (ajuste conforme necessário)
     const imgHeight = (imgWidth * 1.41); // Proporção de aspecto da imagem (ajuste conforme necessário)
     const xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2; // Posição horizontal central
@@ -260,7 +260,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.setTextColor(0, 0, 0); // Defina a cor do texto (preto)
 
     doc.setFontSize(18);
+    doc.setFont('courier', 'bold');
     doc.text('FERREIRA\'S AUTOMOTIVO', 105, 20, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
 
     doc.setFontSize(12);
     doc.text('RUA FRAMBOESA - 23061-522 - (21)964169157', 105, 30, { align: 'center' });
