@@ -25,7 +25,7 @@ export class OrdemdeservicoComponent implements OnInit {
   ) { }
 
   clientes = new Clientes();
-  data: FilterOsDto[];
+  data: FilterOsDto;
   formSearchOs: FormGroup;
   statusSelected: string;
   currentPage: number = 1;
@@ -39,7 +39,7 @@ export class OrdemdeservicoComponent implements OnInit {
       this.data = response.data;
       this.totalPages = response.totalPagina
 
-      console.log(this.data);
+      console.log("Data",this.data);
       this.cdRef.detectChanges();
     });
 
@@ -89,9 +89,9 @@ export class OrdemdeservicoComponent implements OnInit {
     });
   }
 
-  openById(id) {
+  openById(id, clienteId) {
     this.router.navigate(["ordemdeservico/new"], {
-      queryParams: { osId: id, tipo: "visualizar" },
+      queryParams: { osId: id, clienteId: clienteId, tipo: "visualizar" },
     });
   }
 
