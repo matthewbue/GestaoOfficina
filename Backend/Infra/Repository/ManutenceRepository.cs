@@ -218,11 +218,11 @@ namespace GestaoOfficinaProj.Infra.Repository
             foreach (var item in queryResult)
             {
                 if (!String.IsNullOrEmpty(entrada.NomeClient))
-                    item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeClient)).FirstOrDefaultAsync();
+                    item.Clients =  _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeClient)).FirstOrDefault();
                 else
-                    item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Id == item.ClientId).FirstOrDefaultAsync();
+                    item.Clients =  _gestaoOfficinaContext.Clients.Where(_ => _.Id == item.ClientId).FirstOrDefault();
 
-                item.automovels = await _gestaoOfficinaContext.Automoveis.Where(_ => _.Id == item.AutomovelId).FirstOrDefaultAsync();
+                item.automovels =  _gestaoOfficinaContext.Automoveis.Where(_ => _.Id == item.AutomovelId).FirstOrDefault();
             }
                 
             return result;

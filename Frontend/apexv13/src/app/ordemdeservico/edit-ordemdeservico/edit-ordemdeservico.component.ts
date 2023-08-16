@@ -96,8 +96,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
       console.log("OS", this.ordemServico)
       console.log("MANUT", this.manutencesServico)
       console.log("AUTO", this.automovel)
-
-
+      
     })
 
     this.formVeiculo = this.fb.group({
@@ -285,7 +284,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.text(`Data: ${this.ordemServico.dataOS}`, 20, yPosValue);
     yPosValue += 10;
 
-    doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);    
+    doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);
     doc.text(`CPF: ${this.cliente.cpf}`, 105, yPosValue);
     yPosValue += 10;
 
