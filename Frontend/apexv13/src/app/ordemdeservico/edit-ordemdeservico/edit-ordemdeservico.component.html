@@ -304,7 +304,7 @@
                   <!-- Use ngFor para percorrer manutenceServicos -->
                   <tr *ngFor="let servico of ordemServico.manutecesServicos">
                     <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor.toFixed(2) }}</td>
+                    <td>{{ servico.valor }}</td>
                     <td>{{ servico.kmatual }}</td>
                     <td> {{ servico.kmservico }} </td>
                     <td> {{ servico.mediakm }} </td>
@@ -322,7 +322,7 @@
                   </div>
                   <!-- Use vinculação de propriedade [value] para vincular o valor -->
                   <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                    [value]="ordemServico.valorTotal.toFixed(2)" disabled />
+                    [value]="ordemServico.valorTotal" disabled />
                 </div>
               </div>
             </div>
@@ -456,7 +456,7 @@
                 <tbody>
                   <tr *ngFor="let servico of servicos">
                     <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor.toFixed(2) }}</td>
+                    <td>{{ servico.valor }}</td>
                     <td>
                       <div class="form-group">
                         <input maxlength="100" type="number" class="form-control col-md-6"
@@ -527,7 +527,7 @@
                           <span class="input-group-text">R$</span>
                       </div>
                       <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
-                          [value]="valorTotal.toFixed(2)" />
+                          [value]="valorTotal" />
                   </div>
               </div>
           </div>

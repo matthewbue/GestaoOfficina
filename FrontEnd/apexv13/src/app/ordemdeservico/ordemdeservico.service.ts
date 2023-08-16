@@ -52,6 +52,10 @@ saveEditOrdemServico(saveEditOrdemServico){
   return this.httpClient.post<any>(`https://localhost:44391/Manutence/Update`, saveEditOrdemServico)
 }
 
+getRelatorioFilter(filterRelatorio){
+  return this.httpClient.post<any>(`https://localhost:44391/Manutence/GetRelatorio`, filterRelatorio)
+}
+
 private handleError(err: HttpErrorResponse) {
   return throwError(err);
 }
