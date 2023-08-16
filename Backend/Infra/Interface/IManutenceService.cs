@@ -20,6 +20,6 @@ namespace GestaoOfficinaProj.Infra.Interface
         Task<ReturnDefault> UpdateManutenceServico(ManutenceUpdateServicoDTO entrada);
         Task<ReturnDefault> GetFilterOS(OSFilterDTO FilterDTO);
         ReturnDefault CheckoutOS(int IdentificadorOS);
-        ReturnDefault GetRelatorio(EntryFilterRelatorioDTO entrada);
+        Task<ReturnDefault> GetRelatorio(EntryFilterRelatorioDTO entrada);
     }
 }

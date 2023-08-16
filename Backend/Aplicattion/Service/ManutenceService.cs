@@ -122,15 +122,15 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             return new ReturnDefault("Dados modificados com sucesso.", "sucess");
         }
 
-        public ReturnDefault GetRelatorio(EntryFilterRelatorioDTO entrada)
+        public async Task<ReturnDefault> GetRelatorio(EntryFilterRelatorioDTO entrada)
         {
 
-            var result = _manutenceRepository.GetRelatorio(entrada);
+            var result = await _manutenceRepository.GetRelatorio(entrada);
 
             var objetoSaida = new ResponseRelatorioDTO();
-            objetoSaida.Manutences = result.Result;
-            objetoSaida.QuantidadesTotalDeItens = result.Result.Count();
-            foreach (var item in result.Result)
+            objetoSaida.Manutences = result;
+            objetoSaida.QuantidadesTotalDeItens = result.Count();
+            foreach (var item in result)
             {
                 objetoSaida.ValorTotalRelatorio = objetoSaida.ValorTotalRelatorio + item.ValorTotal;
                

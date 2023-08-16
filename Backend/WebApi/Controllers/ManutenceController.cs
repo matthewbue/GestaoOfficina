@@ -123,9 +123,9 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
         [HttpPost("GetRelatorio")]
-        public IActionResult GetRelatorio(EntryFilterRelatorioDTO entrada)
+        public async Task<IActionResult> GetRelatorio(EntryFilterRelatorioDTO entrada)
         {
-            var result = _manutenceService.GetRelatorio(entrada);
+            var result = await _manutenceService.GetRelatorio(entrada);
             return Ok(result);
         }
     }

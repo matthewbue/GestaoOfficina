@@ -202,6 +202,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         public async Task<List<Manutence>> GetRelatorio(EntryFilterRelatorioDTO entrada)
         {
             var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+
             if (!String.IsNullOrEmpty(entrada.StatusOs))
             {
                 queryResult = queryResult.Where(_ => _.Status == entrada.StatusOs);
@@ -210,22 +211,25 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 queryResult = queryResult.Where(_ => _.TipoDoc == entrada.TipoDoc);
             }
-            if(entrada.DataInicial != null)
+            if (entrada.DataInicial != null)
             {
                 queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicial && _.DataOS <= entrada.DataFinal);
             }
-            var result = queryResult.ToList();
-            foreach (var item in queryResult)
+
+            var result =  queryResult.Include(c => c.Clients).ToListAsync(); // Use ToListAsync to await the query execution
+
+            foreach (var item in result.Result) // Iterate over the result list
             {
                 if (!String.IsNullOrEmpty(entrada.NomeClient))
-                    item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeClient)).FirstOrDefaultAsync();
+                    item.Clients = _gestaoOfficinaContext.Clients.FirstOrDefault(_ => _.Nome.Contains(entrada.NomeClient));
                 else
-                    item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Id == item.ClientId).FirstOrDefaultAsync();
+                    item.Clients =  _gestaoOfficinaContext.Clients.FirstOrDefault(_ => _.Id == item.ClientId);
 
-                item.automovels = await _gestaoOfficinaContext.Automoveis.Where(_ => _.Id == item.AutomovelId).FirstOrDefaultAsync();
+                item.automovels =  _gestaoOfficinaContext.Automoveis.FirstOrDefault(_ => _.Id == item.AutomovelId);
             }
-                
-            return result;
+
+            return result.Result;
         }
+
     }
 }
