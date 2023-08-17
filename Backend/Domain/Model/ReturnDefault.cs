@@ -8,7 +8,7 @@ namespace GestaoOfficina.Domain.Model
 {
     public class ReturnDefault
     {
-        public string message { get; set; }
+        public string message {   get; set; }
         public object data { get; set; }
 
         public int totalPagina { get; set; }
