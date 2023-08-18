@@ -25,7 +25,7 @@ namespace GestaoOfficinaProj.Domain.DTO
         public DateTime? DataAberturaOS { get; set; }
         public int? PageNumber { get; set; }
         public int? PageSize { get; set; }
-        public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
+        public DateTime? DataInicio { get; set; }
+        public DateTime? DataFim { get; set; }
     }
 }

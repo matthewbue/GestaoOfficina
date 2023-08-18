@@ -59,8 +59,8 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                
                 var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
-
-                if (entrada.DataInicio <= entrada.DataFim && entrada.DataInicio != null && entrada.DataFim != null)
+                if (entrada.DataInicio != null && entrada.DataFim != null)
+                if (entrada.DataInicio <= entrada.DataFim)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim );
                 }
