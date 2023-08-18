@@ -59,6 +59,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                
                 var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+
                 if (entrada.DataInicio != null && entrada.DataFim != null)
                 if (entrada.DataInicio <= entrada.DataFim)
                 {
