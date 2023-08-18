@@ -86,7 +86,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             }
 
             notaDeServico += $"--------------------------------{Environment.NewLine}" +
-                             $"Total a pagar: R$ 500,00{Environment.NewLine}" +
+                             $"Total a pagar: R$ " + objetoPai.ValorTotal + "{Environment.NewLine}" +
                              $"================================";
             #endregion
 
@@ -95,11 +95,11 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             string remetenteEmail = "bueno.mb55@hotmail.com";
             string senhaRemetente = "Aabbcc12!";
             string destinatarioEmail = result.Result.Email;
-            string assunto ="Ordem Serviço : "+ result.Result.Id+ "/ nome :"  + result.Result.Nome  ;
+            string assunto ="Ordem de Serviço : "+ objetoPai.DataOS+ "- nome :"  + result.Result.Nome  ;
             string corpo = notaDeServico;
 
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Remetente", remetenteEmail));
+            message.From.Add(new MailboxAddress("Oficina ferreira", remetenteEmail));
             message.To.Add(new MailboxAddress("Destinatário", destinatarioEmail.ToString()));
             message.Subject = assunto;
             message.Body = new TextPart("plain")
