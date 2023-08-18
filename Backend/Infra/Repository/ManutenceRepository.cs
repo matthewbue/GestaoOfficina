@@ -38,7 +38,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                  _gestaoOfficinaContext.Manutences.Add(entrada);
                  _gestaoOfficinaContext.SaveChanges();
-               
+                
             }
             catch (Exception ex)
             {

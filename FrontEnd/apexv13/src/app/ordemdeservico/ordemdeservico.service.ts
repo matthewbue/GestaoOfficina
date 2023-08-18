@@ -13,23 +13,23 @@ export class OrdemdeServicoService {
 constructor(private httpClient: HttpClient) { }
 
 createOrdemServico(ordemServico) {
-  return this.httpClient.post(`https://localhost:44391/Manutence/Create`, ordemServico);
+  return this.httpClient.post(`${environment.API}/Manutence/Create`, ordemServico);
 }
 
 getFilterOS(filterOs: FilterOs){
-  return this.httpClient.post<any>(`${environment.API}/Manutence/GetFilterOS`, filterOs)
+  return this.httpClient.post<any>(`https://localhost:44392/Manutence/GetFilterOS`, filterOs)
 }
 
 getOsById(Id) {
-  return this.httpClient.get<any>(`https://localhost:44391/Manutence/GetById?entrada=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.get<any>(`https://localhost:44392/Manutence/GetById?entrada=${Id}`).pipe(catchError(this.handleError));
 }
 
 deleteOrdemServico(Id){
-  return this.httpClient.delete<any>(`https://localhost:44391/Manutence/Delete?entrada=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.delete<any>(`https://localhost:44392/Manutence/Delete?entrada=${Id}`).pipe(catchError(this.handleError));
 }
 
 finalizarOs(Id){
-  return this.httpClient.get<any>(`${environment.API}/Manutence/CheckoutOS?identificadorOS=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.get<any>(`https://localhost:44392/Manutence/CheckoutOS?identificadorOS=${Id}`).pipe(catchError(this.handleError));
 }
 
 getServico(){
@@ -41,7 +41,7 @@ cadastrarServico(descricao){
 }
 
 updateServico(updateServico){
-  return this.httpClient.post<any>(`https://localhost:44391/Manutence/UpdateServico`, updateServico)
+  return this.httpClient.post<any>(`https://localhost:44392/Manutence/UpdateServico`, updateServico)
 }
 
 addNovoServico(addNewServico){
