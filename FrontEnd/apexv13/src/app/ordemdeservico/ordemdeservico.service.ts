@@ -13,7 +13,7 @@ export class OrdemdeServicoService {
 constructor(private httpClient: HttpClient) { }
 
 createOrdemServico(ordemServico) {
-  return this.httpClient.post(`https://localhost:44392/Manutence/Create`, ordemServico);
+  return this.httpClient.post(`${environment.API}/Manutence/Create`, ordemServico);
 }
 
 getFilterOS(filterOs: FilterOs){
