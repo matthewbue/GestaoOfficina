@@ -230,6 +230,12 @@ namespace GestaoOfficinaProj.Infra.Repository
 
             return result.Result;
         }
+        public async Task<int> GetManutenceIdByDate(DateTime entrada)
+        {
+            var result = await _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefaultAsync();
+
+            return result;
+        }
 
     }
 }

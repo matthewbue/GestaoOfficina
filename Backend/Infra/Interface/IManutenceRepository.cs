@@ -22,5 +22,6 @@ namespace GestaoOfficinaProj.Infra.Interface
         void UpdateServicoManutence(ManutenceServico result);
         void CreateManutenceServico(ManutenceServico entrada);
         Task<List<Manutence>> GetRelatorio(EntryFilterRelatorioDTO entrada);
+        Task<int> GetManutenceIdByDate(DateTime entrada);
     }
 }

@@ -18,6 +18,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
     {
         private readonly IManutenceRepository _manutenceRepository;
         private readonly IClientRepository _clientRepository;
+        
         public ManutenceService(IManutenceRepository manutenceRepository, IClientRepository clientRepository)
         {
             _manutenceRepository = manutenceRepository;
@@ -29,7 +30,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             #region criação manutence
             ManutenceServico objeto = new ManutenceServico();
             Manutence objetoPai = new Manutence();
-            
+
             objetoPai.AutomovelId = entrada.Veiculoid;
             objetoPai.ClientId = entrada.Clientid;
             objetoPai.Observacoes = entrada.Observacoes;
@@ -38,11 +39,13 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.Status = "Em Andamento";
             objetoPai.ManutecesServicos = entrada.manutences;
             objetoPai.ValorTotal = entrada.ValorTotal;
+            
             _manutenceRepository.Create(objetoPai);
 
             var result = _clientRepository.GetClientById(objetoPai.ClientId);
+            var resultManutenceid = _manutenceRepository.GetManutenceIdByDate(objetoPai.DataOS);
             #endregion
-
+            
             #region corpo email
             // Informações da oficina
             string nomeOficina = "Oficina ABC";
@@ -92,7 +95,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             string remetenteEmail = "bueno.mb55@hotmail.com";
             string senhaRemetente = "Aabbcc12!";
             string destinatarioEmail = result.Result.Email;
-            string assunto = "Assunto do Email";
+            string assunto ="Ordem Serviço : "+ result.Result.Id+ "/ nome :"  + result.Result.Nome  ;
             string corpo = notaDeServico;
 
             var message = new MimeMessage();
