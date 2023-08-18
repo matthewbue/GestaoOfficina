@@ -60,7 +60,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                
                 var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
-                if (entrada.DataInicio <= entrada.DataFim)
+                if (entrada.DataInicio <= entrada.DataFim && entrada.DataInicio != null && entrada.DataFim != null)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim );
                 }
@@ -74,7 +74,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
                 }
-         
+                
                 var paginatedResult = await queryResult.OrderByDescending(i => i.Id).Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
 
                 foreach (var item in paginatedResult)
@@ -201,7 +201,7 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public async Task<List<Manutence>> GetRelatorio(EntryFilterRelatorioDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+            var queryResult = _gestaoOfficinaContext.Manutences.Include(c => c.ManutecesServicos).AsQueryable();
 
             if (!String.IsNullOrEmpty(entrada.StatusOs))
             {
