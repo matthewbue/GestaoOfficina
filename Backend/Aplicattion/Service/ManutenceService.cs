@@ -92,8 +92,8 @@ namespace GestaoOfficinaProj.Aplicattion.Service
 
             #region envio email
 
-            string remetenteEmail = "bueno.mb55@hotmail.com";
-            string senhaRemetente = "Aabbcc12!";
+            string remetenteEmail = "oficinaferreiras@outlook.com";
+            string senhaRemetente = "oficina12345";
             string destinatarioEmail = result.Result.Email;
             string assunto ="Ordem de Serviço : "+ resultManutenceid + "- nome :"  + result.Result.Nome  ;
             string corpo = notaDeServico;
