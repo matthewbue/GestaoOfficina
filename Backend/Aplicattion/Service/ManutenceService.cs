@@ -86,7 +86,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             }
 
             notaDeServico += $"--------------------------------{Environment.NewLine}" +
-                             $"Total a pagar: R$ " + objetoPai.ValorTotal + "{Environment.NewLine}" +
+                             $"Total a pagar: R$  {objetoPai.ValorTotal}  {Environment.NewLine}" +
                              $"================================";
             #endregion
 
@@ -95,7 +95,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             string remetenteEmail = "bueno.mb55@hotmail.com";
             string senhaRemetente = "Aabbcc12!";
             string destinatarioEmail = result.Result.Email;
-            string assunto ="Ordem de Serviço : "+ objetoPai.DataOS+ "- nome :"  + result.Result.Nome  ;
+            string assunto ="Ordem de Serviço : "+ resultManutenceid + "- nome :"  + result.Result.Nome  ;
             string corpo = notaDeServico;
 
             var message = new MimeMessage();
