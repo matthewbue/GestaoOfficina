@@ -101,7 +101,17 @@ export class GerarRelatorioModalComponent implements OnInit {
 
           doc.text(`Automóvel: ${manutence.automovels.modelo}`, 20 + colWidth, yPosValue);
 
-          yPosValue += 20;
+          yPosValue += 10;
+
+          // Serviços Realizados
+          doc.setFontSize(12);
+          manutence.manutecesServicos.forEach((servico) => {
+            doc.text(`Serviço: ${servico.nome}`, 20, yPosValue);
+            doc.text(`Valor: R$ ${servico.valor},00`, 20 + colWidth, yPosValue);
+            yPosValue += 10;
+          });
+
+          yPosValue += 10;
         });
 
         doc.setFontSize(14);
@@ -112,6 +122,7 @@ export class GerarRelatorioModalComponent implements OnInit {
       });
     }
 }
+
 
 
 

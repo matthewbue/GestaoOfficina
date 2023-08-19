@@ -17,19 +17,19 @@ createOrdemServico(ordemServico) {
 }
 
 getFilterOS(filterOs: FilterOs){
-  return this.httpClient.post<any>(`https://localhost:44392/Manutence/GetFilterOS`, filterOs)
+  return this.httpClient.post<any>(`${environment.API}/Manutence/GetFilterOS`, filterOs)
 }
 
 getOsById(Id) {
-  return this.httpClient.get<any>(`https://localhost:44392/Manutence/GetById?entrada=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.get<any>(`${environment.API}/Manutence/GetById?entrada=${Id}`).pipe(catchError(this.handleError));
 }
 
 deleteOrdemServico(Id){
-  return this.httpClient.delete<any>(`https://localhost:44392/Manutence/Delete?entrada=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.delete<any>(`${environment.API}/Manutence/Delete?entrada=${Id}`).pipe(catchError(this.handleError));
 }
 
 finalizarOs(Id){
-  return this.httpClient.get<any>(`https://localhost:44392/Manutence/CheckoutOS?identificadorOS=${Id}`).pipe(catchError(this.handleError));
+  return this.httpClient.get<any>(`${environment.API}/Manutence/CheckoutOS?identificadorOS=${Id}`).pipe(catchError(this.handleError));
 }
 
 getServico(){
@@ -41,19 +41,19 @@ cadastrarServico(descricao){
 }
 
 updateServico(updateServico){
-  return this.httpClient.post<any>(`https://localhost:44392/Manutence/UpdateServico`, updateServico)
+  return this.httpClient.post<any>(`${environment.API}/Manutence/UpdateServico`, updateServico)
 }
 
 addNovoServico(addNewServico){
-  return this.httpClient.post<any>(`https://localhost:44391/Manutence/AddServico`, addNewServico)
+  return this.httpClient.post<any>(`${environment.API}/Manutence/AddServico`, addNewServico)
 }
 
 saveEditOrdemServico(saveEditOrdemServico){
-  return this.httpClient.post<any>(`https://localhost:44391/Manutence/Update`, saveEditOrdemServico)
+  return this.httpClient.post<any>(`${environment.API}/Manutence/Update`, saveEditOrdemServico)
 }
 
 getRelatorioFilter(filterRelatorio){
-  return this.httpClient.post<any>(`https://localhost:44391/Manutence/GetRelatorio`, filterRelatorio)
+  return this.httpClient.post<any>(`${environment.API}/Manutence/GetRelatorio`, filterRelatorio)
 }
 
 private handleError(err: HttpErrorResponse) {
