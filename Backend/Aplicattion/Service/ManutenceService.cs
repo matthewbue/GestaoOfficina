@@ -43,7 +43,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             _manutenceRepository.Create(objetoPai);
 
             var result = _clientRepository.GetClientById(objetoPai.ClientId);
-            var resultManutenceid = _manutenceRepository.GetManutenceIdByDate(objetoPai.DataOS);
+            var resultManutenceid = await _manutenceRepository.GetManutenceIdByDate(objetoPai.DataOS);
             #endregion
             
             #region corpo email
@@ -95,7 +95,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             string remetenteEmail = "oficinaferreiras@outlook.com";
             string senhaRemetente = "oficina12345";
             string destinatarioEmail = result.Result.Email;
-            string assunto ="Ordem de Serviço : "+ resultManutenceid + "- nome :"  + result.Result.Nome  ;
+            string assunto =objetoPai.TipoDoc + " N: " + resultManutenceid;
             string corpo = notaDeServico;
 
             var message = new MimeMessage();
