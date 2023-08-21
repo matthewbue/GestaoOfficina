@@ -30,10 +30,6 @@ namespace GestaoOfficina.Aplicattion.Service
         public async Task<ReturnDefault> Create(ClientCreateDTO entrada)
         {
             var CPF = await _clientRepository.GetCPF(entrada.CPF);
-            if (CPF != null)
-            {
-                throw new Exception("CPF existente na nossa base de dados.");
-            }
 
             if (entrada.Automoveis.Count() < 1)
             {
