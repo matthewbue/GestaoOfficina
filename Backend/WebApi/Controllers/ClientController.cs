@@ -86,7 +86,7 @@ namespace GestaoOfficina.Controllers
             }
         }
         [HttpDelete("DeleteClient")]
-        public IActionResult Delete(int entrada)
+        public ActionResult Delete(int entrada)
         {
             try
             {

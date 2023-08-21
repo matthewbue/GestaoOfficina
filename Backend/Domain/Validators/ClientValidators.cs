@@ -19,8 +19,6 @@ namespace GestaoOfficina.Domain.ClientValidators
             RuleFor(x => x.NumeroWhatsApp).NotEmpty().WithMessage("preencha o campo");
             RuleFor(x => x.Nome).NotEmpty().WithMessage("preencha o campo");
             RuleFor(x => x.Endereco).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.DataNascimento).NotEmpty().WithMessage("preencha o campo");
-            RuleFor(x => x.CPF).NotEmpty().WithMessage("preencha o campo");
             RuleFor(x => x.Cidade).NotEmpty().WithMessage("preencha o campo");
             RuleFor(x => x.Bairro).NotEmpty().WithMessage("preencha o campo");
             
