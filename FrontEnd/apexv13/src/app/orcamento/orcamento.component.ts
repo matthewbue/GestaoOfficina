@@ -89,9 +89,9 @@ export class OrcamentoComponent implements OnInit {
     });
   }
 
-  openById(id) {
+  openById(id, clienteId) {
     this.router.navigate(["orcamento/new"], {
-      queryParams: { osId: id, tipo: "visualizar" },
+      queryParams: { osId: id, clienteId: clienteId, tipo: "visualizar" },
     });
   }
 

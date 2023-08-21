@@ -39,7 +39,7 @@ export class EditClientesComponent implements OnInit {
       this.tipo = params.tipo;
     });
 
-    
+
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
@@ -254,15 +254,14 @@ export class EditClientesComponent implements OnInit {
         (error) => console.error(error)
       );
   }
-
   onSave() {
     if (this.formCliente.valid && this.formCliente.touched) {
       this.clientes.id = 0
       this.clientes.nome = this.formCliente.value.nome;
-      const cpfSemFormato = this.formCliente.value.cpf;
+      const cpfSemFormato = this.formCliente.value.cpf == null ? "" : this.formCliente.value.cpf;
       const cpfFormatado = cpfSemFormato.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
       this.clientes.cpf = cpfFormatado;
-      this.clientes.dataNascimento = this.formCliente.value.dataNascimento;
+      this.clientes.dataNascimento = this.formCliente.value.dataNascimento == null ? null : this.formCliente.value.dataNascimento;
       this.clientes.endereco = this.formCliente.value.endereco;
       this.clientes.bairro = this.formCliente.value.bairro;
       this.clientes.cidade = this.formCliente.value.cidade;
@@ -273,10 +272,17 @@ export class EditClientesComponent implements OnInit {
 
       console.log("DADOS PARA SALVAR:", this.clientes);
 
+      if (this.clientes.automoveis.length === 0) {
+        this.alertService.showAlertDanger(
+          "Preencha todos os campos."
+        );
+        return;
+      }
+
       console.log("CLIENTES", this.clientes);
       const result$ = this.alertService.showConfirm(
         "Confirmação",
-        "Deseja criar esse cliente?"
+        "Deseja criar esse Cliente?"
       );
       result$
         .asObservable()
@@ -287,21 +293,30 @@ export class EditClientesComponent implements OnInit {
           )
         )
         .subscribe(
-          (clientes) => {
+          () => {
             this.location.back();
           },
-          (error) => console.error(error)
+          (error) => {
+            console.error(error);
+
+            if (error.error && error.error.includes("CPF existente")) {
+              this.alertService.showAlertDanger("CPF já cadastrado na base de dados.");
+            } else {
+              this.alertService.showAlertDanger("Ocorreu um erro ao criar o cliente.");
+            }
+          }
         );
 
     } else {
       this.alertService.showAlertDanger(
-        "Preencha todos os campos obrigatórios."
+        "Preencha todos os campos corretamente."
       );
     }
   }
 
+
   goBack() {
-    this.location.back();    
+    this.location.back();
   }
 
   newOS() {

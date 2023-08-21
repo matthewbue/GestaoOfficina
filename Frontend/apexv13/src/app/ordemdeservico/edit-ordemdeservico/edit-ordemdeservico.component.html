@@ -6,6 +6,7 @@
         <h1>Cadastro de ordem de serviço</h1>
       </div>
     </div>
+
     <div class="card">
       <div class="card-content">
         <div class="card-body">
@@ -79,6 +80,8 @@
                 </div>
               </form>
             </div>
+
+
           </div>
           <form [formGroup]="formVeiculo" novalidate>
             <div class="row">
@@ -313,6 +316,7 @@
               </table>
             </div>
 
+
             <div class="col-md-4 mt-4">
               <div class="form-group">
                 <label for="valorTotal">Valor Total (R$):</label>
@@ -333,6 +337,9 @@
           Voltar
         </button>
       </div>
+    </div>
+    <div class="loading-overlay" *ngIf="showLoading">
+      <div class="loading-spinner"></div>
     </div>
   </section>
 </div>

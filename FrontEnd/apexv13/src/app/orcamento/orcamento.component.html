@@ -89,7 +89,7 @@
                     <td class="text-truncate"> {{ os.status }} </td>
                     <td class="text-truncate">
                       <a class="info p-0" title="Visualizar Orçamento"><i class="ft-search font-medium-3 mr-2"
-                          (click)="openById(os.id)"></i></a>
+                          (click)="openById(os.id, os.clientId)"></i></a>
                       <a class="success p-0" title="Editar orçamento"><i class="ft-edit font-medium-3 mr-2"
                           (click)="openEditById(os.id)"></i></a>
                       <a href="javascript:;" title="Excluir Orçamento" class="danger p-0"><i class="ft-x font-medium-3 mr-2"

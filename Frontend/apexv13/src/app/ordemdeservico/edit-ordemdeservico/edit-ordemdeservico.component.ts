@@ -62,6 +62,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   valorTotal: number = 0;
   manutencesServico = [];
   automovel: any;
+  showLoading: boolean = false;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -96,7 +97,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
       console.log("OS", this.ordemServico)
       console.log("MANUT", this.manutencesServico)
       console.log("AUTO", this.automovel)
-      
+
     })
 
     this.formVeiculo = this.fb.group({
@@ -206,156 +207,170 @@ export class EditOrdemdeservicoComponent implements OnInit {
     })
   }
   gerarOrdemServico() {
-    const valorTotal = this.calcularValorTotal();
-    const ordemServicoData = {
-      clientId: this.cliente.id,
-      veiculoId: this.veiculoSelecionado.id,
-      manutences: this.servicos.map(servico => {
-        return {
-          nome: servico.nome,
-          kmServico: servico.kmServico,
-          mediaKm: servico.mediaKm,
-          kmatual: this.formOrdemServico.get('KmAtual')?.value == null ? 0 : this.formOrdemServico.get('KmAtual')?.value,
-          valor: servico.valor,
-        };
-      }),
-      observacoes: this.formOrdemServico.get('observacoes')?.value,
-      valortotal: valorTotal,
-      tipoDoc: "OrdemServico"
-    };
-    console.log(ordemServicoData)
-    const result$ = this.alertService.showConfirm(
-      "Confirmação",
-      "Deseja criar essa Ordem de Serviço?"
-    );
-    result$
-      .asObservable()
-      .pipe(
-        take(1),
-        switchMap((result) =>
-          result
-            ? this.osService.createOrdemServico(ordemServicoData)
-            : EMPTY
-        )
-      )
-      .subscribe(
-        (os) => {
-          this.router.navigate(["ordemdeservico"]);
-        },
-        (error) => console.error(error)
+    // Verificar se todos os campos obrigatórios foram preenchidos
+    if (
+      this.cliente &&
+      this.veiculoSelecionado &&
+      this.servicos.length > 0 &&
+      this.formOrdemServico.get('KmAtual')?.value !== null &&
+      this.formOrdemServico.get('observacoes')?.value
+    ) {
+      const valorTotal = this.calcularValorTotal();
+      const ordemServicoData = {
+        clientId: this.cliente.id,
+        veiculoId: this.veiculoSelecionado.id,
+        manutences: this.servicos.map(servico => {
+          return {
+            nome: servico.nome,
+            kmServico: servico.kmServico,
+            mediaKm: servico.mediaKm,
+            kmatual: this.formOrdemServico.get('KmAtual')?.value,
+            valor: servico.valor,
+          };
+        }),
+        observacoes: this.formOrdemServico.get('observacoes')?.value,
+        valortotal: valorTotal,
+        tipoDoc: "OrdemServico"
+      };
+
+      console.log(ordemServicoData);
+
+      const result$ = this.alertService.showConfirm(
+        "Confirmação",
+        "Deseja criar essa Ordem de Serviço?"
       );
+      result$
+        .asObservable()
+        .pipe(
+          take(1),
+          switchMap((result) =>
+            result
+              ? this.osService.createOrdemServico(ordemServicoData)
+              : EMPTY
+          )
+        )
+        .subscribe(
+          (os) => {
+            this.router.navigate(["ordemdeservico"]);
+          },
+          (error) => console.error(error)
+        );
+    } else {
+      this.alertService.showAlertDanger("Preencha todos os campos.");
+    }
   }
+
 
   gerarPDF() {
     const doc = new jsPDF();
 
     // Adicione a imagem como marca d'água
     const imgData = '../../../assets/img/logo-oficina-peb.png';
-    const imgWidth = 150; // Largura da imagem (ajuste conforme necessário)
-    const imgHeight = (imgWidth * 1.41); // Proporção de aspecto da imagem (ajuste conforme necessário)
-    const xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2; // Posição horizontal central
-    const yPos = (doc.internal.pageSize.getHeight() - imgHeight) / 2; // Posição vertical central
-    doc.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST', 0.1); // Ajuste o valor de transparência (0.1 neste caso)
+    const imgWidth = 150;
+    const imgHeight = imgWidth * 1.41;
+    const xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2;
+    const yPos = (doc.internal.pageSize.getHeight() - imgHeight) / 2;
+    doc.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST', 0.1);
 
-    doc.setFont('courier', 'normal'); // Defina a fonte padrão
-    doc.setTextColor(0, 0, 0); // Defina a cor do texto (preto)
+    doc.setFont('courier', 'normal');
+    doc.setTextColor(0, 0, 0);
 
     doc.setFontSize(18);
     doc.setFont('courier', 'bold');
-    doc.text('FERREIRA\'S AUTOMOTIVO', 105, 20, { align: 'center' });
-    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+    doc.text('FERREIRA\'S AUTOMOTIVO', 105, 15, { align: 'center' });
+    doc.setFont('courier', 'normal');
 
     doc.setFontSize(12);
-    doc.text('CNPJ: 20.388.818/0001-30', 105, 30, { align: 'center' }); // Adicione o campo CNPJ aqui
+    doc.text('CNPJ: 20.388.818/0001-30', 105, 20, { align: 'center' });
 
     doc.setFontSize(12);
-    doc.text('Rua Framboesa LOTE 1 QUADRA S - 23061-522 - (21)964169157', 105, 40, { align: 'center' });
+    doc.text('Rua Framboesa LOTE 1 QUADRA S - 23061-522 - (21)964169157', 105, 25, { align: 'center' });
 
     doc.setFontSize(14);
     doc.setFont('courier', 'bold');
-    doc.text('ORDEM DE SERVIÇO', 105, 55, { align: 'center' });
-    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+    doc.text('ORDEM DE SERVIÇO', 105, 30, { align: 'center' });
+    doc.setFont('courier', 'normal');
 
-    let yPosValue = 70;
+    let yPosValue = 40;
 
     doc.setFontSize(12);
-    doc.text(`Número da Ordem de Serviço: ${this.ordemServico.id}`, 20, yPosValue);
-    yPosValue += 10;
-    doc.text(`Data: ${this.ordemServico.dataOS}`, 20, yPosValue);
-    yPosValue += 10;
+    doc.text(`Ordem de Serviço Nº: ${this.ordemServico.id}`, 20, yPosValue);
+    yPosValue += 5;
+    const dataFormatada = new Date(this.ordemServico.dataOS).toLocaleDateString('pt-BR');
+    doc.text(`Data: ${dataFormatada}`, 20, yPosValue);
+    yPosValue += 5;
 
     doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);
     doc.text(`CPF: ${this.cliente.cpf}`, 105, yPosValue);
-    yPosValue += 10;
+    yPosValue += 5;
 
     doc.text(`Endereço: ${this.cliente.endereco}`, 20, yPosValue);
-    yPosValue += 15;
+    yPosValue += 10;
 
     doc.setFontSize(14);
     doc.setFont('courier', 'bold');
     doc.text('Informações do Veículo', 105, yPosValue, { align: 'center' });
-    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+    doc.setFont('courier', 'normal');
 
     yPosValue += 10;
     doc.setFontSize(12);
     doc.text(`Placa: ${this.automovel.placa}`, 20, yPosValue);
     doc.text(`Marca: ${this.automovel.marca}`, 80, yPosValue);
     doc.text(`Modelo: ${this.automovel.modelo}`, 140, yPosValue);
-    yPosValue += 10;
+    yPosValue += 5;
     doc.text(`Ano: ${this.automovel.ano}`, 20, yPosValue);
     doc.text(`Cor: ${this.automovel.cor}`, 80, yPosValue);
     doc.text(`Km Atual: ${this.automovel.km}`, 140, yPosValue);
-    yPosValue += 15;
+    yPosValue += 10;
 
     doc.setFontSize(14);
     doc.setFont('courier', 'bold');
     doc.text('Serviços Realizados', 105, yPosValue, { align: 'center' });
-    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+    doc.setFont('courier', 'normal');
+
     yPosValue += 10;
 
     doc.setFontSize(12);
     const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor},00`).join('\n');
     doc.text(servicosFeitos, 20, yPosValue);
-    yPosValue += 10;
+    yPosValue += 60;
 
     doc.setFontSize(14);
     doc.setFont('courier', 'bold');
     doc.text('Observações', 105, yPosValue, { align: 'center' });
-    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+    doc.setFont('courier', 'normal');
 
-    yPosValue += 10;
+    yPosValue += 5;
 
     doc.setFontSize(12);
-    doc.text(`${this.ordemServico.observacoes}`, 20, yPosValue);
-    yPosValue += 10;
+    const xPosObservacoes = 20;
+    doc.text(`${this.ordemServico.observacoes}`, xPosObservacoes, yPosValue);
+    yPosValue += 5;
+    yPosValue = doc.internal.pageSize.getHeight() - 50;
 
     doc.setFontSize(14);
-    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
+    const xPosAssinatura = 105;
 
     // Adicione campos de assinatura
-    yPosValue += 50; // Espaço entre o texto e as assinaturas
-
     doc.setFontSize(12);
-    const assinaturaClienteY = yPosValue;
-    doc.text('Assinatura do Cliente:', 20, assinaturaClienteY);
-    doc.line(20, assinaturaClienteY + 10, 100, assinaturaClienteY + 10); // Linha para assinatura do cliente
+    const assinaturaClienteY = 235;
+    const xPosAssinaturaCliente = 20;
+    doc.text('Assinatura do Cliente:', xPosAssinaturaCliente, assinaturaClienteY);
+    doc.line(xPosAssinaturaCliente, assinaturaClienteY + 10, xPosAssinaturaCliente + 80, assinaturaClienteY + 10);
 
-    const assinaturaResponsavelY = yPosValue;
-    doc.text('Assinatura do Responsável:', 105, assinaturaResponsavelY);
-    doc.line(105, assinaturaResponsavelY + 10, 200, assinaturaResponsavelY + 10); // Linha para assinatura do responsável
+    const assinaturaResponsavelY = 235;
+    const xPosAssinaturaResponsavel = 105;
+    doc.text('Assinatura do Responsável:', xPosAssinaturaResponsavel, assinaturaResponsavelY);
+    doc.line(xPosAssinaturaResponsavel, assinaturaResponsavelY + 10, xPosAssinaturaResponsavel + 95, assinaturaResponsavelY + 10);
 
     doc.setFontSize(10);
-    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 15, { align: 'center' });
+    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 25, { align: 'center' });
 
-    // Adicione a frase adicional
     doc.setFontSize(10);
-    doc.text('Nunca foi sorte, sempre foi Deus!', 105, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+    doc.text('Nunca foi sorte, sempre foi Deus!', 105, doc.internal.pageSize.getHeight() - 20, { align: 'center' });
 
-    doc.save('ordem-de-servico.pdf');
-
+    doc.save(`Ordem de Serviço - Nº - ${this.ordemServico.id}.pdf`);
   }
-
-
 
   onSelectServico(event: any) {
     this.servicoSelected = event

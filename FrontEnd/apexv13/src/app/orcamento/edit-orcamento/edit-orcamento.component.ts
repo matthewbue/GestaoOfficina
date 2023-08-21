@@ -20,6 +20,8 @@ import jsPDF from 'jspdf';
   styleUrls: ['./edit-orcamento.component.scss']
 })
 export class EditOrcamentoComponent implements OnInit {
+  manutencesServico: any;
+  automovel: any;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -62,6 +64,7 @@ export class EditOrcamentoComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.cliente.id = params.clienteId;
       this.tipo = params.tipo;
+      console.log(params.clienteId)
     });
 
     this.clienteService.getAllClient().subscribe((data) => {
@@ -69,8 +72,8 @@ export class EditOrcamentoComponent implements OnInit {
       console.log(data);
     });
 
-    this.clienteId = this.cliente.id;
-    this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
+
+    this.clienteService.getClienteById(this.cliente.id).subscribe((data) => {
       this.cliente = data.data;
       console.log("Cliente By ID", this.cliente);
     });
@@ -84,8 +87,13 @@ export class EditOrcamentoComponent implements OnInit {
     this.osService.getOsById(this.osId).subscribe((response) => {
       this.ordemServico = response.data
       this.kmatualValue = response.data.manutecesServicos[0].kmatual;
+      this.manutencesServico = response.data.manutecesServicos;
+      this.automovel = response.data.automovels
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
       console.log("OS", this.ordemServico)
+      console.log("MANUT", this.manutencesServico)
+      console.log("AUTO", this.automovel)
+
     })
 
     this.formVeiculo = this.fb.group({
@@ -194,7 +202,7 @@ export class EditOrcamentoComponent implements OnInit {
       console.log(response)
     })
   }
-  gerarOrdemServico() {
+  gerarOrcamento() {
     const valorTotal = this.calcularValorTotal();
     const ordemServicoData = {
       clientId: this.cliente.id,
@@ -240,52 +248,111 @@ export class EditOrcamentoComponent implements OnInit {
   gerarPDF() {
     const doc = new jsPDF();
 
+    // Adicione a imagem como marca d'água
+    const imgData = '../../../assets/img/logo-oficina-peb.png';
+    const imgWidth = 150; // Largura da imagem (ajuste conforme necessário)
+    const imgHeight = (imgWidth * 1.41); // Proporção de aspecto da imagem (ajuste conforme necessário)
+    const xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2; // Posição horizontal central
+    const yPos = (doc.internal.pageSize.getHeight() - imgHeight) / 2; // Posição vertical central
+    doc.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST', 0.1); // Ajuste o valor de transparência (0.1 neste caso)
+
+    doc.setFont('courier', 'normal'); // Defina a fonte padrão
+    doc.setTextColor(0, 0, 0); // Defina a cor do texto (preto)
+
     doc.setFontSize(18);
-    doc.text('FERREIRA\'S AUTOMOTIVO', 10, 20);
+    doc.setFont('courier', 'bold');
+    doc.text('FERREIRA\'S AUTOMOTIVO', 105, 20, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
 
     doc.setFontSize(12);
-    doc.text('RUA FRAMBOESA - 23061-522 - (21)964169157', 10, 30);
+    doc.text('CNPJ: 20.388.818/0001-30', 105, 30, { align: 'center' }); // Adicione o campo CNPJ aqui
+
+    doc.setFontSize(12);
+    doc.text('Rua Framboesa LOTE 1 QUADRA S - 23061-522 - (21)964169157', 105, 40, { align: 'center' });
 
     doc.setFontSize(14);
-    doc.text('NOTA FISCAL', 10, 45);
+    doc.setFont('courier', 'bold');
+    doc.text('ORÇAMENTO', 105, 55, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
 
-    let yPos = 60;
+    let yPosValue = 70;
 
     doc.setFontSize(12);
-    doc.text(`Número da Nota Fiscal: ${this.ordemServico.id}`, 10, yPos);
-    yPos += 10;
-    doc.text(`Cliente: ${this.ordemServico.nome}`, 10, yPos);
-    doc.text(`CPF: ${"this.ordemServico.clients"}`, 90, yPos);
-    yPos += 10;
-    doc.text(`Endereço: ${"this.ordemServico.clients.endereco"}`, 10, yPos);
-    yPos += 10;
+    doc.text(`Orçamento Nº: ${this.ordemServico.id}`, 20, yPosValue);
+    yPosValue += 10;
+    const dataFormatada = new Date(this.ordemServico.dataOS).toLocaleDateString('pt-BR');
+    doc.text(`Data: ${dataFormatada}`, 20, yPosValue);
+    yPosValue += 10;
 
-    doc.text(`Placa do Veículo: ${"this.ordemServico.automovels.placa"}`, 10, yPos);
-    doc.text(`Marca: ${"this.ordemServico.automovels.marca"}`, 90, yPos);
-    yPos += 10;
-    doc.text(`Modelo: ${"this.ordemServico.automovels.modelo"}`, 10, yPos);
-    doc.text(`Ano: ${"this.ordemServico.automovels.ano"}`, 90, yPos);
-    yPos += 10;
-    doc.text(`Cor: ${"this.ordemServico.automovels.cor"}`, 10, yPos);
-    doc.text(`Km Atual: ${"this.ordemServico.automovels.km"}`, 90, yPos);
-    yPos += 15;
+    doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);
+    doc.text(`CPF: ${this.cliente.cpf}`, 105, yPosValue);
+    yPosValue += 10;
 
-    doc.text('Descrição do Serviço:', 10, yPos);
-    yPos += 10;
-
-    doc.setFont('courier', 'normal');
-    doc.setFontSize(12);
-    // const servicosFeitos = this.ordemServico.manutecesServicos.map(servico => `- ${servico.nome}: R$ ${servico.valor}`).join('\n');
-    // doc.text(servicosFeitos, 10, yPos);
-    yPos += 10;
+    doc.text(`Endereço: ${this.cliente.endereco}`, 20, yPosValue);
+    yPosValue += 15;
 
     doc.setFontSize(14);
-    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal}`, 10, yPos + 10);
+    doc.setFont('courier', 'bold');
+    doc.text('Informações do Veículo', 105, yPosValue, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+
+    yPosValue += 10;
+    doc.setFontSize(12);
+    doc.text(`Placa: ${this.automovel.placa}`, 20, yPosValue);
+    doc.text(`Marca: ${this.automovel.marca}`, 80, yPosValue);
+    doc.text(`Modelo: ${this.automovel.modelo}`, 140, yPosValue);
+    yPosValue += 10;
+    doc.text(`Ano: ${this.automovel.ano}`, 20, yPosValue);
+    doc.text(`Cor: ${this.automovel.cor}`, 80, yPosValue);
+    doc.text(`Km Atual: ${this.automovel.km}`, 140, yPosValue);
+    yPosValue += 15;
+
+    doc.setFontSize(14);
+    doc.setFont('courier', 'bold');
+    doc.text('Serviços Realizados', 105, yPosValue, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+    yPosValue += 10;
+
+    doc.setFontSize(12);
+    const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor},00`).join('\n');
+    doc.text(servicosFeitos, 20, yPosValue);
+    yPosValue += 10;
+
+    doc.setFontSize(14);
+    doc.setFont('courier', 'bold');
+    doc.text('Observações', 105, yPosValue, { align: 'center' });
+    doc.setFont('courier', 'normal'); // Voltar à fonte normal
+
+    yPosValue += 10;
+
+    doc.setFontSize(12);
+    doc.text(`${this.ordemServico.observacoes}`, 20, yPosValue);
+    yPosValue += 10;
+
+    doc.setFontSize(14);
+    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
+
+    // Adicione campos de assinatura
+    yPosValue += 50; // Espaço entre o texto e as assinaturas
+
+    doc.setFontSize(12);
+    const assinaturaClienteY = yPosValue;
+    doc.text('Assinatura do Cliente:', 20, assinaturaClienteY);
+    doc.line(20, assinaturaClienteY + 10, 100, assinaturaClienteY + 10); // Linha para assinatura do cliente
+
+    const assinaturaResponsavelY = yPosValue;
+    doc.text('Assinatura do Responsável:', 105, assinaturaResponsavelY);
+    doc.line(105, assinaturaResponsavelY + 10, 200, assinaturaResponsavelY + 10); // Linha para assinatura do responsável
 
     doc.setFontSize(10);
-    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 10);
+    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 15, { align: 'center' });
 
-    doc.save('nota-fiscal.pdf');
+    // Adicione a frase adicional
+    doc.setFontSize(10);
+    doc.text('Nunca foi sorte, sempre foi Deus!', 105, doc.internal.pageSize.getHeight() - 10, { align: 'center' });
+
+    doc.save(`Orçamento - Nº - ${this.ordemServico.id}.pdf`);
+
   }
 
   onSelectServico(event: any) {
