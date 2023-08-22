@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficina.Domain.Model
+namespace GestaoOfficinaProj.Domain.Model
 {
+    [Table("Usuarios")]
     public class User
     {
+        [Column("Id")]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Profission { get; set; }
-        public string CPF { get; set; }
+        [Column("Nome")]
+        public string Nome { get; set; }
+        [Column("Email")]
         public string Email { get; set; }
-        public string Password { get; set; }
+        [Column("Senha")]
+        public string Senha { get; set; }
+        [Column("Tipo")]
+        public string Tipo { get; set; }
+        [Column("Datacriacao")]
+        public DateTime Datacriacao { get; set; }
     }
 }

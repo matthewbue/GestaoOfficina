@@ -1,7 +1,6 @@
-﻿using GestaoOfficina.Domain.DTO;
-using GestaoOfficina.Domain.Model;
-using GestaoOfficina.Infra.Context;
-using GestaoOfficina.Infra.Interface;
+﻿using GestaoOfficina.Infra.Context;
+using GestaoOfficinaProj.Domain.Model;
+using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficina.Infra.Repository
+namespace GestaoOfficinaProj.Infra.Repository
 {
     public class UserRepository : IUserRepository
     {
@@ -18,30 +17,43 @@ namespace GestaoOfficina.Infra.Repository
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
         }
-        public async Task<User> login(LoginDTO login)
+        public void Create(User entrada)
+        {
+            _gestaoOfficinaContext.Add(entrada);
+            _gestaoOfficinaContext.SaveChanges();
+            
+        }
+
+        public void Delete(int entrada)
         {
             try
             {
-                var result = await _gestaoOfficinaContext.Users.Where(x => x.Email == login.Email && x.Password == login.Password).FirstOrDefaultAsync();
-                return result;
+                var result = _gestaoOfficinaContext.Usuarios.Where(r => r.Id == entrada).FirstOrDefault();
+                _gestaoOfficinaContext.Usuarios.Remove(result);
+                _gestaoOfficinaContext.SaveChanges();
             }
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
-        public async Task<User> CreateUser(User user)
+
+        public async Task<List<User>> GetAll()
         {
-            try
-            {
-                await _gestaoOfficinaContext.Users.AddAsync(user);
-                await _gestaoOfficinaContext.SaveChangesAsync();
-                return user;
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return _gestaoOfficinaContext.Usuarios.ToList();
+        }
+
+        public async Task<User> GetById(int entrada)
+        {
+            var result = _gestaoOfficinaContext.Usuarios.Where(x => x.Id == entrada).FirstOrDefault();
+            return result;
+        }
+
+        public void Update(User entrada)
+        {
+            _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
+            _gestaoOfficinaContext.SaveChanges();
         }
     }
 }
+

@@ -1,16 +1,20 @@
-﻿using GestaoOfficina.Domain.DTO;
-using GestaoOfficina.Domain.Model;
+﻿using GestaoOfficina.Domain.Model;
+using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficina.Infra.Interface
+namespace GestaoOfficinaProj.Infra.Interface
 {
     public interface IUserService
     {
-        Task<ReturnDefault> login(LoginDTO login);
-        Task<ReturnDefault> Create(User user);
+        ReturnDefault Create(UserCreateDTO entrada);
+        Task<ReturnDefault> Update(UserUpdateDTO entrada);
+        ReturnDefault GetAll();
+        ReturnDefault GetById(int entrada);
+        ReturnDefault Delete(int entrada);
     }
 }

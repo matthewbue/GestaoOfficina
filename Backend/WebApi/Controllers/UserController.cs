@@ -1,11 +1,11 @@
-﻿using GestaoOfficina.Domain.DTO;
-using GestaoOfficina.Domain.Model;
-using GestaoOfficina.Infra.Interface;
+﻿using GestaoOfficina.Domain.Model;
+using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.Model;
+using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
 
-namespace GestaoOfficina.Controllers
+namespace GestaoOfficinaProj.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -16,29 +16,60 @@ namespace GestaoOfficina.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody]LoginDTO login)
+        [HttpPost("Create")]
+        public ActionResult Create(UserCreateDTO entrada)
+        {
+            var result = _userService.Create(entrada);
+            return Ok(result);
+        }
+        [HttpDelete("Delete")]
+        public IActionResult Delete(int entrada)
         {
             try
             {
-                var result = await _userService.login(login);
+                var result = _userService.Delete(entrada);
                 return Ok(result);
             }
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-           
         }
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromBody]User user)
+        [HttpGet("GetbyId")]
+        public ActionResult GetById(int entrada)
         {
             try
             {
-                var result = await _userService.Create(user);
+                var result = _userService.GetById(entrada);
                 return Ok(result);
             }
             catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet("GetAll")]
+        public ActionResult GetAll()
+        {
+            try
+            {
+                var result = _userService.GetAll();
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpPut("Update")]
+        public ActionResult Update(UserUpdateDTO entrada)
+        {
+            try
+            {
+                var result = _userService.Update(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
