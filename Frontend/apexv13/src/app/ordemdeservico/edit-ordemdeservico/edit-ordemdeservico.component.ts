@@ -345,7 +345,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.setFontSize(12);
     const xPosObservacoes = 20;
     doc.text(`${this.ordemServico.observacoes}`, xPosObservacoes, yPosValue);
-    yPosValue += 5;
+    yPosValue += 20;
+
+    doc.setFontSize(14);
+    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
     yPosValue = doc.internal.pageSize.getHeight() - 50;
 
     doc.setFontSize(14);
