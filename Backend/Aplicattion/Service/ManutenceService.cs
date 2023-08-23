@@ -43,78 +43,78 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             var resultManutenceid =  _manutenceRepository.Create(objetoPai);
 
             var result = _clientRepository.GetClientById(objetoPai.ClientId);
-     
+
             #endregion
-            
+
             #region corpo email
-            // Informações da oficina
-            string nomeOficina = "FERREIRA'S AUTOMOTIVO";
-            string enderecoOficina = "Rua Framboesa LOTE 1 QUADRA S";
-            string cidadeOficina = "Rio de Janeiro";
-            string telefoneOficina = "(21)964169157";
+            //// Informações da oficina
+            //string nomeOficina = "FERREIRA'S AUTOMOTIVO";
+            //string enderecoOficina = "Rua Framboesa LOTE 1 QUADRA S";
+            //string cidadeOficina = "Rio de Janeiro";
+            //string telefoneOficina = "(21)964169157";
 
-            // Informações do cliente
-            string nomeCliente = result.Result.Nome;
-            string enderecoCliente = result.Result.Endereco;
-            string cidadeCliente = result.Result.Cidade;
-            string telefoneCliente = result.Result.NumeroContato;
+            //// Informações do cliente
+            //string nomeCliente = result.Result.Nome;
+            //string enderecoCliente = result.Result.Endereco;
+            //string cidadeCliente = result.Result.Cidade;
+            //string telefoneCliente = result.Result.NumeroContato;
 
-            // Itens de serviço
-            List<string> servicos = new List<string>();
-            foreach (var item in entrada.manutences)
-            {
-                servicos.Add(item.Nome);
-                
-            }
-            
+            //// Itens de serviço
+            //List<string> servicos = new List<string>();
+            //foreach (var item in entrada.manutences)
+            //{
+            //    servicos.Add(item.Nome);
 
-            // Montar a nota de serviço em uma string
-            string notaDeServico = $"======== NOTA DE SERVIÇO ========{Environment.NewLine}" +
-                                   $"Oficina: {nomeOficina}{Environment.NewLine}" +
-                                   $"Endereço: {enderecoOficina}, {cidadeOficina}{Environment.NewLine}" +
-                                   $"Telefone: {telefoneOficina}{Environment.NewLine}" +
-                                   $"--------------------------------{Environment.NewLine}" +
-                                   $"Cliente: {nomeCliente}{Environment.NewLine}" +
-                                   $"Endereço: {enderecoCliente}, {cidadeCliente}{Environment.NewLine}" +
-                                   $"Telefone: {telefoneCliente}{Environment.NewLine}" +
-                                   $"--------------------------------{Environment.NewLine}" +
-                                   $"Serviços realizados:{Environment.NewLine}";
+            //}
 
-            foreach (string servico in servicos)
-            {
-                notaDeServico += $"- {servico}{Environment.NewLine}";
-            }
 
-            notaDeServico += $"--------------------------------{Environment.NewLine}" +
-                             $"Total a pagar: R$  {objetoPai.ValorTotal}  {Environment.NewLine}" +
-                             $"================================";
+            //// Montar a nota de serviço em uma string
+            //string notaDeServico = $"======== NOTA DE SERVIÇO ========{Environment.NewLine}" +
+            //                       $"Oficina: {nomeOficina}{Environment.NewLine}" +
+            //                       $"Endereço: {enderecoOficina}, {cidadeOficina}{Environment.NewLine}" +
+            //                       $"Telefone: {telefoneOficina}{Environment.NewLine}" +
+            //                       $"--------------------------------{Environment.NewLine}" +
+            //                       $"Cliente: {nomeCliente}{Environment.NewLine}" +
+            //                       $"Endereço: {enderecoCliente}, {cidadeCliente}{Environment.NewLine}" +
+            //                       $"Telefone: {telefoneCliente}{Environment.NewLine}" +
+            //                       $"--------------------------------{Environment.NewLine}" +
+            //                       $"Serviços realizados:{Environment.NewLine}";
+
+            //foreach (string servico in servicos)
+            //{
+            //    notaDeServico += $"- {servico}{Environment.NewLine}";
+            //}
+
+            //notaDeServico += $"--------------------------------{Environment.NewLine}" +
+            //                 $"Total a pagar: R$  {objetoPai.ValorTotal}  {Environment.NewLine}" +
+            //                 $"================================";
             #endregion
 
             #region envio email
 
-            string remetenteEmail = "oficinaferreiras@outlook.com";
-            string senhaRemetente = "oficina12345";
-            string destinatarioEmail = result.Result.Email;
-            string assunto =objetoPai.TipoDoc + " N: " + resultManutenceid;
-            string corpo = notaDeServico;
+            //string remetenteEmail = "oficinaferreiras@outlook.com";
+            //string senhaRemetente = "oficina12345";
+            //string destinatarioEmail = result.Result.Email;
+            //string assunto =objetoPai.TipoDoc + " N: " + resultManutenceid;
+            //string corpo = notaDeServico;
 
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("Oficina ferreira", remetenteEmail));
-            message.To.Add(new MailboxAddress("Destinatário", destinatarioEmail.ToString()));
-            message.Subject = assunto;
-            message.Body = new TextPart("plain")
-            {
-                Text = corpo
-            };
+            //var message = new MimeMessage();
+            //message.From.Add(new MailboxAddress("Oficina ferreira", remetenteEmail));
+            //message.To.Add(new MailboxAddress("Destinatário", destinatarioEmail.ToString()));
+            //message.Subject = assunto;
+            //message.Body = new TextPart("plain")
+            //{
+            //    Text = corpo
+            //};
 
-            using (var client = new SmtpClient())
-            {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Ignorar validação do certificado
-                await client.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
-                await client.AuthenticateAsync(remetenteEmail, senhaRemetente);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
-            }
+            //using (var client = new SmtpClient())
+            //{
+            //    client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Ignorar validação do certificado
+            //    await client.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
+            //    await client.AuthenticateAsync(remetenteEmail, senhaRemetente);
+            //    await client.SendAsync(message);
+            //    await client.DisconnectAsync(true);
+            //}
 
             #endregion
 
