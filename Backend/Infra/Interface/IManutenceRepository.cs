@@ -11,7 +11,7 @@ namespace GestaoOfficinaProj.Infra.Interface
 {
     public interface IManutenceRepository
     {
-        void Create(Manutence entrada);
+        int Create(Manutence entrada);
         void UpdateManutence(Manutence entrada);
         Task<Manutence> GetById(int entrada);
         void Delete(int entrada);
@@ -22,6 +22,6 @@ namespace GestaoOfficinaProj.Infra.Interface
         void UpdateServicoManutence(ManutenceServico result);
         void CreateManutenceServico(ManutenceServico entrada);
         Task<List<Manutence>> GetRelatorio(EntryFilterRelatorioDTO entrada);
-        Task<int> GetManutenceIdByDate(DateTime entrada);
+       int GetManutenceIdByDate(DateTime entrada);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,13 +33,14 @@ namespace GestaoOfficinaProj.Infra.Repository
              
         }
 
-        public void Create(Manutence entrada)
+        public int Create(Manutence entrada)
         {
             try
             {
-                 _gestaoOfficinaContext.Manutences.Add(entrada);
-                 _gestaoOfficinaContext.SaveChanges();
-                
+                _gestaoOfficinaContext.Manutences.Add(entrada);
+                _gestaoOfficinaContext.SaveChanges();
+
+                return entrada.Id; 
             }
             catch (Exception ex)
             {
@@ -58,7 +60,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             try
             {
                
-                var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+                var queryResult = _gestaoOfficinaContext.Manutences.Include(c => c.Clients).AsQueryable();
 
                 if (entrada.DataInicio != null && entrada.DataFim != null)
                 if (entrada.DataInicio <= entrada.DataFim)
@@ -75,28 +77,44 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
                 }
-                
+
+                //if (!String.IsNullOrEmpty(entrada.NomeCliente))
+                //{
+                //    queryResult == queryResult.Where(_ => _.Equals.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
+                //}
+
                 var paginatedResult = await queryResult.OrderByDescending(i => i.Id).Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
+
+                List<Manutence> filteredItems = new List<Manutence>();
 
                 foreach (var item in paginatedResult)
                 {
                     if (!String.IsNullOrEmpty(entrada.NomeCliente))
                     {
-                        item.Clients = await _gestaoOfficinaContext.Clients.Where(_ => _.Nome.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
+                        item.Clients = await _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).Where(i => i.Id == item.ClientId).FirstOrDefaultAsync();
+                        if (item.Clients.Nome.ToUpper().Contains(entrada.NomeCliente.ToUpper()))
+                        {
+                            filteredItems.Add(item);
+                        }
                     }
                     else
                     {
                         item.Clients = await _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).Where(i => i.Id == item.ClientId).FirstOrDefaultAsync();
-
+                        filteredItems.Add(item);
                     }
+
                     if (!String.IsNullOrEmpty(entrada.Placa))
                     {
                         item.automovels = await _gestaoOfficinaContext.Automoveis.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
                     }
-                   item.automovels = await _gestaoOfficinaContext.Automoveis.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
 
+                    var automovel = await _gestaoOfficinaContext.Automoveis.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
+                    item.automovels = automovel;
                 }
-                
+
+                // Update paginatedResult with filtered items
+                paginatedResult = filteredItems;
+
 
                 return paginatedResult;
             }
@@ -231,9 +249,9 @@ namespace GestaoOfficinaProj.Infra.Repository
 
             return result.Result;
         }
-        public async Task<int> GetManutenceIdByDate(DateTime entrada)
+        public int GetManutenceIdByDate(DateTime entrada)
         {
-            var result = await _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefaultAsync();
+            var result =  _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefault();
 
             return result;
         }

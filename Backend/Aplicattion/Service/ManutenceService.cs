@@ -40,18 +40,18 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.ManutecesServicos = entrada.manutences;
             objetoPai.ValorTotal = entrada.ValorTotal;
             
-            _manutenceRepository.Create(objetoPai);
+            var resultManutenceid =  _manutenceRepository.Create(objetoPai);
 
             var result = _clientRepository.GetClientById(objetoPai.ClientId);
-            var resultManutenceid = await _manutenceRepository.GetManutenceIdByDate(objetoPai.DataOS);
+     
             #endregion
             
             #region corpo email
             // Informações da oficina
-            string nomeOficina = "Oficina ABC";
-            string enderecoOficina = "Rua Principal, 123";
-            string cidadeOficina = "Cidade da Oficina";
-            string telefoneOficina = "(123) 456-7890";
+            string nomeOficina = "FERREIRA'S AUTOMOTIVO";
+            string enderecoOficina = "Rua Framboesa LOTE 1 QUADRA S";
+            string cidadeOficina = "Rio de Janeiro";
+            string telefoneOficina = "(21)964169157";
 
             // Informações do cliente
             string nomeCliente = result.Result.Nome;
