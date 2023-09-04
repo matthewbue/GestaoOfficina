@@ -128,5 +128,18 @@ namespace GestaoOfficinaProj.Controllers
             var result = await _manutenceService.GetRelatorio(entrada);
             return Ok(result);
         }
+        [HttpDelete("DeleteManutenceServico")]
+        public IActionResult DeleteManutenceServico(int entrada)
+        {
+            try
+            {
+                var result = _manutenceService.DeleteManutenceServico(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

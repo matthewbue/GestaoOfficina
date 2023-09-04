@@ -225,5 +225,11 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             
             return new ReturnDefault("Dados retornados com sucesso.", objetoSaida);
         }
+
+        public ReturnDefault DeleteManutenceServico(int entrada)
+        {
+            _manutenceRepository.DeleteManutenceServico(entrada);
+            return new ReturnDefault("Deletado com sucesso.", "");
+        }
     }
 }
