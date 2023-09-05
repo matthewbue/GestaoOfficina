@@ -258,9 +258,16 @@ namespace GestaoOfficinaProj.Infra.Repository
 
         public void DeleteManutenceServico(int entrada)
         {
-            var delete = _gestaoOfficinaContext.ManutenceServicos.Where(x => x.ID == entrada).FirstOrDefault();
-            _gestaoOfficinaContext.Remove(delete);
-            _gestaoOfficinaContext.SaveChanges();
+            try
+            {
+                var delete = _gestaoOfficinaContext.ManutenceServicos.Where(x => x.ID == entrada).FirstOrDefault();
+                _gestaoOfficinaContext.Remove(delete);
+                _gestaoOfficinaContext.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
