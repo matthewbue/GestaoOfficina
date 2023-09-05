@@ -223,13 +223,26 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                
             }
             
-            return new ReturnDefault("Dados retornados com sucesso.", objetoSaida);
+            return new ReturnDefault("Dados retornados com sucesso.", objetoSaida); 
         }
 
-        public ReturnDefault DeleteManutenceServico(int entrada)
+        public async Task<ReturnDefault> DeleteManutenceServico(int entrada)
         {
-            _manutenceRepository.DeleteManutenceServico(entrada);
-            return new ReturnDefault("Deletado com sucesso.", "");
+            try
+            {
+                var result = await _manutenceRepository.GetManutenceServicoById(entrada);
+                if (result == null)
+                {
+                    return new ReturnDefault("O serviço não foi encontrado na nossa base de dados.", "");
+                }
+                
+                await _manutenceRepository.DeleteManutenceServico(entrada);
+                return new ReturnDefault("Deletado com sucesso.", "");
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

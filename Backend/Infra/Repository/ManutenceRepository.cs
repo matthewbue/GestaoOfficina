@@ -256,13 +256,14 @@ namespace GestaoOfficinaProj.Infra.Repository
             return result;
         }
 
-        public void DeleteManutenceServico(int entrada)
+        public async Task<ManutenceServico> DeleteManutenceServico(int entrada)
         {
             try
             {
-                var delete = _gestaoOfficinaContext.ManutenceServicos.Where(x => x.ID == entrada).FirstOrDefault();
-                _gestaoOfficinaContext.Remove(delete);
-                _gestaoOfficinaContext.SaveChanges();
+                var delete = await _gestaoOfficinaContext.ManutenceServicos.Where(x => x.ID == entrada).FirstOrDefaultAsync();
+                 _gestaoOfficinaContext.Remove(delete);
+                 await _gestaoOfficinaContext.SaveChangesAsync();
+                return delete;
             }
             catch(Exception ex)
             {
