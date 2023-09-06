@@ -25,5 +25,10 @@ export const ROUTES: RouteInfo[] = [
 },
 {
   path: '/orcamento', title: 'MenuItemOrçamento', icon: 'ft-file-text', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+},
+
+{
+  path: '/newtiposervico', title: 'MenuItemServico', icon: 'ft-arrow-right', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
 }
+
 ];
