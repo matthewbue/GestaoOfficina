@@ -59,12 +59,16 @@ export class EditOrdemdeservicoComponent implements OnInit {
   editarCampos: boolean = false;
   editarIndices: number[] = [];
   kmatualValue: number;
-  valorTotal: number = 0;
+  valorTotal: any = null;
   manutencesServico = [];
   automovel: any;
   showLoading: boolean = false;
+  servicoEditando: any = null;
+  servicoEditandoTemp: any = null;
 
   ngOnInit(): void {
+    this.valorTotal = this.calcularValorTotal();
+
     this.route.queryParams.subscribe((params) => {
       this.cliente.id = params.clienteId;
       this.tipo = params.tipo;
@@ -335,17 +339,17 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.text(servicosFeitos, 20, yPosValue);
     yPosValue += 60;
 
-    doc.setFontSize(14);
-    doc.setFont('courier', 'bold');
-    doc.text('Observações', 105, yPosValue, { align: 'center' });
-    doc.setFont('courier', 'normal');
+    // doc.setFontSize(14);
+    // doc.setFont('courier', 'bold');
+    // doc.text('Observações', 105, yPosValue, { align: 'center' });
+    // doc.setFont('courier', 'normal');
 
-    yPosValue += 5;
+    // yPosValue += 5;
 
-    doc.setFontSize(12);
-    const xPosObservacoes = 20;
-    doc.text(`${this.ordemServico.observacoes}`, xPosObservacoes, yPosValue);
-    yPosValue += 20;
+    // doc.setFontSize(12);
+    // const xPosObservacoes = 20;
+    // doc.text(`${this.ordemServico.observacoes}`, xPosObservacoes, yPosValue);
+    // yPosValue += 20;
 
     doc.setFontSize(14);
     doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
@@ -409,12 +413,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
 
   adicionarServico() {
-    if (this.servicoSelected && this.novoValor) {
-      const novoServico = { nome: this.servicoSelected, valor: this.novoValor };
+
+      const novoServico = { nome: this.novoServico, valor: this.novoValor };
       this.servicos.push(novoServico);
       this.novoServico = '';
       this.novoValor = null;
-    }
+
   }
 
   removerServico(servico: any) {
@@ -422,6 +426,36 @@ export class EditOrdemdeservicoComponent implements OnInit {
     if (index !== -1) {
       this.servicos.splice(index, 1);
     }
+  }
+
+  atualizarServico(servico: any) {
+    const index = this.servicos.indexOf(servico);
+
+    if (index !== -1) {
+      // Faça a lógica de atualização do serviço no servidor ou onde você estiver armazenando seus dados.
+      // Use this.servicoEditandoTemp para obter os novos valores.
+      const valorAnterior = this.servicos[index].valor;
+      this.servicos[index].nome = this.servicoEditandoTemp.nome;
+      this.servicos[index].valor = this.servicoEditandoTemp.valor;
+
+      // Atualize valorTotal subtraindo o valor anterior do serviço e adicionando o novo valor.
+      this.valorTotal = this.valorTotal - valorAnterior + this.servicoEditandoTemp.valor;
+
+      // Depois de atualizar o serviço, defina servicoEditando de volta para null para encerrar o modo de edição.
+      this.servicoEditando = null;
+    }
+  }
+
+
+  cancelarEdicao(servico: any) {
+    // Restaure os valores originais do serviço e encerre o modo de edição.
+    this.servicoEditandoTemp = null;
+    this.servicoEditando = null;
+  }
+
+  editarServico(servico: any) {
+    this.servicoEditando = servico;
+    this.servicoEditandoTemp = { ...servico };
   }
 
   calcularValorTotal(): number {

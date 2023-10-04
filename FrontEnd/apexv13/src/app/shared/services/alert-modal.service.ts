@@ -4,6 +4,7 @@ import { AlertModalComponent } from '../alert-modal/alert-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { AddOrdemServicoModalComponent } from '../add-ordem-servico-modal/add-ordem-servico-modal.component';
 import { GerarRelatorioModalComponent } from '../gerar-relatorio-modal/gerar-relatorio-modal.component';
+import { AddNewServicoModalComponent } from '../add-new-servico-modal/add-new-servico-modal.component';
 
 export enum AlertTypes {
   DANGER = 'danger',
@@ -94,6 +95,22 @@ export class AlertModalService {
     const bsModalRef: BsModalRef = this.modalService.show(GerarRelatorioModalComponent, modalOptions);
 
     return (<GerarRelatorioModalComponent>bsModalRef.content).confirmResult;
+  }
+
+  addServicoModal(oficina: any){
+    const initialState = {
+      oficina: oficina
+    };
+
+    // Use a classe "modal-xl" para aumentar o tamanho do modal
+    const modalOptions: ModalOptions = {
+      initialState,
+      class: 'modal-xl'
+    };
+
+    const bsModalRef: BsModalRef = this.modalService.show(GerarRelatorioModalComponent, modalOptions);
+
+    return (<AddNewServicoModalComponent>bsModalRef.content).confirmResult;
   }
 
 }

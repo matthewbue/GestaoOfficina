@@ -35,7 +35,7 @@ export class ClientesComponent implements OnInit {
   ngOnInit(): void {
     this.clienteService.getAllClient().subscribe((data) => {
       this.clientes = data.data
-      console.log(this.clientes);
+      console.log(this.clientes); 
     });
 
     const requestData = new FilterClientes("", "", "", this.currentPage, 10);

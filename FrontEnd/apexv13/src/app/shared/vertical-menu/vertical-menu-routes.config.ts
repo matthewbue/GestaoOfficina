@@ -14,21 +14,17 @@ export const ROUTES: RouteInfo[] = [
   //     { path: '/account', title: 'MenuItemUserAccount', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
   //   ]
   // },
-{
-  path: '', title: 'MenuItemClientes', icon: 'ft-users', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
-  submenu: [
-    { path: '/clientes', title: 'MenuItemSubClientes', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-  ]
-},
-{
-  path: '/ordemdeservico', title: 'MenuItemOs', icon: 'ft-file', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
-},
-{
-  path: '/orcamento', title: 'MenuItemOrçamento', icon: 'ft-file-text', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
-},
-
-{
-  path: '/newtiposervico', title: 'MenuItemServico', icon: 'ft-arrow-right', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
-}
+  {
+    path: '', title: 'MenuItemClientes', icon: 'ft-users', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    submenu: [
+      { path: '/clientes', title: 'MenuItemSubClientes', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    ]
+  },
+  {
+    path: '/ordemdeservico', title: 'MenuItemOs', icon: 'ft-file', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+  },
+  {
+    path: '/orcamento', title: 'MenuItemOrçamento', icon: 'ft-file-text', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
+  },
 
 ];

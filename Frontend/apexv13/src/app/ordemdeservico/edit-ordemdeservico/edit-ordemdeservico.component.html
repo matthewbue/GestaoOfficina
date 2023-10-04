@@ -139,20 +139,20 @@
               <div class="col-md-3">
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label for="servico">Serviço:</label>
                   <ng-select (change)="onSelectServico($event)">
                     <ng-option *ngFor="let listServicos of servicosList" [value]="listServicos.descricao">
                       {{ listServicos.descricao }}
                     </ng-option>
                   </ng-select>
-                </div>
-                <!-- <div class="col-md-6">
+                </div> -->
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="servico">Serviço:</label>
                     <input maxlength="100" id="servico" type="text" class="form-control" [(ngModel)]="novoServico" />
                   </div>
-                </div> -->
+                </div>
                 <div class="col-md-3 align-self-end">
                   <div class="form-group">
                     <label for="valorServico">Valor do Serviço (R$):</label>
@@ -171,19 +171,7 @@
                   </div>
                 </div>
               </div>
-              <p>
-                <button class="btn btn-primary" type="button" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-                  Cadastrar novo serviço
-                </button>
-              </p>
-              <div [ngbCollapse]="isCollapsed" id="collapseExample">
-                <form [formGroup]="formNewServico">
-                  <input maxlength="100" id="cadastrarServico" type="text" formControlName="cadastrarServico"
-                    class="form-control col-md-6">
-                </form>
-                <button type="button" class="btn btn-info mt-md-4" (click)="cadastrarServico()">Adicionar</button>
-              </div>
+
             </div>
             <div class="col-md-12 mt-4">
               <h3>Lista de Serviços</h3>
@@ -199,8 +187,24 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let servico of servicos">
-                    <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor }}</td>
+                    <td>
+                      <ng-container *ngIf="servicoEditando !== servico; else editarNome">
+                        {{ servico.nome }}
+                      </ng-container>
+                      <ng-template #editarNome>
+                        <input maxlength="100" type="text" class="form-control col-md-6"
+                          [(ngModel)]="servicoEditandoTemp.nome" />
+                      </ng-template>
+                    </td>
+                    <td>
+                      <ng-container *ngIf="servicoEditando !== servico; else editarValor">
+                        {{ servico.valor }},00
+                      </ng-container>
+                      <ng-template #editarValor>
+                        <input maxlength="100" type="text" class="form-control col-md-6"
+                          [(ngModel)]="servicoEditandoTemp.valor" />
+                      </ng-template>
+                    </td>
                     <td>
                       <div class="form-group">
                         <input maxlength="100" type="text" class="form-control col-md-6"
@@ -214,15 +218,26 @@
                       </div>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-danger btn-sm"
-                        (click)="removerServico(servico)">Remover</button>
+                      <ng-container *ngIf="servicoEditando !== servico; else botoesEdicao">
+                        <button type="button" class="btn btn-danger btn-sm"
+                          (click)="removerServico(servico)">Remover</button>
+                        <!-- <button type="button" class="btn btn-warning btn-sm"
+                          (click)="editarServico(servico)">Editar</button> -->
+                      </ng-container>
+                      <ng-template #botoesEdicao>
+                        <button type="button" class="btn btn-success btn-sm"
+                          (click)="atualizarServico(servico)">Atualizar</button>
+                        <button type="button" class="btn btn-danger btn-sm"
+                          (click)="cancelarEdicao(servico)">Cancelar</button>
+                      </ng-template>
                     </td>
                   </tr>
                 </tbody>
+
               </table>
             </div>
 
-            <div class="col-md-2 mt-4">
+            <div class="col-md-4 mt-4">
               <div class="form-group">
                 <label for="valorTotal">Valor Total (R$):</label>
                 <div class="input-group">
@@ -230,7 +245,7 @@
                     <span class="input-group-text">R$</span>
                   </div>
                   <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                    value="{{ calcularValorTotal() }}" disabled />
+                    value="{{ calcularValorTotal() }},00" disabled />
                 </div>
               </div>
             </div>
@@ -307,7 +322,7 @@
                   <!-- Use ngFor para percorrer manutenceServicos -->
                   <tr *ngFor="let servico of ordemServico.manutecesServicos">
                     <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor }}</td>
+                    <td>{{ servico.valor }},00</td>
                     <td>{{ servico.kmatual }}</td>
                     <td> {{ servico.kmservico }} </td>
                     <td> {{ servico.mediakm }} </td>
@@ -326,7 +341,7 @@
                   </div>
                   <!-- Use vinculação de propriedade [value] para vincular o valor -->
                   <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                    [value]="ordemServico.valorTotal" disabled />
+                  [value]="ordemServico.valorTotal + ',00'" disabled />
                 </div>
               </div>
             </div>
@@ -365,20 +380,20 @@
               <div class="col-md-3">
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label for="servico">Serviço:</label>
                   <ng-select (change)="onSelectServico($event)">
                     <ng-option *ngFor="let listServicos of servicosList" [value]="listServicos.descricao">
                       {{ listServicos.descricao }}
                     </ng-option>
                   </ng-select>
-                </div>
-                <!-- <div class="col-md-6">
+                </div> -->
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="servico">Serviço:</label>
                     <input maxlength="100" id="servico" type="text" class="form-control" [(ngModel)]="novoServico" />
                   </div>
-                </div> -->
+                </div>
                 <div class="col-md-3 align-self-end">
                   <div class="form-group">
                     <label for="valorServico">Valor do Serviço (R$):</label>
@@ -397,19 +412,7 @@
                   </div>
                 </div>
               </div>
-              <p>
-                <button class="btn btn-primary" type="button" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-                  Cadastrar novo serviço
-                </button>
-              </p>
-              <div [ngbCollapse]="isCollapsed" id="collapseExample">
-                <form [formGroup]="formNewServico">
-                  <input maxlength="100" id="cadastrarServico" type="text" formControlName="cadastrarServico"
-                    class="form-control col-md-6">
-                </form>
-                <button type="button" class="btn btn-info mt-md-4" (click)="cadastrarServico()">Adicionar</button>
-              </div>
+
             </div>
             <div class="col-md-12 mt-4">
               <h3>Lista de Serviços existentes</h3>

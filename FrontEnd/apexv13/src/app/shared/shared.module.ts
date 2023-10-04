@@ -38,6 +38,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgSelectModule } from "@ng-select/ng-select";
 import { AddOrdemServicoModalComponent } from './add-ordem-servico-modal/add-ordem-servico-modal.component';
 import { GerarRelatorioModalComponent } from './gerar-relatorio-modal/gerar-relatorio-modal.component';
+import { AddNewServicoModalComponent } from './add-new-servico-modal/add-new-servico-modal.component';
 
 export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
 
@@ -100,6 +101,7 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
         ConfirmModalComponent,
         AddOrdemServicoModalComponent,
         GerarRelatorioModalComponent,
+        AddNewServicoModalComponent,
     ],
     entryComponents: [AlertModalComponent, ConfirmModalComponent]
 })

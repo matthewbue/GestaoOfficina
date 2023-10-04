@@ -59,6 +59,8 @@ export class EditOrcamentoComponent implements OnInit {
   valorTotal: number = 0;
   servicosParaAlterar: FormArray;
   editarIndices: number[] = [];
+  servicoEditando: any = null;
+  servicoEditandoTemp: any = null;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -393,12 +395,12 @@ export class EditOrcamentoComponent implements OnInit {
   }
 
   adicionarServico() {
-    if (this.servicoSelected && this.novoValor) {
-      const novoServico = { nome: this.servicoSelected, valor: this.novoValor };
+
+      const novoServico = { nome: this.novoServico, valor: this.novoValor };
       this.servicos.push(novoServico);
       this.novoServico = '';
       this.novoValor = null;
-    }
+
   }
 
   removerServico(servico: any) {
@@ -406,6 +408,36 @@ export class EditOrcamentoComponent implements OnInit {
     if (index !== -1) {
       this.servicos.splice(index, 1);
     }
+  }
+
+  atualizarServico(servico: any) {
+    const index = this.servicos.indexOf(servico);
+
+    if (index !== -1) {
+      // Faça a lógica de atualização do serviço no servidor ou onde você estiver armazenando seus dados.
+      // Use this.servicoEditandoTemp para obter os novos valores.
+      const valorAnterior = this.servicos[index].valor;
+      this.servicos[index].nome = this.servicoEditandoTemp.nome;
+      this.servicos[index].valor = this.servicoEditandoTemp.valor;
+
+      // Atualize valorTotal subtraindo o valor anterior do serviço e adicionando o novo valor.
+      this.valorTotal = this.valorTotal - valorAnterior + this.servicoEditandoTemp.valor;
+
+      // Depois de atualizar o serviço, defina servicoEditando de volta para null para encerrar o modo de edição.
+      this.servicoEditando = null;
+    }
+  }
+
+
+  cancelarEdicao(servico: any) {
+    // Restaure os valores originais do serviço e encerre o modo de edição.
+    this.servicoEditandoTemp = null;
+    this.servicoEditando = null;
+  }
+
+  editarServico(servico: any) {
+    this.servicoEditando = servico;
+    this.servicoEditandoTemp = { ...servico };
   }
 
   calcularValorTotal(): number {
