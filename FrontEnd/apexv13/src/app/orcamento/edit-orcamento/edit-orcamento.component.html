@@ -375,20 +375,20 @@
               <div class="col-md-3">
               </div>
               <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                   <label for="servico">Serviço:</label>
                   <ng-select (change)="onSelectServico($event)">
                     <ng-option *ngFor="let listServicos of servicosList" [value]="listServicos.descricao">
                       {{ listServicos.descricao }}
                     </ng-option>
                   </ng-select>
-                </div>
-                <!-- <div class="col-md-6">
+                </div> -->
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="servico">Serviço:</label>
                     <input maxlength="100" id="servico" type="text" class="form-control" [(ngModel)]="novoServico" />
                   </div>
-                </div> -->
+                </div>
                 <div class="col-md-3 align-self-end">
                   <div class="form-group">
                     <label for="valorServico">Valor do Serviço (R$):</label>

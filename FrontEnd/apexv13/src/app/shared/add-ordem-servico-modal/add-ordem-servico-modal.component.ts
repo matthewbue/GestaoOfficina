@@ -1,11 +1,13 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
-import { Subject } from "rxjs";
+import { EMPTY, Subject } from "rxjs";
 import { AlertModalService } from "../services/alert-modal.service";
 import { ClientesService } from "app/clientes/clientes.service";
 import { Clientes } from "../Model/Clientes";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { FilterClientes } from "../Model/FilterClientes";
+import { switchMap, take } from "rxjs/operators";
 
 @Component({
   selector: "app-add-ordem-servico-modal",
@@ -21,6 +23,10 @@ export class AddOrdemServicoModalComponent implements OnInit {
   clienteId: any;
   formVeiculo: FormGroup;
   formCliente: FormGroup;
+  filterCliente = new FilterClientes();
+  currentPage: number = 1;
+  totalPages: number;
+  itemsPerPage: number;
 
 
   constructor(
@@ -30,71 +36,122 @@ export class AddOrdemServicoModalComponent implements OnInit {
     private clienteService: ClientesService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private changeDetectorRef: ChangeDetectorRef,
 
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.cliente.id = params.clienteId;
-      this.tipo = params.tipo;
-    });
-
     this.clienteService.getAllClient().subscribe((data) => {
       this.clientes = data.data
-      console.log(data);
+      console.log(this.clientes);
     });
 
-    this.clienteId = this.cliente.id;
-    this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
-      this.clientes = data.data;
-      console.log("Clientes", this.clientes)
-    })
+    const requestData = new FilterClientes("", "", "", this.currentPage, 10);
+    console.log(requestData);
 
-    this.formVeiculo = this.fb.group({
-      marca: [null],
-      placa: [null],
-      cor: [null],
-      ano: [null],
-      modelo: [null],
-      km: [null],
+    this.clienteService.getFilterClientes(requestData).subscribe((data) => {
+      this.clientes = data.data;
+      this.totalPages = data.totalPagina
+      console.log("Filtro", this.totalPages);
+
+      this.changeDetectorRef.detectChanges();
     });
 
     this.formCliente = this.fb.group({
-      nome: [null],
       cpf: [null],
-      dataNascimento: [null],
-      endereco: [null],
-      bairro: [null],
-      cidade: [null],
-      uf: [null],
-      numeroWhatsapp: [null],
-      numeroContato: [null],
-      email: [null],
-    });
+      nome: [null],
+      placa: [null]
+    })
   }
 
   new() {
     this.router.navigate(["clientes/new"]);
-    this.modalService.hide();
+  }
+
+  openById(id) {
+    this.router.navigate(["clientes/new"], {
+      queryParams: { clienteId: id, tipo: "visualizar" },
+    });
   }
 
   novaOS(id) {
     this.router.navigate(["ordemdeservico/new"], {
-      queryParams: { clienteId: id}
+      queryParams: { clienteId: id }
     });
-    this.modalService.hide();
   }
 
-  novoOrc(id) {
+  novoOrc(id){
     this.router.navigate(["orcamento/new"], {
-      queryParams: { clienteId: id}
+      queryParams: { clienteId: id }
     });
-    this.modalService.hide();
   }
 
-  goTo() {
-    this.router.navigate(["clientes/new"]);
-    this.modalService.hide();
+  openEditById(id) {
+    this.router.navigate(["clientes/new"], {
+      queryParams: { clienteId: id, tipo: "editar" },
+    });
   }
+
+  deleteCliente(id) {
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja realmente deletar esse cliente?"
+    );
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.clienteService.deleteCliente(id)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (agendamentos) => {
+           window.location.reload();
+        },
+        (error) => console.error(error)
+      );
+  }
+
+  filterClientes() {
+    const cpfSemFormato = this.formCliente.value.cpf;
+    const cpfFormatado = cpfSemFormato ? cpfSemFormato.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : '';
+
+    const nomeCliente = this.formCliente.value.nome;
+    const placa = this.formCliente.value.placa;
+
+    const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, this.currentPage, 10);
+    console.log(requestData);
+
+    this.clienteService.getFilterClientes(requestData).subscribe((data) => {
+      this.clientes = data.data;
+      console.log("Filtro", data.data);
+
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  getPaginationRange(): number[] {
+    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    const requestData = new FilterClientes("", "", "", this.currentPage, 10);
+
+    this.clienteService.getFilterClientes(requestData).subscribe((data) => {
+      this.clientes = data.data;
+      console.log("Filtro", data.data);
+
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
+  limparFiltro(){
+    this.formCliente.reset()
+  }
+
 }
