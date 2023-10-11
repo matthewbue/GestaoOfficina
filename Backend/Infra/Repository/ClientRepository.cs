@@ -93,36 +93,56 @@ namespace GestaoOfficina.Infra.Repository
 
         public async Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).AsQueryable();
-
-            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            try
             {
-                queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
-            }
-            if (!String.IsNullOrEmpty(entrada.CPF))
-            {
-                queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
-            }
+                var queryResult = _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).AsQueryable();
 
-            var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
-           
-
-            if (!String.IsNullOrEmpty(entrada.Placa))
-            {
-   
-                foreach(var item in paginatedResult)
+                if (!String.IsNullOrEmpty(entrada.NomeCliente))
                 {
-                  var Veiculo = item.Automoveis.Where(c => c.Placa == entrada.Placa).FirstOrDefault();
-                    if(Veiculo != null)
-                    {
-                        var clientes = new List<Client>();
-                        clientes.Add(item);
-                        return clientes;
-                    }
+                    queryResult = queryResult.Where(_ => _.Nome.Contains(entrada.NomeCliente));
+                }
+                if (!String.IsNullOrEmpty(entrada.CPF))
+                {
+                    queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
                 }
 
+                var paginatedResult = await queryResult.Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
+
+
+                if (!String.IsNullOrEmpty(entrada.Placa))
+                {
+
+                    foreach (var item in paginatedResult)
+                    {
+                        var Veiculo = item.Automoveis.Where(c => c.Placa == entrada.Placa).FirstOrDefault();
+                        if (Veiculo != null)
+                        {
+                            var clientes = new List<Client>();
+                            clientes.Add(item);
+                            return clientes;
+                        }
+                    }
+
+                }
+                queryResult = queryResult.OrderByDescending(x => x.Id);
+
+                // Calcule a página corretamente mesmo com PageSize grande
+                int totalCount = await queryResult.CountAsync();
+                int maxPage = (int)Math.Ceiling((double)totalCount / entrada.PageSize.Value);
+                int pageToFetch = Math.Max(1, Math.Min(maxPage, entrada.PageNumber.Value));
+
+                // Aplique a paginação
+                var paginated = await queryResult
+                    .Skip((pageToFetch - 1) * entrada.PageSize.Value)
+                    .Take(entrada.PageSize.Value)
+                    .ToListAsync();
+
+                return paginated;
             }
-            return paginatedResult;
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<int> CountClient(ClientFilterDTO entrada)
