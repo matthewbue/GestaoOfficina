@@ -43,7 +43,7 @@ export class OrcamentoComponent implements OnInit {
     });
 
     this.formSearchOs = this.fb.group({
-      ordemNumero: null,
+      orcamentoNumero: null,
       nomeCliente: null,
       statusOs: null,
     })
@@ -66,7 +66,7 @@ export class OrcamentoComponent implements OnInit {
 
   searchOs() {
 
-    const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
+    const ordemNumero = this.formSearchOs.value.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
 
     const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, null, null)

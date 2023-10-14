@@ -370,6 +370,7 @@
       <div class="card-content">
         <div class="card-body">
           <div class="row" id="ordem-servico-cadastro">
+
             <div class="col-md-12 mt-4">
               <h3>Adicionar Serviços</h3>
               <div class="col-md-3">
@@ -407,22 +408,10 @@
                   </div>
                 </div>
               </div>
-              <p>
-                <button class="btn btn-primary" type="button" (click)="isCollapsed = !isCollapsed"
-                  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-                  Cadastrar novo serviço
-                </button>
-              </p>
-              <div [ngbCollapse]="isCollapsed" id="collapseExample">
-                <form [formGroup]="formNewServico">
-                  <input maxlength="100" id="cadastrarServico" type="text" formControlName="cadastrarServico"
-                    class="form-control col-md-6">
-                </form>
-                <button type="button" class="btn btn-info mt-md-4" (click)="cadastrarServico()">Adicionar</button>
-              </div>
+
             </div>
             <div class="col-md-12 mt-4">
-              <h3>Lista de Serviços existentes</h3>
+              <h3>Lista de Serviços</h3>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -436,7 +425,13 @@
                 <tbody>
                   <ng-container *ngFor="let servico of ordemServico.manutecesServicos; let i = index">
                     <tr>
-                      <td>{{ servico.nome }}</td>
+                      <td>
+                        <div class="form-group">
+                          <input maxlength="100" type="text" class="form-control col-md-12"
+                            [(ngModel)]="servico.nome" [readonly]="editarIndices.indexOf(i) === -1"
+                            (ngModelChange)="atualizarNomeServico(servico, $event)" />
+                        </div>
+                      </td>
                       <td>
                         <div class="form-group">
                           <input maxlength="100" type="number" class="form-control col-md-6" [(ngModel)]="servico.valor"
@@ -452,28 +447,31 @@
                       </td>
                       <td>
                         <div class="form-group">
-                          <input maxlength="100" type="number" class="form-control col-md-6"
-                            [(ngModel)]="servico.mediakm" [readonly]="editarIndices.indexOf(i) === -1"
+                          <input maxlength="100" type="number" class="form-control col-md-6" [(ngModel)]="servico.mediakm"
+                            [readonly]="editarIndices.indexOf(i) === -1"
                             (ngModelChange)="atualizarMediaKm(servico, $event)" />
                         </div>
                       </td>
 
                       <td>
-                        <button class="btn btn-primary" (click)="toggleEdicao(i)">
+                        <button class="btn btn-primary mr-2" (click)="toggleEdicao(i)">
                           {{ editarIndices.indexOf(i) === -1 ? 'Alterar' : 'Cancelar' }}
                         </button>
-                        <button class="btn btn-success" *ngIf="editarIndices.indexOf(i) !== -1"
+                        <button class="btn btn-success mt-2" *ngIf="editarIndices.indexOf(i) !== -1"
                           (click)="adicionarParaAlterar(servico)">
                           Salvar
                         </button>
+
+                        <button class="btn btn-danger mt-2" *ngIf="!isEdicaoAtiva">Excluir</button>
                       </td>
+
                     </tr>
                   </ng-container>
                 </tbody>
                 <tbody>
                   <tr *ngFor="let servico of servicos">
                     <td>{{ servico.nome }}</td>
-                    <td>{{ servico.valor.toFixed(2) }}</td>
+                    <td>{{ servico.valor }}</td>
                     <td>
                       <div class="form-group">
                         <input maxlength="100" type="number" class="form-control col-md-6"
@@ -489,7 +487,7 @@
                     <td>
                       <button type="button" class="btn btn-danger btn-sm mr-2"
                         (click)="removerServico(servico)">Remover</button>
-                      <button type="button" class="btn btn-success btn-sm mt-2"
+                        <button type="button" class="btn btn-success btn-sm mt-2"
                         (click)="salvarNovoServico(servico)">Adicionar</button>
                     </td>
                   </tr>
@@ -538,16 +536,16 @@
 
             <div class="col-md-4 mt-4">
               <div class="form-group">
-                <label for="valorTotal">Valor Total (R$):</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">R$</span>
+                  <label for="valorTotal">Valor Total (R$):</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text">R$</span>
+                      </div>
+                      <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
+                          [value]="valorTotal + ',00' " />
                   </div>
-                  <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
-                    [value]="valorTotal.toFixed(2)" />
-                </div>
               </div>
-            </div>
+          </div>
 
             <form [formGroup]="formOrdemServico" class="col-md-12 mt-4" novalidate>
               <div>

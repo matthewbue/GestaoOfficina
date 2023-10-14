@@ -415,7 +415,7 @@
 
             </div>
             <div class="col-md-12 mt-4">
-              <h3>Lista de Serviços existentes</h3>
+              <h3>Lista de Serviços</h3>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -429,7 +429,13 @@
                 <tbody>
                   <ng-container *ngFor="let servico of ordemServico.manutecesServicos; let i = index">
                     <tr>
-                      <td>{{ servico.nome }}</td>
+                      <td>
+                        <div class="form-group">
+                          <input maxlength="100" type="text" class="form-control col-md-12"
+                            [(ngModel)]="servico.nome" [readonly]="editarIndices.indexOf(i) === -1"
+                            (ngModelChange)="atualizarNomeServico(servico, $event)" />
+                        </div>
+                      </td>
                       <td>
                         <div class="form-group">
                           <input maxlength="100" type="number" class="form-control col-md-6" [(ngModel)]="servico.valor"
@@ -452,14 +458,17 @@
                       </td>
 
                       <td>
-                        <button class="btn btn-primary" (click)="toggleEdicao(i)">
+                        <button class="btn btn-primary mr-2" (click)="toggleEdicao(i)">
                           {{ editarIndices.indexOf(i) === -1 ? 'Alterar' : 'Cancelar' }}
                         </button>
-                        <button class="btn btn-success" *ngIf="editarIndices.indexOf(i) !== -1"
+                        <button class="btn btn-success mt-2" *ngIf="editarIndices.indexOf(i) !== -1"
                           (click)="adicionarParaAlterar(servico)">
                           Salvar
                         </button>
+
+                        <button class="btn btn-danger mt-2" *ngIf="!isEdicaoAtiva">Excluir</button>
                       </td>
+
                     </tr>
                   </ng-container>
                 </tbody>
@@ -537,7 +546,7 @@
                           <span class="input-group-text">R$</span>
                       </div>
                       <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
-                          [value]="valorTotal" />
+                          [value]="valorTotal + ',00' " />
                   </div>
               </div>
           </div>

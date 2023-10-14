@@ -58,6 +58,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   servicosParaAlterar: FormArray;
   editarCampos: boolean = false;
   editarIndices: number[] = [];
+  isEdicaoAtiva: boolean = false;
   kmatualValue: number;
   valorTotal: any = null;
   manutencesServico = [];
@@ -83,7 +84,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     this.clienteService.getClienteById(this.cliente.id).subscribe((data) => {
       this.cliente = data.data;
-      console.log("Cliente By ID", this.cliente);
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -98,10 +98,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.manutencesServico = response.data.manutecesServicos;
       this.automovel = response.data.automovels
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
-      console.log("OS", this.ordemServico)
-      console.log("MANUT", this.manutencesServico)
-      console.log("AUTO", this.automovel)
-
     })
 
     this.formVeiculo = this.fb.group({
@@ -173,6 +169,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
   atualizarKmServico(servico: any, novoKmServico: any) {
     servico.kmservico = novoKmServico;
+  }
+  atualizarNomeServico(servico: any, novoNomeServico: any) {
+    servico.nome = novoNomeServico;
   }
   atualizarMediaKm(servico: any, novoValor: any) {
     servico.mediaKm = novoValor;
@@ -324,7 +323,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
     yPosValue += 5;
     doc.text(`Ano: ${this.automovel.ano}`, 20, yPosValue);
     doc.text(`Cor: ${this.automovel.cor}`, 80, yPosValue);
-    doc.text(`Km Atual: ${this.automovel.km}`, 140, yPosValue);
+    const kmAtualServico = this.manutencesServico.map(servico => `${servico.kmatual}`);
+    doc.text(`Km Atual: ${kmAtualServico[0]}`, 140, yPosValue);
     yPosValue += 10;
 
     doc.setFontSize(14);
@@ -352,8 +352,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
     // yPosValue += 20;
 
     doc.setFontSize(14);
+    doc.setFont('courier', 'bold');
     doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
     yPosValue = doc.internal.pageSize.getHeight() - 50;
+    doc.setFont('courier', 'normal');
 
     doc.setFontSize(14);
     const xPosAssinatura = 105;
@@ -468,9 +470,13 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   toggleEdicao(index: number) {
     if (this.editarIndices.indexOf(index) === -1) {
+      // Se o botão de alterar foi clicado para editar
       this.editarIndices.push(index);
+      this.isEdicaoAtiva = true; // Defina a variável para verdadeira quando a edição começar
     } else {
+      // Se o botão de cancelar foi clicado para sair da edição
       this.editarIndices.splice(this.editarIndices.indexOf(index), 1);
+      this.isEdicaoAtiva = false; // Defina a variável para falsa quando a edição for cancelada
     }
   }
 

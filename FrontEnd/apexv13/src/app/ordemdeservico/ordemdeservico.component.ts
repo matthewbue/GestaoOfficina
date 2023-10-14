@@ -42,6 +42,7 @@ export class OrdemdeservicoComponent implements OnInit {
       console.log("Data",this.data);
       this.cdRef.detectChanges();
     });
+    
 
     this.formSearchOs = this.fb.group({
       ordemNumero: null,
