@@ -34,14 +34,14 @@ namespace GestaoOfficina
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<GestaoOfficinaContext>(
-            //    opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<GestaoOfficinaContext>(
+                opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            //var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<GestaoOfficinaContext>(options =>
-                options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 27))));
+            //services.AddDbContext<GestaoOfficinaContext>(options =>
+            //    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 27))));
 
 
             services.AddAplication()
