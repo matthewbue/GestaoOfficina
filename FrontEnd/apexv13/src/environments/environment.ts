@@ -4,7 +4,6 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  API: 'https://deploy-back-officinaferreira.azurewebsites.net',
-  
+  API: 'http://mbtechinova-001-site1.btempurl.com',
   production: false
 };
