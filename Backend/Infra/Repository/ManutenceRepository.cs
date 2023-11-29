@@ -256,5 +256,11 @@ namespace GestaoOfficinaProj.Infra.Repository
             return result;
         }
 
+        public void DeleteManutence(int entrada)
+        {
+            var resultdelete = _gestaoOfficinaContext.ManutenceServicos.Where(r => r.ManutenceId == entrada).FirstOrDefault();
+            _gestaoOfficinaContext.ManutenceServicos.Remove(resultdelete);
+            _gestaoOfficinaContext.SaveChanges();
+        }
     }
 }

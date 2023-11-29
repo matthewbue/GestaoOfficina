@@ -81,6 +81,22 @@ namespace GestaoOfficinaProj.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        [HttpDelete("DeleteManutence")]
+        public IActionResult DeleteManutence(int entrada)
+        {
+            try
+            {
+                var result = _manutenceService.DeleteManutence(entrada);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int entrada)
         {
