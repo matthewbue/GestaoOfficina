@@ -466,7 +466,7 @@
                           Salvar
                         </button>
 
-                        <button class="btn btn-danger mt-2" *ngIf="!isEdicaoAtiva">Excluir</button>
+                        <button class="btn btn-danger mt-2" *ngIf="!isEdicaoAtiva" (click)="deleteManutence(servico.id)" >Excluir</button>
                       </td>
 
                     </tr>

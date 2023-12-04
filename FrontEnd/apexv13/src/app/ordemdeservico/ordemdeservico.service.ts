@@ -44,6 +44,10 @@ updateServico(updateServico){
   return this.httpClient.post<any>(`${environment.API}/Manutence/UpdateServico`, updateServico)
 }
 
+deleteServico(Id){
+  return this.httpClient.delete<any>(`https://localhost:44392/Manutence/DeleteManutence?entrada=${Id}`).pipe(catchError(this.handleError));
+}
+
 addNovoServico(addNewServico){
   return this.httpClient.post<any>(`${environment.API}/Manutence/AddServico`, addNewServico)
 }

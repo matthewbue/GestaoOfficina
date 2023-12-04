@@ -448,6 +448,16 @@ export class EditOrdemdeservicoComponent implements OnInit {
     }
   }
 
+  deleteManutence(id){
+    this.osService.deleteServico(id).subscribe((data =>{
+      if(data.data == "sucesso"){
+        this.alertService.showAlertSuccess(data.message)
+        location.reload()
+      }else{
+        this.alertService.showAlertDanger("Erro ao deletar serviço")
+      }
+    }))
+  }
 
   cancelarEdicao(servico: any) {
     // Restaure os valores originais do serviço e encerre o modo de edição.
