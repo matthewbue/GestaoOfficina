@@ -71,7 +71,7 @@
                     <div class="form-group">
                       <label for="marca">Veículo:</label>
                       <ng-select [(ngModel)]="marcaSelecionada" (change)="onSelectMarca($event)">
-                        <ng-option *ngFor="let automovel of cliente.automoveis" [value]="automovel.marca">
+                        <ng-option *ngFor="let automovel of cliente.automoveis" [value]="automovel.placa">
                           {{ automovel.marca }}
                         </ng-option>
                       </ng-select>
@@ -364,7 +364,7 @@
   <section>
     <div class="col-12">
       <div class="content-header">
-        <h1>Editar de Ordem de Serviço</h1>
+        <h1>Editar Ordem de Serviço</h1>
       </div>
     </div>
 
@@ -422,6 +422,7 @@
                     <th>Serviço</th>
                     <th>Valor (R$)</th>
                     <th>Km do Serviço</th>
+                    <th>Km Atual</th>
                     <th>Média/dia</th>
                     <th>Ações</th>
                   </tr>
@@ -447,6 +448,13 @@
                           <input maxlength="100" type="number" class="form-control col-md-6"
                             [(ngModel)]="servico.kmservico" [readonly]="editarIndices.indexOf(i) === -1"
                             (ngModelChange)="atualizarKmServico(servico, $event)" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group">
+                          <input maxlength="100" type="number" class="form-control col-md-12"
+                            [(ngModel)]="servico.kmatual" [readonly]="editarIndices.indexOf(i) === -1"
+                            (ngModelChange)="atualizarKmAtual(servico, $event)" />
                         </div>
                       </td>
                       <td>

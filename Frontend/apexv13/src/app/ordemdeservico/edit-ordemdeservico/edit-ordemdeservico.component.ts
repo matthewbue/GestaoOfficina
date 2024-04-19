@@ -170,6 +170,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
   atualizarKmServico(servico: any, novoKmServico: any) {
     servico.kmservico = novoKmServico;
   }
+  atualizarKmAtual(servico: any, novoKmAtual: any) {
+    servico.kmatual = novoKmAtual;
+  }
   atualizarNomeServico(servico: any, novoNomeServico: any) {
     servico.nome = novoNomeServico;
   }
@@ -389,7 +392,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
   onSelectMarca(event: any) {
     this.marcaSelecionada = event;
     console.log('Marca selecionada:', this.marcaSelecionada);
-    this.veiculoSelecionado = this.cliente.automoveis.find(automovel => automovel.marca === this.marcaSelecionada);
+    this.veiculoSelecionado = this.cliente.automoveis.find(automovel => automovel.placa === this.marcaSelecionada);
 
     if (this.veiculoSelecionado) {
       this.formVeiculo.patchValue({
