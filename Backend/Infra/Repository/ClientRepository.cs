@@ -3,6 +3,8 @@ using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Infra.Interface;
 using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.DTOs.Client;
+using GestaoOfficinaProj.Domain.DTOs.OS;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -92,7 +94,7 @@ namespace GestaoOfficina.Infra.Repository
             }
         }
 
-        public async Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada)
+        public async Task<ICollection<ClientGetFilterResponse>> GetClientFilter(ClientFilterDTO entrada)
         {
             try
             {
@@ -114,14 +116,23 @@ namespace GestaoOfficina.Infra.Repository
                         cliente.Automoveis.Any(automovel => automovel.Placa == entrada.Placa));
                 }
 
-                // Ordenação e paginação
-                queryResult = queryResult.OrderByDescending(x => x.Id);
+
                 int totalCount = await queryResult.CountAsync();
                 int maxPage = (int)Math.Ceiling((double)totalCount / entrada.PageSize.Value);
                 int pageToFetch = Math.Max(1, Math.Min(maxPage, entrada.PageNumber.Value));
 
-                // Aplicação da paginação
+             
                 var paginated = await queryResult
+
+
+                     .Select(m => new ClientGetFilterResponse
+                     {
+                         Id = m.Id,
+                         Nome = m.Nome,
+                         Email = m.Email,
+                         NumeroWhatsapp = m.NumeroWhatsapp,
+                     })
+                    .OrderByDescending(x => x.Id)
                     .Skip((pageToFetch - 1) * entrada.PageSize.Value)
                     .Take(entrada.PageSize.Value)
                     .ToListAsync();

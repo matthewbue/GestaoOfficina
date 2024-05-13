@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Domain.DTOs.OS
 {
-    public class OSGetFilter
+    public class OSGetFilterResponse
     {
         public int Id { get; set; }
         public string NomeCliente { get; set; }

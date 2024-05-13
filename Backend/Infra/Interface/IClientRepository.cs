@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
 using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.DTOs.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace GestaoOfficina.Infra.Interface
         void Update(Client entrada);
         Task<Client> GetClientById(int entrada);
         void Delete(int entrada);
-        Task<ICollection<Client>> GetClientFilter(ClientFilterDTO entrada);
+        Task<ICollection<ClientGetFilterResponse>> GetClientFilter(ClientFilterDTO entrada);
 
         Task<int> CountClient(ClientFilterDTO entrada);
     }
