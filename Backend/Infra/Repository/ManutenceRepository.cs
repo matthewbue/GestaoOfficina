@@ -72,7 +72,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
                 }
-   
+                     
                 if (entrada.DataAberturaOS != null)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
