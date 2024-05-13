@@ -309,8 +309,8 @@ export class EditClientesComponent implements OnInit {
 
             if (error.error && error.error.includes("CPF existente")) {
               this.alertService.showAlertDanger("CPF já cadastrado na base de dados.");
-            } else {
-              this.alertService.showAlertDanger("Ocorreu um erro ao criar o cliente.");
+            } else if(error.error && error.error.includes("Veiculo")) {
+              this.alertService.showAlertDanger( error.error );
             }
           }
         );

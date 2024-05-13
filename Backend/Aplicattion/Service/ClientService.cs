@@ -31,6 +31,11 @@ namespace GestaoOfficina.Aplicattion.Service
         {
             var CPF = await _clientRepository.GetCPF(entrada.CPF);
 
+            if(CPF != null)
+            {
+                throw new Exception("Necessario ter pelo menos 1 Veiculo para Cadastro");
+            }
+
             if (entrada.Automoveis.Count() < 1)
             {
                 throw new Exception("Necessario ter pelo menos 1 Veiculo para Cadastro");
