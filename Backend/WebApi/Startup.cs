@@ -1,8 +1,7 @@
 using FluentValidation.AspNetCore;
 using GestaoOfficina.Aplicattion.DependecyInject;
-using GestaoOfficina.Domain.ClientValidators;
-using GestaoOfficina.Domain.Model;
-using GestaoOfficina.Domain.Validators;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Infra.DependecyInject;
 using Microsoft.AspNetCore.Builder;
@@ -46,9 +45,11 @@ namespace GestaoOfficina
 
             services.AddAplication()
             .AddInfrastruture();
-            services.AddControllers()
-            .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<ClientValidators>());
-          
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+            });
+
 
 
             services.AddSwaggerGen(c =>

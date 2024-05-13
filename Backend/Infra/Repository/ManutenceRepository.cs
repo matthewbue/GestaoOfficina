@@ -60,7 +60,6 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             try
             {
-               //Filtrar Pelo nome do Cliente
                 var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
                 if (entrada.DataInicio != null && entrada.DataFim != null)
@@ -80,7 +79,6 @@ namespace GestaoOfficinaProj.Infra.Repository
                 }
 
                 var paginatedResult = await queryResult
-                    .Include(m => m.Automovel.Client) // Incluir os dados do cliente
 
                     .Select(m => new OSGetFilter
                     {
