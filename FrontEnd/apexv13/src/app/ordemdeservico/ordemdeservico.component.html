@@ -24,8 +24,18 @@
 
                 </div>
                 <div class="col-md-6">
-
-
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="dataInicial">Data Inicial:</label>
+                        <input type="date" class="form-control" id="dataInicial" formControlName="dataInicial" />
+                      </div>
+                      <div class="col-md-6">
+                        <label for="dataFinal">Data Final:</label>
+                        <input type="date" class="form-control" id="dataFinal" formControlName="dataFinal" />
+                      </div>
+                    </div>
+                  </div>
                   <fieldset class="form-group">
                     <label for="statusOs">Status:</label>
                     <ng-select [clearable]="false" id="statusOs" formControlName="statusOs"

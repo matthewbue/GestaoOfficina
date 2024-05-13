@@ -8,8 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Infra.Repository
@@ -17,6 +15,7 @@ namespace GestaoOfficinaProj.Infra.Repository
     public class ManutenceRepository : IManutenceRepository
     {
         private readonly GestaoOfficinaContext _gestaoOfficinaContext;
+
         public ManutenceRepository(GestaoOfficinaContext gestaoOfficinaContext)
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
@@ -28,10 +27,9 @@ namespace GestaoOfficinaProj.Infra.Repository
 
             if (produto != null)
             {
-                 produto.Status = "Concluido";
+                produto.Status = "Concluido";
                 _gestaoOfficinaContext.SaveChanges();
             }
-             
         }
 
         public int Create(Manutence entrada)
@@ -41,7 +39,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                 _gestaoOfficinaContext.Manutences.Add(entrada);
                 _gestaoOfficinaContext.SaveChanges();
 
-                return entrada.Id; 
+                return entrada.Id;
             }
             catch (Exception ex)
             {
@@ -63,16 +61,16 @@ namespace GestaoOfficinaProj.Infra.Repository
                 var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
                 if (entrada.DataInicio != null && entrada.DataFim != null)
-                if (entrada.DataInicio <= entrada.DataFim)
-                {
-                    queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim );
-                }
+                    if (entrada.DataInicio <= entrada.DataFim)
+                    {
+                        queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
+                    }
 
                 if (entrada.NumeroOS > 0)
                 {
                     queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
                 }
-                     
+
                 if (entrada.DataAberturaOS != null)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
@@ -99,7 +97,6 @@ namespace GestaoOfficinaProj.Infra.Repository
                     .Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value)
                     .Take(entrada.PageSize.Value)
                     .ToListAsync();
-                    
 
                 return paginatedResult;
             }
@@ -129,11 +126,10 @@ namespace GestaoOfficinaProj.Infra.Repository
                 _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
                 _gestaoOfficinaContext.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-           
         }
 
         public async Task<int> CountOS(OSFilterDTO entrada)
@@ -160,6 +156,12 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 queryResult = queryResult.Where(_ => _.Automovel.Placa == entrada.Placa);
             }
+            if (entrada.DataInicio != null && entrada.DataFim != null)
+                if (entrada.DataInicio <= entrada.DataFim)
+                {
+                    queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
+                }
+
             return queryResult.Count();
         }
 
@@ -195,7 +197,6 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 _gestaoOfficinaContext.ManutenceServicos.Add(entrada);
                 _gestaoOfficinaContext.SaveChanges();
-
             }
             catch (Exception ex)
             {
@@ -220,15 +221,14 @@ namespace GestaoOfficinaProj.Infra.Repository
                 queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicial && _.DataOS <= entrada.DataFinal);
             }
 
-            var result = queryResult; 
-
-            
+            var result = queryResult;
 
             return result.ToList();
         }
+
         public int GetManutenceIdByDate(DateTime entrada)
         {
-            var result =  _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefault();
+            var result = _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefault();
 
             return result;
         }

@@ -48,6 +48,8 @@ export class OrdemdeservicoComponent implements OnInit {
       ordemNumero: null,
       nomeCliente: null,
       statusOs: null,
+      dataInicial: null,
+      dataFinal: null
     })
 
   }
@@ -68,9 +70,13 @@ export class OrdemdeservicoComponent implements OnInit {
   searchOs() {
     const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
-    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, null, null)
+    const dataInicial = this.formSearchOs.value.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
+    const dataFinal = this.formSearchOs.value.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
+    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, dataInicial, dataFinal)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
+      this.totalPages = response.totalPagina
+
       console.log("buscar",this.data);
     });
   }
@@ -81,9 +87,14 @@ export class OrdemdeservicoComponent implements OnInit {
 
   goToPage(page: number) {
     this.currentPage = page;
-    const requestData = new FilterOs("", "", 0, null, this.currentPage, 10, null, null);
+    const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
+    const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
+    const dataInicial = this.formSearchOs.value.dataInicial == null ? "" : this.formSearchOs.value.dataInicial;
+    const dataFinal = this.formSearchOs.value.dataFinal == null ? "" : this.formSearchOs.value.dataFinal;
+    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, this.currentPage, 10, dataInicial, dataFinal);
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
+      this.totalPages = response.totalPagina
       console.log(this.data);
     });
   }
