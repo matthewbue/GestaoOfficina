@@ -80,6 +80,8 @@ namespace GestaoOfficinaProj.Infra.Repository
                 }
 
                 var paginatedResult = await queryResult
+                    .Include(m => m.Automovel.Client) // Incluir os dados do cliente
+
                     .Select(m => new OSGetFilter
                     {
                         Id = m.Id,
