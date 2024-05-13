@@ -42,7 +42,7 @@ export class OrdemdeservicoComponent implements OnInit {
       console.log("Data",this.data);
       this.cdRef.detectChanges();
     });
-    
+
 
     this.formSearchOs = this.fb.group({
       ordemNumero: null,
@@ -66,14 +66,12 @@ export class OrdemdeservicoComponent implements OnInit {
 
   }
   searchOs() {
-
     const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
-
     const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, null, null)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
-      console.log(this.data);
+      console.log("buscar",this.data);
     });
   }
 

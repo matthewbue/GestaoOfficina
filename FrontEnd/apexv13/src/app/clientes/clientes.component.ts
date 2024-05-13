@@ -33,19 +33,16 @@ export class ClientesComponent implements OnInit {
   itemsPerPage: number;
 
   ngOnInit(): void {
-    this.clienteService.getAllClient().subscribe((data) => {
-      this.clientes = data.data
-      console.log(this.clientes); 
-    });
+    // this.clienteService.getAllClient().subscribe((data) => {
+    //   this.clientes = data.data
+    //   console.log(this.clientes);
+    // });
 
     const requestData = new FilterClientes("", "", "", this.currentPage, 10);
-    console.log(requestData);
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
       this.totalPages = data.totalPagina
-      console.log("Filtro", this.totalPages);
-
       this.changeDetectorRef.detectChanges();
     });
 
@@ -119,8 +116,7 @@ export class ClientesComponent implements OnInit {
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Filtro", data.data);
-
+      this.totalPages = data.totalPagina
       this.changeDetectorRef.detectChanges();
     });
   }
@@ -131,7 +127,13 @@ export class ClientesComponent implements OnInit {
 
   goToPage(page: number) {
     this.currentPage = page;
-    const requestData = new FilterClientes("", "", "", this.currentPage, 10);
+    const cpfSemFormato = this.formCliente.value.cpf;
+    const cpfFormatado = cpfSemFormato ? cpfSemFormato.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : '';
+
+    const nomeCliente = this.formCliente.value.nome;
+    const placa = this.formCliente.value.placa;
+
+    const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, this.currentPage, 10);
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
