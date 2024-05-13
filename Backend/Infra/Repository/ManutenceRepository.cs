@@ -56,7 +56,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             _gestaoOfficinaContext.SaveChanges();
         }
 
-        public async Task<List<OSGetFilter>> GetFilterOS(OSFilterDTO entrada)
+        public async Task<List<OSGetFilterResponse>> GetFilterOS(OSFilterDTO entrada)
         {
             try
             {
@@ -72,15 +72,21 @@ namespace GestaoOfficinaProj.Infra.Repository
                 {
                     queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
                 }
-   
+                     
                 if (entrada.DataAberturaOS != null)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
                 }
 
+                if (!String.IsNullOrEmpty(entrada.Placa))
+                {
+                    queryResult = queryResult.Where(cliente =>
+                        cliente.Automovel.Placa == entrada.Placa);
+                }
+
                 var paginatedResult = await queryResult
 
-                    .Select(m => new OSGetFilter
+                    .Select(m => new OSGetFilterResponse
                     {
                         Id = m.Id,
                         Veiculo = m.Automovel.Modelo,

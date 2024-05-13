@@ -16,7 +16,7 @@ namespace GestaoOfficinaProj.Infra.Interface
         void UpdateManutence(Manutence entrada);
         Task<Manutence> GetById(int entrada);
         void Delete(int entrada);
-        Task<List<OSGetFilter>> GetFilterOS(OSFilterDTO entrada);
+        Task<List<OSGetFilterResponse>> GetFilterOS(OSFilterDTO entrada);
         void CheckoutOS(int identificadorOS);
         Task<int> CountOS(OSFilterDTO filterDTO);
         Task<ManutenceServico> GetManutenceServicoById(int id);
