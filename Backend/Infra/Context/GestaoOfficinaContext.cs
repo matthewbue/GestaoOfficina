@@ -41,6 +41,9 @@ namespace GestaoOfficina.Infra.Context
                 .HasOne(m => m.Automovel)
                 .WithMany(c => c.Manutences)
                 .HasForeignKey(m => m.AutomovelId);
+
+            modelBuilder.Entity<Automovel>()
+                .Ignore(a => a.Client);
         }
     }
 }

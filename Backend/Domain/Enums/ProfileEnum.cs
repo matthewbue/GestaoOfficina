@@ -15,8 +15,8 @@ namespace GestaoOfficinaProj.Domain.Enums
         [Description("Cliente")]
         Cliente,
 
-        [Description("Operativo")]
-        Concluida,
+        [Description("Funcionario Empresa")]
+        Funcionario_Empresa,
 
         [Description("Administrador Empresa")]
         Administrador_Empresa

@@ -146,10 +146,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             var response = new ReturnDefault("Dados retornado com sucesso.", result);
             response.totalDados = count;
             response.totalPagina = TotalperPag.Value;
-            return response;
-         
-            
-            return new ReturnDefault("Dados retornado com sucesso.", result);
+            return response;            
         }
 
         public async Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada)

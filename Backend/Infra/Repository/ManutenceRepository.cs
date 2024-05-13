@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.DTOs.OS;
 using GestaoOfficinaProj.Domain.Model;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -55,7 +56,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             _gestaoOfficinaContext.SaveChanges();
         }
 
-        public async Task<List<Manutence>> GetFilterOS(OSFilterDTO entrada)
+        public async Task<List<OSGetFilter>> GetFilterOS(OSFilterDTO entrada)
         {
             try
             {
@@ -79,28 +80,19 @@ namespace GestaoOfficinaProj.Infra.Repository
                 }
 
                 var paginatedResult = await queryResult
-                    .Select(m => new Manutence
+                    .Select(m => new OSGetFilter
                     {
                         Id = m.Id,
-                        Automovel = new Automovel
-                        {
-         
-                            Id = m.Automovel.Id,
-                            Modelo = m.Automovel.Modelo,
-                            Placa = m.Automovel.Placa,
-                            Client = new Client
-                             {
-                                 
-                                 Id = m.Automovel.Client.Id,
-                                 Nome = m.Automovel.Client.Nome,
-                             }
-                        },
-                        
+                        Veiculo = m.Automovel.Modelo,
+                        Placa = m.Automovel.Placa,
+                        Status = m.Status,
+                        NomeCliente = m.Automovel.Client.Nome
                     })
                     .OrderByDescending(i => i.Id)
                     .Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value)
                     .Take(entrada.PageSize.Value)
                     .ToListAsync();
+                    
 
                 return paginatedResult;
             }
