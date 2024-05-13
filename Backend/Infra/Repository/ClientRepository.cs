@@ -37,9 +37,10 @@ namespace GestaoOfficina.Infra.Repository
 
         public void Delete(int entrada)
          {
+            //ajustar metodo Todo
             try
             {
-                var manutence = _gestaoOfficinaContext.Manutences.Where(r => r.ClientId == entrada).FirstOrDefault();
+                var manutence = _gestaoOfficinaContext.Manutences.FirstOrDefault();
 
                 if (manutence != null)
                 {

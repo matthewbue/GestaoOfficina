@@ -32,7 +32,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             Manutence objetoPai = new Manutence();
 
             objetoPai.AutomovelId = entrada.Veiculoid;
-            objetoPai.ClientId = entrada.Clientid;
             objetoPai.Observacoes = entrada.Observacoes;
             objetoPai.TipoDoc = entrada.TipoDoc;
             objetoPai.DataOS = DateTime.Now;
@@ -41,8 +40,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.ValorTotal = entrada.ValorTotal;
             
             var resultManutenceid =  _manutenceRepository.Create(objetoPai);
-
-            var result = _clientRepository.GetClientById(objetoPai.ClientId);
 
             #endregion
 

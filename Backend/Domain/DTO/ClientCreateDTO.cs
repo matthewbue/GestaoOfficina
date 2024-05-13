@@ -20,6 +20,6 @@ namespace GestaoOfficina.Domain.DTO
         public string Email { get; set; }
         public string NumeroContato { get; set; }
         public string CPF { get; set; }
-        public ICollection<Automovel> Automoveis { get; set; }
+        public List<Automovel> Automoveis { get; set; }
     }
 }
