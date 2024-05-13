@@ -24,8 +24,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
-                      <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        />
+                      <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf" mask="000.000.000-00" />
                     </div>
                   </div>
 
@@ -68,8 +67,7 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
-                      <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" />
+                      <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control" formControlName="numeroWhatsapp" mask="(00)00000-0000" />
                     </div>
                   </div>
 
@@ -77,7 +75,7 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" />
+                        formControlName="numeroContato" mask="(00)0000-0000" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -474,7 +472,7 @@
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        value="{{ clientes.cpf }}" />
+                        value="{{ clientes.cpf }}" mask="000.000.000-00"  />
                     </div>
                   </div>
 
@@ -521,7 +519,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" />
+                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" mask="(00)00000-0000"  />
                     </div>
                   </div>
 
@@ -529,7 +527,7 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" />
+                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" mask="(00)0000-0000"  />
                     </div>
                   </div>
                   <div class="col-md-6">

@@ -83,9 +83,9 @@
                   <!-- Use ngIf para verificar o tipoDoc -->
                   <ng-container *ngIf="os.tipoDoc === 'OrdemServico'">
                     <td class="text-truncate"> {{ os.id }} </td>
-                    <td class="text-truncate"> {{ os.nomeCliente}} </td>
-                    <td class="text-truncate"> {{ os.veiculo }} </td>
-                    <td class="text-truncate"> {{ os.placa }} </td>
+                    <td class="text-truncate" [style.textTransform]="'uppercase'" > {{ os.nomeCliente}} </td>
+                    <td class="text-truncate" [style.textTransform]="'uppercase'" > {{ os.veiculo }} </td>
+                    <td class="text-truncate" [style.textTransform]="'uppercase'" > {{ os.placa }} </td>
                     <td class="text-truncate"> {{ os.status }} </td>
                     <td class="text-truncate">
                       <a class="info p-0" title="Visualizar OS"><i class="ft-search font-medium-3 mr-2"

@@ -158,7 +158,13 @@ namespace GestaoOfficina.Infra.Repository
             {
                 queryResult = queryResult.Where(_ => _.CPF == entrada.CPF);
             }
-  
+
+            if (!String.IsNullOrEmpty(entrada.Placa))
+            {
+                queryResult = queryResult.Where(cliente =>
+                    cliente.Automoveis.Any(automovel => automovel.Placa == entrada.Placa));
+            }
+
             return await queryResult.CountAsync();
         }
 

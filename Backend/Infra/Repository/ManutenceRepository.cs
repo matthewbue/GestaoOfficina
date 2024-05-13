@@ -89,7 +89,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                     .Select(m => new OSGetFilterResponse
                     {
                         Id = m.Id,
-                        Veiculo = m.Automovel.Modelo,
+                        Veiculo = m.Automovel.Marca,
                         Placa = m.Automovel.Placa,
                         Status = m.Status,
                         NomeCliente = m.Automovel.Client.Nome,

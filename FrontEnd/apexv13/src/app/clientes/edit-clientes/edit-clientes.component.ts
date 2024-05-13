@@ -1,13 +1,13 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Clientes } from "app/shared/Model/Clientes";
 import { Automovel } from "app/shared/Model/Automovel";
+import { Clientes } from "app/shared/Model/Clientes";
 import { AlertModalService } from "app/shared/services/alert-modal.service";
+import { EMPTY } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 import { ClientesService } from "../clientes.service";
-import { EMPTY, forkJoin } from "rxjs";
-import { Location } from '@angular/common';
 
 
 @Component({
@@ -156,8 +156,12 @@ export class EditClientesComponent implements OnInit {
     this.EditClientes.email = this.formCliente.value.email == null ? "" : this.formCliente.value.email;
     this.EditClientes.endereco = this.formCliente.value.email == null ? "" : this.formCliente.value.endereco;
     this.EditClientes.nome = this.formCliente.value.nome == null ? "" : this.formCliente.value.nome;
-    this.EditClientes.numeroContato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
-    this.EditClientes.numeroWhatsapp = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+    const numeroContatoSemFormato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
+    const contatoFormatado = numeroContatoSemFormato.replace(/(\d{2})(\d{4})(\d{4})/, '($1)$2-$3');
+    this.EditClientes.numeroContato = contatoFormatado;
+    const numeroWhatsappSemFormato = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+    const whatsappFormatado = numeroWhatsappSemFormato.replace(/(\d{2})(\d{5})(\d{4})/, '($1)$2-$3');
+    this.EditClientes.numeroWhatsapp = whatsappFormatado
 
     this.EditClientes.automoveis = []
     const result$ = this.alertService.showConfirm(
@@ -266,8 +270,12 @@ export class EditClientesComponent implements OnInit {
       this.clientes.bairro = this.formCliente.value.bairro;
       this.clientes.cidade = this.formCliente.value.cidade;
       this.clientes.uf = this.formCliente.value.uf;
-      this.clientes.numeroWhatsapp = this.formCliente.value.numeroWhatsapp;
-      this.clientes.numeroContato = this.formCliente.value.numeroContato;
+      const numeroWhatsappSemFormato = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+      const whatsappFormatado = numeroWhatsappSemFormato.replace(/(\d{2})(\d{5})(\d{4})/, '($1)$2-$3');
+      this.clientes.numeroWhatsapp = whatsappFormatado;
+      const numeroContatoSemFormato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
+      const contatoFormatado = numeroContatoSemFormato.replace(/(\d{2})(\d{4})(\d{4})/, '($1)$2-$3');
+      this.clientes.numeroContato = contatoFormatado;
       this.clientes.email = this.formCliente.value.email;
 
       console.log("DADOS PARA SALVAR:", this.clientes);
