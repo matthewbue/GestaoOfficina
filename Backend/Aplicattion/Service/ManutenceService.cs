@@ -89,7 +89,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
 
             #region envio email
 
-            //string remetenteEmail = "oficinaferreiras@outlook.com";
+            //string remetenteEmail = "oficinaferreiras@outlo new JsonResult.com";
             //string senhaRemetente = "oficina12345";
             //string destinatarioEmail = result.Result.Email;
             //string assunto =objetoPai.TipoDoc + " N: " + resultManutenceid;
@@ -107,7 +107,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             //using (var client = new SmtpClient())
             //{
             //    client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Ignorar validação do certificado
-            //    await client.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
+            //    await client.ConnectAsync("smtp-mail.outlo new JsonResult.com", 587, SecureSocketOptions.StartTls);
             //    await client.AuthenticateAsync(remetenteEmail, senhaRemetente);
             //    await client.SendAsync(message);
             //    await client.DisconnectAsync(true);

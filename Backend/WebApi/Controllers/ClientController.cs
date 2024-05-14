@@ -25,7 +25,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = await _clientService.Create(client);
-                return Ok(result);
+                return new JsonResult(result);
             }
             catch(Exception ex)
             {
@@ -38,7 +38,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = await _clientService.GetAll();
-                return Ok(result);
+                return new JsonResult(result);
             }
             catch(Exception ex)
             {
@@ -51,7 +51,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                  await _clientService.Update(entrada);
-                return Ok(entrada);
+                return new JsonResult(entrada);
             }
             catch(Exception ex)
             {
@@ -65,7 +65,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                var resultado =  await _clientService.GetClientById(identificador);
-                return Ok(resultado);
+                return new JsonResult(resultado);
             }
             catch (Exception ex)
             {
@@ -78,7 +78,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var resultado = await _clientService.GetClientFilter(entrada);
-                return Ok(resultado);
+                return new JsonResult(resultado);
             }
             catch (Exception ex)
             {
@@ -91,7 +91,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = _clientService.Delete(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {

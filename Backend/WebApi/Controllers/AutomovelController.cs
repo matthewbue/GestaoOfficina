@@ -22,7 +22,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 _automovelService.UpdateAutomovel(entrada);
-                return Ok(entrada);
+                return  new JsonResult(entrada);
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 _automovelService.CreateAutomovel(entrada);
-                return Ok(entrada);
+                return  new JsonResult(entrada);
             }
              catch(Exception ex)
             {
@@ -48,7 +48,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _automovelService.DeleteAutomovel(Id);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {

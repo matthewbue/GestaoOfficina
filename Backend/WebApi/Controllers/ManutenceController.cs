@@ -22,7 +22,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.Create(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch(Exception ex)
             {
@@ -35,7 +35,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.CreateManutenceServico(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.UpdateManutence(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch(Exception ex)
             {
@@ -61,7 +61,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.UpdateManutenceServico(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _manutenceService.Delete(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _manutenceService.DeleteManutence(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -103,7 +103,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.GetById(entrada);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.GetFilterOS(FilterDTO);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -131,7 +131,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _manutenceService.CheckoutOS(identificadorOS);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -142,7 +142,7 @@ namespace GestaoOfficinaProj.Controllers
         public async Task<IActionResult> GetRelatorio(EntryFilterRelatorioDTO entrada)
         {
             var result = await _manutenceService.GetRelatorio(entrada);
-            return Ok(result);
+            return  new JsonResult(result);
         }
     }
 }
