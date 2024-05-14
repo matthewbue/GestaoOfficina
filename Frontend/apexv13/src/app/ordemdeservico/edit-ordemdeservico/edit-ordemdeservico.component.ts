@@ -14,7 +14,6 @@ import { Location } from '@angular/common';
 import { Servicos } from 'app/shared/Model/Servicos';
 import jsPDF from 'jspdf';
 
-
 @Component({
   selector: 'app-edit-ordemdeservico',
   templateUrl: './edit-ordemdeservico.component.html',
@@ -32,7 +31,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private location: Location,
-
   ) { }
 
   public isCollapsed = true;
@@ -73,14 +71,11 @@ export class EditOrdemdeservicoComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.cliente.id = params.clienteId;
       this.tipo = params.tipo;
-      console.log(params.clienteId)
     });
 
     this.clienteService.getAllClient().subscribe((data) => {
       this.clientes = data.data;
-      console.log(data);
     });
-
 
     this.clienteService.getClienteById(this.cliente.id).subscribe((data) => {
       this.cliente = data.data;
@@ -137,14 +132,12 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     this.osService.getServico().subscribe((response) => {
       this.servicosList = response.data
-      console.log("Lista Serviços", this.servicosList)
     })
 
     this.formServicos = this.fb.group({
       servicosParaAlterar: this.fb.array([])
     });
     this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as FormArray;
-
   }
 
   adicionarParaAlterar(servico: any) {
@@ -164,7 +157,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
   enviarDadosAlterados(dadosAlterados) {
     this.osService.updateServico(dadosAlterados).subscribe((data) => {
       window.location.reload();
-      console.log(data)
     })
   }
   atualizarKmServico(servico: any, novoKmServico: any) {
@@ -190,11 +182,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
       manutenceId: this.osId,
       kmAtual: this.kmatualValue
     };
-    console.log(novoServicoFormGroup)
 
     this.osService.addNovoServico(novoServicoFormGroup).subscribe((response) => {
       window.location.reload();
-      console.log(response)
     })
   }
 
@@ -205,11 +195,9 @@ export class EditOrdemdeservicoComponent implements OnInit {
       tipoDoc: "OrdemServico",
       observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
     };
-    console.log("resquestData", requestData)
 
     this.osService.saveEditOrdemServico(requestData).subscribe((response) => {
       window.location.reload();
-      console.log(response)
     })
   }
   gerarOrdemServico() {
@@ -238,9 +226,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
         valortotal: valorTotal,
         tipoDoc: "OrdemServico"
       };
-
-      console.log(ordemServicoData);
-
       const result$ = this.alertService.showConfirm(
         "Confirmação",
         "Deseja criar essa Ordem de Serviço?"
@@ -266,10 +251,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
     }
   }
 
-
   gerarPDF() {
     const doc = new jsPDF();
-
     // Adicione a imagem como marca d'água
     const imgData = '../../../assets/img/logo-oficina-peb.png';
     const imgWidth = 150;
@@ -386,12 +369,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   onSelectServico(event: any) {
     this.servicoSelected = event
-    console.log("Servico Select", this.servicoSelected)
   }
 
   onSelectMarca(event: any) {
     this.marcaSelecionada = event;
-    console.log('Marca selecionada:', this.marcaSelecionada);
     this.veiculoSelecionado = this.cliente.automoveis.find(automovel => automovel.placa === this.marcaSelecionada);
 
     if (this.veiculoSelecionado) {
@@ -412,18 +393,15 @@ export class EditOrdemdeservicoComponent implements OnInit {
       descricao: this.descricao
     }
     this.osService.cadastrarServico(requestaData).subscribe((response) => {
-      console.log(response)
       window.location.reload()
     })
   }
 
   adicionarServico() {
-
-      const novoServico = { nome: this.novoServico, valor: this.novoValor };
-      this.servicos.push(novoServico);
-      this.novoServico = '';
-      this.novoValor = null;
-
+    const novoServico = { nome: this.novoServico, valor: this.novoValor };
+    this.servicos.push(novoServico);
+    this.novoServico = '';
+    this.novoValor = null;
   }
 
   removerServico(servico: any) {
@@ -435,28 +413,25 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   atualizarServico(servico: any) {
     const index = this.servicos.indexOf(servico);
-
     if (index !== -1) {
       // Faça a lógica de atualização do serviço no servidor ou onde você estiver armazenando seus dados.
       // Use this.servicoEditandoTemp para obter os novos valores.
       const valorAnterior = this.servicos[index].valor;
       this.servicos[index].nome = this.servicoEditandoTemp.nome;
       this.servicos[index].valor = this.servicoEditandoTemp.valor;
-
       // Atualize valorTotal subtraindo o valor anterior do serviço e adicionando o novo valor.
       this.valorTotal = this.valorTotal - valorAnterior + this.servicoEditandoTemp.valor;
-
       // Depois de atualizar o serviço, defina servicoEditando de volta para null para encerrar o modo de edição.
       this.servicoEditando = null;
     }
   }
 
-  deleteManutence(id){
-    this.osService.deleteServico(id).subscribe((data =>{
-      if(data.data == "sucesso"){
+  deleteManutence(id) {
+    this.osService.deleteServico(id).subscribe((data => {
+      if (data.data == "sucesso") {
         this.alertService.showAlertSuccess(data.message)
         location.reload()
-      }else{
+      } else {
         this.alertService.showAlertDanger("Erro ao deletar serviço")
       }
     }))
@@ -496,8 +471,6 @@ export class EditOrdemdeservicoComponent implements OnInit {
   salvarEdicao(index: number) {
     // Aqui você pode implementar a lógica para salvar as alterações do item específico.
     // Por exemplo, você pode acessar this.ordemServico.manutecesServicos[index] para obter o item atual.
-    console.log("Salvando alterações para o item de índice:", index);
     this.toggleEdicao(index);
   }
-
 }

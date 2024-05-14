@@ -20,8 +20,6 @@ export class ClientesComponent implements OnInit {
     private alertService: AlertModalService,
     private fb: FormBuilder,
     private changeDetectorRef: ChangeDetectorRef,
-
-
   ) { }
 
   clientes: Clientes[];
@@ -33,11 +31,6 @@ export class ClientesComponent implements OnInit {
   itemsPerPage: number;
 
   ngOnInit(): void {
-    // this.clienteService.getAllClient().subscribe((data) => {
-    //   this.clientes = data.data
-    //   console.log(this.clientes);
-    // });
-
     const requestData = new FilterClientes("", "", "", this.currentPage, 10);
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
@@ -69,7 +62,7 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  novoOrc(id){
+  novoOrc(id) {
     this.router.navigate(["orcamento/new"], {
       queryParams: { clienteId: id }
     });
@@ -98,7 +91,7 @@ export class ClientesComponent implements OnInit {
       )
       .subscribe(
         (agendamentos) => {
-           window.location.reload();
+          window.location.reload();
         },
         (error) => console.error(error)
       );
@@ -107,13 +100,10 @@ export class ClientesComponent implements OnInit {
   filterClientes() {
     const cpfSemFormato = this.formCliente.value.cpf;
     const cpfFormatado = cpfSemFormato ? cpfSemFormato.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4') : '';
-
     const nomeCliente = this.formCliente.value.nome;
     const placa = this.formCliente.value.placa;
 
     const requestData = new FilterClientes(nomeCliente, cpfFormatado, placa, this.currentPage, 10);
-    console.log(requestData);
-
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
       this.totalPages = data.totalPagina
@@ -137,13 +127,11 @@ export class ClientesComponent implements OnInit {
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Filtro", data.data);
-
       this.changeDetectorRef.detectChanges();
     });
   }
 
-  limparFiltro(){
+  limparFiltro() {
     this.formCliente.reset()
   }
 

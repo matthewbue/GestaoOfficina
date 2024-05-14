@@ -1,11 +1,10 @@
 
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { FilterClientes } from 'app/shared/Model/FilterClientes';
 import { environment } from 'environments/environment';
-import { Clientes } from 'app/shared/Model/Clientes';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { FilterClientes } from 'app/shared/Model/FilterClientes';
 
 @Injectable({ providedIn: 'root' })
 export class ClientesService {

@@ -341,7 +341,7 @@
                   </div>
                   <!-- Use vinculação de propriedade [value] para vincular o valor -->
                   <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text"
-                  [value]="ordemServico.valorTotal + ',00'" disabled />
+                    [value]="ordemServico.valorTotal + ',00'" disabled />
                 </div>
               </div>
             </div>
@@ -432,8 +432,8 @@
                     <tr>
                       <td>
                         <div class="form-group">
-                          <input maxlength="100" type="text" class="form-control col-md-12"
-                            [(ngModel)]="servico.nome" [readonly]="editarIndices.indexOf(i) === -1"
+                          <input maxlength="100" type="text" class="form-control col-md-12" [(ngModel)]="servico.nome"
+                            [readonly]="editarIndices.indexOf(i) === -1"
                             (ngModelChange)="atualizarNomeServico(servico, $event)" />
                         </div>
                       </td>
@@ -459,8 +459,8 @@
                       </td>
                       <td>
                         <div class="form-group">
-                          <input maxlength="100" type="number" class="form-control col-md-6" [(ngModel)]="servico.mediakm"
-                            [readonly]="editarIndices.indexOf(i) === -1"
+                          <input maxlength="100" type="number" class="form-control col-md-6"
+                            [(ngModel)]="servico.mediakm" [readonly]="editarIndices.indexOf(i) === -1"
                             (ngModelChange)="atualizarMediaKm(servico, $event)" />
                         </div>
                       </td>
@@ -474,7 +474,8 @@
                           Salvar
                         </button>
 
-                        <button class="btn btn-danger mt-2" *ngIf="!isEdicaoAtiva" (click)="deleteManutence(servico.id)" >Excluir</button>
+                        <button class="btn btn-danger mt-2" *ngIf="!isEdicaoAtiva"
+                          (click)="deleteManutence(servico.id)">Excluir</button>
                       </td>
 
                     </tr>
@@ -499,7 +500,7 @@
                     <td>
                       <button type="button" class="btn btn-danger btn-sm mr-2"
                         (click)="removerServico(servico)">Remover</button>
-                        <button type="button" class="btn btn-success btn-sm mt-2"
+                      <button type="button" class="btn btn-success btn-sm mt-2"
                         (click)="salvarNovoServico(servico)">Adicionar</button>
                     </td>
                   </tr>
@@ -548,16 +549,16 @@
 
             <div class="col-md-4 mt-4">
               <div class="form-group">
-                  <label for="valorTotal">Valor Total (R$):</label>
-                  <div class="input-group">
-                      <div class="input-group-prepend">
-                          <span class="input-group-text">R$</span>
-                      </div>
-                      <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
-                          [value]="valorTotal + ',00' " />
+                <label for="valorTotal">Valor Total (R$):</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">R$</span>
                   </div>
+                  <input maxlength="100" id="valorTotal" type="text" class="form-control valor-total-text" disabled
+                    [value]="valorTotal + ',00' " />
+                </div>
               </div>
-          </div>
+            </div>
 
             <form [formGroup]="formOrdemServico" class="col-md-12 mt-4" novalidate>
               <div>

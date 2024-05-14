@@ -9,7 +9,6 @@ import { EMPTY } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 import { ClientesService } from "../clientes.service";
 
-
 @Component({
   selector: "app-edit-clientes",
   templateUrl: "./edit-clientes.component.html",
@@ -43,7 +42,6 @@ export class EditClientesComponent implements OnInit {
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Clientes", this.clienteId)
     })
 
     this.formVeiculo = this.fb.group({
@@ -78,7 +76,6 @@ export class EditClientesComponent implements OnInit {
     veiculos.modelo = this.formVeiculo.value.modelo;
     veiculos.placa = this.formVeiculo.value.placa;
 
-    console.log(veiculos);
     this.clientes.automoveis.push(veiculos);
     console.warn(this.formVeiculo.value);
     this.formVeiculo.reset();
@@ -188,7 +185,6 @@ export class EditClientesComponent implements OnInit {
 
   adicionarVeiculo() {
     const veiculos = new Automovel();
-
     veiculos.id = this.veiculoId;
     veiculos.clienteId = this.clienteId;
     veiculos.ano = this.formVeiculo.value.ano == null ? "" : this.formVeiculo.value.ano;
@@ -197,9 +193,7 @@ export class EditClientesComponent implements OnInit {
     veiculos.marca = this.formVeiculo.value.marca == null ? "" : this.formVeiculo.value.marca;
     veiculos.modelo = this.formVeiculo.value.modelo == null ? "" : this.formVeiculo.value.modelo;
     veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
-
     this.EditClientes.automoveis.push(veiculos)
-    console.log("Veiculos add", veiculos)
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
@@ -235,7 +229,6 @@ export class EditClientesComponent implements OnInit {
     veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
 
     this.EditClientes.automoveis.push(veiculos)
-    console.log("Veiculos alterar", this.EditClientes.automoveis)
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
@@ -258,6 +251,7 @@ export class EditClientesComponent implements OnInit {
         (error) => console.error(error)
       );
   }
+
   onSave() {
     if (this.formCliente.valid && this.formCliente.touched) {
       this.clientes.id = 0
@@ -278,8 +272,6 @@ export class EditClientesComponent implements OnInit {
       this.clientes.numeroContato = contatoFormatado;
       this.clientes.email = this.formCliente.value.email;
 
-      console.log("DADOS PARA SALVAR:", this.clientes);
-
       if (this.clientes.automoveis.length === 0) {
         this.alertService.showAlertDanger(
           "Preencha todos os campos."
@@ -287,7 +279,6 @@ export class EditClientesComponent implements OnInit {
         return;
       }
 
-      console.log("CLIENTES", this.clientes);
       const result$ = this.alertService.showConfirm(
         "Confirmação",
         "Deseja criar esse Cliente?"
@@ -309,12 +300,11 @@ export class EditClientesComponent implements OnInit {
 
             if (error.error && error.error.includes("CPF existente")) {
               this.alertService.showAlertDanger("CPF já cadastrado na base de dados.");
-            } else if(error.error && error.error.includes("Veiculo")) {
-              this.alertService.showAlertDanger( error.error );
+            } else if (error.error && error.error.includes("Veiculo")) {
+              this.alertService.showAlertDanger(error.error);
             }
           }
         );
-
     } else {
       this.alertService.showAlertDanger(
         "Preencha todos os campos corretamente."
@@ -322,13 +312,11 @@ export class EditClientesComponent implements OnInit {
     }
   }
 
-
   goBack() {
     this.location.back();
   }
 
   newOS() {
     this.router.navigate(["ordemdeservico/new"]);
-
   }
 }

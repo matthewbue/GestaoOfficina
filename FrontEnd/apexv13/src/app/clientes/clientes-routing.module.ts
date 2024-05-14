@@ -1,8 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { ClientesComponent } from './clientes.component';
 import { Full_ROUTES } from 'app/shared/routes/full-layout.routes';
+import { ClientesComponent } from './clientes.component';
 import { EditClientesComponent } from './edit-clientes/edit-clientes.component';
 
 const routes: Routes = [
