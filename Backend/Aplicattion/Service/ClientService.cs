@@ -33,12 +33,14 @@ namespace GestaoOfficina.Aplicattion.Service
             
             if(CPF is not null)
             {
-                throw new Exception("CPF Ja esta no sistema Cadastrado");
+                return new ReturnDefault("CPF Ja esta no sistema Cadastrado.", entrada.CPF,400);
+
 
             }
-            if (entrada.Automoveis.Count() < 1)
+            if (entrada.Automoveis.Count < 1)
             {
-                throw new Exception("Necessario ter pelo menos 1 Veiculo para Cadastro");
+                return new ReturnDefault("Necessario ter pelo menos 1 Veiculo para Cadastroo.", null, 400);
+
             }
 
             Client objetoclient = new Client();
