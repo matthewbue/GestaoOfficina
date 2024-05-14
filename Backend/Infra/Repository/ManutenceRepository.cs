@@ -76,6 +76,10 @@ namespace GestaoOfficinaProj.Infra.Repository
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
                 }
 
+                if (entrada.Status != null)
+                {
+                    queryResult = queryResult.Where(_ => _.Status == entrada.Status);
+                }
                 if (!String.IsNullOrEmpty(entrada.Placa))
                 {
                     queryResult = queryResult.Where(cliente =>
@@ -142,10 +146,10 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
-            //if (!String.IsNullOrEmpty(entrada.NomeCliente))
-            //{
-            //    queryResult = queryResult.Where(_ => _..Contains(entrada.NomeCliente));
-            //}
+            if (!string.IsNullOrEmpty(entrada.Status))
+            {
+                queryResult = queryResult.Where(_ => _.Status == entrada.Status);
+            }
             if (entrada.NumeroOS > 0)
             {
                 queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
@@ -158,7 +162,7 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
             }
-            if (!String.IsNullOrEmpty(entrada.Placa))
+            if (!string.IsNullOrEmpty(entrada.Placa))
             {
                 queryResult = queryResult.Where(_ => _.Automovel.Placa == entrada.Placa);
             }
