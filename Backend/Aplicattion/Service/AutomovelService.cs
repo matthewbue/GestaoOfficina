@@ -23,7 +23,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             var carroExiste = await _automovelRepository.GetAutomovelByPlaca(entrada.Placa, entrada.ClienteId);
 
             if (carroExiste is not null)
-                throw new Exception("Automovel ja existe no sistema vinculado ao cliente.");
+                return new ReturnDefault("Automovel ja existe no sistema vinculado ao cliente..", entrada.Placa, 400);
 
 
             Automovel objeto = new Automovel();
