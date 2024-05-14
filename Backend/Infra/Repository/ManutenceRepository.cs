@@ -59,6 +59,9 @@ namespace GestaoOfficinaProj.Infra.Repository
             try
             {
                 var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+                
+                
+                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
 
                 if (entrada.DataInicio != null && entrada.DataFim != null)
                     if (entrada.DataInicio <= entrada.DataFim)
@@ -146,6 +149,8 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
+            queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
+
             if (!string.IsNullOrEmpty(entrada.Status))
             {
                 queryResult = queryResult.Where(_ => _.Status == entrada.Status);
@@ -223,17 +228,38 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             var queryResult = _gestaoOfficinaContext.Manutences.Include(c => c.ManutecesServicos).AsQueryable();
 
-            if (!String.IsNullOrEmpty(entrada.StatusOs))
+            queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
+
+            if (!string.IsNullOrEmpty(entrada.Status))
             {
-                queryResult = queryResult.Where(_ => _.Status == entrada.StatusOs);
+                queryResult = queryResult.Where(_ => _.Status == entrada.Status);
             }
-            if (!String.IsNullOrEmpty(entrada.TipoDoc))
+            if (entrada.NumeroOS > 0)
             {
-                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.TipoDoc);
+                queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
             }
-            if (entrada.DataInicial != null)
+            if (entrada.NumeroOS > 0)
             {
-                queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicial && _.DataOS <= entrada.DataFinal);
+                queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
+            }
+            if (entrada.DataAberturaOS != null)
+            {
+                queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
+            }
+            if (!string.IsNullOrEmpty(entrada.Placa))
+            {
+                queryResult = queryResult.Where(_ => _.Automovel.Placa == entrada.Placa);
+            }
+            if (entrada.DataInicio != null && entrada.DataFim != null)
+                if (entrada.DataInicio <= entrada.DataFim)
+                {
+                    queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
+                }
+
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(cliente =>
+                    cliente.Automovel.Client.Nome.Contains(entrada.NomeCliente));
             }
 
             var result = queryResult;

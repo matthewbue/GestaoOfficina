@@ -9,10 +9,15 @@ namespace GestaoOfficinaProj.Domain.DTO
 {
     public class EntryFilterRelatorioDTO
     {
-        public string NomeClient { get; set; }
-        public string StatusOs { get; set; }
-        public string TipoDoc { get; set; }
-        public DateTime DataInicial { get; set; }
-        public DateTime DataFinal { get; set; }
+        public string Placa { get; set; }
+        public string NomeCliente { get; set; }
+        public int NumeroOS { get; set; }
+        public string Status { get; set; }
+        public string Tipo { get; set; }
+        public DateTime? DataAberturaOS { get; set; }
+        public int? PageNumber { get; set; }
+        public int? PageSize { get; set; }
+        public DateTime? DataInicio { get; set; }
+        public DateTime? DataFim { get; set; }
     }
 }
