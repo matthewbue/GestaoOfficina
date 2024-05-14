@@ -33,7 +33,7 @@ export class OrdemdeservicoComponent implements OnInit {
   tipoDoc: any;
 
   ngOnInit(): void {
-    const requestData = new FilterOs("", "", 0, null, 1, 10, null, null)
+    const requestData = new FilterOs("", "", 0, null, 1, 10, null, null, "ordemServico")
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
       this.totalPages = response.totalPagina
@@ -65,7 +65,7 @@ export class OrdemdeservicoComponent implements OnInit {
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
     const dataInicial = this.formSearchOs.value.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
     const dataFinal = this.formSearchOs.value.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
-    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, dataInicial, dataFinal)
+    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, dataInicial, dataFinal, "ordemServico")
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
       this.totalPages = response.totalPagina
@@ -80,9 +80,9 @@ export class OrdemdeservicoComponent implements OnInit {
     this.currentPage = page;
     const ordemNumero = this.formSearchOs.value.ordemNumero == null ? 0 : this.formSearchOs.value.ordemNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
-    const dataInicial = this.formSearchOs.value.dataInicial == null ? "" : this.formSearchOs.value.dataInicial;
-    const dataFinal = this.formSearchOs.value.dataFinal == null ? "" : this.formSearchOs.value.dataFinal;
-    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, this.currentPage, 10, dataInicial, dataFinal);
+    const dataInicial = this.formSearchOs.value.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
+    const dataFinal = this.formSearchOs.value.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
+    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, this.currentPage, 10, dataInicial, dataFinal, "ordemServico");
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
       this.totalPages = response.totalPagina

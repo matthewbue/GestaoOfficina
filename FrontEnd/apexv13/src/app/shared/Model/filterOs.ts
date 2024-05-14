@@ -1,5 +1,5 @@
 export class FilterOs {
-    constructor(        
+    constructor(
         public placa: string = "",
         public nomeCliente: string = "",
         public numeroOS: number = 0,
@@ -8,8 +8,7 @@ export class FilterOs {
         public pageSize: number = 0,
         public dataInicio: Date,
         public dataFim: Date,
-
-
+        public tipo: string = ""
     ) { }
 
 }
