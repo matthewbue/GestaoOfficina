@@ -228,19 +228,14 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             var queryResult = _gestaoOfficinaContext.Manutences.Include(c => c.ManutecesServicos).AsQueryable();
 
-            queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
+            if (!string.IsNullOrEmpty(entrada.Tipo))
+            {
+                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
+            }
 
             if (!string.IsNullOrEmpty(entrada.Status))
             {
                 queryResult = queryResult.Where(_ => _.Status == entrada.Status);
-            }
-            if (entrada.NumeroOS > 0)
-            {
-                queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
-            }
-            if (entrada.NumeroOS > 0)
-            {
-                queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
             }
             if (entrada.DataAberturaOS != null)
             {
