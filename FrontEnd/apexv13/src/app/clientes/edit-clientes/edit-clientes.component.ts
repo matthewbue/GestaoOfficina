@@ -299,7 +299,7 @@ export class EditClientesComponent implements OnInit {
             console.error(error);
 
             if (error.error && error.error.includes("CPF")) {
-              this.alertService.showAlertDanger(error.error);
+              this.alertService.showAlertDanger(error.message);
             } else if (error.error && error.error.includes("Veiculo")) {
               this.alertService.showAlertDanger(error.error);
             }
