@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
 using GestaoOfficinaProj.Domain.DTO;
+using MySqlX.XDevAPI.Common;
+using System.Net;
 
 namespace GestaoOfficinaProj.Controllers
 {
@@ -21,8 +23,8 @@ namespace GestaoOfficinaProj.Controllers
         {
             try
             {
-                _automovelService.UpdateAutomovel(entrada);
-                return  new JsonResult(entrada);
+                var result = await _automovelService.UpdateAutomovel(entrada);
+                return StatusCode(result.HttpStatusCode, result);
             }
             catch (Exception ex)
             {
@@ -34,8 +36,8 @@ namespace GestaoOfficinaProj.Controllers
         {
             try
             {
-                _automovelService.CreateAutomovel(entrada);
-                return  new JsonResult(entrada);
+                var result = await _automovelService.CreateAutomovel(entrada);
+                return StatusCode(result.HttpStatusCode, entrada);
             }
              catch(Exception ex)
             {
@@ -48,7 +50,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _automovelService.DeleteAutomovel(Id);
-                return  new JsonResult(result);
+                return StatusCode(result.HttpStatusCode, result);
             }
             catch (Exception ex)
             {
