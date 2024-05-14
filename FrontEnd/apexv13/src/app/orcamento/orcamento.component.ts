@@ -21,7 +21,7 @@ export class OrcamentoComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private fb: FormBuilder,
     private router: Router,
-    ) { }
+  ) { }
 
   clientes = new Clientes();
   data: FilterOsDto[];
@@ -37,8 +37,6 @@ export class OrcamentoComponent implements OnInit {
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
       this.totalPages = response.totalPagina
-
-      console.log(this.data);
       this.cdRef.detectChanges();
     });
 
@@ -46,8 +44,9 @@ export class OrcamentoComponent implements OnInit {
       orcamentoNumero: null,
       nomeCliente: null,
       statusOs: null,
+      dataInicial: null,
+      dataFinal: null
     })
-
   }
 
   addOS() {
@@ -56,23 +55,21 @@ export class OrcamentoComponent implements OnInit {
 
   onSelectStatus(event: any) {
     this.statusSelected = event
-    console.log('Marca selecionada:', this.statusSelected);
-
   }
 
-  gerarRelatorio(){
+  gerarRelatorio() {
     this.alertService.gerarRelatorioModal(this.clientes);
   }
 
   searchOs() {
-
-    const ordemNumero = this.formSearchOs.value.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
+    const orcamentoNumero = this.formSearchOs.value.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
     const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
-
-    const requestData = new FilterOs("", nomeCliente, ordemNumero, null, 1, 10, null, null)
+    const dataInicial = this.formSearchOs.value.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
+    const dataFinal = this.formSearchOs.value.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
+    const requestData = new FilterOs("", nomeCliente, orcamentoNumero, null, 1, 10, dataInicial, dataFinal)
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
-      console.log(this.data);
+      this.totalPages = response.totalPagina
     });
   }
 
@@ -82,10 +79,14 @@ export class OrcamentoComponent implements OnInit {
 
   goToPage(page: number) {
     this.currentPage = page;
-    const requestData = new FilterOs("", "", 0, null, this.currentPage, 10, null, null);
+    const orcamentoNumero = this.formSearchOs.value.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
+    const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
+    const dataInicial = this.formSearchOs.value.dataInicial == null ? "" : this.formSearchOs.value.dataInicial;
+    const dataFinal = this.formSearchOs.value.dataFinal == null ? "" : this.formSearchOs.value.dataFinal;
+    const requestData = new FilterOs("", nomeCliente, orcamentoNumero, null, this.currentPage, 10, dataInicial, dataFinal);
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data; // Armazene os objetos retornados no array
-      console.log(this.data);
+      this.totalPages = response.totalPagina
     });
   }
 
@@ -147,9 +148,7 @@ export class OrcamentoComponent implements OnInit {
       );
   }
 
-  limparFiltro(){
+  limparFiltro() {
     this.formSearchOs.reset()
   }
-
-
 }

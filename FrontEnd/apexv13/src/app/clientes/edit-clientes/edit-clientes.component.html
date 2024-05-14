@@ -17,15 +17,15 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="nome">Nome:</label>
-                      <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome" required
-                        />
+                      <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
+                        required />
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        />
+                        mask="000.000.000-00" />
                     </div>
                   </div>
 
@@ -69,7 +69,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" />
+                        formControlName="numeroWhatsapp" mask="(00)00000-0000" />
                     </div>
                   </div>
 
@@ -77,7 +77,7 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" />
+                        formControlName="numeroContato" mask="(00)0000-0000" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -244,7 +244,7 @@
                     <div class="form-group">
                       <label for="nome">Nome:</label>
                       <input maxlength="100" id="nome" type="text" class="form-control" formControlName="nome"
-                         value="{{ clientes.nome }}" disabled />
+                        value="{{ clientes.nome }}" disabled />
                     </div>
                   </div>
                   <div class="col-md-4">
@@ -259,8 +259,7 @@
                     <div class="form-group">
                       <label for="dataNascimento">Data de Nascimento:</label>
                       <input maxlength="50" id="dataNascimento" type="text" class="form-control"
-                        formControlName="dataNascimento"  value="{{ clientes.dataNascimento }}"
-                        disabled />
+                        formControlName="dataNascimento" value="{{ clientes.dataNascimento }}" disabled />
                     </div>
                   </div>
 
@@ -474,7 +473,7 @@
                     <div class="form-group">
                       <label for="cpf">CPF / CNPJ:</label>
                       <input maxlength="100" id="cpf" type="text" class="form-control" formControlName="cpf"
-                        value="{{ clientes.cpf }}" />
+                        value="{{ clientes.cpf }}" mask="000.000.000-00" />
                     </div>
                   </div>
 
@@ -521,7 +520,7 @@
                     <div class="form-group">
                       <label for="numeroWhatsapp">Número Whatsapp:</label>
                       <input maxlength="100" id="numeroWhatsapp" name="numeroWhatsapp" type="text" class="form-control"
-                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" />
+                        formControlName="numeroWhatsapp" value="{{ clientes.numeroWhatsapp }}" mask="(00)00000-0000" />
                     </div>
                   </div>
 
@@ -529,7 +528,7 @@
                     <div class="form-group">
                       <label for="numeroContato">Telefone para contato:</label>
                       <input maxlength="100" id="numeroContato" name="numeroContato" type="text" class="form-control"
-                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" />
+                        formControlName="numeroContato" value="{{ clientes.numeroContato }}" mask="(00)0000-0000" />
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -653,7 +652,7 @@
 
                       <td class="text-truncate">
                         <a href="javascript:;" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"
-                           title="Editar Veiculo" (click)="showEditVeiculos(veiculos)"></i></a>
+                            title="Editar Veiculo" (click)="showEditVeiculos(veiculos)"></i></a>
                         <a href="javascript:;" class="danger p-0" (click)="deleteVeiculo(veiculos)">
                           <i class="ft-x font-medium-3"></i>
                         </a>

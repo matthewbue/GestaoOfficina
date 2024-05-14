@@ -67,18 +67,14 @@ export class EditOrcamentoComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.cliente.id = params.clienteId;
       this.tipo = params.tipo;
-      console.log(params.clienteId)
     });
 
     this.clienteService.getAllClient().subscribe((data) => {
       this.clientes = data.data;
-      console.log(data);
     });
-
 
     this.clienteService.getClienteById(this.cliente.id).subscribe((data) => {
       this.cliente = data.data;
-      console.log("Cliente By ID", this.cliente);
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -93,10 +89,6 @@ export class EditOrcamentoComponent implements OnInit {
       this.manutencesServico = response.data.manutecesServicos;
       this.automovel = response.data.automovels
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
-      console.log("OS", this.ordemServico)
-      console.log("MANUT", this.manutencesServico)
-      console.log("AUTO", this.automovel)
-
     })
 
     this.formVeiculo = this.fb.group({
@@ -136,7 +128,6 @@ export class EditOrcamentoComponent implements OnInit {
 
     this.osService.getServico().subscribe((response) => {
       this.servicosList = response.data
-      console.log("Lista Serviços", this.servicosList)
     })
 
     this.formServicos = this.fb.group({
@@ -163,7 +154,6 @@ export class EditOrcamentoComponent implements OnInit {
   enviarDadosAlterados(dadosAlterados) {
     this.osService.updateServico(dadosAlterados).subscribe((data) => {
       window.location.reload();
-      console.log(data)
     })
   }
   atualizarKmServico(servico: any, novoKmServico: any) {
@@ -186,11 +176,9 @@ export class EditOrcamentoComponent implements OnInit {
       manutenceId: this.osId,
       kmAtual: this.kmatualValue
     };
-    console.log(novoServicoFormGroup)
 
     this.osService.addNovoServico(novoServicoFormGroup).subscribe((response) => {
       window.location.reload();
-      console.log(response)
     })
   }
 
@@ -201,11 +189,9 @@ export class EditOrcamentoComponent implements OnInit {
       tipoDoc: "Orçamento",
       observacoes: this.formOrdemServico.value.observacoes == null ? this.ordemServico.observacoes : this.formOrdemServico.value.observacoes
     };
-    console.log("resquestData", requestData)
 
     this.osService.saveEditOrdemServico(requestData).subscribe((response) => {
       window.location.reload();
-      console.log(response)
     })
   }
   gerarOrcamento() {
@@ -226,7 +212,6 @@ export class EditOrcamentoComponent implements OnInit {
       valortotal: valorTotal,
       tipoDoc: "Orçamento"
     };
-    console.log(ordemServicoData)
     const result$ = this.alertService.showConfirm(
       "Confirmação",
       "Deseja criar esse Orçamento?"
@@ -253,7 +238,6 @@ export class EditOrcamentoComponent implements OnInit {
 
   gerarPDF() {
     const doc = new jsPDF();
-
     // Adicione a imagem como marca d'água
     const imgData = '../../../assets/img/logo-oficina-peb.png';
     const imgWidth = 150;
@@ -370,12 +354,10 @@ export class EditOrcamentoComponent implements OnInit {
 
   onSelectServico(event: any) {
     this.servicoSelected = event
-    console.log("Servico Select", this.servicoSelected)
   }
 
   onSelectMarca(event: any) {
     this.marcaSelecionada = event;
-    console.log('Marca selecionada:', this.marcaSelecionada);
     this.veiculoSelecionado = this.cliente.automoveis.find(automovel => automovel.marca === this.marcaSelecionada);
 
     if (this.veiculoSelecionado) {
@@ -396,18 +378,15 @@ export class EditOrcamentoComponent implements OnInit {
       descricao: this.descricao
     }
     this.osService.cadastrarServico(requestaData).subscribe((response) => {
-      console.log(response)
       window.location.reload()
     })
   }
 
   adicionarServico() {
-
-      const novoServico = { nome: this.novoServico, valor: this.novoValor };
-      this.servicos.push(novoServico);
-      this.novoServico = '';
-      this.novoValor = null;
-
+    const novoServico = { nome: this.novoServico, valor: this.novoValor };
+    this.servicos.push(novoServico);
+    this.novoServico = '';
+    this.novoValor = null;
   }
 
   removerServico(servico: any) {
@@ -419,22 +398,18 @@ export class EditOrcamentoComponent implements OnInit {
 
   atualizarServico(servico: any) {
     const index = this.servicos.indexOf(servico);
-
     if (index !== -1) {
       // Faça a lógica de atualização do serviço no servidor ou onde você estiver armazenando seus dados.
       // Use this.servicoEditandoTemp para obter os novos valores.
       const valorAnterior = this.servicos[index].valor;
       this.servicos[index].nome = this.servicoEditandoTemp.nome;
       this.servicos[index].valor = this.servicoEditandoTemp.valor;
-
       // Atualize valorTotal subtraindo o valor anterior do serviço e adicionando o novo valor.
       this.valorTotal = this.valorTotal - valorAnterior + this.servicoEditandoTemp.valor;
-
       // Depois de atualizar o serviço, defina servicoEditando de volta para null para encerrar o modo de edição.
       this.servicoEditando = null;
     }
   }
-
 
   cancelarEdicao(servico: any) {
     // Restaure os valores originais do serviço e encerre o modo de edição.
@@ -470,8 +445,6 @@ export class EditOrcamentoComponent implements OnInit {
   salvarEdicao(index: number) {
     // Aqui você pode implementar a lógica para salvar as alterações do item específico.
     // Por exemplo, você pode acessar this.ordemServico.manutecesServicos[index] para obter o item atual.
-    console.log("Salvando alterações para o item de índice:", index);
     this.toggleEdicao(index);
   }
-
 }

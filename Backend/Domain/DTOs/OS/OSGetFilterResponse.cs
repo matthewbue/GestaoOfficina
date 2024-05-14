@@ -13,5 +13,6 @@ namespace GestaoOfficinaProj.Domain.DTOs.OS
         public string Veiculo { get; set; }
         public string Placa { get; set; }
         public string Status { get; set; }
+        public string TipoDoc {  get; set; }
     }
 }

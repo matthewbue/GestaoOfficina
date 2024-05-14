@@ -1,6 +1,5 @@
 <section>
   <div>
-
     <div class="col-12">
       <div class="card">
         <div class="content-header">
@@ -92,11 +91,11 @@
 
               <tbody>
                 <tr *ngFor="let cliente of clientes">
-                  <td class="text-truncate" id="nome"> {{ cliente.nome }} </td>
-                  <td class="text-truncate">{{ cliente.numeroWhatsapp }}</td>
-                  <td class="text-truncate">{{ cliente.email }}</td>
+                  <td class="text-truncate" id="nome" [style.textTransform]="'uppercase'"> {{ cliente.nome }} </td>
+                  <td class="text-truncate" [style.textTransform]="'uppercase'">{{ cliente.numeroWhatsapp }}</td>
+                  <td class="text-truncate" [style.textTransform]="'uppercase'">{{ cliente.email }}</td>
 
-                  <td class="text-truncate">
+                  <td class="text-truncate" [style.textTransform]="'uppercase'">
                     <a class="info p-0" title="Visualizar cliente"><i class="ft-search font-medium-3 mr-2"
                         (click)="openById(cliente.id)"></i></a>
 
@@ -118,7 +117,8 @@
           </div>
           <div class="centered-pagination">
             <div *ngIf="totalPages > 0">
-              <button class="btn btn-info mr-1 smaller-button" *ngFor="let page of getPaginationRange()" (click)="goToPage(page)">
+              <button class="btn btn-info mr-1 smaller-button" *ngFor="let page of getPaginationRange()"
+                (click)="goToPage(page)">
                 {{ page }}
               </button>
             </div>

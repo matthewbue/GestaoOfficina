@@ -1,14 +1,13 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Clientes } from "app/shared/Model/Clientes";
 import { Automovel } from "app/shared/Model/Automovel";
+import { Clientes } from "app/shared/Model/Clientes";
 import { AlertModalService } from "app/shared/services/alert-modal.service";
+import { EMPTY } from "rxjs";
 import { switchMap, take } from "rxjs/operators";
 import { ClientesService } from "../clientes.service";
-import { EMPTY, forkJoin } from "rxjs";
-import { Location } from '@angular/common';
-
 
 @Component({
   selector: "app-edit-clientes",
@@ -43,7 +42,6 @@ export class EditClientesComponent implements OnInit {
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
-      console.log("Clientes", this.clienteId)
     })
 
     this.formVeiculo = this.fb.group({
@@ -78,7 +76,6 @@ export class EditClientesComponent implements OnInit {
     veiculos.modelo = this.formVeiculo.value.modelo;
     veiculos.placa = this.formVeiculo.value.placa;
 
-    console.log(veiculos);
     this.clientes.automoveis.push(veiculos);
     console.warn(this.formVeiculo.value);
     this.formVeiculo.reset();
@@ -156,8 +153,12 @@ export class EditClientesComponent implements OnInit {
     this.EditClientes.email = this.formCliente.value.email == null ? "" : this.formCliente.value.email;
     this.EditClientes.endereco = this.formCliente.value.email == null ? "" : this.formCliente.value.endereco;
     this.EditClientes.nome = this.formCliente.value.nome == null ? "" : this.formCliente.value.nome;
-    this.EditClientes.numeroContato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
-    this.EditClientes.numeroWhatsapp = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+    const numeroContatoSemFormato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
+    const contatoFormatado = numeroContatoSemFormato.replace(/(\d{2})(\d{4})(\d{4})/, '($1)$2-$3');
+    this.EditClientes.numeroContato = contatoFormatado;
+    const numeroWhatsappSemFormato = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+    const whatsappFormatado = numeroWhatsappSemFormato.replace(/(\d{2})(\d{5})(\d{4})/, '($1)$2-$3');
+    this.EditClientes.numeroWhatsapp = whatsappFormatado
 
     this.EditClientes.automoveis = []
     const result$ = this.alertService.showConfirm(
@@ -184,7 +185,6 @@ export class EditClientesComponent implements OnInit {
 
   adicionarVeiculo() {
     const veiculos = new Automovel();
-
     veiculos.id = this.veiculoId;
     veiculos.clienteId = this.clienteId;
     veiculos.ano = this.formVeiculo.value.ano == null ? "" : this.formVeiculo.value.ano;
@@ -193,9 +193,7 @@ export class EditClientesComponent implements OnInit {
     veiculos.marca = this.formVeiculo.value.marca == null ? "" : this.formVeiculo.value.marca;
     veiculos.modelo = this.formVeiculo.value.modelo == null ? "" : this.formVeiculo.value.modelo;
     veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
-
     this.EditClientes.automoveis.push(veiculos)
-    console.log("Veiculos add", veiculos)
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
@@ -231,7 +229,6 @@ export class EditClientesComponent implements OnInit {
     veiculos.placa = this.formVeiculo.value.placa == null ? "" : this.formVeiculo.value.placa;
 
     this.EditClientes.automoveis.push(veiculos)
-    console.log("Veiculos alterar", this.EditClientes.automoveis)
 
     const result$ = this.alertService.showConfirm(
       "Confirmação",
@@ -254,6 +251,7 @@ export class EditClientesComponent implements OnInit {
         (error) => console.error(error)
       );
   }
+
   onSave() {
     if (this.formCliente.valid && this.formCliente.touched) {
       this.clientes.id = 0
@@ -266,11 +264,13 @@ export class EditClientesComponent implements OnInit {
       this.clientes.bairro = this.formCliente.value.bairro;
       this.clientes.cidade = this.formCliente.value.cidade;
       this.clientes.uf = this.formCliente.value.uf;
-      this.clientes.numeroWhatsapp = this.formCliente.value.numeroWhatsapp;
-      this.clientes.numeroContato = this.formCliente.value.numeroContato;
+      const numeroWhatsappSemFormato = this.formCliente.value.numeroWhatsapp == null ? "" : this.formCliente.value.numeroWhatsapp;
+      const whatsappFormatado = numeroWhatsappSemFormato.replace(/(\d{2})(\d{5})(\d{4})/, '($1)$2-$3');
+      this.clientes.numeroWhatsapp = whatsappFormatado;
+      const numeroContatoSemFormato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
+      const contatoFormatado = numeroContatoSemFormato.replace(/(\d{2})(\d{4})(\d{4})/, '($1)$2-$3');
+      this.clientes.numeroContato = contatoFormatado;
       this.clientes.email = this.formCliente.value.email;
-
-      console.log("DADOS PARA SALVAR:", this.clientes);
 
       if (this.clientes.automoveis.length === 0) {
         this.alertService.showAlertDanger(
@@ -279,7 +279,6 @@ export class EditClientesComponent implements OnInit {
         return;
       }
 
-      console.log("CLIENTES", this.clientes);
       const result$ = this.alertService.showConfirm(
         "Confirmação",
         "Deseja criar esse Cliente?"
@@ -301,12 +300,11 @@ export class EditClientesComponent implements OnInit {
 
             if (error.error && error.error.includes("CPF existente")) {
               this.alertService.showAlertDanger("CPF já cadastrado na base de dados.");
-            } else {
-              this.alertService.showAlertDanger("Ocorreu um erro ao criar o cliente.");
+            } else if (error.error && error.error.includes("Veiculo")) {
+              this.alertService.showAlertDanger(error.error);
             }
           }
         );
-
     } else {
       this.alertService.showAlertDanger(
         "Preencha todos os campos corretamente."
@@ -314,13 +312,11 @@ export class EditClientesComponent implements OnInit {
     }
   }
 
-
   goBack() {
     this.location.back();
   }
 
   newOS() {
     this.router.navigate(["ordemdeservico/new"]);
-
   }
 }
