@@ -79,7 +79,13 @@ namespace GestaoOfficinaProj.Infra.Repository
                 if (!String.IsNullOrEmpty(entrada.Placa))
                 {
                     queryResult = queryResult.Where(cliente =>
-                        cliente.Automovel.Placa == entrada.Placa);
+                        cliente.Automovel.Placa.Contains(entrada.Placa));
+                }
+
+                if (!String.IsNullOrEmpty(entrada.NomeCliente))
+                {
+                    queryResult = queryResult.Where(cliente =>
+                        cliente.Automovel.Client.Nome.Contains(entrada.NomeCliente));
                 }
 
                 var paginatedResult = await queryResult
@@ -162,6 +168,11 @@ namespace GestaoOfficinaProj.Infra.Repository
                     queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
                 }
 
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(cliente =>
+                    cliente.Automovel.Client.Nome.Contains(entrada.NomeCliente));
+            }
             return queryResult.Count();
         }
 
