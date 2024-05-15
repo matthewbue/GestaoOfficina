@@ -151,6 +151,8 @@ namespace GestaoOfficinaProj.Infra.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("CPF")
                         .HasColumnType("longtext");
 
