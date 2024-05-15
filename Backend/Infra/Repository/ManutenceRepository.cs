@@ -1,14 +1,13 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.DTOs.OS;
 using GestaoOfficinaProj.Domain.Model;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GestaoOfficinaProj.Infra.Repository
@@ -16,6 +15,7 @@ namespace GestaoOfficinaProj.Infra.Repository
     public class ManutenceRepository : IManutenceRepository
     {
         private readonly GestaoOfficinaContext _gestaoOfficinaContext;
+
         public ManutenceRepository(GestaoOfficinaContext gestaoOfficinaContext)
         {
             _gestaoOfficinaContext = gestaoOfficinaContext;
@@ -27,10 +27,9 @@ namespace GestaoOfficinaProj.Infra.Repository
 
             if (produto != null)
             {
-                 produto.Status = "Concluido";
+                produto.Status = "Concluido";
                 _gestaoOfficinaContext.SaveChanges();
             }
-             
         }
 
         public int Create(Manutence entrada)
@@ -40,7 +39,7 @@ namespace GestaoOfficinaProj.Infra.Repository
                 _gestaoOfficinaContext.Manutences.Add(entrada);
                 _gestaoOfficinaContext.SaveChanges();
 
-                return entrada.Id; 
+                return entrada.Id;
             }
             catch (Exception ex)
             {
@@ -55,66 +54,62 @@ namespace GestaoOfficinaProj.Infra.Repository
             _gestaoOfficinaContext.SaveChanges();
         }
 
-        public async Task<List<Manutence>> GetFilterOS(OSFilterDTO entrada)
+        public async Task<List<OSGetFilterResponse>> GetFilterOS(OSFilterDTO entrada)
         {
             try
             {
-               
-                var queryResult = _gestaoOfficinaContext.Manutences.Include(c => c.Clients).AsQueryable();
+                var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
+                
+                
+                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
 
                 if (entrada.DataInicio != null && entrada.DataFim != null)
-                if (entrada.DataInicio <= entrada.DataFim)
-                {
-                    queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim );
-                }
+                    if (entrada.DataInicio <= entrada.DataFim)
+                    {
+                        queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
+                    }
 
                 if (entrada.NumeroOS > 0)
                 {
                     queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
                 }
-   
+
                 if (entrada.DataAberturaOS != null)
                 {
                     queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
                 }
 
-                //if (!String.IsNullOrEmpty(entrada.NomeCliente))
-                //{
-                //    queryResult == queryResult.Where(_ => _.Equals.Contains(entrada.NomeCliente)).FirstOrDefaultAsync();
-                //}
-
-                var paginatedResult = await queryResult.OrderByDescending(i => i.Id).Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value).Take(entrada.PageSize.Value).ToListAsync();
-
-                List<Manutence> filteredItems = new List<Manutence>();
-
-                foreach (var item in paginatedResult)
+                if (entrada.Status != null)
                 {
-                    if (!String.IsNullOrEmpty(entrada.NomeCliente))
-                    {
-                        item.Clients = await _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).Where(i => i.Id == item.ClientId).FirstOrDefaultAsync();
-                        if (item.Clients.Nome.ToUpper().Contains(entrada.NomeCliente.ToUpper()))
-                        {
-                            filteredItems.Add(item);
-                        }
-                    }
-                    else
-                    {
-                        item.Clients = await _gestaoOfficinaContext.Clients.Include(a => a.Automoveis).Where(i => i.Id == item.ClientId).FirstOrDefaultAsync();
-                        filteredItems.Add(item);
-                    }
-
-                    if (!String.IsNullOrEmpty(entrada.Placa))
-                    {
-                        item.automovels = await _gestaoOfficinaContext.Automoveis.Where(_ => _.Placa.Contains(entrada.Placa)).FirstOrDefaultAsync();
-                    }
-
-                    var automovel = await _gestaoOfficinaContext.Automoveis.Where(c => c.ClientId == item.ClientId).FirstOrDefaultAsync();
-                    item.automovels = automovel;
+                    queryResult = queryResult.Where(_ => _.Status == entrada.Status);
+                }
+                if (!String.IsNullOrEmpty(entrada.Placa))
+                {
+                    queryResult = queryResult.Where(cliente =>
+                        cliente.Automovel.Placa.Contains(entrada.Placa));
                 }
 
-                // Update paginatedResult with filtered items
-                paginatedResult = filteredItems;
+                if (!String.IsNullOrEmpty(entrada.NomeCliente))
+                {
+                    queryResult = queryResult.Where(cliente =>
+                        cliente.Automovel.Client.Nome.Contains(entrada.NomeCliente));
+                }
 
+                var paginatedResult = await queryResult
+
+                    .Select(m => new OSGetFilterResponse
+                    {
+                        Id = m.Id,
+                        Veiculo = m.Automovel.Marca,
+                        Placa = m.Automovel.Placa,
+                        Status = m.Status,
+                        NomeCliente = m.Automovel.Client.Nome,
+                        TipoDoc = m.TipoDoc
+                    })
+                    .OrderByDescending(i => i.Id)
+                    .Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value)
+                    .Take(entrada.PageSize.Value)
+                    .ToListAsync();
 
                 return paginatedResult;
             }
@@ -128,7 +123,7 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             try
             {
-                var result = await _gestaoOfficinaContext.Manutences.Include(m => m.ManutecesServicos).Include(a => a.automovels).Where(x => x.Id == entrada).FirstOrDefaultAsync();
+                var result = await _gestaoOfficinaContext.Manutences.Include(m => m.ManutecesServicos).Where(x => x.Id == entrada).FirstOrDefaultAsync();
                 return result;
             }
             catch (Exception ex)
@@ -144,21 +139,22 @@ namespace GestaoOfficinaProj.Infra.Repository
                 _gestaoOfficinaContext.Entry(entrada).State = EntityState.Modified;
                 _gestaoOfficinaContext.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-           
         }
 
         public async Task<int> CountOS(OSFilterDTO entrada)
         {
-            var queryResult = _gestaoOfficinaContext.Manutences.Include(C => C.Clients).AsQueryable();
+            var queryResult = _gestaoOfficinaContext.Manutences.AsQueryable();
 
-            //if (!String.IsNullOrEmpty(entrada.NomeCliente))
-            //{
-            //    queryResult = queryResult.Where(_ => _..Contains(entrada.NomeCliente));
-            //}
+            queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
+
+            if (!string.IsNullOrEmpty(entrada.Status))
+            {
+                queryResult = queryResult.Where(_ => _.Status == entrada.Status);
+            }
             if (entrada.NumeroOS > 0)
             {
                 queryResult = queryResult.Where(_ => _.Id == entrada.NumeroOS);
@@ -171,9 +167,20 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
             }
-            if (!String.IsNullOrEmpty(entrada.Placa))
+            if (!string.IsNullOrEmpty(entrada.Placa))
             {
-                queryResult = queryResult.Where(_ => _.automovels.Placa == entrada.Placa);
+                queryResult = queryResult.Where(_ => _.Automovel.Placa == entrada.Placa);
+            }
+            if (entrada.DataInicio != null && entrada.DataFim != null)
+                if (entrada.DataInicio <= entrada.DataFim)
+                {
+                    queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
+                }
+
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(cliente =>
+                    cliente.Automovel.Client.Nome.Contains(entrada.NomeCliente));
             }
             return queryResult.Count();
         }
@@ -210,7 +217,6 @@ namespace GestaoOfficinaProj.Infra.Repository
             {
                 _gestaoOfficinaContext.ManutenceServicos.Add(entrada);
                 _gestaoOfficinaContext.SaveChanges();
-
             }
             catch (Exception ex)
             {
@@ -222,36 +228,43 @@ namespace GestaoOfficinaProj.Infra.Repository
         {
             var queryResult = _gestaoOfficinaContext.Manutences.Include(c => c.ManutecesServicos).AsQueryable();
 
-            if (!String.IsNullOrEmpty(entrada.StatusOs))
+            if (!string.IsNullOrEmpty(entrada.Tipo))
             {
-                queryResult = queryResult.Where(_ => _.Status == entrada.StatusOs);
-            }
-            if (!String.IsNullOrEmpty(entrada.TipoDoc))
-            {
-                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.TipoDoc);
-            }
-            if (entrada.DataInicial != null)
-            {
-                queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicial && _.DataOS <= entrada.DataFinal);
+                queryResult = queryResult.Where(_ => _.TipoDoc == entrada.Tipo);
             }
 
-            var result =  queryResult.Include(c => c.Clients).ToListAsync(); // Use ToListAsync to await the query execution
-
-            foreach (var item in result.Result) // Iterate over the result list
+            if (!string.IsNullOrEmpty(entrada.Status))
             {
-                if (!String.IsNullOrEmpty(entrada.NomeClient))
-                    item.Clients = _gestaoOfficinaContext.Clients.FirstOrDefault(_ => _.Nome.Contains(entrada.NomeClient));
-                else
-                    item.Clients =  _gestaoOfficinaContext.Clients.FirstOrDefault(_ => _.Id == item.ClientId);
+                queryResult = queryResult.Where(_ => _.Status == entrada.Status);
+            }
+            if (entrada.DataAberturaOS != null)
+            {
+                queryResult = queryResult.Where(_ => _.DataOS == entrada.DataAberturaOS);
+            }
+            if (!string.IsNullOrEmpty(entrada.Placa))
+            {
+                queryResult = queryResult.Where(_ => _.Automovel.Placa == entrada.Placa);
+            }
+            if (entrada.DataInicio != null && entrada.DataFim != null)
+                if (entrada.DataInicio <= entrada.DataFim)
+                {
+                    queryResult = queryResult.Where(_ => _.DataOS >= entrada.DataInicio && _.DataOS <= entrada.DataFim);
+                }
 
-                item.automovels =  _gestaoOfficinaContext.Automoveis.FirstOrDefault(_ => _.Id == item.AutomovelId);
+            if (!String.IsNullOrEmpty(entrada.NomeCliente))
+            {
+                queryResult = queryResult.Where(cliente =>
+                    cliente.Automovel.Client.Nome.Contains(entrada.NomeCliente));
             }
 
-            return result.Result;
+            var result = queryResult;
+
+            return result.ToList();
         }
+
         public int GetManutenceIdByDate(DateTime entrada)
         {
-            var result =  _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefault();
+            var result = _gestaoOfficinaContext.Manutences.Where(x => x.DataOS == entrada).Select(x => x.Id).FirstOrDefault();
 
             return result;
         }

@@ -4,6 +4,7 @@ using GestaoOfficina.Infra.Interface;
 using GestaoOfficinaProj.Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI.Common;
 using System;
 using System.Threading.Tasks;
 
@@ -25,7 +26,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = await _clientService.Create(client);
-                return Ok(result);
+                return StatusCode(result.HttpStatusCode, result);
             }
             catch(Exception ex)
             {
@@ -38,7 +39,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = await _clientService.GetAll();
-                return Ok(result);
+                return StatusCode(result.HttpStatusCode, result);
             }
             catch(Exception ex)
             {
@@ -51,7 +52,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                  await _clientService.Update(entrada);
-                return Ok(entrada);
+                return StatusCode(200, entrada);
             }
             catch(Exception ex)
             {
@@ -65,7 +66,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                var resultado =  await _clientService.GetClientById(identificador);
-                return Ok(resultado);
+                return StatusCode(200, resultado);
             }
             catch (Exception ex)
             {
@@ -78,7 +79,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var resultado = await _clientService.GetClientFilter(entrada);
-                return Ok(resultado);
+                return StatusCode(200, resultado);
             }
             catch (Exception ex)
             {
@@ -91,7 +92,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = _clientService.Delete(entrada);
-                return Ok(result);
+                return StatusCode(200, result);
             }
             catch (Exception ex)
             {

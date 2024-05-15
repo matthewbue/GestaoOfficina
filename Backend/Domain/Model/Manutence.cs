@@ -19,14 +19,7 @@ namespace GestaoOfficina.Domain.Model
 
         [ForeignKey("Automovel")]
         public int AutomovelId { get; set; }
-        public virtual Automovel automovels { get; set; }
-
-        [ForeignKey("Client")]
-        public int ClientId { get; set; }
-        public virtual Client Clients { get; set; }
-
-        [ForeignKey("ManutenceServico")]
-        public int ManutenceServicoId { get; set; }
-        public virtual ICollection<ManutenceServico> ManutecesServicos { get; set; }
+        public virtual Automovel Automovel { get; set; }
+        public virtual List<ManutenceServico> ManutecesServicos { get; set; }
     }
 }

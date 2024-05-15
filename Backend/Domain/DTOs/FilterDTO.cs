@@ -22,7 +22,9 @@ namespace GestaoOfficinaProj.Domain.DTO
         public string Placa { get; set; }
         public string NomeCliente { get; set; }
         public int NumeroOS { get; set; }
+        public string Status { get; set; }
         public DateTime? DataAberturaOS { get; set; }
+        public string Tipo { get; set; }
         public int? PageNumber { get; set; }
         public int? PageSize { get; set; }
         public DateTime? DataInicio { get; set; }

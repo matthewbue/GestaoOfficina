@@ -21,14 +21,12 @@ namespace GestaoOfficina.Domain.Model
         public string Email { get; set; }
         public string NumeroContato { get; set; }
         public string CPF { get; set; }
-        
-        [ForeignKey("Automovel")]
+        public List<Automovel> Automoveis { get; set; }
 
-        public int AutomovelId { get; set; }
-        public virtual ICollection<Automovel> Automoveis { get; set; }
-        [ForeignKey("Manutence")]
-        public int? ManutenceId { get; set; }
-    //    public virtual ICollection<Manutence> Manutences { get; set; }
+
+        [ForeignKey("Empresa")]
+        public int EmpresaId { get; set; }
+        //    public virtual ICollection<Manutence> Manutences { get; set; }
 
 
 

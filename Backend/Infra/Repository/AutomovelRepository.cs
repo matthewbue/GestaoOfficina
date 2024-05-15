@@ -39,7 +39,11 @@ namespace GestaoOfficinaProj.Infra.Repository
             _gestaoOfficinaContext.SaveChanges();
         }
 
-   
+        public async Task<Automovel> GetAutomovelByPlaca(string placa, int idclient)
+        {
+            var result = await _gestaoOfficinaContext.Automoveis.Where(x => x.Placa == placa && x.Id == x.ClientId).FirstOrDefaultAsync();
+            return result;
+        }
 
         public async Task<Automovel> GetByIdAutomovel(int entrada)
         {

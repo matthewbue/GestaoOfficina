@@ -19,7 +19,7 @@ namespace GestaoOfficinaProj.Controllers
         public async Task<IActionResult> CreateServicoManutence(ServicoCreateDTO entrada)
         {
             var result = await _servicoService.CreateServicoManutence(entrada);
-            return Ok(result);        
+            return  new JsonResult(result);        
         }
 
 
@@ -27,7 +27,7 @@ namespace GestaoOfficinaProj.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _servicoService.GetAll();
-            return Ok(result);
+            return  new JsonResult(result);
         }
     }
 }

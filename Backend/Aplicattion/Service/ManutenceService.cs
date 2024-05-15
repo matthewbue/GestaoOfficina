@@ -32,7 +32,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             Manutence objetoPai = new Manutence();
 
             objetoPai.AutomovelId = entrada.Veiculoid;
-            objetoPai.ClientId = entrada.Clientid;
             objetoPai.Observacoes = entrada.Observacoes;
             objetoPai.TipoDoc = entrada.TipoDoc;
             objetoPai.DataOS = DateTime.Now;
@@ -41,8 +40,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.ValorTotal = entrada.ValorTotal;
             
             var resultManutenceid =  _manutenceRepository.Create(objetoPai);
-
-            var result = _clientRepository.GetClientById(objetoPai.ClientId);
 
             #endregion
 
@@ -92,7 +89,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
 
             #region envio email
 
-            //string remetenteEmail = "oficinaferreiras@outlook.com";
+            //string remetenteEmail = "oficinaferreiras@outlo new JsonResult.com";
             //string senhaRemetente = "oficina12345";
             //string destinatarioEmail = result.Result.Email;
             //string assunto =objetoPai.TipoDoc + " N: " + resultManutenceid;
@@ -110,7 +107,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             //using (var client = new SmtpClient())
             //{
             //    client.ServerCertificateValidationCallback = (s, c, h, e) => true; // Ignorar validação do certificado
-            //    await client.ConnectAsync("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
+            //    await client.ConnectAsync("smtp-mail.outlo new JsonResult.com", 587, SecureSocketOptions.StartTls);
             //    await client.AuthenticateAsync(remetenteEmail, senhaRemetente);
             //    await client.SendAsync(message);
             //    await client.DisconnectAsync(true);
@@ -149,10 +146,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             var response = new ReturnDefault("Dados retornado com sucesso.", result);
             response.totalDados = count;
             response.totalPagina = TotalperPag.Value;
-            return response;
-         
-            
-            return new ReturnDefault("Dados retornado com sucesso.", result);
+            return response;            
         }
 
         public async Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada)

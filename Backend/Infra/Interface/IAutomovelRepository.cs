@@ -11,6 +11,7 @@ namespace GestaoOfficinaProj.Infra.Interface
     {
         void UpdateAutomovel(Automovel entrada);
         Task<Automovel> GetByIdAutomovel(int entrada);
+        Task<Automovel> GetAutomovelByPlaca(string placa, int idclient);
         void CreateAutomovel(Automovel entrada);
         void DeleteAutomovel(int identificador);
     }

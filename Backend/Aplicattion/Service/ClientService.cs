@@ -30,10 +30,17 @@ namespace GestaoOfficina.Aplicattion.Service
         public async Task<ReturnDefault> Create(ClientCreateDTO entrada)
         {
             var CPF = await _clientRepository.GetCPF(entrada.CPF);
-
-            if (entrada.Automoveis.Count() < 1)
+            
+            if(CPF is not null)
             {
-                throw new Exception("Necessario ter pelo menos 1 Veiculo para Cadastro");
+                return new ReturnDefault("CPF Ja esta no sistema Cadastrado.", entrada.CPF,400);
+
+
+            }
+            if (entrada.Automoveis.Count < 1)
+            {
+                return new ReturnDefault("Necessario ter pelo menos 1 Veiculo para Cadastroo.", null, 400);
+
             }
 
             Client objetoclient = new Client();

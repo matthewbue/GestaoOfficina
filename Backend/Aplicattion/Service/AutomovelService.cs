@@ -20,6 +20,11 @@ namespace GestaoOfficinaProj.Aplicattion.Service
 
         public async Task<ReturnDefault> CreateAutomovel(AutomovelAddDTO entrada)
         {
+            var carroExiste = await _automovelRepository.GetAutomovelByPlaca(entrada.Placa, entrada.ClienteId);
+
+            if (carroExiste is not null)
+                return new ReturnDefault("Automovel ja existe no sistema vinculado ao cliente..", entrada.Placa, 400);
+
 
             Automovel objeto = new Automovel();
             objeto.Placa = entrada.Placa;

@@ -1,5 +1,6 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficinaProj.Domain.DTO;
+using GestaoOfficinaProj.Domain.DTOs.OS;
 using GestaoOfficinaProj.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace GestaoOfficinaProj.Infra.Interface
         void UpdateManutence(Manutence entrada);
         Task<Manutence> GetById(int entrada);
         void Delete(int entrada);
-        Task<List<Manutence>> GetFilterOS(OSFilterDTO entrada);
+        Task<List<OSGetFilterResponse>> GetFilterOS(OSFilterDTO entrada);
         void CheckoutOS(int identificadorOS);
         Task<int> CountOS(OSFilterDTO filterDTO);
         Task<ManutenceServico> GetManutenceServicoById(int id);

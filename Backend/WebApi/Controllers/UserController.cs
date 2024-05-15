@@ -22,7 +22,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = await _userService.login(login);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch(Exception ex)
             {
@@ -36,7 +36,7 @@ namespace GestaoOfficina.Controllers
             try
             {
                 var result = await _userService.Create(user);
-                return Ok(result);
+                return  new JsonResult(result);
             }
             catch(Exception ex)
             {

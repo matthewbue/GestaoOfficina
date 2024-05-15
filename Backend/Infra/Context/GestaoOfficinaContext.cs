@@ -16,6 +16,8 @@ namespace GestaoOfficina.Infra.Context
             Database.EnsureCreated();
         }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Empresa> Empresas { get; set; }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Manutence> Manutences { get; set; }
         public DbSet<Automovel> Automoveis { get; set; }
@@ -24,6 +26,22 @@ namespace GestaoOfficina.Infra.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
+           //optionsBuilder.UseLazyLoadingProxies();
+
+
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Automovel>()
+                .HasOne(c => c.Client)
+                .WithMany(c => c.Automoveis)
+                .HasForeignKey(c => c.ClientId);
+
+            modelBuilder.Entity<Manutence>()
+                .HasOne(m => m.Automovel)
+                .WithMany(c => c.Manutences)
+                .HasForeignKey(m => m.AutomovelId);
+
         }
     }
 }

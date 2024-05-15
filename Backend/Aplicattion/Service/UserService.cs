@@ -28,7 +28,7 @@ namespace GestaoOfficina.Aplicattion.Service
         {
             if(login.Password.Length == 0 && login.Email.Length == 0)
             {
-                throw new Exception("Esqueceu um ou mais de um campo.");
+                return new ReturnDefault("Esqueceu um ou mais de um campo.",null, 400);
             }
             var result = await _userRepository.login(login);
             if (result == null)

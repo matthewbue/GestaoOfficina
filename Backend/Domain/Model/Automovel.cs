@@ -18,7 +18,12 @@ namespace GestaoOfficina.Domain.Model
         public string Modelo { get; set; }
         public string Ano { get; set; }
         public string Km { get; set; }
+
+        [ForeignKey("Client")]
         public int ClientId { get; set; }
+
+        public Client Client { get; set; }
+        public List<Manutence> Manutences { get; set; }
         public int Observacoes { get; set; }
 
         //[ForeignKey("Manutence")]
