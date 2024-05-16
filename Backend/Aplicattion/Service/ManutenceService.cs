@@ -34,6 +34,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.AutomovelId = entrada.Veiculoid;
             objetoPai.Observacoes = entrada.Observacoes;
             objetoPai.TipoDoc = entrada.TipoDoc;
+            objetoPai.KmAtual = entrada.KmAtual;
             objetoPai.DataOS = DateTime.Now;
             objetoPai.Status = "Em Andamento";
             objetoPai.ManutecesServicos = entrada.manutences;
@@ -121,7 +122,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         public async Task<ReturnDefault> CreateManutenceServico(ManutenceServico entrada)
         {
 
-           
             _manutenceRepository.CreateManutenceServico(entrada);
             return new ReturnDefault("Dados retornado com sucesso.", entrada);
         }
@@ -152,6 +152,11 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         public async Task<ReturnDefault> UpdateManutence(ManutenceUpdateDTO entrada)
         {
             var result = await _manutenceRepository.GetById(entrada.Id);
+            if (entrada.KmAtual > 0 )
+            {
+                result.KmAtual = entrada.KmAtual;
+            }
+
             if (!String.IsNullOrEmpty(entrada.Observacoes))
             {
                 result.Observacoes = entrada.Observacoes;
@@ -176,10 +181,6 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             if (!String.IsNullOrEmpty(entrada.Nome))
             {
                 result.Nome = entrada.Nome;
-            }
-            if (entrada.Kmatual > 0)
-            {
-                result.Kmatual = entrada.Kmatual;
             }
             if (entrada.Mediakm > 0)
             {

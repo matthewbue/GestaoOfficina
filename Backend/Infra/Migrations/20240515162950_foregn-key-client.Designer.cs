@@ -4,6 +4,7 @@ using GestaoOfficina.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoOfficinaProj.Infra.Migrations
 {
     [DbContext(typeof(GestaoOfficinaContext))]
-    partial class GestaoOfficinaContextModelSnapshot : ModelSnapshot
+    [Migration("20240515162950_foregn-key-client")]
+    partial class foregnkeyclient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,9 +126,6 @@ namespace GestaoOfficinaProj.Infra.Migrations
                     b.Property<DateTime>("DataOS")
                         .HasColumnType("datetime2");
 
-                    b.Property<double>("KmAtual")
-                        .HasColumnType("float");
-
                     b.Property<string>("Observacoes")
                         .HasColumnType("nvarchar(max)");
 
@@ -208,6 +208,9 @@ namespace GestaoOfficinaProj.Infra.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<double>("Kmatual")
+                        .HasColumnType("float");
 
                     b.Property<double>("Kmservico")
                         .HasColumnType("float");

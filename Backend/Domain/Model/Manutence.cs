@@ -16,6 +16,7 @@ namespace GestaoOfficina.Domain.Model
         public string Status { get; set; }
         public DateTime DataOS { get; set; }
         public string TipoDoc { get; set; }
+        public double KmAtual { get; set; }
 
         [ForeignKey("Automovel")]
         public int AutomovelId { get; set; }

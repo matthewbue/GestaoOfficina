@@ -15,6 +15,7 @@ namespace GestaoOfficinaProj.Domain.DTO
         public int Id { get; set; }
         public double ValorTotal { get; set; }
         public string TipoDoc { get; set; }
+        public double KmAtual { get; set; }
         public string Observacoes { get; set; }
      
     }

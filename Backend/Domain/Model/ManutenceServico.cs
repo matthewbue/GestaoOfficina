@@ -15,7 +15,6 @@ namespace GestaoOfficinaProj.Domain.Model
         public int ID { get; set; }
         public double Valor { get; set; }
         public string Nome { get; set; }
-        public double Kmatual { get; set; }
         public double Kmservico { get; set; }
         public double Mediakm { get; set; }
         [ForeignKey("Manutence")]
