@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
@@ -52,8 +52,8 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
       }
     );
 
-    this.oform = new FormGroup({
-      userName: new FormControl(
+    this.oform = new UntypedFormGroup({
+      userName: new UntypedFormControl(
         "",
         [
           Validators.required,
@@ -62,7 +62,7 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
         ]),
 
       fullname:
-        new FormControl(
+        new UntypedFormControl(
           "",
           [
             Validators.required,
@@ -70,10 +70,10 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
             Validators.maxLength(100),
           ]
         ),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      status: new FormControl(1, [Validators.required]),
-      userRoleIds: new FormControl("", [Validators.required, Validators.min(1)]),
-      userFacilityIds: new FormControl([] , [Validators.required, Validators.min(1)]),
+      email: new UntypedFormControl("", [Validators.required, Validators.email]),
+      status: new UntypedFormControl(1, [Validators.required]),
+      userRoleIds: new UntypedFormControl("", [Validators.required, Validators.min(1)]),
+      userFacilityIds: new UntypedFormControl([] , [Validators.required, Validators.min(1)]),
     });
 
 

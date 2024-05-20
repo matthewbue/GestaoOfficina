@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,10 +15,10 @@ export class LoginPageComponent {
   loginFormSubmitted = false;
   loading = false;
 
-  loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-    rememberMe: new FormControl(true)
+  loginForm = new UntypedFormGroup({
+    username: new UntypedFormControl('', [Validators.required]),
+    password: new UntypedFormControl('', [Validators.required]),
+    rememberMe: new UntypedFormControl(true)
   });
 
   constructor(private router: Router, private authService: AuthService, private toastr: ToastrService) {}

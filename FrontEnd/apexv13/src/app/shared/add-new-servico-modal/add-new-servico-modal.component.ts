@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Subject } from 'rxjs';
@@ -16,8 +16,8 @@ export class AddNewServicoModalComponent implements OnInit {
   confirmResult: Subject<boolean>;
   tipo: string;
   clienteId: any;
-  formVeiculo: FormGroup;
-  formCliente: FormGroup;
+  formVeiculo: UntypedFormGroup;
+  formCliente: UntypedFormGroup;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -26,7 +26,7 @@ export class AddNewServicoModalComponent implements OnInit {
     private clienteService: ClientesService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
   ngOnInit(): void {

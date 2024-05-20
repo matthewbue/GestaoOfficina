@@ -6,7 +6,7 @@ import { AlertModalService } from "app/shared/services/alert-modal.service";
 import { switchMap, take } from "rxjs/operators";
 import { EMPTY } from "rxjs";
 import { FilterClientes } from "app/shared/Model/FilterClientes";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-clientes",
@@ -18,14 +18,14 @@ export class ClientesComponent implements OnInit {
     private router: Router,
     private clienteService: ClientesService,
     private alertService: AlertModalService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   clientes: Clientes[];
   clienteId: number;
   filterCliente = new FilterClientes();
-  formCliente: FormGroup;
+  formCliente: UntypedFormGroup;
   currentPage: number = 1;
   totalPages: number;
   itemsPerPage: number;

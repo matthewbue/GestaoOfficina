@@ -5,7 +5,7 @@ import { EMPTY, Subject } from "rxjs";
 import { AlertModalService } from "../services/alert-modal.service";
 import { ClientesService } from "app/clientes/clientes.service";
 import { Clientes } from "../Model/Clientes";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { FilterClientes } from "../Model/FilterClientes";
 import { switchMap, take } from "rxjs/operators";
 
@@ -21,8 +21,8 @@ export class AddOrdemServicoModalComponent implements OnInit {
   cliente = new Clientes();
   tipo: string;
   clienteId: any;
-  formVeiculo: FormGroup;
-  formCliente: FormGroup;
+  formVeiculo: UntypedFormGroup;
+  formCliente: UntypedFormGroup;
   filterCliente = new FilterClientes();
   currentPage: number = 1;
   totalPages: number;
@@ -36,7 +36,7 @@ export class AddOrdemServicoModalComponent implements OnInit {
     private clienteService: ClientesService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private changeDetectorRef: ChangeDetectorRef,
 
   ) {}

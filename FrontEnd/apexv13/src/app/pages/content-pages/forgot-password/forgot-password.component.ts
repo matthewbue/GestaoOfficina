@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -14,9 +14,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   changePasswordFormSubmitted: boolean = false;
 
-  changePasswordForm = new FormGroup({
-    password: new FormControl('', [Validators.required]),
-    confirm: new FormControl('', [Validators.required]),
+  changePasswordForm = new UntypedFormGroup({
+    password: new UntypedFormControl('', [Validators.required]),
+    confirm: new UntypedFormControl('', [Validators.required]),
   });
 
   onSubmit() {

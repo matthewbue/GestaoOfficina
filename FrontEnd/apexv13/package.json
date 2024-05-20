@@ -13,18 +13,18 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^13.1.0",
+    "@angular/animations": "^14.3.0",
     "@angular/cdk": "13.1.0",
-    "@angular/common": "13.1.0",
-    "@angular/compiler": "13.1.0",
-    "@angular/core": "13.1.0",
+    "@angular/common": "14.3.0",
+    "@angular/compiler": "14.3.0",
+    "@angular/core": "14.3.0",
     "@angular/fire": "7.2.0",
-    "@angular/forms": "13.1.0",
-    "@angular/localize": "13.1.0",
-    "@angular/platform-browser": "13.1.0",
-    "@angular/platform-browser-dynamic": "13.1.0",
-    "@angular/platform-server": "13.1.0",
-    "@angular/router": "13.1.0",
+    "@angular/forms": "14.3.0",
+    "@angular/localize": "14.3.0",
+    "@angular/platform-browser": "14.3.0",
+    "@angular/platform-browser-dynamic": "14.3.0",
+    "@angular/platform-server": "14.3.0",
+    "@angular/router": "14.3.0",
     "@asymmetrik/ngx-leaflet": "^13.0.2",
     "@mapbox/togeojson": "^0.16.0",
     "@ng-bootstrap/ng-bootstrap": "11.0.1",
@@ -70,13 +70,12 @@
     "tslib": "2.2.0",
     "wellknown": "^0.5.0",
     "zone.js": "~0.11.4",
-    "@angular/cli": "^13.3.8"
+    "@angular/cli": "^14.2.13"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "13.1.1",
-    "@angular/cli": "13.3.8",
-    "@angular/compiler-cli": "13.1.0",
-    "@angular/language-service": "13.1.0",
+    "@angular-devkit/build-angular": "14.2.13",
+    "@angular/compiler-cli": "14.3.0",
+    "@angular/language-service": "14.3.0",
     "@schematics/angular": "^13.2.3",
     "@types/core-js": "2.5.3",
     "@types/jasmine": "~3.6.0",
@@ -98,6 +97,6 @@
     "sass": "~1.32.6",
     "ts-node": "8.6.2",
     "tslint": "~6.1.0",
-    "typescript": "4.5.3"
+    "typescript": "4.8.4"
   }
 }

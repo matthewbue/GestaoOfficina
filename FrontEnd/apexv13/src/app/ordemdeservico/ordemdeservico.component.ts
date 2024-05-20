@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Clientes } from 'app/shared/Model/Clientes';
 import { FilterOs } from 'app/shared/Model/filterOs';
@@ -18,14 +18,14 @@ export class OrdemdeservicoComponent implements OnInit {
 
   constructor(private alertService: AlertModalService,
     private osService: OrdemdeServicoService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private cdRef: ChangeDetectorRef,
     private router: Router,
   ) { }
 
   clientes = new Clientes();
   data: FilterOsDto;
-  formSearchOs: FormGroup;
+  formSearchOs: UntypedFormGroup;
   statusSelected: string;
   currentPage: number = 1;
   totalPages: number;

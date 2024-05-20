@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 
 import { BsModalRef } from "ngx-bootstrap/modal";
 import { Router } from "@angular/router";
-import { FormControl, FormGroup } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
 import { AuthService } from "../auth/auth.service";
 import { ToastrService } from "ngx-toastr";
 import { isThisQuarter } from "date-fns";
@@ -26,9 +26,9 @@ export class ConfirmModalComponent implements OnInit {
 
   constructor(public bsModalRef: BsModalRef, private router: Router, private auth: AuthService, private toastr: ToastrService) {}
 
-  cpf: FormControl;
-  cpfForm: FormGroup = new FormGroup({
-    cpf: new FormControl()
+  cpf: UntypedFormControl;
+  cpfForm: UntypedFormGroup = new UntypedFormGroup({
+    cpf: new UntypedFormControl()
   });
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable } from "@angular/core";
-import { FormGroup, FormArray } from "@angular/forms";
+import { UntypedFormGroup, UntypedFormArray } from "@angular/forms";
 import { TranslateService } from "@ngx-translate/core";
 
 //@Component({
@@ -10,7 +10,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 export abstract class BaseFormComponent implements OnInit {
 
-  oform: FormGroup;
+  oform: UntypedFormGroup;
   rows = [];
   rowsFilter = [];
   temp = [];
@@ -31,12 +31,12 @@ export abstract class BaseFormComponent implements OnInit {
     }
   }
 
-  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
+  verificaValidacoesForm(formGroup: UntypedFormGroup | UntypedFormArray) {
     Object.keys(formGroup.controls).forEach((field) => {
       const controle = formGroup.get(field);
       controle.markAsDirty();
       controle.markAsTouched();
-      if (controle instanceof FormGroup || controle instanceof FormArray) {
+      if (controle instanceof UntypedFormGroup || controle instanceof UntypedFormArray) {
         this.verificaValidacoesForm(controle);
       }
     });

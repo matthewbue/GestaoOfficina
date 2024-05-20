@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Automovel } from "app/shared/Model/Automovel";
 import { Clientes } from "app/shared/Model/Clientes";
@@ -17,15 +17,15 @@ import { ClientesService } from "../clientes.service";
 export class EditClientesComponent implements OnInit {
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private alertService: AlertModalService,
     private clienteService: ClientesService,
     private route: ActivatedRoute,
     private location: Location
 
   ) { }
-  formVeiculo: FormGroup;
-  formCliente: FormGroup;
+  formVeiculo: UntypedFormGroup;
+  formCliente: UntypedFormGroup;
   clientes = new Clientes();
   EditClientes = new Clientes();
   tipo: string;

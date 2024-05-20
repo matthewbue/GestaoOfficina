@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 import { TranslateService } from '@ngx-translate/core';
 import { AccountService } from 'app/Account/account.service';
@@ -24,8 +24,8 @@ export class AcconutSettingsComponent extends BaseFormComponent implements OnIni
     private formtranslate: FormValidationsService,
     private accountService: AccountService) {
     super();
-    this.oform = new FormGroup({
-      userName: new FormControl(
+    this.oform = new UntypedFormGroup({
+      userName: new UntypedFormControl(
         "",
         [
           Validators.required,
@@ -34,7 +34,7 @@ export class AcconutSettingsComponent extends BaseFormComponent implements OnIni
         ]),
 
       fullname:
-        new FormControl(
+        new UntypedFormControl(
           "",
           [
             Validators.required,
@@ -42,8 +42,8 @@ export class AcconutSettingsComponent extends BaseFormComponent implements OnIni
             Validators.maxLength(100),
           ]
         ),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      password: new FormControl(
+      email: new UntypedFormControl("", [Validators.required, Validators.email]),
+      password: new UntypedFormControl(
         "",
         [
           Validators.required,
@@ -51,7 +51,7 @@ export class AcconutSettingsComponent extends BaseFormComponent implements OnIni
           Validators.maxLength(12),
         ]
       ),
-      newPassword: new FormControl(
+      newPassword: new UntypedFormControl(
         "",
         [
           Validators.required,
@@ -60,7 +60,7 @@ export class AcconutSettingsComponent extends BaseFormComponent implements OnIni
 
         ],
       ),
-      newPasswordConfirm: new FormControl(
+      newPasswordConfirm: new UntypedFormControl(
         "",
         [
           Validators.required,
@@ -70,7 +70,7 @@ export class AcconutSettingsComponent extends BaseFormComponent implements OnIni
       )
     }, { validators: this.checkPasswords });
   }
-  checkPasswords(group: FormGroup) {
+  checkPasswords(group: UntypedFormGroup) {
     // here we have the 'passwords' group
     let pass = group.get("newPassword").value;
     let confirmPass = group.get("newPasswordConfirm").value;

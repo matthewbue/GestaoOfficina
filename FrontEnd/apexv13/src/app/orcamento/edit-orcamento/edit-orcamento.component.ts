@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from 'app/clientes/clientes.service';
 import { OrdemdeServicoService } from 'app/ordemdeservico/ordemdeservico.service';
@@ -30,7 +30,7 @@ export class EditOrcamentoComponent implements OnInit {
     private clienteService: ClientesService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private osService: OrdemdeServicoService,
     private location: Location,
   ) { }
@@ -42,10 +42,10 @@ export class EditOrcamentoComponent implements OnInit {
   osId: any;
   tipo: string;
   clienteId: any;
-  formVeiculo: FormGroup;
-  formCliente: FormGroup;
-  formNewServico: FormGroup;
-  formOrdemServico: FormGroup;
+  formVeiculo: UntypedFormGroup;
+  formCliente: UntypedFormGroup;
+  formNewServico: UntypedFormGroup;
+  formOrdemServico: UntypedFormGroup;
   marcaSelecionada: string;
   veiculoSelecionado: Automovel;
   servicos: any[] = [];
@@ -54,10 +54,10 @@ export class EditOrcamentoComponent implements OnInit {
   novoServico: string;
   novoValor: number;
   descricao: string;
-  formServicos: FormGroup;
+  formServicos: UntypedFormGroup;
   kmatualValue: number;
   valorTotal: number = 0;
-  servicosParaAlterar: FormArray;
+  servicosParaAlterar: UntypedFormArray;
   editarIndices: number[] = [];
   isEdicaoAtiva: boolean = false;
   servicoEditando: any = null;
@@ -133,7 +133,7 @@ export class EditOrcamentoComponent implements OnInit {
     this.formServicos = this.fb.group({
       servicosParaAlterar: this.fb.array([])
     });
-    this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as FormArray;
+    this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as UntypedFormArray;
 
   }
 

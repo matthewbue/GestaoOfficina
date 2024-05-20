@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from 'app/clientes/clientes.service';
 import { Automovel } from 'app/shared/Model/Automovel';
@@ -29,7 +29,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private osService: OrdemdeServicoService,
     private modalService: BsModalService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private location: Location,
   ) { }
 
@@ -40,10 +40,10 @@ export class EditOrdemdeservicoComponent implements OnInit {
   osId: any;
   tipo: string;
   clienteId: any;
-  formVeiculo: FormGroup;
-  formCliente: FormGroup;
-  formNewServico: FormGroup;
-  formOrdemServico: FormGroup;
+  formVeiculo: UntypedFormGroup;
+  formCliente: UntypedFormGroup;
+  formNewServico: UntypedFormGroup;
+  formOrdemServico: UntypedFormGroup;
   marcaSelecionada: string;
   veiculoSelecionado: Automovel;
   servicos: any[] = [];
@@ -52,8 +52,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
   novoServico: string;
   novoValor: number;
   descricao: string
-  formServicos: FormGroup;
-  servicosParaAlterar: FormArray;
+  formServicos: UntypedFormGroup;
+  servicosParaAlterar: UntypedFormArray;
   editarCampos: boolean = false;
   editarIndices: number[] = [];
   isEdicaoAtiva: boolean = false;
@@ -137,7 +137,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     this.formServicos = this.fb.group({
       servicosParaAlterar: this.fb.array([])
     });
-    this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as FormArray;
+    this.servicosParaAlterar = this.formServicos.get('servicosParaAlterar') as UntypedFormArray;
   }
 
   adicionarParaAlterar(servico: any) {

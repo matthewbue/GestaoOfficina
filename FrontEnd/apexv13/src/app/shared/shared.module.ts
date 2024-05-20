@@ -62,7 +62,6 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
         PipeModule,
         FormsModule,
         ModalModule
-
     ],
     imports: [
         RouterModule,
@@ -71,7 +70,7 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
         TranslateModule,
         FormsModule,
         OverlayModule,
-        ReactiveFormsModule ,
+        ReactiveFormsModule,
         PerfectScrollbarModule,
         ClickOutsideModule,
         AutocompleteModule,
@@ -102,7 +101,6 @@ export const options: Partial<null|IConfig> | (() => Partial<IConfig>) = null;
         AddOrdemServicoModalComponent,
         GerarRelatorioModalComponent,
         AddNewServicoModalComponent,
-    ],
-    entryComponents: [AlertModalComponent, ConfirmModalComponent]
+    ]
 })
 export class SharedModule { }

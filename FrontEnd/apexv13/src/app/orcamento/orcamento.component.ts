@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrdemdeServicoService } from 'app/ordemdeservico/ordemdeservico.service';
 import { Clientes } from 'app/shared/Model/Clientes';
@@ -19,13 +19,13 @@ export class OrcamentoComponent implements OnInit {
   constructor(private alertService: AlertModalService,
     private osService: OrdemdeServicoService,
     private cdRef: ChangeDetectorRef,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
   ) { }
 
   clientes = new Clientes();
   data: FilterOsDto[];
-  formSearchOs: FormGroup;
+  formSearchOs: UntypedFormGroup;
   statusSelected: string;
   currentPage: number = 1;
   totalPages: number;

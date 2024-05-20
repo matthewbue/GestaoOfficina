@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { OrdemdeServicoService } from 'app/ordemdeservico/ordemdeservico.service';
 import jsPDF from 'jspdf';
 import { AlertModalService } from '../services/alert-modal.service';
@@ -12,13 +12,13 @@ import { AlertModalService } from '../services/alert-modal.service';
 })
 export class GerarRelatorioModalComponent implements OnInit {
   confirmResult: any;
-  formRelatorio: FormGroup;
+  formRelatorio: UntypedFormGroup;
   statusSelected: string;
   tipoSelected: string;
 
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private osService: OrdemdeServicoService,
     private alertService: AlertModalService,
   ) { }

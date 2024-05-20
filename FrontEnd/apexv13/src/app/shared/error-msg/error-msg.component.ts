@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import { FormValidationsService } from './../services/form-validations.service';
 
@@ -10,7 +10,7 @@ import { FormValidationsService } from './../services/form-validations.service';
 })
 export class ErrorMsgComponent implements OnInit {
 
-  @Input() control: FormControl;
+  @Input() control: UntypedFormControl;
   @Input() label: string;
 
   constructor( private validations: FormValidationsService ) { }
