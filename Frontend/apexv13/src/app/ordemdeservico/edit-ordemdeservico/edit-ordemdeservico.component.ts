@@ -1,18 +1,18 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from 'app/clientes/clientes.service';
 import { Automovel } from 'app/shared/Model/Automovel';
 import { Clientes } from 'app/shared/Model/Clientes';
-import { AlertModalService } from 'app/shared/services/alert-modal.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { OrdemdeServicoService } from '../ordemdeservico.service';
-import { switchMap, take } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { FilterOsDto } from 'app/shared/Model/filterOsDto';
-import { Location } from '@angular/common';
 import { Servicos } from 'app/shared/Model/Servicos';
+import { FilterOsDto } from 'app/shared/Model/filterOsDto';
+import { AlertModalService } from 'app/shared/services/alert-modal.service';
 import jsPDF from 'jspdf';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EMPTY } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+import { OrdemdeServicoService } from '../ordemdeservico.service';
 
 @Component({
   selector: 'app-edit-ordemdeservico',
@@ -91,7 +91,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.ordemServico = response.data
       this.kmatualValue = response.data.manutecesServicos[0].kmatual;
       this.manutencesServico = response.data.manutecesServicos;
-      this.automovel = response.data.automovels
+      this.automovel = response.data.automovel;
+      this.cliente = response.data.automovel.client;
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
     })
 
