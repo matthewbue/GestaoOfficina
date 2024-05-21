@@ -96,7 +96,6 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
 
-
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int entrada)
         {

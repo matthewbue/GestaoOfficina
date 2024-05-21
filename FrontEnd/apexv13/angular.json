@@ -15,6 +15,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
+              "dragula",
               "firebase/app",
               "@mattlewis92/dom-autoscroller",
               "angular-calendar/date-adapters/date-fns",
@@ -42,6 +43,7 @@
               "src/assets/css/demo.css",
               "src/assets/sass/core.scss",
               "src/styles.scss",
+              "node_modules/dragula/dist/dragula.css",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],

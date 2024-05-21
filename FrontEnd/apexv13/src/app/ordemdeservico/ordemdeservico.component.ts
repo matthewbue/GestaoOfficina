@@ -8,11 +8,31 @@ import { AlertModalService } from 'app/shared/services/alert-modal.service';
 import { EMPTY } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { OrdemdeServicoService } from './ordemdeservico.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 
 @Component({
   selector: 'app-ordemdeservico',
   templateUrl: './ordemdeservico.component.html',
-  styleUrls: ['./ordemdeservico.component.scss']
+  styleUrls: ['./ordemdeservico.component.scss'],
+  animations: [
+    trigger('filterAnimation', [
+      state('hidden', style({
+        opacity: 0,
+        height: '0px',
+        overflow: 'hidden',
+        padding: '0px'
+      })),
+      state('visible', style({
+        opacity: 1,
+        height: '*',
+        padding: '*'
+      })),
+      transition('hidden <=> visible', [
+        animate('300ms ease-in-out')
+      ])
+    ])
+  ]
 })
 export class OrdemdeservicoComponent implements OnInit {
 
@@ -31,6 +51,7 @@ export class OrdemdeservicoComponent implements OnInit {
   totalPages: number;
   itemsPerPage: number;
   tipoDoc: any;
+  filteractive: boolean = false;
 
   ngOnInit(): void {
     const requestData = new FilterOs("", "", 0, null, 1, 10, null, null, "OrdemServico")
@@ -149,5 +170,9 @@ export class OrdemdeservicoComponent implements OnInit {
 
   limparFiltro() {
     this.formSearchOs.reset()
+  }
+
+  onFilterToggle() {
+    this.filteractive = !this.filteractive;
   }
 }

@@ -29,7 +29,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AppComponent } from "./app.component";
 import { ContentLayoutComponent } from "./layouts/content/content-layout.component";
 import { FullLayoutComponent } from "./layouts/full/full-layout.component";
-
+import { StoreModule } from "@ngrx/store";
 import { AuthService } from "./shared/auth/auth.service";
 import { AuthGuard } from "./shared/auth/auth-guard.service";
 import { WINDOW_PROVIDERS } from "./shared/services/window.service";
@@ -46,6 +46,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { OrdemdeservicoComponent } from './ordemdeservico/ordemdeservico.component';
 import { OrcamentoComponent } from './orcamento/orcamento.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { DragulaService } from "ng2-dragula";
+import { TaskboardComponent } from "./components/taskboard/taskboard.component";
+import { TaskboardModule } from "./components/taskboard/taskboard.module";
+import * as fromApp from './store/app.reducer';
 
 
 L.Icon.Default.prototype.options.shadowUrl =
@@ -63,7 +67,9 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, OrdemdeservicoComponent, OrcamentoComponent, ClientesComponent],
   imports: [
+    TaskboardModule,
     BrowserAnimationsModule,
+    StoreModule.forRoot(fromApp.appReducer),
     BrowserModule,
     TranslateModule.forRoot({
       loader: {
@@ -87,7 +93,7 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     AuthService,
     AuthGuard,
-
+    DragulaService,
     CrudService,
     CrudServiceFactory,
 

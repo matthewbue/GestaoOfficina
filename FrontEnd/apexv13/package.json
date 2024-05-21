@@ -70,7 +70,9 @@
     "tslib": "2.2.0",
     "wellknown": "^0.5.0",
     "zone.js": "~0.11.4",
-    "@angular/cli": "^14.2.13"
+    "@angular/cli": "^14.2.13",
+    "@types/dragula": "3.7.0",
+    "ng2-dragula": "2.1.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "14.2.13",
