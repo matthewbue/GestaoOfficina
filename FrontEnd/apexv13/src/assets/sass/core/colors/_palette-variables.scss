@@ -70,9 +70,9 @@ $info-color: (
   "lighten-2": #81C8F7,
   "lighten-1": #60AFF0,
   "base": #2F8BE6,
-  "darken-1": #226CC5,
-  "darken-2": #1750A5,
-  "darken-3": #0E3885,
+  "darken-1": #4e3291, //COR DA BARRA LATERAL
+  "darken-2": #271946,
+  "darken-3": #33215D,
   "darken-4": #09276E
 );
 $light: (
@@ -116,7 +116,7 @@ $colors: (
 
 $gradient-colors: (
   gradient-mint: (
-    "start-color": #226CC5,
+    "start-color": #33215D,
     "end-color": #6CD975
   ),
   gradient-pomegranate: (
