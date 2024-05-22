@@ -1,17 +1,127 @@
 <div class="row">
   <div class="col-12">
-    <div class="content-header">{{'home.header.MAIN' | translate }}</div>
-    <p class="content-sub-header mb-1">{{'home.header.SUB' | translate }}</p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-12">
     <!-- Kick start -->
     <div id="kick-start" class="card">
-      <div class="card-header">
-        <h4 class="card-title">{{'home.label.HELLO' | translate }} Damon{{'home.label.WELCOME' | translate }}</h4>
+
+      <!--Statistics cards Starts-->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card gradient-purple-love">
+            <div class="card-content">
+              <div class="card-body py-0">
+                <div class="media pb-3">
+                  <div class="media-body white text-left">
+                    <h3 class="font-large-1 white mb-0">R$10,156,26</h3>
+                    <span>Total Recebido</span>
+                  </div>
+                  <div class="media-right white text-right">
+                    <i class="ft-activity font-large-1"></i>
+                  </div>
+                </div>
+              </div>
+              <div id="Widget-line-chart" class=" WidgetlineChart WidgetlineChartshadow mb-2">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card gradient-ibiza-sunset">
+            <div class="card-content">
+              <div class="card-body py-0">
+                <div class="media pb-3">
+                  <div class="media-body white text-left">
+                    <h3 class="font-large-1 white mb-0">353</h3>
+                    <span>Total Ordem Serviço</span>
+                  </div>
+                  <div class="media-right white text-right">
+                    <i class="ft-plus font-large-1"></i>
+                  </div>
+                </div>
+              </div>
+              <div id="Widget-line-chart" class="WidgetlineChart WidgetlineChartshadow mb-2">
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card gradient-mint">
+            <div class="card-content">
+              <div class="card-body py-0">
+                <div class="media pb-3">
+                  <div class="media-body white text-left">
+                    <h3 class="font-large-1 white mb-0">15</h3>
+                    <span>Em Andamento</span>
+                  </div>
+                  <div class="media-right white text-right">
+                    <i class="ft-arrow-left font-large-1"></i>
+                  </div>
+                </div>
+              </div>
+              <div id="Widget-line-chart" class="WidgetlineChart WidgetlineChartshadow mb-2">
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+          <div class="card gradient-king-yna">
+            <div class="card-content">
+              <div class="card-body py-0">
+                <div class="media pb-3">
+                  <div class="media-body white text-left">
+                    <h3 class="font-large-1 white mb-0">300</h3>
+                    <span>Concluídas</span>
+                  </div>
+                  <div class="media-right white text-right">
+                    <i class="ft-arrow-right font-large-1"></i>
+                  </div>
+                </div>
+              </div>
+              <div id="Widget-line-chart" class="WidgetlineChart WidgetlineChartshadow mb-2">
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <!--Statistics cards Ends-->
+
+      <!--Line with Area Chart 1 Starts-->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Estatísticas</h4>
+            </div>
+            <div class="card-content">
+              <div class="card-body">
+                <div class="chart-info mb-3 ml-3">
+                  <!-- <span class="gradient-purple-bliss d-inline-block rounded-circle mr-1"
+                    style="width:15px; height:15px;"></span>
+                  <span>Sales</span>
+                  <span class="gradient-mint d-inline-block rounded-circle mr-1 ml-2"
+                    style="width:15px; height:15px;"></span>
+                  <span>Visits</span> -->
+                </div>
+                <div id="line-area" class="lineArea">
+                  <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [dataLabels]="chartOptions.dataLabels"
+                    [plotOptions]="chartOptions.plotOptions" [responsive]="chartOptions.responsive" [xaxis]="chartOptions.xaxis"
+                    [legend]="chartOptions.legend" [fill]="chartOptions.fill"></apx-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Line with Area Chart 1 Ends-->
+
+
+
+
+
       <div class="card-content">
         <div class="card-body">
           <div class="card-text">

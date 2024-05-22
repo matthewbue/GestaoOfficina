@@ -53,10 +53,10 @@ export class ConfigService {
         },
         sidebar: {
           collapsed: false,
-          size: "sidebar-md",
+          size: "sidebar-lg",
           backgroundColor: "man-of-steel",
-          backgroundImage: true,
-          backgroundImageURL: "assets/img/sidebar-bg/09.jpg"
+          backgroundImage: false,
+          backgroundImageURL: ""
         }
       }
     };
