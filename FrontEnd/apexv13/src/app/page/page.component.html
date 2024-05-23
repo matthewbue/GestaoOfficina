@@ -1,22 +1,212 @@
 <div class="row">
   <div class="col-12">
-    <div class="content-header">{{'home.header.MAIN' | translate }}</div>
-    <p class="content-sub-header mb-1">{{'home.header.SUB' | translate }}</p>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-12">
     <!-- Kick start -->
-    <div id="kick-start" class="card">
-      <div class="card-header">
-        <h4 class="card-title">{{'home.label.HELLO' | translate }} Damon{{'home.label.WELCOME' | translate }}</h4>
-      </div>
-      <div class="card-content">
-        <div class="card-body">
-          <div class="card-text">
-
+    <!--Statistics cards Starts-->
+    <div class="row">
+      <h4 class="card-title ml-4 mb-0 mt-5">Dashboard <i class="ft-activity font-medium-3"></i></h4>
+      <div class="card-body">
+        <div class="dropdown btn-group mr-1 float-right" ngbDropdown>
+          <button type="button" class="btn btn-outline-primary dropdown-toggle" ngbDropdownToggle>
+            Selecione o período
+            <span class="caret"></span>
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu" role="menu">
+            <a class="dropdown-item">Hoje</a>
+            <a class="dropdown-item">Semana</a>
+            <a class="dropdown-item">Mês</a>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-purple-love">
+          <div class="card-content">
+            <div class="card-body py-0">
+              <div class="media pb-3">
+                <div class="media-body white text-left">
+                  <h3 class="font-large-1 white mb-0">R$10,156,26</h3>
+                  <span>Total Recebido</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="ft-credit-card font-large-1"></i>
+                </div>
+              </div>
+            </div>
+            <div id="Widget-line-chart" class=" WidgetlineChart WidgetlineChartshadow mb-2">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-ibiza-sunset">
+          <div class="card-content">
+            <div class="card-body py-0">
+              <div class="media pb-3">
+                <div class="media-body white text-left">
+                  <h3 class="font-large-1 white mb-0">353</h3>
+                  <span>Total Ordem Serviço</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="ft-plus-circle font-large-1"></i>
+                </div>
+              </div>
+            </div>
+            <div id="Widget-line-chart" class="WidgetlineChart WidgetlineChartshadow mb-2">
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-mint">
+          <div class="card-content">
+            <div class="card-body py-0">
+              <div class="media pb-3">
+                <div class="media-body white text-left">
+                  <h3 class="font-large-1 white mb-0">15</h3>
+                  <span>Em Andamento</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="ft-settings font-large-1"></i>
+                </div>
+              </div>
+            </div>
+            <div id="Widget-line-chart" class="WidgetlineChart WidgetlineChartshadow mb-2">
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+        <div class="card gradient-king-yna">
+          <div class="card-content">
+            <div class="card-body py-0">
+              <div class="media pb-3">
+                <div class="media-body white text-left">
+                  <h3 class="font-large-1 white mb-0">300</h3>
+                  <span>Concluídas</span>
+                </div>
+                <div class="media-right white text-right">
+                  <i class="ft-check-circle font-large-1"></i>
+                </div>
+              </div>
+            </div>
+            <div id="Widget-line-chart" class="WidgetlineChart WidgetlineChartshadow mb-2">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Statistics cards Ends-->
+
+    <!--Line with Area Chart 1 Starts-->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Estatísticas</h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="chart-info ml-3">
+                <!-- <span class="gradient-purple-bliss d-inline-block rounded-circle mr-1"
+                    style="width:15px; height:15px;"></span>
+                  <span>Sales</span>
+                  <span class="gradient-mint d-inline-block rounded-circle mr-1 ml-2"
+                    style="width:15px; height:15px;"></span>
+                  <span>Visits</span> -->
+              </div>
+              <div id="line-area" class="lineArea">
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                  [dataLabels]="chartOptions.dataLabels" [plotOptions]="chartOptions.plotOptions"
+                  [responsive]="chartOptions.responsive" [xaxis]="chartOptions.xaxis" [legend]="chartOptions.legend"
+                  [fill]="chartOptions.fill"></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Line with Area Chart 1 Ends-->
+
+    <div class="row col-12">
+      <div class="col-xl-8 col-lg-12 col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title mb-0">Ordem de serviço & Orçamento</h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <div id="line-area2" class="lineArea2">
+                <apx-chart
+                [series]="chartOptions2.series"
+                [chart]="chartOptions2.chart"
+                [xaxis]="chartOptions2.xaxis"
+                [stroke]="chartOptions2.stroke"
+                [tooltip]="chartOptions2.tooltip"
+                [dataLabels]="chartOptions2.dataLabels"
+                [legend]="chartOptions2.legend"
+                [markers]="chartOptions2.markers"
+                [grid]="chartOptions2.grid"
+                [yaxis]="chartOptions2.yaxis"
+                [title]="chartOptions2.title"
+              ></apx-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card col-4">
+        <div class="card-header">
+          <h4 class="card-title mb-0">Serviços em Andamento</h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <div class="media pt-0 pb-2">
+              <img class="mr-3 avatar rounded" src="assets/img/portrait/small/avatar-s-20.png" alt="Avatar" width="35">
+              <div class="media-body">
+                <h4 class="font-medium-1 mb-0">Honda Civic</h4>
+                <p class="grey font-small-3 m-0">Jessica</p>
+              </div>
+              <button type="button" class="btn btn-primary">
+                <i class="ft-eye"></i>
+              </button>
+            </div>
+            <div class="media py-2">
+              <img class="mr-3 avatar rounded" src="assets/img/portrait/small/avatar-s-25.png" alt="Avatar" width="35">
+              <div class="media-body">
+                <h4 class="font-medium-1 mb-0">Toyota Corolla</h4>
+                <p class="grey font-small-3 m-0">Pedro</p>
+              </div>
+              <button type="button" class="btn btn-primary">
+                <i class="ft-eye"></i>
+              </button>
+            </div>
+            <div class="media pt-2 pb-1">
+              <img class="mr-3 avatar rounded" src="assets/img/portrait/small/avatar-s-5.png" alt="Avatar" width="35">
+              <div class="media-body">
+                <h4 class="font-medium-1 mb-0">Nissan Kicks</h4>
+                <p class="grey font-small-3 m-0">Matheus</p>
+              </div>
+              <button type="button" class="btn btn-primary">
+                <i class="ft-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="card-content">
+      <div class="card-body">
+        <div class="card-text">
+
         </div>
       </div>
     </div>
