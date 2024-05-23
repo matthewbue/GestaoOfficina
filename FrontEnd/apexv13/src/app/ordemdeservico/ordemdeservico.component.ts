@@ -52,6 +52,7 @@ export class OrdemdeservicoComponent implements OnInit {
   itemsPerPage: number;
   tipoDoc: any;
   filteractive: boolean = false;
+  Listview: boolean = false;
 
   ngOnInit(): void {
     const requestData = new FilterOs("", "", 0, null, 1, 10, null, null, "OrdemServico")
@@ -174,5 +175,8 @@ export class OrdemdeservicoComponent implements OnInit {
 
   onFilterToggle() {
     this.filteractive = !this.filteractive;
+  }
+  onFilterList() {
+    this.Listview = !this.Listview;
   }
 }

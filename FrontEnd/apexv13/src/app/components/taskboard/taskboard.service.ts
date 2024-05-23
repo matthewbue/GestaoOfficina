@@ -12,173 +12,174 @@ export class TaskBoardService {
   public tasks: Task[] = [
     new Task(
       1,
-      'Troca de Óleo',
-      'primary',
-      'Trocar o óleo do motor e verificar o filtro.',
+      'Troca de Óleo', // servico
+      'primary', 
+      'Trocar o óleo do motor e verificar o filtro.', // descricao servico 
       'text',
-      "1",
-      "3",
-      'May 10',
-      'Carlos Oliveira',
-      ['assets/img/portrait/small/avatar-s-2.png', 'assets/img/portrait/small/avatar-s-3.png'],
+      'Paula Sampaio', // nome cliente
+      'Renault Logan', // Carro
+      '10, Maio', // Data 
+      'Paula Sampaio', // nome cliente
+      ['assets/img/portrait/small/avatar-s-2.png'],
       true,
       'Aguardando'
     ),
     new Task(
       2,
-      'Alinhamento',
+      'Alinhamento', // servico
       'primary',
-      'Realizar alinhamento e balanceamento das rodas.',
+      'Realizar alinhamento e balanceamento das rodas.', // descricao servico
       'text',
-      "",
-      "",
-      'May 12',
-      'Maria Silva',
-      [{name: 'A', class: 'warning'}],
+      'Maria Silva', // nome cliente
+      'Toyota Corolla', // Carro
+      '12, Maio', // Data
+      'Maria Silva', // nome cliente
+      ['assets/img/portrait/small/avatar-s-17.png'], // Adicionei uma imagem fictícia para consistência
       false,
       'Aguardando'
     ),
     new Task(
       3,
-      'Troca de Pneus',
+      'Troca de Pneus', // servico
       'primary',
-      'Substituir os pneus dianteiros.',
-      'text',
-      "2",
-      "1",
-      '',
-      'João Souza',
+      'assets/img/banner/banner-41.jpg', // descricao servico
+      'image',
+      'João Souza', // nome cliente
+      'Honda Civic', // Carro
+      '15, Maio', // Data (adicionada para consistência)
+      'João Souza', // nome cliente
       ['assets/img/portrait/small/avatar-s-6.png'],
       true,
       'Aguardando'
     ),
     new Task(
       4,
-      'Inspeção de Freios',
+      'Inspeção de Freios', // servico
       'warning',
-      'assets/img/banner/banner-10.jpg',
-      'image',
-      "",
-      "",
-      '',
-      'Pedro Santos',
-      [],
+      'Verificar o estado dos freios e fazer a troca se necessário.', // descricao servico
+      'text', // Corrigido para 'text'
+      'Pedro Santos', // nome cliente
+      'Ford Fiesta', // Carro
+      '20, Maio', // Data (adicionada para consistência)
+      'Pedro Santos', // nome cliente
+      ['assets/img/portrait/small/avatar-s-4.png'], // Adicionei uma imagem fictícia para consistência
       true,
       'emAtendimento'
     ),
     new Task(
       5,
-      'Substituição de Bateria',
+      'Substituição de Bateria', // servico
       'warning',
-      'Trocar a bateria e verificar o alternador.',
-      'text',
-      "",
-      "6",
-      '',
-      'Ana Costa',
-      ['assets/img/portrait/small/avatar-s-7.png', 'assets/img/portrait/small/avatar-s-8.png', 'assets/img/portrait/small/avatar-s-9.png', 'assets/img/portrait/small/avatar-s-10.png'],
+      'assets/img/banner/banner-42.jpg', // descricao servico
+      'image',
+      'Ana Costa', // nome cliente
+      'Chevrolet Cruze', // Carro
+      '22, Maio', // Data (adicionada para consistência)
+      'Ana Costa', // nome cliente
+      ['assets/img/portrait/small/avatar-s-7.png'],
       true,
       'emAtendimento'
     ),
     new Task(
       6,
-      'Revisão Completa',
+      'Revisão Completa', // servico
       'warning',
-      'Revisão dos 50.000 km.',
+      'Revisão dos 50.000 km.', // descricao servico
       'text',
-      "4",
-      "",
-      'May 18',
-      'Lucas Ferreira',
-      ['assets/img/portrait/small/avatar-s-11.png', 'assets/img/portrait/small/avatar-s-12.png'],
+      'Lucas Ferreira', // nome cliente
+      'Volkswagen Golf', // Carro
+      '18, Maio', // Data
+      'Lucas Ferreira', // nome cliente
+      ['assets/img/portrait/small/avatar-s-11.png'],
       true,
       'emAtendimento'
     ),
     new Task(
       7,
-      'Troca de Correia Dentada',
+      'Troca de Correia Dentada', // servico
       'success',
-      'Substituir a correia dentada e verificar tensores.',
+      'Substituir a correia dentada e verificar tensores.', // descricao servico
       'text',
-      "3",
-      "2",
-      '',
-      'Carlos Oliveira',
-      ['assets/img/portrait/small/avatar-s-13.png', 'assets/img/portrait/small/avatar-s-14.png', 'assets/img/portrait/small/avatar-s-15.png'],
+      'Carlos Oliveira', // nome cliente
+      'Hyundai HB20', // Carro
+      '25, Maio', // Data (adicionada para consistência)
+      'Carlos Oliveira', // nome cliente
+      ['assets/img/portrait/small/avatar-s-13.png'],
       true,
       'Pronto'
     ),
     new Task(
       8,
-      'Troca de Velas',
+      'Troca de Velas', // servico
       'success',
-      'Trocar as velas de ignição.',
+      'Trocar as velas de ignição.', // descricao servico
       'text',
-      "",
-      "",
-      'May 16',
-      'Maria Silva',
-      ['assets/img/portrait/small/avatar-s-16.png', 'assets/img/portrait/small/avatar-s-17.png'],
+      'Maria Silva', // nome cliente
+      'Nissan Sentra', // Carro
+      '16, Maio', // Data
+      'Maria Silva', // nome cliente
+      ['assets/img/portrait/small/avatar-s-16.png'],
       true,
       'Pronto'
     ),
     new Task(
       9,
-      'Diagnóstico de Motor',
+      'Diagnóstico de Motor', // servico
       'success',
-      'Realizar diagnóstico completo do motor.',
+      'Realizar diagnóstico completo do motor.', // descricao servico
       'text',
-      "8",
-      "",
-      '',
-      'João Souza',
-      [{name: 'M', class: 'primary'}, {name: 'J', class: 'success'}],
+      'João Souza', // nome cliente
+      'Fiat Uno', // Carro
+      '30, Abril', // Data (adicionada para consistência)
+      'João Souza', // nome cliente
+      ['assets/img/portrait/small/avatar-s-18.png'], // Adicionei imagens fictícias para consistência
       false,
       'Pronto'
     ),
     new Task(
       10,
-      'Lavagem Completa',
+      'Lavagem Completa', // servico
       'info',
-      'Lavagem completa e polimento.',
+      'Lavagem completa e polimento.', // descricao servico
       'text',
-      "",
-      "",
-      'May 20',
-      'Ana Costa',
+      'Ana Costa', // nome cliente
+      'Renault Sandero', // Carro
+      '20, Maio', // Data
+      'Ana Costa', // nome cliente
       ['assets/img/portrait/small/avatar-s-26.png'],
       true,
       'Concluido'
     ),
     new Task(
       11,
-      'Pintura de Para-choque',
+      'Pintura de Para-choque', // servico
       'info',
-      'assets/img/banner/banner-22.jpg',
-      'image',
-      "2",
-      "5",
-      '',
-      'Lucas Ferreira',
-      [{name: 'P', class: 'secondary'}, {name: 'F', class: 'danger'}, {name: 'T', class: 'info'}],
+      'Pintura do para-choque dianteiro.', // descricao servico (adicionada descrição consistente)
+      'text', // Corrigido para 'text'
+      'Lucas Ferreira', // nome cliente
+      'Peugeot 208', // Carro
+      '28, Abril', // Data (adicionada para consistência)
+      'Lucas Ferreira', // nome cliente
+      ['assets/img/portrait/small/avatar-s-22.png'], // Adicionei uma imagem fictícia para consistência
       false,
       'Concluido'
     ),
     new Task(
       12,
-      'Reparação de Amortecedores',
+      'Reparação de Amortecedores', // servico
       'info',
-      'Verificar e reparar os amortecedores dianteiros.',
+      'Verificar e reparar os amortecedores dianteiros.', // descricao servico
       'text',
-      "5",
-      "4",
-      'May 22',
-      'Pedro Santos',
-      ['assets/img/portrait/small/avatar-s-24.png', 'assets/img/portrait/small/avatar-s-20.png'],
+      'Pedro Santos', // nome cliente
+      'Kia Sportage', // Carro
+      '22, Maio', // Data
+      'Pedro Santos', // nome cliente
+      ['assets/img/portrait/small/avatar-s-24.png'],
       true,
       'Concluido'
     )
   ];
+  
 
   addNewTask(title: string, message: string, type: string) {
 

@@ -16,7 +16,7 @@ import { DragulaService } from 'ng2-dragula';
 })
 export class TaskboardComponent {
   @Output() filterToggle = new EventEmitter<void>();
-
+  @Output() filterList = new EventEmitter<void>();
   @ViewChild('AguardandoTitle') titleInputRef: ElementRef;
   @ViewChild('AguardandoMessage') messageInputRef: ElementRef;
 
@@ -123,6 +123,9 @@ export class TaskboardComponent {
   }
   toggleFilter() {
     this.filterToggle.emit();
+  }
+  toggleList() {
+    this.filterList.emit();
   }
 
 }

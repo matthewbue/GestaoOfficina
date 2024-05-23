@@ -1,3 +1,27 @@
+<div class="row">
+  <div class="col-12">
+    <div class="my-3">
+      <button type="button" class="btn btn-primary mr-2" (click)="onFilterList() ">
+        <span class="d-flex align-items-center">
+          <span>Quadro Tarefas</span>
+        </span>
+      </button>
+      <button type="button" class="btn bg-light-primary" (click)="onFilterToggle()" >
+        <span class="d-flex align-items-center">
+          <i class="ft-filter mr-1"></i>
+          <span>Filter</span>
+        </span>
+      </button>
+      <button type="button" class="btn btn-primary mr-1 mb-1 float-right" (click)="addOS()">
+        Nova OS
+      </button>
+      <button type="button" class="btn btn-info mr-1 mb-1 float-left" (click)="gerarRelatorio()">
+        Gerar Relatório
+        <i class="ft-file font-medium-3"></i>
+      </button>
+    </div>
+  </div>
+</div>
 <section [@filterAnimation]="filteractive ? 'visible' : 'hidden'">
   <div>
     <div class="col-12">
@@ -49,8 +73,69 @@
     </div>
   </div>
 </section>
-<section>
+<section [@filterAnimation]="Listview ? 'hidden' : 'visible' ">
   <div class="col-12">
-  <app-taskboard (filterToggle)="onFilterToggle()"></app-taskboard>
+  <app-taskboard (filterToggle)="onFilterToggle()" (filterList)="onFilterList()"></app-taskboard>
 </div>
 </section>
+<section [@filterAnimation]="Listview ? 'visible':'hidden'">
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-body">
+            <div class="py-2 mb-2 mx-n2 clearfix" id="card-agendamentos">
+              <h2>Lista de Ordem de Servico</h2>
+            </div>
+            <div class="card-body table-responsive">
+              <table class="table text-center m-0">
+                <thead>
+                  <tr>
+                    <th id="table-p">Nº OS</th>
+                    <th id="table-p">Nome</th>
+                    <th id="table-p">Veículo</th>
+                    <th id="table-p">Placa</th>
+                    <th id="table-p">Status</th>
+                    <th id="table-p">Ações</th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngFor="let os of data">
+                    <!-- Use ngIf para verificar o tipoDoc -->
+                    <ng-container>
+                      <td class="text-truncate"> {{ os.id }} </td>
+                      <td class="text-truncate" [style.textTransform]="'uppercase'"> {{ os.nomeCliente}} </td>
+                      <td class="text-truncate" [style.textTransform]="'uppercase'"> {{ os.veiculo }} </td>
+                      <td class="text-truncate" [style.textTransform]="'uppercase'"> {{ os.placa }} </td>
+                      <td class="text-truncate"> {{ os.status }} </td>
+                      <td class="text-truncate">
+                        <a class="info p-0" title="Visualizar Orçamento"><i class="ft-search font-medium-3 mr-2"
+                            (click)="openById(os.id, os.clientId)"></i></a>
+                        <a class="success p-0" title="Editar orçamento"><i class="ft-edit font-medium-3 mr-2"
+                            (click)="openEditById(os.id)"></i></a>
+                        <a href="javascript:;" title="Excluir Orçamento" class="danger p-0"><i
+                            class="ft-x font-medium-3 mr-2" (click)="deleteById(os.id)"></i></a>
+                        <a href="javascript:;" title="Finalizar Orçamento" class="dark p-0 mr-2"><i
+                            class="ft-check font-medium-3" (click)="finalizarOs(os.id)"></i></a>
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+  
+            <div class="centered-pagination">
+              <div *ngIf="totalPages > 0">
+                <button class="btn btn-info mr-1 smaller-button" *ngFor="let page of getPaginationRange()"
+                  (click)="goToPage(page)">
+                  {{ page }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
