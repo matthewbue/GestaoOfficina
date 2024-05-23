@@ -55,7 +55,7 @@ export class TaskBoardService {
     new Task(
       4,
       'Inspeção de Freios', // servico
-      'warning',
+      'sucess',
       'Verificar o estado dos freios e fazer a troca se necessário.', // descricao servico
       'text', // Corrigido para 'text'
       'Pedro Santos', // nome cliente
@@ -69,7 +69,7 @@ export class TaskBoardService {
     new Task(
       5,
       'Substituição de Bateria', // servico
-      'warning',
+      'sucess',
       'assets/img/banner/banner-42.jpg', // descricao servico
       'image',
       'Ana Costa', // nome cliente
@@ -83,7 +83,7 @@ export class TaskBoardService {
     new Task(
       6,
       'Revisão Completa', // servico
-      'warning',
+      'sucess',
       'Revisão dos 50.000 km.', // descricao servico
       'text',
       'Lucas Ferreira', // nome cliente
@@ -97,7 +97,7 @@ export class TaskBoardService {
     new Task(
       7,
       'Troca de Correia Dentada', // servico
-      'success',
+      'warning',
       'Substituir a correia dentada e verificar tensores.', // descricao servico
       'text',
       'Carlos Oliveira', // nome cliente
@@ -111,7 +111,7 @@ export class TaskBoardService {
     new Task(
       8,
       'Troca de Velas', // servico
-      'success',
+      'warning',
       'Trocar as velas de ignição.', // descricao servico
       'text',
       'Maria Silva', // nome cliente
@@ -125,7 +125,7 @@ export class TaskBoardService {
     new Task(
       9,
       'Diagnóstico de Motor', // servico
-      'success',
+      'warning',
       'Realizar diagnóstico completo do motor.', // descricao servico
       'text',
       'João Souza', // nome cliente
@@ -139,7 +139,7 @@ export class TaskBoardService {
     new Task(
       10,
       'Lavagem Completa', // servico
-      'info',
+      'danger',
       'Lavagem completa e polimento.', // descricao servico
       'text',
       'Ana Costa', // nome cliente
@@ -153,7 +153,7 @@ export class TaskBoardService {
     new Task(
       11,
       'Pintura de Para-choque', // servico
-      'info',
+      'danger',
       'Pintura do para-choque dianteiro.', // descricao servico (adicionada descrição consistente)
       'text', // Corrigido para 'text'
       'Lucas Ferreira', // nome cliente
@@ -167,7 +167,7 @@ export class TaskBoardService {
     new Task(
       12,
       'Reparação de Amortecedores', // servico
-      'info',
+      'danger',
       'Verificar e reparar os amortecedores dianteiros.', // descricao servico
       'text',
       'Pedro Santos', // nome cliente

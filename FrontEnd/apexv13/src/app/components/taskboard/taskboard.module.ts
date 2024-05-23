@@ -8,7 +8,6 @@ import { TaskboardComponent } from "./taskboard.component";
 import { CrudModalComponent } from './crud-modal/crud-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UiSwitchModule } from 'ngx-ui-switch';
 
 
 
@@ -18,7 +17,6 @@ import { UiSwitchModule } from 'ngx-ui-switch';
         ReactiveFormsModule,
         NgbModule,
         DragulaModule.forRoot(),
-        UiSwitchModule
     ],
     declarations: [
         TaskboardComponent,

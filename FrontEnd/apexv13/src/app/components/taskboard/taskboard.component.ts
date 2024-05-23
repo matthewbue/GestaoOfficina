@@ -79,7 +79,7 @@ export class TaskboardComponent {
       badgeClass = 'success'
     }
     else if (status === 'Concluido') {
-      badgeClass = 'info'
+      badgeClass = 'danger'
     }
 
     let currentTask: Task;
