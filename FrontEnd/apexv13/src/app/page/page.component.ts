@@ -10,7 +10,12 @@ import {
   ApexResponsive,
   ApexXAxis,
   ApexLegend,
-  ApexFill
+  ApexFill,
+  ApexStroke,
+  ApexMarkers,
+  ApexYAxis,
+  ApexGrid,
+  ApexTitleSubtitle
 } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -24,6 +29,20 @@ export type ChartOptions = {
   fill: ApexFill;
 };
 
+export type ChartOptions2 = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  tooltip: any; // ApexTooltip;
+  yaxis: ApexYAxis;
+  grid: ApexGrid;
+  legend: ApexLegend;
+  title: ApexTitleSubtitle;
+};
+
 @Component({
   selector: 'app-page',
   templateUrl: './page.component.html',
@@ -34,6 +53,8 @@ export class PageComponent {
   fullname: string = "Damon";
   chartConfiguration: any;
   chartOptions: Partial<ChartOptions>;
+  chartOptions2: Partial<ChartOptions2>;
+
 
   constructor(private accountService: AccountService, private router: Router) {
     this.accountService.getUserAuthenticaded();
@@ -43,6 +64,99 @@ export class PageComponent {
     if (situacaoSenha == '1') {
       this.router.navigate(['/pages/forgot-password'])
     }
+
+    this.chartOptions2 = {
+      series: [
+        {
+          name: "Ordem de serviço",
+          data: [45, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15, 10]
+        },
+        {
+          name: "Orçamento",
+          data: [35, 41, 62, 42, 13, 18, 29, 37, 36, 51, 32, 35]
+        },
+      ],
+      chart: {
+        height: 350,
+        type: "line"
+      },
+      dataLabels: {
+        enabled: true
+      },
+      stroke: {
+        width: 5,
+        curve: "smooth",
+        dashArray: [0, 8, 5]
+      },
+      title: {
+        text: "Page Statistics",
+        align: "left"
+      },
+      legend: {
+        tooltipHoverFormatter: function(val, opts) {
+          return (
+            val +
+            " - <strong>" +
+            opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] +
+            "</strong>"
+          );
+        }
+      },
+      markers: {
+        size: 0,
+        hover: {
+          sizeOffset: 6
+        }
+      },
+      xaxis: {
+        labels: {
+          trim: false
+        },
+        categories: [
+          "01 Jan",
+          "02 Jan",
+          "03 Jan",
+          "04 Jan",
+          "05 Jan",
+          "06 Jan",
+          "07 Jan",
+          "08 Jan",
+          "09 Jan",
+          "10 Jan",
+          "11 Jan",
+          "12 Jan"
+        ]
+      },
+      tooltip: {
+        y: [
+          {
+            title: {
+              formatter: function(val) {
+                return val + "";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val) {
+                return val + "";
+              }
+            }
+          },
+          {
+            title: {
+              formatter: function(val) {
+                return val;
+              }
+            }
+          }
+        ]
+      },
+      grid: {
+        borderColor: "#f1f1f1",
+        
+      }
+    };
 
     this.chartOptions = {
       series: [
@@ -111,6 +225,8 @@ export class PageComponent {
         opacity: 1
       }
     };
+
+
 
     // this.chartOptions = {
     //   series: [
