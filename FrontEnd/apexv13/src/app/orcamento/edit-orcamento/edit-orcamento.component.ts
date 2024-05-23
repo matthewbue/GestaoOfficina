@@ -87,7 +87,8 @@ export class EditOrcamentoComponent implements OnInit {
       this.ordemServico = response.data
       this.kmatualValue = response.data.manutecesServicos[0].kmatual;
       this.manutencesServico = response.data.manutecesServicos;
-      this.automovel = response.data.automovels
+      this.automovel = response.data.automovel;
+      this.cliente = response.data.automovel.client;
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
     })
 
@@ -295,7 +296,7 @@ export class EditOrcamentoComponent implements OnInit {
     doc.text(`Ano: ${this.automovel.ano}`, 20, yPosValue);
     doc.text(`Cor: ${this.automovel.cor}`, 80, yPosValue);
     const kmAtualServico = this.manutencesServico.map(servico => `${servico.kmatual}`);
-    doc.text(`Km Atual: ${kmAtualServico}`, 140, yPosValue);
+    doc.text(`Km Atual: ${kmAtualServico[0]}`, 140, yPosValue);
     yPosValue += 10;
 
     doc.setFontSize(14);
