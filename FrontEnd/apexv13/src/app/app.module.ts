@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { AngularFireModule } from "@angular/fire";
 // import { AngularFireAuthModule } from "@angular/fire/auth";
 
-import { NgbDateParserFormatter, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbDateParserFormatter, NgbModule, NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 import {
   HttpClientModule,
   HttpClient,
@@ -50,6 +50,9 @@ import { DragulaService } from "ng2-dragula";
 import { TaskboardComponent } from "./components/taskboard/taskboard.component";
 import { TaskboardModule } from "./components/taskboard/taskboard.module";
 import * as fromApp from './store/app.reducer';
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { GenericTableComponent } from './components/generic-table/generic-table.component';
+import { PaginationComponent } from "./components/pagination/pagination.component";
 
 
 L.Icon.Default.prototype.options.shadowUrl =
@@ -65,7 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, OrdemdeservicoComponent, OrcamentoComponent, ClientesComponent],
+  declarations: [AppComponent, FullLayoutComponent, ContentLayoutComponent, OrdemdeservicoComponent, OrcamentoComponent, ClientesComponent, GenericTableComponent, PaginationComponent],
   imports: [
     TaskboardModule,
     BrowserAnimationsModule,
@@ -89,6 +92,8 @@ export function createTranslateLoader(http: HttpClient) {
     PerfectScrollbarModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxDatatableModule,
+    NgbPaginationModule
   ],
   providers: [
     AuthService,

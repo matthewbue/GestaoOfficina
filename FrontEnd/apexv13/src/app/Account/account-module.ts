@@ -19,9 +19,9 @@ import { SelectComponent } from './select/select.component';
 @NgModule({
   imports: [
     SharedModule,
-    NgxDatatableModule,
     UsersRoutingModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxDatatableModule
 
   ],
   declarations: [AccountComponent, UserEditComponent, SelectComponent]

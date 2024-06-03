@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { Router } from "@angular/router";
 import { ClientesService } from "./clientes.service";
 import { Clientes } from "app/shared/Model/Clientes";
@@ -7,11 +7,17 @@ import { switchMap, take } from "rxjs/operators";
 import { EMPTY } from "rxjs";
 import { FilterClientes } from "app/shared/Model/FilterClientes";
 import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
+import {
+  ColumnMode,
+  DatatableComponent,
+  SelectionType
+} from '@swimlane/ngx-datatable';
 
 @Component({
   selector: "app-clientes",
   templateUrl: "./clientes.component.html",
   styleUrls: ["./clientes.component.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class ClientesComponent implements OnInit {
   constructor(
@@ -30,11 +36,23 @@ export class ClientesComponent implements OnInit {
   totalPages: number;
   itemsPerPage: number;
 
+// row data
+ rows = [];
+ ColumnMode = ColumnMode;
+ // column header
+ columns = [
+  { name: 'Nome', prop: 'nome' },
+  { name: 'Email', prop: 'email' },
+  { name: 'Contato', prop: 'numeroWhatsapp' },
+];
+
+
   ngOnInit(): void {
     const requestData = new FilterClientes("", "", "", this.currentPage, 10);
 
     this.clienteService.getFilterClientes(requestData).subscribe((data) => {
       this.clientes = data.data;
+      this.rows = data.data;
       this.totalPages = data.totalPagina
       this.changeDetectorRef.detectChanges();
     });
@@ -44,6 +62,14 @@ export class ClientesComponent implements OnInit {
       nome: [null],
       placa: [null]
     })
+  }
+
+  editRow(row) {
+    console.log('Editing row:', row);
+  }
+
+  deleteRow(row) {
+    console.log('Deleting row:', row);
   }
 
   new() {

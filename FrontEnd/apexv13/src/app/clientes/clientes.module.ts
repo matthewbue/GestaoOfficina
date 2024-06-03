@@ -4,7 +4,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { EditClientesComponent } from './edit-clientes/edit-clientes.component';
-
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -15,7 +15,8 @@ import { EditClientesComponent } from './edit-clientes/edit-clientes.component';
     SharedModule,
     ClientesRoutingModule,
     NgSelectModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    NgxDatatableModule
   ]
 })
 export class ClientesModule { }

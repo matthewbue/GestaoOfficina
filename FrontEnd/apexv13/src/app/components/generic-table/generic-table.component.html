@@ -1,0 +1,51 @@
+<!-- generic-table.component.html -->
+<section id="ngx-datatable-row-details">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">{{ title }}</h4>
+        </div>
+        <div class="card-content">
+          <div class="card-body">
+            <ngx-datatable #tableRowDetails class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force"
+              [headerHeight]="50" [footerHeight]="50" [rowHeight]="50" [limit]="10" [rows]="rows" [scrollbarH]="true">
+              <ngx-datatable-row-detail [rowHeight]="50">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                  <div class="ml-5 my-1">
+                    <div><strong>Veículos: </strong> {{ row.city }}</div>
+                    <div><strong>Experience :</strong> {{ row.experience }}</div>
+                  </div>
+                </ng-template>
+              </ngx-datatable-row-detail>
+              <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                [canAutoResize]="false">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                  <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded"
+                    [class.datatable-icon-down]="expanded" title="Expand/Collapse Row"
+                    (click)="rowDetailsToggleExpand(row)">
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column *ngFor="let column of columns" [name]="column.name" [prop]="column.prop" [width]="column.width">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <div *ngIf="column.template; else defaultTemplate">
+                    <ng-container *ngTemplateOutlet="column.template; context: { row: row, value: value }"></ng-container>
+                  </div>
+                  <ng-template #defaultTemplate>
+                    {{ value }}
+                  </ng-template>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Ações">
+                <ng-template ngx-datatable-cell-template let-row="row">
+                  <ng-container *ngTemplateOutlet="actionTemplate; context: { row: row }"></ng-container>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
