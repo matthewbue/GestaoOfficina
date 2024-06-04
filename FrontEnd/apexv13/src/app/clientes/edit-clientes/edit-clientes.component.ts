@@ -42,6 +42,7 @@ export class EditClientesComponent implements OnInit {
     this.clienteId = this.clientes.id;
     this.clienteService.getClienteById(this.clienteId).subscribe((data) => {
       this.clientes = data.data;
+     
     })
 
     this.formVeiculo = this.fb.group({
@@ -148,10 +149,10 @@ export class EditClientesComponent implements OnInit {
     this.EditClientes.id = this.clienteId;
     this.EditClientes.bairro = this.formCliente.value.bairro == null ? "" : this.formCliente.value.bairro;
     this.EditClientes.cidade = this.formCliente.value.cidade == null ? "" : this.formCliente.value.cidade;
-    this.EditClientes.cpf = this.formCliente.value.cidade == null ? "" : this.formCliente.value.cpf;
+    this.EditClientes.cpf = this.formCliente.value.cpf == null ? "" : this.formCliente.value.cpf;
     this.EditClientes.dataNascimento = this.formCliente.value.dataNascimento == null ? Date : this.formCliente.value.dataNascimento;
     this.EditClientes.email = this.formCliente.value.email == null ? "" : this.formCliente.value.email;
-    this.EditClientes.endereco = this.formCliente.value.email == null ? "" : this.formCliente.value.endereco;
+    this.EditClientes.endereco = this.formCliente.value.endereco == null ? "" : this.formCliente.value.endereco;
     this.EditClientes.nome = this.formCliente.value.nome == null ? "" : this.formCliente.value.nome;
     const numeroContatoSemFormato = this.formCliente.value.numeroContato == null ? "" : this.formCliente.value.numeroContato;
     const contatoFormatado = numeroContatoSemFormato.replace(/(\d{2})(\d{4})(\d{4})/, '($1)$2-$3');

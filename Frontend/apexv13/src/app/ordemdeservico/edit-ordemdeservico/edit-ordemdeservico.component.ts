@@ -1,18 +1,18 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientesService } from 'app/clientes/clientes.service';
 import { Automovel } from 'app/shared/Model/Automovel';
 import { Clientes } from 'app/shared/Model/Clientes';
-import { AlertModalService } from 'app/shared/services/alert-modal.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { OrdemdeServicoService } from '../ordemdeservico.service';
-import { switchMap, take } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
-import { FilterOsDto } from 'app/shared/Model/filterOsDto';
-import { Location } from '@angular/common';
 import { Servicos } from 'app/shared/Model/Servicos';
+import { FilterOsDto } from 'app/shared/Model/filterOsDto';
+import { AlertModalService } from 'app/shared/services/alert-modal.service';
 import jsPDF from 'jspdf';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { EMPTY } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+import { OrdemdeServicoService } from '../ordemdeservico.service';
 
 @Component({
   selector: 'app-edit-ordemdeservico',
@@ -91,7 +91,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
       this.ordemServico = response.data
       this.kmatualValue = response.data.manutecesServicos[0].kmatual;
       this.manutencesServico = response.data.manutecesServicos;
-      this.automovel = response.data.automovels
+      this.automovel = response.data.automovel;
+      this.cliente = response.data.automovel.client;
       this.valorTotal = response.data.manutecesServicos.reduce((total, servico) => total + servico.valor, 0);
     })
 
@@ -252,6 +253,14 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
 
   gerarPDF() {
+    this.showLoading = true;
+    setTimeout(() => {
+      this.gerarPDFInternal();
+      this.showLoading = false;
+    }, 100);
+  }
+
+  gerarPDFInternal() {
     const doc = new jsPDF();
     // Adicione a imagem como marca d'água
     const imgData = '../../../assets/img/logo-oficina-peb.png';
@@ -281,6 +290,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     doc.setFont('courier', 'normal');
 
     let yPosValue = 40;
+    let yPosValorTotal = 0;
 
     doc.setFontSize(12);
     doc.text(`Ordem de Serviço Nº: ${this.ordemServico.id}`, 20, yPosValue);
@@ -290,7 +300,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     yPosValue += 5;
 
     doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);
-    doc.text(`CPF: ${this.cliente.cpf}`, 105, yPosValue);
+    doc.text(`CPF/CNPJ: ${this.cliente.cpf}`, 135, yPosValue);
     yPosValue += 5;
 
     doc.text(`Endereço: ${this.cliente.endereco}`, 20, yPosValue);
@@ -321,39 +331,24 @@ export class EditOrdemdeservicoComponent implements OnInit {
     yPosValue += 10;
 
     doc.setFontSize(12);
-    const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor},00`).join('\n');
-    doc.text(servicosFeitos, 20, yPosValue);
-    yPosValue += 60;
+    const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor},00`);
+    const servicosText = servicosFeitos.join('\n');
+    doc.text(servicosText, 20, yPosValue, { maxWidth: 170 });
+    yPosValue += servicosFeitos.length * 5 + 10;
 
-    // doc.setFontSize(14);
-    // doc.setFont('courier', 'bold');
-    // doc.text('Observações', 105, yPosValue, { align: 'center' });
-    // doc.setFont('courier', 'normal');
-
-    // yPosValue += 5;
-
-    // doc.setFontSize(12);
-    // const xPosObservacoes = 20;
-    // doc.text(`${this.ordemServico.observacoes}`, xPosObservacoes, yPosValue);
-    // yPosValue += 20;
+    yPosValorTotal = yPosValue + 10;
 
     doc.setFontSize(14);
     doc.setFont('courier', 'bold');
-    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValue + 10, { align: 'center' });
-    yPosValue = doc.internal.pageSize.getHeight() - 50;
-    doc.setFont('courier', 'normal');
+    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValorTotal, { align: 'center' });
 
-    doc.setFontSize(14);
-    const xPosAssinatura = 105;
-
-    // Adicione campos de assinatura
-    doc.setFontSize(12);
-    const assinaturaClienteY = 235;
+    const assinaturaClienteY = doc.internal.pageSize.getHeight() - 50;
     const xPosAssinaturaCliente = 20;
+    doc.setFontSize(12);
     doc.text('Assinatura do Cliente:', xPosAssinaturaCliente, assinaturaClienteY);
     doc.line(xPosAssinaturaCliente, assinaturaClienteY + 10, xPosAssinaturaCliente + 80, assinaturaClienteY + 10);
 
-    const assinaturaResponsavelY = 235;
+    const assinaturaResponsavelY = assinaturaClienteY;
     const xPosAssinaturaResponsavel = 105;
     doc.text('Assinatura do Responsável:', xPosAssinaturaResponsavel, assinaturaResponsavelY);
     doc.line(xPosAssinaturaResponsavel, assinaturaResponsavelY + 10, xPosAssinaturaResponsavel + 95, assinaturaResponsavelY + 10);
@@ -366,6 +361,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
     doc.save(`Ordem de Serviço - Nº - ${this.ordemServico.id}.pdf`);
   }
+
+
 
   onSelectServico(event: any) {
     this.servicoSelected = event

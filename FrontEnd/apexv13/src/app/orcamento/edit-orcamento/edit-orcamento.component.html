@@ -293,7 +293,9 @@
         <h1>Visualizar de Orçamentos</h1>
       </div>
     </div>
-
+    <div class="loading-overlay" *ngIf="showLoading">
+      <div class="loading-spinner"></div>
+    </div>
   </section>
   <section>
     <div class="card">
@@ -310,8 +312,6 @@
                     <th>KM Atual Veiculo:</th>
                     <th>KM Serviço:</th>
                     <th>Média Km/dia:</th>
-
-
                   </tr>
                 </thead>
                 <tbody>
@@ -326,8 +326,6 @@
                 </tbody>
               </table>
             </div>
-
-
             <div class="col-md-4 mt-4">
               <div class="form-group">
                 <label for="valorTotal">Valor Total (R$):</label>
