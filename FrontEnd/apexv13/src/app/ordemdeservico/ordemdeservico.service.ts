@@ -45,7 +45,7 @@ export class OrdemdeServicoService {
   }
 
   deleteServico(Id) {
-    return this.httpClient.delete<any>(`https://localhost:44392/Manutence/DeleteManutence?entrada=${Id}`).pipe(catchError(this.handleError));
+    return this.httpClient.delete<any>(`${environment.API}/Manutence/DeleteManutence?entrada=${Id}`).pipe(catchError(this.handleError));
   }
 
   addNovoServico(addNewServico) {
