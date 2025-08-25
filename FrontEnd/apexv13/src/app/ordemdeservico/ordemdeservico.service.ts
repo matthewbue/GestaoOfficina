@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FilterOs } from 'app/shared/Model/filterOs';
+import { FilterOsDto } from 'app/shared/Model/filterOsDto';
+import { PaginatedResponse } from 'app/shared/Model/PaginatedResponse';
 import { environment } from 'environments/environment';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -17,7 +19,7 @@ export class OrdemdeServicoService {
   }
 
   getFilterOS(filterOs: FilterOs) {
-    return this.httpClient.post<any>(`${environment.API}/Manutence/GetFilterOS`, filterOs)
+    return this.httpClient.post<PaginatedResponse<FilterOsDto[]>>(`${environment.API}/Manutence/GetFilterOS`, filterOs)
   }
 
   getOsById(Id) {

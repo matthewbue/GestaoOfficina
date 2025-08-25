@@ -1,7 +1,9 @@
 
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Clientes } from 'app/shared/Model/Clientes';
 import { FilterClientes } from 'app/shared/Model/FilterClientes';
+import { PaginatedResponse } from 'app/shared/Model/PaginatedResponse';
 import { environment } from 'environments/environment';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -43,7 +45,7 @@ export class ClientesService {
   }
 
   getFilterClientes(filterClientes: FilterClientes){
-    return this.httpClient.post<any>(`${environment.API}/Client/GetClientFilter`, filterClientes)
+    return this.httpClient.post<PaginatedResponse<Clientes[]>>(`${environment.API}/Client/GetClientFilter`, filterClientes)
   }
 
   private handleError(err: HttpErrorResponse) {

@@ -24,21 +24,18 @@ export class OrcamentoComponent implements OnInit {
   ) { }
 
   clientes = new Clientes();
-  data: FilterOsDto[];
+  data: FilterOsDto[] = [];
   formSearchOs: FormGroup;
   statusSelected: string;
   currentPage: number = 1;
   totalPages: number;
-  itemsPerPage: number;
+  itemsPerPage: number = 10;
+  totalItems: number = 0;
   tipoDoc: any;
+  pageSizeOptions: number[] = [5, 10, 20, 50];
 
   ngOnInit(): void {
-    const requestData = new FilterOs("", "", 0, null, 1, 10, null, null, "Orçamento")
-    this.osService.getFilterOS(requestData).subscribe((response) => {
-      this.data = response.data;
-      this.totalPages = response.totalPagina
-      this.cdRef.detectChanges();
-    });
+    this.loadData();
 
     this.formSearchOs = this.fb.group({
       orcamentoNumero: null,
@@ -46,7 +43,23 @@ export class OrcamentoComponent implements OnInit {
       statusOs: null,
       dataInicial: null,
       dataFinal: null
-    })
+    });
+  }
+
+  loadData(): void {
+    const orcamentoNumero = this.formSearchOs?.value?.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
+    const nomeCliente = this.formSearchOs?.value?.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
+    const dataInicial = this.formSearchOs?.value?.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
+    const dataFinal = this.formSearchOs?.value?.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
+
+    const requestData = new FilterOs("", nomeCliente, orcamentoNumero, null, this.currentPage, this.itemsPerPage, dataInicial, dataFinal, "Orçamento");
+
+    this.osService.getFilterOS(requestData).subscribe((response) => {
+      this.data = response.data;
+      this.totalPages = response.totalPagina;
+      this.totalItems = response.totalItens || (response.data ? response.data.length * this.totalPages : 0);
+      this.cdRef.detectChanges();
+    });
   }
 
   addOS() {
@@ -62,15 +75,8 @@ export class OrcamentoComponent implements OnInit {
   }
 
   searchOs() {
-    const orcamentoNumero = this.formSearchOs.value.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
-    const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
-    const dataInicial = this.formSearchOs.value.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
-    const dataFinal = this.formSearchOs.value.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
-    const requestData = new FilterOs("", nomeCliente, orcamentoNumero, null, 1, 10, dataInicial, dataFinal, "Orçamento")
-    this.osService.getFilterOS(requestData).subscribe((response) => {
-      this.data = response.data; // Armazene os objetos retornados no array
-      this.totalPages = response.totalPagina
-    });
+    this.currentPage = 1; // Reset to first page on search
+    this.loadData();
   }
 
   getPaginationRange(): number[] {
@@ -78,16 +84,9 @@ export class OrcamentoComponent implements OnInit {
   }
 
   goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    const orcamentoNumero = this.formSearchOs.value.orcamentoNumero == null ? 0 : this.formSearchOs.value.orcamentoNumero;
-    const nomeCliente = this.formSearchOs.value.nomeCliente == null ? "" : this.formSearchOs.value.nomeCliente;
-    const dataInicial = this.formSearchOs.value.dataInicial == null ? null : this.formSearchOs.value.dataInicial;
-    const dataFinal = this.formSearchOs.value.dataFinal == null ? null : this.formSearchOs.value.dataFinal;
-    const requestData = new FilterOs("", nomeCliente, orcamentoNumero, null, this.currentPage, 10, dataInicial, dataFinal, "Orçamento");
-    this.osService.getFilterOS(requestData).subscribe((response) => {
-      this.data = response.data; // Armazene os objetos retornados no array
-      this.totalPages = response.totalPagina
-    });
+    this.loadData();
   }
 
   openById(id, clienteId) {
@@ -149,6 +148,54 @@ export class OrcamentoComponent implements OnInit {
   }
 
   limparFiltro() {
-    this.formSearchOs.reset()
+    this.formSearchOs.reset();
+    this.currentPage = 1;
+    this.loadData();
+  }
+
+  // Pagination methods
+  onPageSizeChange(newSize: number) {
+    this.itemsPerPage = newSize;
+    this.currentPage = 1;
+    this.loadData();
+  }
+
+  goToFirstPage() {
+    this.goToPage(1);
+  }
+
+  goToLastPage() {
+    this.goToPage(this.totalPages);
+  }
+
+  goToPreviousPage() {
+    this.goToPage(this.currentPage - 1);
+  }
+
+  goToNextPage() {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  getVisiblePages(): number[] {
+    const maxVisible = 5;
+    const half = Math.floor(maxVisible / 2);
+    let start = Math.max(1, this.currentPage - half);
+    let end = Math.min(this.totalPages, start + maxVisible - 1);
+
+    if (end - start + 1 < maxVisible) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
+
+  getStartItem(): number {
+    if (this.totalItems === 0) return 0;
+    return (this.currentPage - 1) * this.itemsPerPage + 1;
+  }
+
+  getEndItem(): number {
+    if (this.totalItems === 0) return 0;
+    return Math.min(this.currentPage * this.itemsPerPage, this.totalItems);
   }
 }

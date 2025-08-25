@@ -114,14 +114,77 @@
                 </tr>
               </tbody>
             </table>
-          </div>
-          <div class="centered-pagination">
-            <div *ngIf="totalPages > 0">
-              <button class="btn btn-info mr-1 smaller-button" *ngFor="let page of getPaginationRange()"
-                (click)="goToPage(page)">
-                {{ page }}
-              </button>
+
+            <!-- Empty state message -->
+            <div *ngIf="clientes?.length === 0" class="text-center py-4">
+              <div class="text-muted">
+                <i class="ft-users font-large-2 mb-2"></i>
+                <p class="mb-0">Nenhum cliente encontrado</p>
+                <small>Tente ajustar os filtros ou adicionar novos clientes</small>
+              </div>
             </div>
+          </div>
+          <!-- Modern Pagination -->
+          <div class="pagination-container" *ngIf="totalPages > 0">
+            <!-- Items per page selector -->
+            <div class="pagination-info">
+              <div class="items-per-page">
+                <label for="pageSize">Itens por página:</label>
+                <select id="pageSize" class="form-control form-control-sm" [(ngModel)]="itemsPerPage"
+                        (change)="onPageSizeChange(itemsPerPage)">
+                  <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                </select>
+              </div>
+
+              <!-- Results info -->
+              <div class="results-info">
+                <span *ngIf="clientes?.length > 0; else noData">
+                  Mostrando {{ getStartItem() }} - {{ getEndItem() }} de {{ totalItems }} registros
+                </span>
+                <ng-template #noData>
+                  <span class="text-muted">Nenhum registro encontrado</span>
+                </ng-template>
+              </div>
+            </div>
+
+            <!-- Pagination controls -->
+            <nav aria-label="Navegação de páginas">
+              <ul class="pagination justify-content-center mb-0">
+                <!-- First page -->
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <button class="page-link" (click)="goToFirstPage()" [disabled]="currentPage === 1">
+                    <i class="ft-chevrons-left"></i>
+                  </button>
+                </li>
+
+                <!-- Previous page -->
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                  <button class="page-link" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+                    <i class="ft-chevron-left"></i>
+                  </button>
+                </li>
+
+                <!-- Page numbers -->
+                <li class="page-item" *ngFor="let page of getVisiblePages()"
+                    [class.active]="page === currentPage">
+                  <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+                </li>
+
+                <!-- Next page -->
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                  <button class="page-link" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+                    <i class="ft-chevron-right"></i>
+                  </button>
+                </li>
+
+                <!-- Last page -->
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                  <button class="page-link" (click)="goToLastPage()" [disabled]="currentPage === totalPages">
+                    <i class="ft-chevrons-right"></i>
+                  </button>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </div>

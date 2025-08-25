@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'app/shared/shared.module';
 import { EditOrdemdeservicoComponent } from './edit-ordemdeservico/edit-ordemdeservico.component';
@@ -9,6 +9,6 @@ import { OrdemdeservicoRoutingModule } from './ordemdeservico-routing.module';
   declarations: [
     EditOrdemdeservicoComponent
   ],
-  imports: [SharedModule, OrdemdeservicoRoutingModule, NgSelectModule, ReactiveFormsModule]
+  imports: [SharedModule, OrdemdeservicoRoutingModule, NgSelectModule, ReactiveFormsModule, FormsModule]
 })
 export class OrdemdeservicoModule { }

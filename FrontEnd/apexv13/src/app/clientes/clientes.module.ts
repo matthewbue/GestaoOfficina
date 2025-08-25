@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from 'app/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
@@ -15,7 +16,9 @@ import { EditClientesComponent } from './edit-clientes/edit-clientes.component';
     SharedModule,
     ClientesRoutingModule,
     NgSelectModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ClientesModule { }

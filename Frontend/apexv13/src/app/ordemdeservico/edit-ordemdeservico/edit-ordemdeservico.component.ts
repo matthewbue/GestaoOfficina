@@ -8,7 +8,7 @@ import { Clientes } from 'app/shared/Model/Clientes';
 import { Servicos } from 'app/shared/Model/Servicos';
 import { FilterOsDto } from 'app/shared/Model/filterOsDto';
 import { AlertModalService } from 'app/shared/services/alert-modal.service';
-import jsPDF from 'jspdf';
+import { PDFCompanyInfo, PdfGeneratorService, PDFServiceOrder } from 'app/shared/services/pdf-generator.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EMPTY } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
@@ -31,6 +31,7 @@ export class EditOrdemdeservicoComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private location: Location,
+    private pdfGeneratorService: PdfGeneratorService
   ) { }
 
   public isCollapsed = true;
@@ -261,105 +262,47 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
 
   gerarPDFInternal() {
-    const doc = new jsPDF();
-    // Adicione a imagem como marca d'água
-    const imgData = '../../../assets/img/logo-oficina-peb.png';
-    const imgWidth = 150;
-    const imgHeight = imgWidth * 1.41;
-    const xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2;
-    const yPos = (doc.internal.pageSize.getHeight() - imgHeight) / 2;
-    doc.addImage(imgData, 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'FAST', 0.1);
+    // Company information
+    const companyInfo: PDFCompanyInfo = {
+      name: 'FERREIRA\'S AUTOMOTIVO',
+      cnpj: '20.388.818/0001-30',
+      address: 'Rua Framboesa LOTE 1 QUADRA S - 23061-522',
+      phone: '(21) 964169157',
+      logoPath: '../../../assets/img/logo-oficina-peb.png'
+    };
 
-    doc.setFont('courier', 'normal');
-    doc.setTextColor(0, 0, 0);
+    // Prepare service order data
+    const orderData: PDFServiceOrder = {
+      id: this.ordemServico.id,
+      date: new Date(this.ordemServico.dataOS).toLocaleDateString('pt-BR'),
+      type: 'OrdemServico',
+      customer: {
+        name: this.cliente.nome,
+        cpf: this.cliente.cpf,
+        address: this.cliente.endereco,
+        phone: this.cliente.numeroWhatsapp,
+        email: this.cliente.email
+      },
+      vehicle: {
+        plate: this.automovel.placa,
+        brand: this.automovel.marca,
+        model: this.automovel.modelo,
+        year: this.automovel.ano,
+        color: this.automovel.cor,
+        currentKm: this.manutencesServico.length > 0 ? this.manutencesServico[0].kmatual : ''
+      },
+      services: this.manutencesServico.map(servico => ({
+        name: servico.nome,
+        value: typeof servico.valor === 'string' ? parseFloat(servico.valor) || 0 : servico.valor || 0,
+        description: servico.descricao || ''
+      })),
+      totalValue: typeof this.ordemServico.valorTotal === 'string' ? parseFloat(this.ordemServico.valorTotal) || 0 : this.ordemServico.valorTotal || 0,
+      observations: this.ordemServico.observacoes,
+      status: this.ordemServico.status
+    };
 
-    doc.setFontSize(18);
-    doc.setFont('courier', 'bold');
-    doc.text('FERREIRA\'S AUTOMOTIVO', 105, 15, { align: 'center' });
-    doc.setFont('courier', 'normal');
-
-    doc.setFontSize(12);
-    doc.text('CNPJ: 20.388.818/0001-30', 105, 20, { align: 'center' });
-
-    doc.setFontSize(12);
-    doc.text('Rua Framboesa LOTE 1 QUADRA S - 23061-522 - (21)964169157', 105, 25, { align: 'center' });
-
-    doc.setFontSize(14);
-    doc.setFont('courier', 'bold');
-    doc.text('ORDEM DE SERVIÇO', 105, 30, { align: 'center' });
-    doc.setFont('courier', 'normal');
-
-    let yPosValue = 40;
-    let yPosValorTotal = 0;
-
-    doc.setFontSize(12);
-    doc.text(`Ordem de Serviço Nº: ${this.ordemServico.id}`, 20, yPosValue);
-    yPosValue += 5;
-    const dataFormatada = new Date(this.ordemServico.dataOS).toLocaleDateString('pt-BR');
-    doc.text(`Data: ${dataFormatada}`, 20, yPosValue);
-    yPosValue += 5;
-
-    doc.text(`Cliente: ${this.cliente.nome}`, 20, yPosValue);
-    doc.text(`CPF/CNPJ: ${this.cliente.cpf}`, 135, yPosValue);
-    yPosValue += 5;
-
-    doc.text(`Endereço: ${this.cliente.endereco}`, 20, yPosValue);
-    yPosValue += 10;
-
-    doc.setFontSize(14);
-    doc.setFont('courier', 'bold');
-    doc.text('Informações do Veículo', 105, yPosValue, { align: 'center' });
-    doc.setFont('courier', 'normal');
-
-    yPosValue += 10;
-    doc.setFontSize(12);
-    doc.text(`Placa: ${this.automovel.placa}`, 20, yPosValue);
-    doc.text(`Marca: ${this.automovel.marca}`, 80, yPosValue);
-    doc.text(`Modelo: ${this.automovel.modelo}`, 140, yPosValue);
-    yPosValue += 5;
-    doc.text(`Ano: ${this.automovel.ano}`, 20, yPosValue);
-    doc.text(`Cor: ${this.automovel.cor}`, 80, yPosValue);
-    const kmAtualServico = this.manutencesServico.map(servico => `${servico.kmatual}`);
-    doc.text(`Km Atual: ${kmAtualServico[0]}`, 140, yPosValue);
-    yPosValue += 10;
-
-    doc.setFontSize(14);
-    doc.setFont('courier', 'bold');
-    doc.text('Serviços Realizados', 105, yPosValue, { align: 'center' });
-    doc.setFont('courier', 'normal');
-
-    yPosValue += 10;
-
-    doc.setFontSize(12);
-    const servicosFeitos = this.manutencesServico.map(servico => `- ${servico.nome}: R$ ${servico.valor},00`);
-    const servicosText = servicosFeitos.join('\n');
-    doc.text(servicosText, 20, yPosValue, { maxWidth: 170 });
-    yPosValue += servicosFeitos.length * 5 + 10;
-
-    yPosValorTotal = yPosValue + 10;
-
-    doc.setFontSize(14);
-    doc.setFont('courier', 'bold');
-    doc.text(`Valor Total: R$ ${this.ordemServico.valorTotal},00`, 105, yPosValorTotal, { align: 'center' });
-
-    const assinaturaClienteY = doc.internal.pageSize.getHeight() - 50;
-    const xPosAssinaturaCliente = 20;
-    doc.setFontSize(12);
-    doc.text('Assinatura do Cliente:', xPosAssinaturaCliente, assinaturaClienteY);
-    doc.line(xPosAssinaturaCliente, assinaturaClienteY + 10, xPosAssinaturaCliente + 80, assinaturaClienteY + 10);
-
-    const assinaturaResponsavelY = assinaturaClienteY;
-    const xPosAssinaturaResponsavel = 105;
-    doc.text('Assinatura do Responsável:', xPosAssinaturaResponsavel, assinaturaResponsavelY);
-    doc.line(xPosAssinaturaResponsavel, assinaturaResponsavelY + 10, xPosAssinaturaResponsavel + 95, assinaturaResponsavelY + 10);
-
-    doc.setFontSize(10);
-    doc.text('Agradecemos pela preferência!', 105, doc.internal.pageSize.getHeight() - 25, { align: 'center' });
-
-    doc.setFontSize(10);
-    doc.text('Nunca foi sorte, sempre foi Deus!', 105, doc.internal.pageSize.getHeight() - 20, { align: 'center' });
-
-    doc.save(`Ordem de Serviço - Nº - ${this.ordemServico.id}.pdf`);
+    // Generate PDF using the new service
+    this.pdfGeneratorService.generateServiceOrderPDF(orderData, companyInfo);
   }
 
 
