@@ -367,14 +367,35 @@ export class EditOrdemdeservicoComponent implements OnInit {
   }
 
   deleteManutence(id) {
-    this.osService.deleteServico(id).subscribe((data => {
-      if (data.data == "sucesso") {
-        this.alertService.showAlertSuccess(data.message)
-        location.reload()
-      } else {
-        this.alertService.showAlertDanger("Erro ao deletar serviço")
-      }
-    }))
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja realmente excluir este serviço?"
+    );
+
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.osService.deleteServico(id)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (data) => {
+          if (data.data == "sucesso") {
+            this.alertService.showAlertSuccess(data.message);
+            location.reload();
+          } else {
+            this.alertService.showAlertDanger("Erro ao deletar serviço");
+          }
+        },
+        (error) => {
+          this.alertService.showAlertDanger("Erro ao excluir serviço!");
+          console.error(error);
+        }
+      );
   }
 
   cancelarEdicao(servico: any) {

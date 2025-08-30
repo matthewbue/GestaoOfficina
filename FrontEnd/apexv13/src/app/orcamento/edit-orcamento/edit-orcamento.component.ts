@@ -385,4 +385,32 @@ export class EditOrcamentoComponent implements OnInit {
     // Por exemplo, você pode acessar this.ordemServico.manutecesServicos[index] para obter o item atual.
     this.toggleEdicao(index);
   }
+
+  deleteServicoExistente(servico: any) {
+    const result$ = this.alertService.showConfirm(
+      "Confirmação",
+      "Deseja realmente excluir este serviço?"
+    );
+
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap((result) =>
+          result
+            ? this.osService.deleteServico(servico.id)
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (response) => {
+          this.alertService.showAlertSuccess("Serviço excluído com sucesso!");
+          window.location.reload();
+        },
+        (error) => {
+          this.alertService.showAlertDanger("Erro ao excluir serviço!");
+          console.error(error);
+        }
+      );
+  }
 }
