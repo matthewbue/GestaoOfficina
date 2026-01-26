@@ -1,0 +1,40 @@
+
+.users-search {
+	width: 260px;
+}
+
+@media (max-width: 576px) {
+	.users-search {
+		width: 100%;
+	}
+}
+
+.user-avatar {
+	height: 36px;
+	width: 36px;
+	border-radius: 999px;
+	background: rgba(0, 0, 0, 0.06);
+	color: rgba(0, 0, 0, 0.7);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.user-avatar.has-photo {
+	background: transparent;
+}
+
+.user-avatar img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.font-weight-600 {
+	font-weight: 600;
+}
+

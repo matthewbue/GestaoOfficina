@@ -28,7 +28,7 @@ export interface UserCreateDTO {
   email: string;
   cpf: string;
   profile: number;
-  profilePhoto?: number[] | null;
+  profilePhoto?: string | null;
 }
 
 export interface UserUpdateDTO {
@@ -38,7 +38,7 @@ export interface UserUpdateDTO {
   cpf?: string | null;
   profile?: number | null;
   password?: string | null;
-  profilePhoto?: number[] | null;
+  profilePhoto?: string | null;
 }
 
 @Injectable({

@@ -21,7 +21,11 @@ export class LoginPageComponent {
     rememberMe: new FormControl(true)
   });
 
-  constructor(private router: Router, private authService: AuthService, private toastr: ToastrService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService,
+  ) {}
 
   get lf() {
     return this.loginForm.controls;

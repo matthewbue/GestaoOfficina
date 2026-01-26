@@ -18,6 +18,44 @@ import { take } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class UserEditComponent extends BaseFormComponent implements OnInit {
+  photoPreviewUrl: string | null = null;
+  private selectedPhotoBase64: string | null = null;
+
+  get initials(): string {
+    return this.getInitials(this.oform?.value?.name ?? this.user?.name);
+  }
+
+  private buildImageDataUrl(base64?: string | null): string | null {
+    if (!base64) return null;
+
+    const trimmed = String(base64).trim();
+    if (!trimmed) return null;
+
+    if (trimmed.startsWith('data:')) {
+      return trimmed;
+    }
+
+    const clean = trimmed.replace(/\s+/g, '');
+
+    let mime = 'image/jpeg';
+    if (clean.startsWith('iVBORw0KGgo')) mime = 'image/png';
+    else if (clean.startsWith('/9j/')) mime = 'image/jpeg';
+    else if (clean.startsWith('R0lGOD')) mime = 'image/gif';
+    else if (clean.startsWith('UklGR')) mime = 'image/webp';
+    else if (clean.startsWith('Qk')) mime = 'image/bmp';
+
+    return `data:${mime};base64,${clean}`;
+  }
+
+  private getInitials(name?: string | null): string {
+    const safe = String(name ?? '').trim();
+    if (!safe) return '??';
+    const parts = safe.split(/\s+/).filter(Boolean);
+    const first = parts[0]?.[0] ?? '';
+    const last = (parts.length > 1 ? parts[parts.length - 1]?.[0] : '') ?? '';
+    return (first + last).toUpperCase() || '??';
+  }
+
   user: UserResponseDTO = {
     id: 0,
     name: '',
@@ -52,6 +90,9 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
           this.f['name'].setValue(this.user.name);
           this.f['email'].setValue(this.user.email);
           this.f['profile'].setValue(this.user.profile);
+
+          this.photoPreviewUrl = this.buildImageDataUrl(this.user.profilePhotoBase64);
+          this.selectedPhotoBase64 = null;
         });
       }
     });
@@ -81,6 +122,26 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
     this.router.navigate(['/account']);
   }
 
+  onPhotoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files && input.files.length > 0 ? input.files[0] : null;
+    if (!file) return;
+
+    if (!file.type || !file.type.startsWith('image/')) {
+      this.toastr.warning('Selecione um arquivo de imagem (JPG/PNG/GIF).');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = String(reader.result ?? '');
+      this.photoPreviewUrl = dataUrl;
+      const commaIndex = dataUrl.indexOf(',');
+      this.selectedPhotoBase64 = commaIndex >= 0 ? dataUrl.substring(commaIndex + 1) : dataUrl;
+    };
+    reader.readAsDataURL(file);
+  }
+
   submit() {
     this.submitted = true;
     const payload = {
@@ -99,12 +160,14 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
           email: payload.email,
           profile: payload.profile,
           password: payload.password ? payload.password : null,
+          profilePhoto: this.selectedPhotoBase64,
         })
       : this.usersApi.create({
           cpf: payload.cpf,
           name: payload.name,
           email: payload.email,
           profile: payload.profile,
+          profilePhoto: this.selectedPhotoBase64,
         });
 
     request$.subscribe(

@@ -2,6 +2,20 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap">
+          <div>
+            <h4 class="card-title mb-0">{{ title | translate }}</h4>
+            <small class="text-muted">{{ user?.name || ('account.header.SUB' | translate) }}</small>
+          </div>
+
+          <div class="d-flex align-items-center mt-1 mt-sm-0">
+            <button type="button" (click)="onCancel()" class="btn btn-outline-secondary">
+              <i class="ft-arrow-left mr-1"></i>
+              {{"account.button.CANCEL" | translate}}
+            </button>
+          </div>
+        </div>
+
         <div class="card-content">
           <div class="card-body">
             <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-tabs justify-content-left">
@@ -42,6 +56,24 @@
 
                       <div class="col-12 col-md-6">
                         <div class="form-group">
+                          <label>{{"account.label.PHOTO" | translate | uppercase}}</label>
+                          <div class="d-flex align-items-center">
+                            <div class="user-avatar user-avatar-lg mr-2" [ngClass]="{ 'has-photo': !!photoPreviewUrl }">
+                              <img *ngIf="photoPreviewUrl" [src]="photoPreviewUrl" alt="foto" />
+                              <span *ngIf="!photoPreviewUrl">{{ initials }}</span>
+                            </div>
+                            <div>
+                              <label class="btn btn-sm bg-light-primary mb-0" for="users-edit-photo">
+                                <i class="ft-upload mr-1"></i>
+                                {{"account.button.UPLOAD" | translate}}
+                              </label>
+                              <input type="file" id="users-edit-photo" hidden accept="image/*" (change)="onPhotoSelected($event)">
+                              <div class="text-muted"><small>{{"account.setting.ALLOWEDPHOTO" | translate}}</small></div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
                           <label for="user-profile">{{"account.label.ROLE" | translate | uppercase}}</label>
                           <select id="user-profile" class="form-control" required formControlName="profile">
                             <option *ngFor="let p of profiles" [value]="p.id">{{ p.label }}</option>
@@ -58,8 +90,13 @@
                       </div>
 
                       <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-3 mt-sm-2">
-                        <button type="submit" class="btn btn-primary mb-2 mb-sm-0 mr-sm-2">{{"account.button.SAVE" | translate}}</button>
-                        <button type="button" (click)="onCancel()" class="btn btn-secondary">{{"account.button.CANCEL" | translate}}</button>
+                        <button type="submit" class="btn btn-primary mb-1 mb-sm-0 mr-sm-1">
+                          <i class="ft-save mr-1"></i>
+                          {{"account.button.SAVE" | translate}}
+                        </button>
+                        <button type="button" (click)="onCancel()" class="btn btn-outline-secondary">
+                          {{"account.button.CANCEL" | translate}}
+                        </button>
                       </div>
                     </div>
                   </form>
