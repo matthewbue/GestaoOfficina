@@ -39,9 +39,26 @@ export class AuthService {
     this.router.navigate(['/pages/login']);
   }
 
+  getCurrentUser(): any | null {
+    const raw = localStorage.getItem('user');
+    if (!raw) return null;
+
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
   isAdm(): boolean {
-    // Sua lógica para verificar se o usuário é um administrador, se necessário
-    return false;
+    const user = this.getCurrentUser();
+    if (!user) return false;
+
+    // backend usa ProfileEnum: 1=Administrador, 2=Operador, 3=Técnico
+    if (Number(user.profile) === 1) return true;
+
+    const desc = String(user.profileDescription ?? '').toLowerCase();
+    return desc.includes('admin');
   }
 
   isAuthenticated() {

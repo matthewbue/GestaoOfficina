@@ -4,6 +4,7 @@ import {
 } from "@angular/core";
 import { ROUTES } from './vertical-menu-routes.config';
 import { HROUTES } from '../horizontal-menu/navigation-routes.config';
+import { RouteInfo } from './vertical-menu.metadata';
 
 import { Router } from "@angular/router";
 import { TranslateService } from '@ngx-translate/core';
@@ -12,6 +13,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { ConfigService } from '../services/config.service';
 import { Subscription } from 'rxjs';
 import { LayoutService } from '../services/layout.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: "app-sidebar",
@@ -38,7 +40,8 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
     private layoutService: LayoutService,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private authService: AuthService
   ) {
     this.config = this.configService.templateConf;
     this.innerWidth = window.innerWidth;
@@ -47,7 +50,30 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit() {
-    this.menuItems = ROUTES;
+    this.menuItems = this.applyPermissions(ROUTES);
+  }
+
+  private applyPermissions(routes: RouteInfo[]): RouteInfo[] {
+    const isAdmin = this.authService.isAdm();
+
+    const mapRoute = (route: RouteInfo): RouteInfo | null => {
+      if (route.requiresAdmin && !isAdmin) return null;
+
+      const filteredSubmenu = (route.submenu ?? [])
+        .map(mapRoute)
+        .filter((x): x is RouteInfo => !!x);
+
+      // remove grupos vazios (sem path navegável e sem submenu)
+      const hasPath = !!route.path && route.path !== '';
+      if (!hasPath && filteredSubmenu.length === 0) return null;
+
+      return {
+        ...route,
+        submenu: filteredSubmenu,
+      };
+    };
+
+    return (routes ?? []).map(mapRoute).filter((x): x is RouteInfo => !!x);
   }
 
   ngAfterViewInit() {
@@ -85,11 +111,11 @@ export class VerticalMenuComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.config.layout.menuPosition === "Top") { // Horizontal Menu
       if (this.innerWidth < 1200) { // Screen size < 1200
-        this.menuItems = HROUTES;
+        this.menuItems = this.applyPermissions(HROUTES);
       }
     }
     else if (this.config.layout.menuPosition === "Side") { // Vertical Menu{
-      this.menuItems = ROUTES;
+      this.menuItems = this.applyPermissions(ROUTES);
     }
 
     if (this.config.layout.sidebar.backgroundColor === 'white') {

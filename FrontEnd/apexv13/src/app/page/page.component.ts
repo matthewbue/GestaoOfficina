@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AccountService } from 'app/Account/account.service';
 import { User } from 'app/shared/Model/user';
 import { environment } from 'environments/environment';
+import { AuthService } from 'app/shared/auth/auth.service';
 
 
 @Component({
@@ -12,14 +13,18 @@ import { environment } from 'environments/environment';
 })
 
 export class PageComponent {
-  fullname: string="Damon";
+  fullname: string = 'Usuário';
 
   /**
    *
    */
-  constructor(private accountService: AccountService, private router: Router) {
+  constructor(private accountService: AccountService, private router: Router, private authService: AuthService) {
     this.accountService.getUserAuthenticaded();
     // this.fullname = localStorage.getItem("fullname");
+
+    const user = this.authService.getCurrentUser();
+    const name = String(user?.name ?? user?.fullname ?? user?.userName ?? user?.username ?? '').trim();
+    this.fullname = name || this.fullname;
 
     let situacaoSenha = localStorage.getItem("situacaoSenha");
 

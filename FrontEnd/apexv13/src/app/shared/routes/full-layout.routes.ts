@@ -3,6 +3,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { EditClientesComponent } from 'app/clientes/edit-clientes/edit-clientes.component';
 import { EditOrdemdeservicoComponent } from 'app/ordemdeservico/edit-ordemdeservico/edit-ordemdeservico.component';
 import { EditOrcamentoComponent } from 'app/orcamento/edit-orcamento/edit-orcamento.component';
+import { AdminGuard } from '../auth/admin-guard.service';
 
 
 
@@ -30,6 +31,7 @@ export const Full_ROUTES: Routes = [
 
   {
     path: 'account',
+    canActivate: [AdminGuard],
     loadChildren: () => import('../../Account/account-module').then(m => m.AccountModule)
   },
   {
