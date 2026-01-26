@@ -1,17 +1,14 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 import { FormValidationsService } from 'app/shared/services/form-validations.service';
 import { ToastrService } from 'ngx-toastr';
-import { AccountService } from '../account.service';
-import { Role } from 'app/shared/Model/role';
-import { Observable } from 'rxjs';
-import { User } from './../../shared/Model/user';
-import { UpperCasePipe } from '@angular/common';
+import { UsersApiService, UserResponseDTO } from '../users-api.service';
 import { BaseFormComponent } from 'app/shared/base-form/base-form.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users-edit',
@@ -21,59 +18,50 @@ import { BaseFormComponent } from 'app/shared/base-form/base-form.component';
   encapsulation: ViewEncapsulation.None
 })
 export class UserEditComponent extends BaseFormComponent implements OnInit {
+  user: UserResponseDTO = {
+    id: 0,
+    name: '',
+    email: '',
+    cpf: '',
+    profile: 1,
+    profileDescription: '',
+    profilePhotoBase64: null,
+  };
 
-
-  roles$: Observable<Role[]>;
-  user: User = new User();;
-  selectedFacilityIds: number[];
+  profiles = [
+    { id: 1, label: 'Administrador' },
+    { id: 2, label: 'Operador' },
+    { id: 3, label: 'Técnico' },
+  ];
 
   constructor(public translate: TranslateService,
     public toastr: ToastrService,
     private formtranslate: FormValidationsService,
-    private accountService: AccountService,
+    private usersApi: UsersApiService,
     private router: Router,
     private route: ActivatedRoute) {
     super();
-    this.roles$ = this.accountService.getRoles();
+    this.route.params.pipe(take(1)).subscribe((params: any) => {
+      this.user.id = params['id'] == undefined ? 0 : Number(params['id']);
+      this.title = this.user.id == 0 ? 'account.label.ADD' : 'account.label.EDIT';
 
-    this.route.params.subscribe(
-
-      (params: any) => {
-        this.user.id  = params['id'] == undefined ? 0 : params['id'];
-        this.title = this.user.id == 0 ? "account.label.ADD" : "account.label.EDIT";
-        this.accountService.getUser(this.user.id).subscribe((data) => {
-          (this.user = data);
-
-          this.f["userName"].setValue(this.user.userName);
-          this.f["fullname"].setValue(this.user.fullname);
-          this.f["email"].setValue(this.user.email);
-          this.f["status"].setValue(this.user.status ? 1 : 0);
+      if (this.user.id && this.user.id !== 0) {
+        this.usersApi.getById(this.user.id).subscribe((result) => {
+          this.user = result.data;
+          this.f['cpf'].setValue(this.user.cpf);
+          this.f['name'].setValue(this.user.name);
+          this.f['email'].setValue(this.user.email);
+          this.f['profile'].setValue(this.user.profile);
         });
       }
-    );
+    });
 
     this.oform = new FormGroup({
-      userName: new FormControl(
-        "",
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(50),
-        ]),
-
-      fullname:
-        new FormControl(
-          "",
-          [
-            Validators.required,
-            Validators.minLength(10),
-            Validators.maxLength(100),
-          ]
-        ),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      status: new FormControl(1, [Validators.required]),
-      userRoleIds: new FormControl("", [Validators.required, Validators.min(1)]),
-      userFacilityIds: new FormControl([] , [Validators.required, Validators.min(1)]),
+      cpf: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]),
+      name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(200)]),
+      profile: new FormControl(1, [Validators.required]),
+      password: new FormControl('', [Validators.minLength(6), Validators.maxLength(200)]),
     });
 
 
@@ -95,14 +83,31 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
 
   submit() {
     this.submitted = true;
-    this.user.email = this.oform.value.email;
-    this.user.fullname = this.oform.value.fullname;
-    this.user.userName = this.oform.value.userName;
+    const payload = {
+      cpf: this.oform.value.cpf,
+      name: this.oform.value.name,
+      email: this.oform.value.email,
+      profile: Number(this.oform.value.profile),
+      password: this.oform.value.password,
+    };
 
-    //this.user.laguangeId = this.oform.value.languageId;
-    this.user.status = this.oform.value.status;
-    //save User
-    this.accountService.save(this.user).subscribe(
+    const request$ = this.user.id && this.user.id !== 0
+      ? this.usersApi.update({
+          id: this.user.id,
+          cpf: payload.cpf,
+          name: payload.name,
+          email: payload.email,
+          profile: payload.profile,
+          password: payload.password ? payload.password : null,
+        })
+      : this.usersApi.create({
+          cpf: payload.cpf,
+          name: payload.name,
+          email: payload.email,
+          profile: payload.profile,
+        });
+
+    request$.subscribe(
       () => {
         this.submitted = false;
         this.user.id != 0 ?
@@ -111,8 +116,7 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
           ) : this.toastr.success(
             this.formtranslate.getMsg("account.message.CREATESUCESS")
           );
-
-
+        this.router.navigate(['/account']);
       },
       (err) => {
         this.submitted = false;
@@ -121,25 +125,8 @@ export class UserEditComponent extends BaseFormComponent implements OnInit {
             this.formtranslate.getMsg("account.message.UNAUTHORIZE")
           );
         }
-        else if (err.error.status === 400) {
-          let msg = ""
-
-          if (err.error.errors != null) {
-            err.error.errors.Messages.forEach(element => {
-              msg += `${this.formtranslate.getMsg("account.message." + element.toUpperCase())}|`
-            });
-          }
-          if (msg.length > 0) {
-            this.toastr.warning(msg);
-          }
-
-          // if (err.error.errors.Messages.includes("RoleRequired") || err.error.errors.Messages.includes("FacilityRequired")) {
-          //   this.toastr.warning(this.formtranslate.getMsg("account.message." + "RoleRequired".toUpperCase()));
-          // }
-        }
         else {
-
-          this.toastr.error(err.error != null ? err.error.message : err);
+          this.toastr.error(err?.error?.message ?? 'Erro ao salvar usuário');
         }
 
       }

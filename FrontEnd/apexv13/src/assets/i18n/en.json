@@ -1,5 +1,7 @@
 {
   "Home": "Home",
+  "MenuItemConfiguracoes": "Settings",
+  "MenuItemUsuarios": "Users",
   "MenuTopSetting": "Administration",
   "MenuTopSource": "Sources",
   "MenuTopEvent": "Envents",
@@ -25,5 +27,28 @@
       "WELCOME" : "Hi, Welcome, "
     }
 
+  }
+  ,
+  "account": {
+    "datatable": {
+      "VIEW": "View",
+      "DELETE": "Delete"
+    },
+    "label": {
+      "VIEW": "View",
+      "CPF": "CPF",
+      "PASSWORD": "Password",
+      "PASSWORD_HELP": "(Optional) Fill only if you want to change the password"
+    },
+    "message": {
+      "DELETESUCESS": "User deleted successfully",
+      "UNAUTHORIZE": "Operation not authorized"
+    },
+    "showConfirmDeleteUser": {
+      "TITLE": "Delete user",
+      "BODY": "Do you really want to delete the user:",
+      "CONFIRM": "Delete",
+      "CANCEL": "Cancel"
+    }
   }
 }

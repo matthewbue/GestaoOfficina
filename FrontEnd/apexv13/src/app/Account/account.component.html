@@ -88,7 +88,7 @@
               [footerHeight]="50" rowHeight="auto" [limit]="limitRef" [rows]="rows" [scrollbarH]="true"
               [columns]="columns">
               <!-- <ngx-datatable-column name="ID" prop="Id" [width]="50"></ngx-datatable-column> -->
-              <ngx-datatable-column name="{{'account.label.USERNAME' | translate | uppercase}}" prop="userName" [width]="150">
+              <ngx-datatable-column name="{{'account.label.CPF' | translate | uppercase}}" prop="cpf" [width]="130">
                 <!-- <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                   <div class="d-flex align-items-center">
                     <img class="rounded-circle mr-1" src="assets/img/portrait/small/{{
@@ -101,24 +101,15 @@
                   </div>
                 </ng-template> -->
               </ngx-datatable-column>
-              <ngx-datatable-column name="{{'account.label.FULLNAME' | translate | uppercase}}" prop="fullname" [width]="150"></ngx-datatable-column>
-              <!-- <ngx-datatable-column name="Role" prop="role" [width]="70"></ngx-datatable-column> -->
-              <ngx-datatable-column name="{{'account.label.STATUS' | translate | uppercase}}" prop="status" [width]="50">
-                <ng-template let-status="value" ngx-datatable-cell-template>
-                  <div class="badge" [ngClass]="{
-                      'bg-light-success': status == true,
-                      'bg-light-danger': status == false
-                    }">
-                    {{ (status == true ?'account.label.ACTIVE': 'account.label.INACTIVE') | translate | uppercase }}
-                  </div>
-                </ng-template>
-              </ngx-datatable-column>
+              <ngx-datatable-column name="{{'account.label.FULLNAME' | translate | uppercase}}" prop="name" [width]="200"></ngx-datatable-column>
+              <ngx-datatable-column name="{{'account.label.EMAIL' | translate | uppercase}}" prop="email" [width]="220"></ngx-datatable-column>
+              <ngx-datatable-column name="{{'account.label.ROLE' | translate | uppercase}}" prop="profileDescription" [width]="150"></ngx-datatable-column>
               <ngx-datatable-column  name="{{'account.datatable.ACTION' | translate | uppercase}}" [width]="50">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <!-- routerLink="{{row.id}}/edit"  -->
+                  <button (click)="view(row)" class="btn btn-sm btn-outline-info mr-2" title="{{'account.datatable.VIEW' | translate | uppercase}}"  ><i class="ft-eye  cursor-pointer"></i></button>
                   <button (click)="edit(row)" class="btn btn-sm btn-outline-primary mr-2" title="{{'account.datatable.EDIT' | translate | uppercase}}"  ><i class="ft-edit  cursor-pointer"></i></button>
-
-                  <button (click)="reset(row)" class="btn btn-sm btn-outline-dark" title="{{'account.datatable.RESET' | translate | uppercase}}" ><i class="ft-user-check cursor-pointer"></i></button>
+                  <button (click)="remove(row)" class="btn btn-sm btn-outline-danger" title="{{'account.datatable.DELETE' | translate | uppercase}}" ><i class="ft-trash cursor-pointer"></i></button>
                 </ng-template>
               </ngx-datatable-column>
             </ngx-datatable>

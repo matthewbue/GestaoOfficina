@@ -4,12 +4,10 @@ import { Router } from "@angular/router";
 import { switchMap, take } from "rxjs/operators";
 import { TranslateService } from "@ngx-translate/core";
 import { DatatableComponent, ColumnMode } from "@swimlane/ngx-datatable";
-import { User } from "app/shared/Model/user";
 import { AlertModalService } from "app/shared/services/alert-modal.service";
 import { FormValidationsService } from "app/shared/services/form-validations.service";
 import { ToastrService } from "ngx-toastr";
-import { AccountService } from "./account.service";
-import { usersListData } from "./data/users-list.data";
+import { UsersApiService, UserResponseDTO } from "./users-api.service";
 import { EMPTY } from "rxjs";
 import { ModalDirective, BsModalService } from "ngx-bootstrap/modal";
 
@@ -31,22 +29,13 @@ export class AccountComponent implements OnInit {
   public ColumnMode = ColumnMode;
   public limitRef = 10;
 
-  user: User = new User();
-
   // column header
-  public columns = [
-    { name: "Id", prop: "ID" },
-    { name: "UserName", prop: "UserName" },
-    { name: "FullName", prop: "firstName" },
-    { name: "Role", prop: "Role" },
-    { name: "Status", prop: "Status" },
-    { name: "Actions", prop: "Actions" },
-  ];
+  public columns = [];
 
   // private
-  private tempData = [];
+  private tempData: UserResponseDTO[] = [];
 
-  constructor(private accountService: AccountService,
+  constructor(private usersApi: UsersApiService,
     private toastr: ToastrService,
     private translate: TranslateService,
     private formTranslate: FormValidationsService,
@@ -58,9 +47,10 @@ export class AccountComponent implements OnInit {
   }
 
   private getUsers() {
-    this.accountService.getAll().subscribe((data) => {
-        this.rows = JSON.parse(JSON.stringify(data));
-      this.tempData = JSON.parse(JSON.stringify(data));
+    this.usersApi.getAll().subscribe((result) => {
+      const list = (result?.data ?? []) as UserResponseDTO[];
+      this.rows = JSON.parse(JSON.stringify(list));
+      this.tempData = JSON.parse(JSON.stringify(list));
     });
   }
 
@@ -77,7 +67,12 @@ export class AccountComponent implements OnInit {
 
     // filter our data
     const temp = this.tempData.filter(function (d) {
-        return d.userName.toLowerCase().indexOf(val) !== -1 || !val;
+      return (
+        d.cpf?.toLowerCase().indexOf(val) !== -1 ||
+        d.name?.toLowerCase().indexOf(val) !== -1 ||
+        d.email?.toLowerCase().indexOf(val) !== -1 ||
+        !val
+      );
     });
 
     // update the rows
@@ -97,49 +92,42 @@ export class AccountComponent implements OnInit {
   edit(row: any) {
     this.router.navigate([`account/${row.id}/edit`]);
   }
+  view(row: any) {
+    this.router.navigate([`account/${row.id}`]);
+  }
   new()
   {
     this.router.navigate(["account/new"]);
   }
   ngOnInit(): void { }
-  reset(row : any) {
 
+  remove(row: any) {
     const result$ = this.alertService.showConfirm(
-      this.formTranslate.getMsg("account.showConfirmResetPassword.TITLE"),
-      `${this.formTranslate.getMsg(
-        "account.showConfirmResetPassword.BODY"
-      )} ${row.fullname}`,
-      this.formTranslate.getMsg("account.showConfirmResetPassword.CONFIRM"),
-      this.formTranslate.getMsg("account.showConfirmResetPassword.CANCEL"),
-      "btn btn-primary"
+      this.formTranslate.getMsg('account.showConfirmDeleteUser.TITLE'),
+      `${this.formTranslate.getMsg('account.showConfirmDeleteUser.BODY')} ${row.name}`,
+      this.formTranslate.getMsg('account.showConfirmDeleteUser.CONFIRM'),
+      this.formTranslate.getMsg('account.showConfirmDeleteUser.CANCEL'),
+      'btn btn-danger'
     );
 
     result$
       .asObservable()
       .pipe(
         take(1),
-        switchMap((result) =>
-          result ? this.accountService.resetPassword(row.id) : EMPTY
-        )
+        switchMap((result) => (result ? this.usersApi.delete(Number(row.id)) : EMPTY))
       )
       .subscribe(
-        (success) => {
-          this.toastr.success(
-            this.formTranslate.getMsg("account.message.RESETPASSSUCESS")
-          );
+        () => {
+          this.toastr.success(this.formTranslate.getMsg('account.message.DELETESUCESS'));
+          this.getUsers();
         },
         (err) => {
           if (err.status === 403) {
-            this.toastr.warning(
-              this.formTranslate.getMsg("account.message.UNAUTHORIZE")
-            );
+            this.toastr.warning(this.formTranslate.getMsg('account.message.UNAUTHORIZE'));
           } else {
-            this.toastr.error(err.error != null ? this.formTranslate.getMsg("configuration.itemcost.error.FOREIGNKEY"): err.error );
+            this.toastr.error(err.error != null ? err.error.message : err);
           }
-
         }
       );
   }
-
-
 }

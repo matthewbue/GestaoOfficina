@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { UserEditComponent } from './edit/user-edit.component';
+import { UserViewComponent } from './view/user-view.component';
 import { AccountComponent } from './account.component';
 import { AcconutSettingsComponent } from '../page/setting/account-settings.component';
 import { SelectComponent } from './select/select.component';
@@ -15,6 +16,11 @@ const routes: Routes = [
 
     // }]
 
+  },
+
+  {
+    path: ':id',
+    component: UserViewComponent,
   },
 
   {
