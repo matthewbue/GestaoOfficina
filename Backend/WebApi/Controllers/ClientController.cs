@@ -1,7 +1,6 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
-using GestaoOfficinaProj.Domain.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MySqlX.XDevAPI.Common;
@@ -18,7 +17,7 @@ namespace GestaoOfficina.Controllers
         private readonly IClientService _clientService;
         public ClientController(IClientService clientService)
         {
-            _clientService = clientService;            
+            _clientService = clientService;
         }
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] ClientCreateDTO client)
@@ -28,7 +27,7 @@ namespace GestaoOfficina.Controllers
                 var result = await _clientService.Create(client);
                 return StatusCode(result.HttpStatusCode, result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -41,7 +40,7 @@ namespace GestaoOfficina.Controllers
                 var result = await _clientService.GetAll();
                 return StatusCode(result.HttpStatusCode, result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -51,10 +50,10 @@ namespace GestaoOfficina.Controllers
         {
             try
             {
-                 await _clientService.Update(entrada);
+                await _clientService.Update(entrada);
                 return StatusCode(200, entrada);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -65,7 +64,7 @@ namespace GestaoOfficina.Controllers
         {
             try
             {
-               var resultado =  await _clientService.GetClientById(identificador);
+                var resultado = await _clientService.GetClientById(identificador);
                 return StatusCode(200, resultado);
             }
             catch (Exception ex)

@@ -2,9 +2,8 @@
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Infra.Interface;
-using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.DTOs.Client;
-using GestaoOfficinaProj.Domain.DTOs.OS;
+using GestaoOfficina.Domain.DTOs.Client;
+using GestaoOfficina.Domain.DTOs.OS;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

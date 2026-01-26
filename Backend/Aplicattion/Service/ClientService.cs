@@ -2,7 +2,6 @@
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
 using GestaoOfficina.Infra.Repository;
-using GestaoOfficinaProj.Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;

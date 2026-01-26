@@ -1,16 +1,15 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Context;
-using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.DTOs.OS;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Interface;
+using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.DTOs.OS;
+using GestaoOfficina.Infra.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Infra.Repository
+namespace GestaoOfficina.Infra.Repository
 {
     public class ManutenceRepository : IManutenceRepository
     {

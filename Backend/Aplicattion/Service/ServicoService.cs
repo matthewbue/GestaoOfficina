@@ -1,6 +1,6 @@
 ﻿using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Interface;
 using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
 using GestaoOfficinaProj.Infra.Interface;
 using System;
 using System.Collections.Generic;

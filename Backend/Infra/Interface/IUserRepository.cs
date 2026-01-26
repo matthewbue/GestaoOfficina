@@ -12,5 +12,14 @@ namespace GestaoOfficina.Infra.Interface
     {
         Task<User> login(LoginDTO login);
         Task<User> CreateUser(User user);
+
+        Task<User?> GetById(int id);
+        Task<List<User>> GetAll();
+
+        Task<bool> EmailExists(string email, int? ignoringUserId = null);
+        Task<bool> CpfExists(string cpf, int? ignoringUserId = null);
+
+        Task<User> Update(User user);
+        Task<bool> Delete(int id);
     }
 }

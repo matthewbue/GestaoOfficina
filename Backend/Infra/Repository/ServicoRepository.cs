@@ -1,13 +1,13 @@
 ﻿using GestaoOfficina.Infra.Context;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Interface;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Infra.Repository
+namespace GestaoOfficina.Infra.Repository
 {
     public class ServicoRepository : IServicoRepository
     {

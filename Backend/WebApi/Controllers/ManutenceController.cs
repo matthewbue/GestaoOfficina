@@ -1,6 +1,7 @@
-﻿using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
-using GestaoOfficinaProj.Infra.Interface;
+﻿
+using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

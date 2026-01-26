@@ -1,7 +1,6 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
-using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.DTOs.Client;
+using GestaoOfficina.Domain.DTOs.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;

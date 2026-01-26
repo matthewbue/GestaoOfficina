@@ -1,5 +1,4 @@
 ﻿using GestaoOfficina.Domain.Model;
-using GestaoOfficinaProj.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,23 +12,22 @@ namespace GestaoOfficina.Infra.Context
     {
         public GestaoOfficinaContext(DbContextOptions<GestaoOfficinaContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            // Database.EnsureCreated(); // REMOVIDO - Comentado para usar Migrations
         }
+        
         public DbSet<Client> Clients { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Manutence> Manutences { get; set; }
         public DbSet<Automovel> Automoveis { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<ManutenceServico> ManutenceServicos { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-           //optionsBuilder.UseLazyLoadingProxies();
-
-
         }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Automovel>()
@@ -41,7 +39,6 @@ namespace GestaoOfficina.Infra.Context
                 .HasOne(m => m.Automovel)
                 .WithMany(c => c.Manutences)
                 .HasForeignKey(m => m.AutomovelId);
-
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using GestaoOfficina.Domain.Model;
+﻿using GestaoOfficina.Domain.DTO;
+using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
 using GestaoOfficinaProj.Domain.DTO;
-using GestaoOfficinaProj.Domain.Model;
 using GestaoOfficinaProj.Infra.Interface;
 using MailKit.Net.Smtp;
 using MailKit.Security;

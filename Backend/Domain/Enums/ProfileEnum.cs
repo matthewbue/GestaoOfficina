@@ -5,21 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Domain.Enums
+namespace GestaoOfficina.Domain.Enums
 {
     public enum ProfileEnum
     {
         [Description("Administrador")]
-        Administrador,
+        Admin = 1,
 
-        [Description("Cliente")]
-        Cliente,
+        [Description("Operador")]
+        Operador = 2,
 
-        [Description("Funcionario Empresa")]
-        Funcionario_Empresa,
-
-        [Description("Administrador Empresa")]
-        Administrador_Empresa
-
+        [Description("Técnico")]
+        Tecnico = 3
     }
 }

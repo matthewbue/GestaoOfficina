@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GestaoOfficinaProj.Domain.DTOs.Client
+namespace GestaoOfficina.Domain.DTOs.Client
 {
     public class ClientGetFilterResponse
     {
