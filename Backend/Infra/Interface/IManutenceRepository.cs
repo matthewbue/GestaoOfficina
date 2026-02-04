@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.DTOs.OS;
+using GestaoOfficina.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,11 @@ namespace GestaoOfficina.Infra.Interface
         Task<List<Manutence>> GetRelatorio(EntryFilterRelatorioDTO entrada);
         int GetManutenceIdByDate(DateTime entrada);
         void DeleteManutence(int entrada);
+
+        // Novos métodos para fluxo de orçamento
+        void AtualizarStatusOrcamento(int manutenceId, StatusOrcamentoEnum novoStatus);
+        void AdicionarFotos(List<OrcamentoFoto> fotos);
+        Task<List<OrcamentoFoto>> GetFotosByManutenceId(int manutenceId);
+        void DeletarFoto(int fotoId);
     }
 }

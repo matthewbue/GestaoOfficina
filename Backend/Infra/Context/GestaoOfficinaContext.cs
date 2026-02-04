@@ -22,6 +22,7 @@ namespace GestaoOfficina.Infra.Context
         public DbSet<Automovel> Automoveis { get; set; }
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<ManutenceServico> ManutenceServicos { get; set; }
+        public DbSet<OrcamentoFoto> OrcamentoFotos { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +40,12 @@ namespace GestaoOfficina.Infra.Context
                 .HasOne(m => m.Automovel)
                 .WithMany(c => c.Manutences)
                 .HasForeignKey(m => m.AutomovelId);
+
+            modelBuilder.Entity<OrcamentoFoto>()
+                .HasOne(f => f.Manutence)
+                .WithMany(m => m.Fotos)
+                .HasForeignKey(f => f.ManutenceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

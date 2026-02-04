@@ -1,6 +1,7 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
+using GestaoOfficina.Domain.Enums;
 using GestaoOfficinaProj.Domain.DTO;
 using GestaoOfficinaProj.Infra.Interface;
 using MailKit.Net.Smtp;
@@ -224,6 +225,231 @@ namespace GestaoOfficinaProj.Aplicattion.Service
         {
             _manutenceRepository.DeleteManutence(entrada);
             return new ReturnDefault("Deletado com sucesso.", "sucesso");
+        }
+
+        // Novos métodos para fluxo de orçamento
+
+        public async Task<ReturnDefault> RealizarCheckIn(CheckInDTO entrada)
+        {
+            try
+            {
+                var manutence = new Manutence
+                {
+                    AutomovelId = entrada.VeiculoId,
+                    Observacoes = entrada.Observacoes,
+                    TipoDoc = "Orçamento",
+                    DataOS = DateTime.Now,
+                    DataCheckIn = DateTime.Now,
+                    Status = "Em Andamento",
+                    StatusOrcamento = StatusOrcamentoEnum.CheckIn,
+                    OperadorCheckInId = entrada.OperadorId,
+                    ValorTotal = 0,
+                    ManutecesServicos = new List<ManutenceServico>()
+                };
+
+                var manutenceId = _manutenceRepository.Create(manutence);
+                
+                return new ReturnDefault("Check-in realizado com sucesso.", new { id = manutenceId, status = "CheckIn" });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao realizar check-in: {ex.Message}", null);
+            }
+        }
+
+        public async Task<ReturnDefault> AdicionarFotosCheckIn(CheckInVisualDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.CheckIn)
+                    return new ReturnDefault("Orçamento não está na etapa de Check-in.", null);
+
+                if (entrada.Fotos != null && entrada.Fotos.Count > 6)
+                    return new ReturnDefault("Máximo de 6 fotos permitidas.", null);
+
+                var fotos = entrada.Fotos?.Select(f => new OrcamentoFoto
+                {
+                    ImagemBytes = f.ImagemBytes,
+                    NomeArquivo = f.NomeArquivo,
+                    TipoImagem = f.TipoImagem,
+                    Descricao = f.Descricao,
+                    ManutenceId = entrada.ManutenceId,
+                    DataUpload = DateTime.Now
+                }).ToList();
+
+                if (fotos != null && fotos.Any())
+                {
+                    _manutenceRepository.AdicionarFotos(fotos);
+                }
+
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.CheckInVisual);
+
+                return new ReturnDefault("Fotos adicionadas com sucesso. Status atualizado para Check-in Visual.", 
+                    new { quantidadeFotos = fotos?.Count ?? 0, status = "CheckInVisual" });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao adicionar fotos: {ex.Message}", null);
+            }
+        }
+
+        public async Task<ReturnDefault> InformarDiagnostico(DiagnosticoDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.CheckInVisual)
+                    return new ReturnDefault("Orçamento não está na etapa de Check-in Visual.", null);
+
+                manutence.DiagnosticoMecanico = entrada.DiagnosticoMecanico;
+                manutence.DataDiagnostico = DateTime.Now;
+                manutence.MecanicoId = entrada.MecanicoId;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.Diagnostico;
+
+                _manutenceRepository.UpdateManutence(manutence);
+
+                return new ReturnDefault("Diagnóstico informado com sucesso.", 
+                    new { status = "Diagnostico", diagnostico = entrada.DiagnosticoMecanico });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao informar diagnóstico: {ex.Message}", null);
+            }
+        }
+
+        public async Task<ReturnDefault> ConcluirDiagnostico(DiagnosticoCompletoDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.Diagnostico)
+                    return new ReturnDefault("Orçamento não está na etapa de Diagnóstico.", null);
+
+                if (string.IsNullOrEmpty(manutence.DiagnosticoMecanico))
+                    return new ReturnDefault("Diagnóstico não foi informado.", null);
+
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.DiagnosticoCompleto);
+
+                return new ReturnDefault("Diagnóstico concluído. Aguardando operador criar orçamento.", 
+                    new { status = "DiagnosticoCompleto" });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao concluir diagnóstico: {ex.Message}", null);
+            }
+        }
+
+        public async Task<ReturnDefault> IniciarCriacaoOrcamento(IniciarCriacaoOrcamentoDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.DiagnosticoCompleto)
+                    return new ReturnDefault("Diagnóstico ainda não foi concluído.", null);
+
+                manutence.OperadorOrcamentoId = entrada.OperadorId;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.CriandoOrcamento;
+
+                _manutenceRepository.UpdateManutence(manutence);
+
+                return new ReturnDefault("Criação de orçamento iniciada.", 
+                    new { status = "CriandoOrcamento", operadorId = entrada.OperadorId });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao iniciar criação de orçamento: {ex.Message}", null);
+            }
+        }
+
+        public async Task<ReturnDefault> ConcluirOrcamento(ConcluirOrcamentoDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.CriandoOrcamento)
+                    return new ReturnDefault("Orçamento não está sendo criado.", null);
+
+                if (entrada.Servicos == null || !entrada.Servicos.Any())
+                    return new ReturnDefault("É necessário adicionar pelo menos um serviço.", null);
+
+                // Adicionar serviços
+                foreach (var servico in entrada.Servicos)
+                {
+                    servico.ManutenceId = entrada.ManutenceId;
+                    _manutenceRepository.CreateManutenceServico(servico);
+                }
+
+                // Atualizar valores e status
+                manutence.ValorTotal = entrada.ValorTotal;
+                manutence.DataOrcamentoCriado = DateTime.Now;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.OrcamentoConcluido;
+                
+                if (!string.IsNullOrEmpty(entrada.ObservacoesAdicionais))
+                {
+                    manutence.Observacoes = string.IsNullOrEmpty(manutence.Observacoes) 
+                        ? entrada.ObservacoesAdicionais 
+                        : manutence.Observacoes + "\n" + entrada.ObservacoesAdicionais;
+                }
+
+                _manutenceRepository.UpdateManutence(manutence);
+
+                return new ReturnDefault("Orçamento concluído com sucesso.", 
+                    new { 
+                        id = manutence.Id, 
+                        status = "OrcamentoConcluido", 
+                        valorTotal = entrada.ValorTotal,
+                        quantidadeServicos = entrada.Servicos.Count 
+                    });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao concluir orçamento: {ex.Message}", null);
+            }
+        }
+
+        public async Task<ReturnDefault> GetFotosByOrcamento(int manutenceId)
+        {
+            try
+            {
+                var fotos = await _manutenceRepository.GetFotosByManutenceId(manutenceId);
+                
+                var fotosResponse = fotos.Select(f => new
+                {
+                    id = f.Id,
+                    nomeArquivo = f.NomeArquivo,
+                    tipoImagem = f.TipoImagem,
+                    descricao = f.Descricao,
+                    dataUpload = f.DataUpload,
+                    tamanhoBytes = f.ImagemBytes?.Length ?? 0
+                }).ToList();
+
+                return new ReturnDefault("Fotos retornadas com sucesso.", fotosResponse);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao buscar fotos: {ex.Message}", null);
+            }
         }
     }
 }

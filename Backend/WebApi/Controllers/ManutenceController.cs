@@ -145,5 +145,105 @@ namespace GestaoOfficinaProj.Controllers
             var result = await _manutenceService.GetRelatorio(entrada);
             return  new JsonResult(result);
         }
+
+        // Novos endpoints para fluxo de orçamento
+
+        [HttpPost("CheckIn")]
+        public async Task<IActionResult> RealizarCheckIn(CheckInDTO entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.RealizarCheckIn(entrada);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("CheckInVisual")]
+        public async Task<IActionResult> AdicionarFotosCheckIn(CheckInVisualDTO entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.AdicionarFotosCheckIn(entrada);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("Diagnostico")]
+        public async Task<IActionResult> InformarDiagnostico(DiagnosticoDTO entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.InformarDiagnostico(entrada);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("DiagnosticoCompleto")]
+        public async Task<IActionResult> ConcluirDiagnostico(DiagnosticoCompletoDTO entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.ConcluirDiagnostico(entrada);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("IniciarCriacaoOrcamento")]
+        public async Task<IActionResult> IniciarCriacaoOrcamento(IniciarCriacaoOrcamentoDTO entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.IniciarCriacaoOrcamento(entrada);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("ConcluirOrcamento")]
+        public async Task<IActionResult> ConcluirOrcamento(ConcluirOrcamentoDTO entrada)
+        {
+            try
+            {
+                var result = await _manutenceService.ConcluirOrcamento(entrada);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet("GetFotosOrcamento")]
+        public async Task<IActionResult> GetFotosByOrcamento(int manutenceId)
+        {
+            try
+            {
+                var result = await _manutenceService.GetFotosByOrcamento(manutenceId);
+                return new JsonResult(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

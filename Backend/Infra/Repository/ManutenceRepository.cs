@@ -3,6 +3,7 @@ using GestaoOfficina.Infra.Context;
 using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.DTOs.OS;
 using GestaoOfficina.Infra.Interface;
+using GestaoOfficina.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -273,6 +274,40 @@ namespace GestaoOfficina.Infra.Repository
             var resultdelete = _gestaoOfficinaContext.ManutenceServicos.Where(r => r.ID == entrada).FirstOrDefault();
             _gestaoOfficinaContext.ManutenceServicos.Remove(resultdelete);
             _gestaoOfficinaContext.SaveChanges();
+        }
+
+        // Novos métodos para fluxo de orçamento
+        public void AtualizarStatusOrcamento(int manutenceId, StatusOrcamentoEnum novoStatus)
+        {
+            var manutence = _gestaoOfficinaContext.Manutences.Find(manutenceId);
+            if (manutence != null)
+            {
+                manutence.StatusOrcamento = novoStatus;
+                _gestaoOfficinaContext.SaveChanges();
+            }
+        }
+
+        public void AdicionarFotos(List<OrcamentoFoto> fotos)
+        {
+            _gestaoOfficinaContext.OrcamentoFotos.AddRange(fotos);
+            _gestaoOfficinaContext.SaveChanges();
+        }
+
+        public async Task<List<OrcamentoFoto>> GetFotosByManutenceId(int manutenceId)
+        {
+            return await _gestaoOfficinaContext.OrcamentoFotos
+                .Where(f => f.ManutenceId == manutenceId)
+                .ToListAsync();
+        }
+
+        public void DeletarFoto(int fotoId)
+        {
+            var foto = _gestaoOfficinaContext.OrcamentoFotos.Find(fotoId);
+            if (foto != null)
+            {
+                _gestaoOfficinaContext.OrcamentoFotos.Remove(foto);
+                _gestaoOfficinaContext.SaveChanges();
+            }
         }
     }
 }

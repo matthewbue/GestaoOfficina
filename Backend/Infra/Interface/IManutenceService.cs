@@ -21,5 +21,14 @@ namespace GestaoOfficina.Infra.Interface
         ReturnDefault CheckoutOS(int IdentificadorOS);
         Task<ReturnDefault> GetRelatorio(EntryFilterRelatorioDTO entrada);
         ReturnDefault DeleteManutence(int entrada);
+
+        // Novos métodos para fluxo de orçamento
+        Task<ReturnDefault> RealizarCheckIn(CheckInDTO entrada);
+        Task<ReturnDefault> AdicionarFotosCheckIn(CheckInVisualDTO entrada);
+        Task<ReturnDefault> InformarDiagnostico(DiagnosticoDTO entrada);
+        Task<ReturnDefault> ConcluirDiagnostico(DiagnosticoCompletoDTO entrada);
+        Task<ReturnDefault> IniciarCriacaoOrcamento(IniciarCriacaoOrcamentoDTO entrada);
+        Task<ReturnDefault> ConcluirOrcamento(ConcluirOrcamentoDTO entrada);
+        Task<ReturnDefault> GetFotosByOrcamento(int manutenceId);
     }
 }
