@@ -3,11 +3,13 @@ using GestaoOfficinaProj.Domain.DTO;
 using GestaoOfficinaProj.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoOfficinaProj.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class ServicoController : ControllerBase
     {
         private readonly IServicoService _servicoService;

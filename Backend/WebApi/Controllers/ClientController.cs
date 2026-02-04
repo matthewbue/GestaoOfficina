@@ -11,6 +11,7 @@ namespace GestaoOfficina.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class ClientController : ControllerBase
     {
 

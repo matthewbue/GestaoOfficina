@@ -26,5 +26,18 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/orcamento', title: 'MenuItemOrçamento', icon: 'ft-file-text', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []
   },
+  {
+    path: '',
+    title: 'MenuItemConfiguracoes',
+    icon: 'ft-settings',
+    class: 'has-sub',
+    badge: '',
+    badgeClass: '',
+    isExternalLink: false,
+    requiresAdmin: true,
+    submenu: [
+      { path: '/account', title: 'MenuItemUsuarios', icon: 'ft-arrow-right submenu-icon', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    ]
+  },
 
 ];

@@ -5,11 +5,13 @@ using GestaoOfficina.Infra.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoOfficinaProj.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class ManutenceController : ControllerBase
     {
         private readonly IManutenceService _manutenceService;

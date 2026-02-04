@@ -56,10 +56,14 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router,
     private configService: ConfigService, private cdr: ChangeDetectorRef, private authService: AuthService) {
 
-    const browserLang: string = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
-    this.currentLang = browserLang;
-    this.ChangeLanguage(this.currentLang);
+    const browserLang: string = translate.getBrowserLang() || 'pt';
+    const match = browserLang.match(/en|es|pt|de/);
+    const lang = match ? match[0] : 'en';
+
+    translate.setDefaultLang('pt');
+    translate.use(lang);
+    this.currentLang = lang;
+    this.ChangeLanguage(lang);
     this.config = this.configService.templateConf;
     this.innerWidth = window.innerWidth;
 
@@ -72,8 +76,8 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.cpfcnpj = localStorage.getItem("CPFCNPJ");
-    // this.fullname = localStorage.getItem("fullname");
-    this.fullname = "Damon Pinheiro";
+    const user = this.authService.getCurrentUser();
+    this.fullname = String(user?.name ?? user?.fullname ?? user?.userName ?? user?.username ?? '').trim() || 'Usuário';
 
 
 

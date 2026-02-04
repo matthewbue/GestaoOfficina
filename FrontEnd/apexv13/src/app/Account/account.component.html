@@ -9,86 +9,49 @@
 <section id="ngx-datatable-filter">
   <div class="row">
     <div class="col-12">
-      <!-- Filter starts -->
-      <div class="users-list-filter px-2">
-        <!-- <form>
-          <div class="row border rounded py-2 mb-2 mx-n2">
-             <div class="col-12 col-sm-6 col-lg-3">
-              <label for="list-falicity">{{"account.label.FACILITY" | translate |  uppercase }}</label>
-              <fieldset class="form-group">
-                <select id="list-falicity" class="form-control">
-                  <option value="">{{"account.label.ALL" | translate | uppercase}}</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                </select>
-              </fieldset>
-            </div>
-
-            <div class="col-12 col-sm-6 col-lg-3">
-              <label for="users-list-role">Role</label>
-              <fieldset class="form-group">
-                <select id="users-list-role" class="form-control">
-                  <option value="">Any</option>
-                  <option value="User">User</option>
-                  <option value="Staff">Staff</option>
-                </select>
-              </fieldset>
-            </div>
-
-            <div class="col-12 col-sm-6 col-lg-3">
-              <label for="users-list-status">Status</label>
-              <fieldset class="form-group">
-                <select id="users-list-status" class="form-control">
-                  <option value="">Any</option>
-                  <option value="Active">Active</option>
-                  <option value="Close">Close</option>
-                  <option value="Banned">Banned</option>
-                </select>
-              </fieldset>
-            </div>
-             <div class="bg-info clearfix">
-              <button type="button" class="btn btn-danger float-left">Example Button floated left</button>
-              <button type="button" class="btn btn-dark float-right">Example Button floated right</button>
-          </div>
-
-
-
-          </div>
-        </form> -->
-        <div class="border rounded py-2 mb-2 mx-n2 clearfix">
-          <button type="button" class="btn btn-primary mr-2 float-right" (click)="new()">
-            {{"account.button.NEW" | translate}}
-          </button>
-        </div>
-      </div>
-      <!-- Filter ends -->
-    </div>
-    <div class="col-12">
       <div class="card">
+        <div class="card-header d-flex align-items-center justify-content-between flex-wrap">
+          <div>
+            <h4 class="card-title mb-0">{{"account.header.MAIN" | translate}}</h4>
+            <small class="text-muted">{{"account.header.SUB" | translate}}</small>
+          </div>
+
+          <div class="d-flex align-items-center mt-1 mt-sm-0">
+            <button type="button" class="btn btn-primary" (click)="openCreateModal(createUserTpl)">
+              <i class="ft-plus mr-1"></i>
+              {{"account.button.NEW" | translate}}
+            </button>
+          </div>
+        </div>
+
         <div class="card-content">
           <div class="card-body">
-            <!-- ngx-datatable-filter -->
-            <fieldset class="form-group">
-              <label>{{"account.datatable.SHOW" | translate | uppercase}}
-                <select name="users-list-select"
-                  class="form-control form-control-sm d-inline-block width-100 p-right-25 pl-4 mx-1"
-                  (click)="updateLimit($event)">
+            <div class="d-flex flex-wrap align-items-center justify-content-between mb-1">
+              <div class="d-flex align-items-center mb-1 mb-md-0">
+                <span class="text-uppercase font-small-2 mr-1">{{"account.datatable.SHOW" | translate}}</span>
+                <select name="users-list-select" class="form-control form-control-sm width-100" (change)="updateLimit($event)">
                   <option value="10">10</option>
                   <option value="25">25</option>
                   <option value="50">50</option>
                   <option value="100">100</option>
                 </select>
-                {{"account.datatable.RESULT" | translate | uppercase}}</label>
-              <label for="ngx-filter-ref" class="float-right">{{'account.datatable.SEARCH' | translate | uppercase}}:
-                <input id="ngx-filter-ref" class="form-control form-control-sm d-inline-block width-200 ml-1"
-                  type="text" (keyup)="filterUpdate($event)" />
-              </label>
-            </fieldset>
+                <span class="text-uppercase font-small-2 ml-1">{{"account.datatable.RESULT" | translate}}</span>
+              </div>
+
+              <div class="input-group input-group-sm users-search">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ft-search"></i></span>
+                </div>
+                <input id="ngx-filter-ref" class="form-control" type="text"
+                  placeholder="{{'account.datatable.SEARCH' | translate}}" (keyup)="filterUpdate($event)" />
+              </div>
+            </div>
+
             <ngx-datatable class="bootstrap core-bootstrap" [columnMode]="ColumnMode.force" [headerHeight]="50"
               [footerHeight]="50" rowHeight="auto" [limit]="limitRef" [rows]="rows" [scrollbarH]="true"
               [columns]="columns">
               <!-- <ngx-datatable-column name="ID" prop="Id" [width]="50"></ngx-datatable-column> -->
-              <ngx-datatable-column name="{{'account.label.USERNAME' | translate | uppercase}}" prop="userName" [width]="150">
+              <ngx-datatable-column name="{{'account.label.CPF' | translate | uppercase}}" prop="cpf" [width]="130">
                 <!-- <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
                   <div class="d-flex align-items-center">
                     <img class="rounded-circle mr-1" src="assets/img/portrait/small/{{
@@ -101,24 +64,41 @@
                   </div>
                 </ng-template> -->
               </ngx-datatable-column>
-              <ngx-datatable-column name="{{'account.label.FULLNAME' | translate | uppercase}}" prop="fullname" [width]="150"></ngx-datatable-column>
-              <!-- <ngx-datatable-column name="Role" prop="role" [width]="70"></ngx-datatable-column> -->
-              <ngx-datatable-column name="{{'account.label.STATUS' | translate | uppercase}}" prop="status" [width]="50">
-                <ng-template let-status="value" ngx-datatable-cell-template>
-                  <div class="badge" [ngClass]="{
-                      'bg-light-success': status == true,
-                      'bg-light-danger': status == false
-                    }">
-                    {{ (status == true ?'account.label.ACTIVE': 'account.label.INACTIVE') | translate | uppercase }}
+              <ngx-datatable-column name="{{'account.label.FULLNAME' | translate | uppercase}}" prop="name" [width]="260">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div class="d-flex align-items-center">
+                    <div class="user-avatar mr-1" [ngClass]="{ 'has-photo': !!row.profilePhotoUrl }">
+                      <img *ngIf="row.profilePhotoUrl" [src]="row.profilePhotoUrl" alt="foto" />
+                      <span *ngIf="!row.profilePhotoUrl">{{ row.initials }}</span>
+                    </div>
+
+                    <div class="cell-line-height">
+                      <div class="font-weight-600 line-height-1">{{ row.name }}</div>
+                      <small class="text-muted">{{ row.email }}</small>
+                    </div>
                   </div>
                 </ng-template>
               </ngx-datatable-column>
-              <ngx-datatable-column  name="{{'account.datatable.ACTION' | translate | uppercase}}" [width]="50">
+              <ngx-datatable-column name="{{'account.label.EMAIL' | translate | uppercase}}" prop="email" [width]="220"></ngx-datatable-column>
+              <ngx-datatable-column name="{{'account.label.ROLE' | translate | uppercase}}" prop="profileDescription" [width]="160">
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <span class="badge badge-light-primary">{{ row.profileDescription }}</span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="{{'account.datatable.ACTION' | translate | uppercase}}" [width]="140">
                 <ng-template let-row="row" ngx-datatable-cell-template>
                   <!-- routerLink="{{row.id}}/edit"  -->
-                  <button (click)="edit(row)" class="btn btn-sm btn-outline-primary mr-2" title="{{'account.datatable.EDIT' | translate | uppercase}}"  ><i class="ft-edit  cursor-pointer"></i></button>
-
-                  <button (click)="reset(row)" class="btn btn-sm btn-outline-dark" title="{{'account.datatable.RESET' | translate | uppercase}}" ><i class="ft-user-check cursor-pointer"></i></button>
+                  <div class="btn-group" role="group" aria-label="Ações">
+                    <button (click)="view(row)" class="btn btn-sm btn-outline-info" title="{{'account.datatable.VIEW' | translate | uppercase}}">
+                      <i class="ft-eye cursor-pointer"></i>
+                    </button>
+                    <button (click)="edit(row)" class="btn btn-sm btn-outline-primary" title="{{'account.datatable.EDIT' | translate | uppercase}}">
+                      <i class="ft-edit cursor-pointer"></i>
+                    </button>
+                    <button (click)="remove(row)" class="btn btn-sm btn-outline-danger" title="{{'account.datatable.DELETE' | translate | uppercase}}">
+                      <i class="ft-trash cursor-pointer"></i>
+                    </button>
+                  </div>
                 </ng-template>
               </ngx-datatable-column>
             </ngx-datatable>
@@ -131,3 +111,68 @@
   </div>
 </section>
 <!--/ Filter Datatables -->
+
+<ng-template #createUserTpl let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ 'account.button.NEW' | translate }}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="createForm">
+      <div class="form-group">
+        <label>{{ 'account.label.FULLNAME' | translate }}</label>
+        <input type="text" class="form-control" formControlName="name"
+          [ngClass]="{ 'is-invalid': createFormSubmitted && createForm.get('name')?.invalid }">
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'account.label.EMAIL' | translate }}</label>
+        <input type="email" class="form-control" formControlName="email"
+          [ngClass]="{ 'is-invalid': createFormSubmitted && createForm.get('email')?.invalid }">
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'account.label.CPF' | translate }}</label>
+        <input type="text" class="form-control" formControlName="cpf"
+          [ngClass]="{ 'is-invalid': createFormSubmitted && createForm.get('cpf')?.invalid }">
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'account.label.ROLE' | translate }}</label>
+        <select class="form-control" formControlName="profile"
+          [ngClass]="{ 'is-invalid': createFormSubmitted && createForm.get('profile')?.invalid }">
+          <option [ngValue]="1">Administrador</option>
+          <option [ngValue]="2">Operador</option>
+          <option [ngValue]="3">Técnico</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'account.label.PHOTO' | translate }}</label>
+        <div class="d-flex align-items-center">
+          <img *ngIf="createPhotoPreviewUrl" [src]="createPhotoPreviewUrl" alt="foto" class="rounded mr-2" height="48" width="48">
+          <div>
+            <label class="btn btn-sm bg-light-primary mb-0" for="create-user-photo">{{ 'account.button.UPLOAD' | translate }}</label>
+            <input type="file" id="create-user-photo" hidden accept="image/*" (change)="onCreatePhotoSelected($event)">
+            <div class="text-muted"><small>{{ 'account.setting.ALLOWEDPHOTO' | translate }}</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info mb-0">
+        A conta será criada com a senha padrão <strong>ferreira123</strong>.
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.dismiss()">{{ 'account.button.CANCEL' | translate }}</button>
+    <button type="button" class="btn btn-primary" (click)="submitCreate(modal)" [disabled]="creating">
+      <span *ngIf="creating" class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+      {{ 'account.label.ADD' | translate }}
+    </button>
+  </div>
+</ng-template>

@@ -21,7 +21,11 @@ export class LoginPageComponent {
     rememberMe: new FormControl(true)
   });
 
-  constructor(private router: Router, private authService: AuthService, private toastr: ToastrService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private toastr: ToastrService,
+  ) {}
 
   get lf() {
     return this.loginForm.controls;
@@ -36,20 +40,25 @@ export class LoginPageComponent {
       return;
     }
 
-    // Chama o método signinUser do AuthService (login sem a verificação de credenciais)
     const { username, password } = this.loginForm.value;
-    if (username === 'damon' && password === '123456') {
-      // Login bem-sucedido
-      this.authService.isAuthenticated(); // Define a autenticação como verdadeira
-
-      // Redireciona para a página desejada
-      this.router.navigate(['/page']);
-      this.loading = false;
-    } else {
-      // Credenciais inválidas
-      this.toastr.error('Credenciais inválidas. Tente novamente.', 'Erro de login');
-      this.loading = false;
-    }
+    this.authService.signinUser(username as string, password as string).subscribe(
+      (response) => {
+        this.loading = false;
+        if (response?.data?.token) {
+          this.router.navigate(['/page']);
+          return;
+        }
+        this.toastr.error('Credenciais inválidas. Tente novamente.', 'Erro de login');
+      },
+      (err) => {
+        this.loading = false;
+        if (err?.status === 401) {
+          this.toastr.error('Credenciais inválidas. Tente novamente.', 'Erro de login');
+          return;
+        }
+        this.toastr.error('Erro ao autenticar. Tente novamente.', 'Erro de login');
+      }
+    );
   }
 
   openModal() {

@@ -21,8 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private ngSelectConfig: NgSelectConfig,
     public translate: TranslateService,
   ) {
-    const browserLang: string = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "pt");
+    const browserLang: string = translate.getBrowserLang() || 'pt';
+    const match = browserLang.match(/en|es|pt|de/);
+    const lang = match ? match[0] : 'pt';
+
+    translate.setDefaultLang('pt');
+    translate.use(lang);
   }
 
   ngOnInit() {

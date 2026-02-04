@@ -9,6 +9,8 @@
   "MenuItemServico": "Novo Serviço",
   "MenuItemClientes": "Clientes",
   "MenuItemSubClientes": "Listagem",
+  "MenuItemConfiguracoes": "Configurações",
+  "MenuItemUsuarios": "Usuários",
   "MenuTopReport":"Comunicações",
   "MenuItemUserAccount": "Conta Usuários",
   "SettingFacility": "Instalações",
@@ -68,10 +70,14 @@
       "PHOTO": "Foto",
       "EDIT": "Editar",
       "ADD": "Criar",
+      "VIEW": "Visualizar",
+      "CPF": "CPF",
       "USERNAME": "Usuário",
       "FULLNAME": "Nome Completo",
       "ROLE": "Perfil",
       "EMAIL": "E-mail",
+      "PASSWORD": "Senha",
+      "PASSWORD_HELP": "(Opcional) Preencha apenas se quiser alterar a senha",
       "FACILITY": "Instalação",
       "STATUS": "Situação",
       "INACTIVE": "Inativo",
@@ -88,6 +94,8 @@
       "ACTION": "Ação",
       "SEARCH": "Pesquisar",
       "EDIT": "Alterar Conta",
+      "VIEW": "Visualizar",
+      "DELETE": "Excluir",
       "RESET": "Resetar Senha"
     },
     "message": {
@@ -102,7 +110,14 @@
       "UNAUTHORIZE": "Operação não autorizada",
       "ROLEREQUIRED": "É obrigatório no mimino um perfil",
       "FACILITYREQUIRED": "É obrigatório no mimino uma instalação",
-      "RESETPASSSUCESS": "Senha Resetada com sucesso"
+      "RESETPASSSUCESS": "Senha Resetada com sucesso",
+      "DELETESUCESS": "Usuário excluído com sucesso"
+    },
+    "showConfirmDeleteUser": {
+      "TITLE": "Excluir usuário",
+      "BODY": "Deseja realmente excluir o usuário:",
+      "CONFIRM": "Excluir",
+      "CANCEL": "Cancelar"
     },
     "roles": {
       "ADMIN": "Administrador",

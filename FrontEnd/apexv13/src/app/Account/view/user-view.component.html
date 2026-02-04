@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-12">
+    <div class="content-header">{{ 'account.header.MAIN' | translate }}</div>
+    <p class="content-sub-header mb-1">{{ 'account.header.SUB' | translate }}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between flex-wrap">
+        <div>
+          <h4 class="card-title mb-0">{{ 'account.label.VIEW' | translate }}</h4>
+          <small class="text-muted">{{ user?.name }}</small>
+        </div>
+
+        <div class="d-flex align-items-center mt-1 mt-sm-0">
+          <button type="button" class="btn btn-outline-secondary mr-1" (click)="back()">
+            <i class="ft-arrow-left mr-1"></i>
+            {{ 'account.button.CANCEL' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary" (click)="edit()" [disabled]="!user?.id">
+            <i class="ft-edit mr-1"></i>
+            {{ 'account.datatable.EDIT' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-2">
+          <div class="user-avatar user-avatar-lg mr-2" [ngClass]="{ 'has-photo': !!profilePhotoUrl }">
+            <img *ngIf="profilePhotoUrl" [src]="profilePhotoUrl" alt="foto" />
+            <span *ngIf="!profilePhotoUrl">{{ initials }}</span>
+          </div>
+          <div class="min-width-0">
+            <div class="h5 mb-0 text-truncate">{{ user?.name }}</div>
+            <small class="text-muted">{{ user?.email }}</small>
+            <div class="mt-50">
+              <span class="badge badge-light-primary">{{ user?.profileDescription }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>{{ 'account.label.CPF' | translate }}</label>
+              <div class="form-control-plaintext">{{ user.cpf }}</div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'account.label.FULLNAME' | translate }}</label>
+              <div class="form-control-plaintext">{{ user.name }}</div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>{{ 'account.label.EMAIL' | translate }}</label>
+              <div class="form-control-plaintext">{{ user.email }}</div>
+            </div>
+            <div class="form-group">
+              <label>{{ 'account.label.ROLE' | translate }}</label>
+              <div class="form-control-plaintext">{{ user.profileDescription }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

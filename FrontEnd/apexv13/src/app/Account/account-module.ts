@@ -14,6 +14,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AccountComponent} from './account.component';
 import { UserEditComponent } from './edit/user-edit.component';
 import { SelectComponent } from './select/select.component';
+import { UserViewComponent } from './view/user-view.component';
 
 
 @NgModule({
@@ -24,6 +25,6 @@ import { SelectComponent } from './select/select.component';
     NgSelectModule
 
   ],
-  declarations: [AccountComponent, UserEditComponent, SelectComponent]
+  declarations: [AccountComponent, UserEditComponent, UserViewComponent, SelectComponent]
 })
 export class AccountModule { }

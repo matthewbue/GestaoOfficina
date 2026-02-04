@@ -6,11 +6,13 @@ using System;
 using GestaoOfficinaProj.Domain.DTO;
 using MySqlX.XDevAPI.Common;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestaoOfficinaProj.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class AutomovelController : ControllerBase
     {
         private readonly IAutomovelService _automovelService;
