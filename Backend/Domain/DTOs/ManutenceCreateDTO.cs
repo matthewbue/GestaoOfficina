@@ -1,4 +1,5 @@
 ﻿using GestaoOfficina.Domain.Model;
+using GestaoOfficina.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,6 @@ namespace GestaoOfficina.Domain.DTO
         public double ValorTotal { get; set; }
         public string Observacoes { get; set; }
         public string TipoDoc { get; set; }
-
+        public StatusOrcamentoEnum? StatusOrcamento { get; set; }
     }
 }

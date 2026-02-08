@@ -13,6 +13,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EMPTY } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { OrdemdeServicoService } from '../ordemdeservico.service';
+import { StatusOrcamentoHelper } from 'app/shared/helpers/status-orcamento.helper';
+import { StatusOrcamentoEnum } from 'app/shared/Model/StatusOrcamentoEnum';
 
 @Component({
   selector: 'app-edit-ordemdeservico',
@@ -226,7 +228,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
         }),
         observacoes: this.formOrdemServico.get('observacoes')?.value,
         valortotal: valorTotal,
-        tipoDoc: "OrdemServico"
+        tipoDoc: "OrdemServico",
+        statusOrcamento: StatusOrcamentoEnum.OrcamentoIniciado
       };
       const result$ = this.alertService.showConfirm(
         "Confirmação",
@@ -433,5 +436,30 @@ export class EditOrdemdeservicoComponent implements OnInit {
     // Aqui você pode implementar a lógica para salvar as alterações do item específico.
     // Por exemplo, você pode acessar this.ordemServico.manutecesServicos[index] para obter o item atual.
     this.toggleEdicao(index);
+  }
+
+  // Métodos para status de orçamento
+  getStatusDescricao(status: number): string {
+    return StatusOrcamentoHelper.getDescricao(status);
+  }
+
+  getStatusClass(status: number): string {
+    return StatusOrcamentoHelper.getCssClass(status);
+  }
+
+  getStatusIcon(status: number): string {
+    return StatusOrcamentoHelper.getIcon(status);
+  }
+
+  isAguardandoFotos(status: number): boolean {
+    return StatusOrcamentoHelper.aguardandoFotosApp(status);
+  }
+
+  podeEditar(status: number): boolean {
+    return StatusOrcamentoHelper.podeEditarOrcamento(status);
+  }
+
+  podeFinalizar(status: number): boolean {
+    return StatusOrcamentoHelper.podeFinalizar(status);
   }
 }

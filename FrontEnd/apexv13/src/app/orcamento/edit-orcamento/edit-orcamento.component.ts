@@ -13,6 +13,8 @@ import { PDFCompanyInfo, PdfGeneratorService, PDFServiceOrder } from 'app/shared
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { EMPTY } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
+import { StatusOrcamentoHelper } from 'app/shared/helpers/status-orcamento.helper';
+import { StatusOrcamentoEnum } from 'app/shared/Model/StatusOrcamentoEnum';
 
 @Component({
   selector: 'app-edit-orcamento',
@@ -213,7 +215,8 @@ export class EditOrcamentoComponent implements OnInit {
       }),
       observacoes: this.formOrdemServico.get('observacoes')?.value,
       valortotal: valorTotal,
-      tipoDoc: "Orçamento"
+      tipoDoc: "Orçamento",
+      statusOrcamento: StatusOrcamentoEnum.OrcamentoIniciado
     };
     const result$ = this.alertService.showConfirm(
       "Confirmação",
@@ -412,5 +415,30 @@ export class EditOrcamentoComponent implements OnInit {
           console.error(error);
         }
       );
+  }
+
+  // Métodos para status de orçamento
+  getStatusDescricao(status: number): string {
+    return StatusOrcamentoHelper.getDescricao(status);
+  }
+
+  getStatusClass(status: number): string {
+    return StatusOrcamentoHelper.getCssClass(status);
+  }
+
+  getStatusIcon(status: number): string {
+    return StatusOrcamentoHelper.getIcon(status);
+  }
+
+  isAguardandoFotos(status: number): boolean {
+    return StatusOrcamentoHelper.aguardandoFotosApp(status);
+  }
+
+  podeEditar(status: number): boolean {
+    return StatusOrcamentoHelper.podeEditarOrcamento(status);
+  }
+
+  podeFinalizar(status: number): boolean {
+    return StatusOrcamentoHelper.podeFinalizar(status);
   }
 }

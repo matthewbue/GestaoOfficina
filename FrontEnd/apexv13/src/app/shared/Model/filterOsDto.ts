@@ -14,6 +14,21 @@ export class FilterOsDto {
   clientId: number;
   clients: Client;
   tipoDoc: string;
+  
+  // Novos campos do fluxo de orçamento
+  statusOrcamento?: number; // StatusOrcamentoEnum
+  statusOrcamentoDescricao?: string; // Para exibição amigável
+  diagnosticoMecanico?: string;
+  dataDiagnostico?: string;
+  dataCheckIn?: string;
+  dataOrcamentoCriado?: string;
+  mecanicoId?: number;
+  operadorCheckInId?: number;
+  operadorOrcamentoId?: number;
+  quantidadeFotos?: number; // Para indicar se tem fotos
+  nomeCliente?: string; // Nome do cliente
+  veiculo?: string; // Modelo do veículo
+  placa?: string; // Placa do veículo
 }
 
 export class Client {

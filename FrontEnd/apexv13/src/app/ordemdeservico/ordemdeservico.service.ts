@@ -62,6 +62,61 @@ export class OrdemdeServicoService {
     return this.httpClient.post<any>(`${environment.API}/Manutence/GetRelatorio`, filterRelatorio)
   }
 
+  // Novos endpoints do fluxo de orçamento
+  realizarCheckIn(checkInData: any) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/CheckIn`, checkInData);
+  }
+
+  adicionarFotosCheckIn(checkInVisualData: any) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/CheckInVisual`, checkInVisualData);
+  }
+
+  informarDiagnostico(diagnosticoData: any) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/Diagnostico`, diagnosticoData);
+  }
+
+  concluirDiagnostico(diagnosticoCompletoData: any) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/DiagnosticoCompleto`, diagnosticoCompletoData);
+  }
+
+  iniciarCriacaoOrcamento(orcamentoData: any) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/IniciarCriacaoOrcamento`, orcamentoData);
+  }
+
+  concluirOrcamento(orcamentoData: any) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/ConcluirOrcamento`, orcamentoData);
+  }
+
+  getFotosOrcamento(manutenceId: number) {
+    return this.httpClient.get<any>(`${environment.API}/Manutence/GetFotosOrcamento/${manutenceId}`);
+  }
+
+  habilitarCapturaDeFotos(manutenceId: number, operadorId: number) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/HabilitarCapturaDeFotos`, {
+      manutenceId: manutenceId,
+      operadorId: operadorId
+    });
+  }
+
+  atualizarStatus(manutenceId: number, novoStatus: number) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/AtualizarStatus`, {
+      manutenceId: manutenceId,
+      novoStatus: novoStatus
+    });
+  }
+
+  aprovarOrcamento(manutenceId: number) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/AprovarOrcamento`, {
+      manutenceId: manutenceId
+    });
+  }
+
+  rejeitarOrcamento(manutenceId: number) {
+    return this.httpClient.post<any>(`${environment.API}/Manutence/RejeitarOrcamento`, {
+      manutenceId: manutenceId
+    });
+  }
+
   private handleError(err: HttpErrorResponse) {
     return throwError(err);
   }

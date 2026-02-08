@@ -37,6 +37,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.TipoDoc = entrada.TipoDoc;
             objetoPai.DataOS = DateTime.Now;
             objetoPai.Status = "Em Andamento";
+            objetoPai.StatusOrcamento = entrada.StatusOrcamento ?? StatusOrcamentoEnum.AprovadoEmExecucao;
             objetoPai.ManutecesServicos = entrada.manutences;
             objetoPai.ValorTotal = entrada.ValorTotal;
             
@@ -241,7 +242,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                     DataOS = DateTime.Now,
                     DataCheckIn = DateTime.Now,
                     Status = "Em Andamento",
-                    StatusOrcamento = StatusOrcamentoEnum.CheckIn,
+                    StatusOrcamento = StatusOrcamentoEnum.OrcamentoIniciado,
                     OperadorCheckInId = entrada.OperadorId,
                     ValorTotal = 0,
                     ManutecesServicos = new List<ManutenceServico>()
@@ -266,10 +267,10 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 if (manutence == null)
                     return new ReturnDefault("Orçamento não encontrado.", null);
 
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.CheckIn)
-                    return new ReturnDefault("Orçamento não está na etapa de Check-in.", null);
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoFotos)
+                    return new ReturnDefault("Orçamento não está na etapa de captura de fotos.", null);
 
-                if (entrada.Fotos != null && entrada.Fotos.Count > 6)
+                if (entrada.Fotos != null && entrada.Fotos.Count > 9)
                     return new ReturnDefault("Máximo de 6 fotos permitidas.", null);
 
                 var fotos = entrada.Fotos?.Select(f => new OrcamentoFoto
@@ -287,7 +288,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                     _manutenceRepository.AdicionarFotos(fotos);
                 }
 
-                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.CheckInVisual);
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.AguardandoFotos);
 
                 return new ReturnDefault("Fotos adicionadas com sucesso. Status atualizado para Check-in Visual.", 
                     new { quantidadeFotos = fotos?.Count ?? 0, status = "CheckInVisual" });
@@ -307,13 +308,10 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 if (manutence == null)
                     return new ReturnDefault("Orçamento não encontrado.", null);
 
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.CheckInVisual)
-                    return new ReturnDefault("Orçamento não está na etapa de Check-in Visual.", null);
-
                 manutence.DiagnosticoMecanico = entrada.DiagnosticoMecanico;
                 manutence.DataDiagnostico = DateTime.Now;
                 manutence.MecanicoId = entrada.MecanicoId;
-                manutence.StatusOrcamento = StatusOrcamentoEnum.Diagnostico;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.EmDiagnostico;
 
                 _manutenceRepository.UpdateManutence(manutence);
 
@@ -335,13 +333,13 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 if (manutence == null)
                     return new ReturnDefault("Orçamento não encontrado.", null);
 
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.Diagnostico)
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.EmDiagnostico)
                     return new ReturnDefault("Orçamento não está na etapa de Diagnóstico.", null);
 
                 if (string.IsNullOrEmpty(manutence.DiagnosticoMecanico))
                     return new ReturnDefault("Diagnóstico não foi informado.", null);
 
-                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.DiagnosticoCompleto);
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.AguardandoPreenchimento);
 
                 return new ReturnDefault("Diagnóstico concluído. Aguardando operador criar orçamento.", 
                     new { status = "DiagnosticoCompleto" });
@@ -361,11 +359,11 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 if (manutence == null)
                     return new ReturnDefault("Orçamento não encontrado.", null);
 
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.DiagnosticoCompleto)
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoPreenchimento)
                     return new ReturnDefault("Diagnóstico ainda não foi concluído.", null);
 
                 manutence.OperadorOrcamentoId = entrada.OperadorId;
-                manutence.StatusOrcamento = StatusOrcamentoEnum.CriandoOrcamento;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.PreenchendoOrcamento;
 
                 _manutenceRepository.UpdateManutence(manutence);
 
@@ -387,7 +385,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 if (manutence == null)
                     return new ReturnDefault("Orçamento não encontrado.", null);
 
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.CriandoOrcamento)
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.PreenchendoOrcamento)
                     return new ReturnDefault("Orçamento não está sendo criado.", null);
 
                 if (entrada.Servicos == null || !entrada.Servicos.Any())
@@ -403,7 +401,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 // Atualizar valores e status
                 manutence.ValorTotal = entrada.ValorTotal;
                 manutence.DataOrcamentoCriado = DateTime.Now;
-                manutence.StatusOrcamento = StatusOrcamentoEnum.OrcamentoConcluido;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.AguardandoAprovacao;
                 
                 if (!string.IsNullOrEmpty(entrada.ObservacoesAdicionais))
                 {

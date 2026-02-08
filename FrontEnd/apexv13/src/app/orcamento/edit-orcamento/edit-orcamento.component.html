@@ -297,6 +297,100 @@
       <div class="loading-spinner"></div>
     </div>
   </section>
+
+  <!-- Nova Seção: Status do Orçamento -->
+  <section *ngIf="ordemServico.statusOrcamento">
+    <div class="col-12">
+      <div class="card mb-3">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">
+            <i class="ft-activity"></i> Status do Fluxo de Orçamento
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <span class="badge badge-lg" [ngClass]="getStatusClass(ordemServico.statusOrcamento)">
+                <i [ngClass]="getStatusIcon(ordemServico.statusOrcamento)"></i>
+                {{ getStatusDescricao(ordemServico.statusOrcamento) }}
+              </span>
+            </div>
+
+            <!-- Alerta: Aguardando fotos do aplicativo -->
+            <div class="col-md-12" *ngIf="isAguardandoFotos(ordemServico.statusOrcamento)">
+              <div class="alert alert-warning">
+                <h4 class="alert-heading">
+                  <i class="ft-camera"></i> Aguardando Fotos do Aplicativo
+                </h4>
+                <p>
+                  As fotos do veículo serão capturadas pelo aplicativo mobile.
+                  O mecânico responsável fará o registro visual através do app.
+                </p>
+                <hr>
+                <p class="mb-0" *ngIf="ordemServico.dataCheckIn">
+                  <strong>Data do Check-in:</strong> {{ ordemServico.dataCheckIn | date: 'dd/MM/yyyy HH:mm' }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Informações do Diagnóstico -->
+            <div class="col-md-12" *ngIf="ordemServico.diagnosticoMecanico">
+              <div class="card border-primary">
+                <div class="card-header">
+                  <h5><i class="ft-clipboard"></i> Diagnóstico do Mecânico</h5>
+                </div>
+                <div class="card-body">
+                  <p>{{ ordemServico.diagnosticoMecanico }}</p>
+                  <small class="text-muted" *ngIf="ordemServico.dataDiagnostico">
+                    Data: {{ ordemServico.dataDiagnostico | date: 'dd/MM/yyyy HH:mm' }}
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline do Fluxo -->
+            <div class="col-md-12 mt-3">
+              <h5>Timeline do Orçamento</h5>
+              <ul class="timeline">
+                <li [class.completed]="ordemServico.statusOrcamento >= 1">
+                  <i class="ft-log-in"></i> Check-in
+                  <span *ngIf="ordemServico.dataCheckIn">
+                    - {{ ordemServico.dataCheckIn | date: 'dd/MM/yyyy HH:mm' }}
+                  </span>
+                </li>
+                <li [class.completed]="ordemServico.statusOrcamento >= 2"
+                    [class.warning]="ordemServico.statusOrcamento === 2">
+                  <i class="ft-camera"></i> Fotos do Veículo
+                  <span *ngIf="ordemServico.statusOrcamento === 2" class="text-warning">
+                    - Aguardando fotos do app
+                  </span>
+                </li>
+                <li [class.completed]="ordemServico.statusOrcamento >= 3">
+                  <i class="ft-clipboard"></i> Diagnóstico
+                  <span *ngIf="ordemServico.dataDiagnostico">
+                    - {{ ordemServico.dataDiagnostico | date: 'dd/MM/yyyy HH:mm' }}
+                  </span>
+                </li>
+                <li [class.completed]="ordemServico.statusOrcamento >= 4">
+                  <i class="ft-check-circle"></i> Diagnóstico Completo
+                </li>
+                <li [class.completed]="ordemServico.statusOrcamento >= 5">
+                  <i class="ft-edit"></i> Criando Orçamento
+                </li>
+                <li [class.completed]="ordemServico.statusOrcamento >= 6">
+                  <i class="ft-file-text"></i> Orçamento Concluído
+                  <span *ngIf="ordemServico.dataOrcamentoCriado">
+                    - {{ ordemServico.dataOrcamentoCriado | date: 'dd/MM/yyyy HH:mm' }}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="card">
       <div class="card-content">

@@ -104,7 +104,8 @@ namespace GestaoOfficina.Infra.Repository
                         Placa = m.Automovel.Placa,
                         Status = m.Status,
                         NomeCliente = m.Automovel.Client.Nome,
-                        TipoDoc = m.TipoDoc
+                        TipoDoc = m.TipoDoc,
+                        StatusOrcamento = m.StatusOrcamento
                     })
                     .OrderByDescending(i => i.Id)
                     .Skip((entrada.PageNumber.Value - 1) * entrada.PageSize.Value)

@@ -8,6 +8,8 @@ import { AlertModalService } from 'app/shared/services/alert-modal.service';
 import { EMPTY } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { OrdemdeServicoService } from './ordemdeservico.service';
+import { StatusOrcamentoHelper } from 'app/shared/helpers/status-orcamento.helper';
+import { StatusOrcamentoEnum } from 'app/shared/Model/StatusOrcamentoEnum';
 
 @Component({
   selector: 'app-ordemdeservico',
@@ -33,8 +35,10 @@ export class OrdemdeservicoComponent implements OnInit {
   totalItems: number = 0;
   tipoDoc: any;
   pageSizeOptions: number[] = [5, 10, 20, 50];
+  isTecnico: boolean = false;
 
   ngOnInit(): void {
+    this.verificarPerfil();
     const requestData = new FilterOs("", "", 0, null, 1, this.itemsPerPage, null, null, "OrdemServico")
     this.osService.getFilterOS(requestData).subscribe((response) => {
       this.data = response.data;
@@ -50,6 +54,21 @@ export class OrdemdeservicoComponent implements OnInit {
       dataInicial: null,
       dataFinal: null
     })
+  }
+
+  verificarPerfil(): void {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        // Verifica se o perfil é 3 (Técnico)
+        this.isTecnico = Number(user.profile) === 3;
+        console.log('User profile:', user.profile, 'isTecnico:', this.isTecnico);
+      } catch (e) {
+        console.error('Erro ao parsear user do localStorage', e);
+        this.isTecnico = false;
+      }
+    }
   }
 
   addOS() {
@@ -210,5 +229,145 @@ export class OrdemdeservicoComponent implements OnInit {
   getEndItem(): number {
     if (this.totalItems === 0) return 0;
     return Math.min(this.currentPage * this.itemsPerPage, this.totalItems);
+  }
+
+  // Métodos para status de orçamento
+  getStatusDescricao(status: number): string {
+    return StatusOrcamentoHelper.getDescricao(status);
+  }
+
+  getStatusClass(status: number): string {
+    return StatusOrcamentoHelper.getCssClass(status);
+  }
+
+  getStatusIcon(status: number): string {
+    return StatusOrcamentoHelper.getIcon(status);
+  }
+
+  isAguardandoFotos(status: number): boolean {
+    return StatusOrcamentoHelper.aguardandoFotosApp(status);
+  }
+
+  podeIniciarPreenchimento(status: number): boolean {
+    return StatusOrcamentoHelper.podeIniciarPreenchimento(status);
+  }
+
+  podeEditar(status: number): boolean {
+    return StatusOrcamentoHelper.podeEditarOrcamento(status);
+  }
+
+  podeEnviarParaAprovacao(status: number): boolean {
+    return StatusOrcamentoHelper.podeEnviarParaAprovacao(status);
+  }
+
+  podeAprovarOuRejeitar(status: number): boolean {
+    return StatusOrcamentoHelper.podeAprovarOuRejeitar(status);
+  }
+
+  podeFinalizar(status: number): boolean {
+    return StatusOrcamentoHelper.podeFinalizar(status);
+  }
+
+  aprovarOrcamento(osId: number) {
+    this.alertService.showConfirm(
+      'Aprovar Orçamento',
+      'Deseja aprovar este orçamento? Ele será convertido em Ordem de Serviço.'
+    ).asObservable().subscribe((confirmed) => {
+      if (confirmed) {
+        this.osService.aprovarOrcamento(osId).subscribe(
+          (response) => {
+            this.alertService.showAlertSuccess('Orçamento aprovado! Convertido em Ordem de Serviço.');
+            this.searchOs(); // Recarrega a lista
+          },
+          (error) => {
+            this.alertService.showAlertDanger(error.error?.message || 'Erro ao aprovar orçamento.');
+          }
+        );
+      }
+    });
+  }
+
+  rejeitarOrcamento(osId: number) {
+    this.alertService.showConfirm(
+      'Rejeitar Orçamento',
+      'Deseja rejeitar este orçamento? Ele será cancelado e não poderá mais ser editado.'
+    ).asObservable().subscribe((confirmed) => {
+      if (confirmed) {
+        this.osService.rejeitarOrcamento(osId).subscribe(
+          (response) => {
+            this.alertService.showAlertSuccess('Orçamento rejeitado pelo cliente.');
+            this.searchOs(); // Recarrega a lista
+          },
+          (error) => {
+            this.alertService.showAlertDanger(error.error?.message || 'Erro ao rejeitar orçamento.');
+          }
+        );
+      }
+    });
+  }
+
+  enviarParaAprovacao(osId: number) {
+    this.alertService.showConfirm(
+      'Confirmar',
+      'Deseja enviar o orçamento para aprovação do cliente?'
+    ).asObservable().subscribe((confirmed) => {
+      if (confirmed) {
+        this.osService.atualizarStatus(osId, 6).subscribe(
+          (response) => {
+            this.alertService.showAlertSuccess('Orçamento enviado para aprovação do cliente!');
+            this.searchOs(); // Recarrega a lista
+          },
+          (error) => {
+            this.alertService.showAlertDanger(error.error?.message || 'Erro ao enviar orçamento para aprovação.');
+          }
+        );
+      }
+    });
+  }
+
+  iniciarPreenchimento(osId: number) {
+    this.alertService.showConfirm(
+      'Confirmar',
+      'Deseja iniciar o preenchimento do orçamento com valores e serviços?'
+    ).asObservable().subscribe((confirmed) => {
+      if (confirmed) {
+        this.osService.atualizarStatus(osId, 5).subscribe(
+          (response) => {
+            this.alertService.showAlertSuccess('Orçamento liberado para preenchimento!');
+            this.searchOs(); // Recarrega a lista
+          },
+          (error) => {
+            this.alertService.showAlertDanger(error.error?.message || 'Erro ao iniciar preenchimento.');
+          }
+        );
+      }
+    });
+  }
+
+  habilitarFotos(osId: number) {
+    const usuarioLogado = JSON.parse(localStorage.getItem('user'));
+    const operadorId = usuarioLogado?.id;
+
+    if (!operadorId) {
+      this.alertService.showAlertDanger('Erro ao identificar usuário logado.');
+      return;
+    }
+
+    this.alertService.showConfirm(
+      'Confirmar',
+      'Deseja habilitar a captura de fotos no aplicativo?'
+    ).asObservable().subscribe((confirmed) => {
+      if (confirmed) {
+        this.osService.habilitarCapturaDeFotos(osId, operadorId).subscribe(
+          (response) => {
+            this.alertService.showAlertSuccess('Captura de fotos habilitada! Agora é possível adicionar fotos pelo aplicativo.');
+            this.searchOs(); // Recarrega a lista
+          },
+          (error) => {
+            this.alertService.showAlertDanger(error.error?.message || 'Erro ao habilitar captura de fotos.');
+          }
+        );
+      }
+    });
   }
 }

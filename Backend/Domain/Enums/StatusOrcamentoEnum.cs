@@ -8,14 +8,14 @@ namespace GestaoOfficina.Domain.Enums
 {
     public enum StatusOrcamentoEnum
     {
-        CheckIn = 1,
-        CheckInVisual = 2,
-        Diagnostico = 3,
-        DiagnosticoCompleto = 4,
-        CriandoOrcamento = 5,
-        OrcamentoConcluido = 6,
-        EmAndamento = 7,
-        Concluida = 8,
-        Cancelada = 9
+        OrcamentoIniciado = 1,
+        AguardandoFotos = 2,
+        EmDiagnostico = 3,
+        AguardandoPreenchimento = 4,
+        PreenchendoOrcamento = 5,
+        AguardandoAprovacao = 6,
+        AprovadoEmExecucao = 7,
+        Finalizada = 8,
+        Rejeitada = 9
     }
 }

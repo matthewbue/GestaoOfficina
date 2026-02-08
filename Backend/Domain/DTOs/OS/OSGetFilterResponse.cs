@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoOfficina.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace GestaoOfficina.Domain.DTOs.OS
         public string Placa { get; set; }
         public string Status { get; set; }
         public string TipoDoc {  get; set; }
+        public StatusOrcamentoEnum? StatusOrcamento { get; set; }
     }
 }
