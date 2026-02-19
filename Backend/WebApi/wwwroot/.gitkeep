@@ -1,0 +1,7 @@
+# Esta pasta armazena arquivos estáticos da aplicação
+# Estrutura sugerida:
+# /wwwroot
+#   /images
+#   /css
+#   /js
+#   /uploads (para arquivos de upload temporários)

@@ -1,10 +1,6 @@
 ﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
-using GestaoOfficina.Domain.DTOs.OS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using GestaoOfficinaProj.Domain.DTO;
 using System.Threading.Tasks;
 
 namespace GestaoOfficina.Infra.Interface
@@ -22,7 +18,7 @@ namespace GestaoOfficina.Infra.Interface
         Task<ReturnDefault> GetRelatorio(EntryFilterRelatorioDTO entrada);
         ReturnDefault DeleteManutence(int entrada);
 
-        // Novos métodos para fluxo de orçamento
+        // Métodos do fluxo de orçamento
         Task<ReturnDefault> RealizarCheckIn(CheckInDTO entrada);
         Task<ReturnDefault> AdicionarFotosCheckIn(CheckInVisualDTO entrada);
         Task<ReturnDefault> InformarDiagnostico(DiagnosticoDTO entrada);
@@ -30,5 +26,11 @@ namespace GestaoOfficina.Infra.Interface
         Task<ReturnDefault> IniciarCriacaoOrcamento(IniciarCriacaoOrcamentoDTO entrada);
         Task<ReturnDefault> ConcluirOrcamento(ConcluirOrcamentoDTO entrada);
         Task<ReturnDefault> GetFotosByOrcamento(int manutenceId);
+
+        // ✅ NOVOS: Métodos movidos do controller para service
+        Task<ReturnDefault> AprovarOrcamento(AprovarOrcamentoDTO entrada);
+        Task<ReturnDefault> RejeitarOrcamento(RejeitarOrcamentoDTO entrada);
+        Task<ReturnDefault> HabilitarCapturaDeFotos(HabilitarFotosDTO entrada);
+        Task<ReturnDefault> AtualizarStatus(AtualizarStatusDTO entrada);
     }
 }

@@ -2,6 +2,7 @@
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
 using GestaoOfficina.Domain.Enums;
+using GestaoOfficina.Domain.Validators;
 using GestaoOfficinaProj.Domain.DTO;
 using GestaoOfficinaProj.Infra.Interface;
 using MailKit.Net.Smtp;
@@ -25,9 +26,9 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             _manutenceRepository = manutenceRepository;
             _clientRepository = clientRepository;
         }
+        
         public async Task<ReturnDefault> Create(ManutenceCreateDTO entrada)
         {
-
             #region criação manutence
             ManutenceServico objeto = new ManutenceServico();
             Manutence objetoPai = new Manutence();
@@ -37,12 +38,14 @@ namespace GestaoOfficinaProj.Aplicattion.Service
             objetoPai.TipoDoc = entrada.TipoDoc;
             objetoPai.DataOS = DateTime.Now;
             objetoPai.Status = "Em Andamento";
-            objetoPai.StatusOrcamento = entrada.StatusOrcamento ?? StatusOrcamentoEnum.AprovadoEmExecucao;
+            
+            // ✅ CORRIGIDO: Status default é OrcamentoIniciado, não AprovadoEmExecucao
+            objetoPai.StatusOrcamento = entrada.StatusOrcamento ?? StatusOrcamentoEnum.OrcamentoIniciado;
+            
             objetoPai.ManutecesServicos = entrada.manutences;
             objetoPai.ValorTotal = entrada.ValorTotal;
             
-            var resultManutenceid =  _manutenceRepository.Create(objetoPai);
-
+            var resultManutenceid = _manutenceRepository.Create(objetoPai);
             #endregion
 
             #region corpo email
@@ -250,7 +253,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
 
                 var manutenceId = _manutenceRepository.Create(manutence);
                 
-                return new ReturnDefault("Check-in realizado com sucesso.", new { id = manutenceId, status = "CheckIn" });
+                return new ReturnDefault("Check-in realizado com sucesso.", new { id = manutenceId, status = StatusOrcamentoEnum.OrcamentoIniciado });
             }
             catch (Exception ex)
             {
@@ -265,13 +268,17 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
                 
                 if (manutence == null)
-                    return new ReturnDefault("Orçamento não encontrado.", null);
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
 
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoFotos)
-                    return new ReturnDefault("Orçamento não está na etapa de captura de fotos.", null);
+                // ✅ CORRIGIDO: Valida status usando validator
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.EmDiagnostico))
+                {
+                    var erro = StatusOrcamentoValidator.ObterMensagemErro(manutence.StatusOrcamento, StatusOrcamentoEnum.EmDiagnostico);
+                    return new ReturnDefault(erro ?? "Orçamento não está na etapa correta para adicionar fotos.", null, 400);
+                }
 
                 if (entrada.Fotos != null && entrada.Fotos.Count > 9)
-                    return new ReturnDefault("Máximo de 6 fotos permitidas.", null);
+                    return new ReturnDefault("Máximo de 9 fotos permitidas.", null, 400);
 
                 var fotos = entrada.Fotos?.Select(f => new OrcamentoFoto
                 {
@@ -288,14 +295,15 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                     _manutenceRepository.AdicionarFotos(fotos);
                 }
 
-                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.AguardandoFotos);
+                // ✅ CORRIGIDO: Avança para próximo status
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.EmDiagnostico);
 
-                return new ReturnDefault("Fotos adicionadas com sucesso. Status atualizado para Check-in Visual.", 
-                    new { quantidadeFotos = fotos?.Count ?? 0, status = "CheckInVisual" });
+                return new ReturnDefault("Fotos adicionadas com sucesso. Status atualizado para Em Diagnóstico.", 
+                    new { quantidadeFotos = fotos?.Count ?? 0, status = StatusOrcamentoEnum.EmDiagnostico });
             }
             catch (Exception ex)
             {
-                return new ReturnDefault($"Erro ao adicionar fotos: {ex.Message}", null);
+                return new ReturnDefault($"Erro ao adicionar fotos: {ex.Message}", null, 500);
             }
         }
 
@@ -306,21 +314,25 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
                 
                 if (manutence == null)
-                    return new ReturnDefault("Orçamento não encontrado.", null);
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
+
+                // ✅ CORRIGIDO: Valida status atual
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.EmDiagnostico)
+                    return new ReturnDefault("Orçamento não está na etapa de diagnóstico.", null, 400);
 
                 manutence.DiagnosticoMecanico = entrada.DiagnosticoMecanico;
                 manutence.DataDiagnostico = DateTime.Now;
                 manutence.MecanicoId = entrada.MecanicoId;
-                manutence.StatusOrcamento = StatusOrcamentoEnum.EmDiagnostico;
+                // Status continua EmDiagnostico até concluir
 
                 _manutenceRepository.UpdateManutence(manutence);
 
                 return new ReturnDefault("Diagnóstico informado com sucesso.", 
-                    new { status = "Diagnostico", diagnostico = entrada.DiagnosticoMecanico });
+                    new { status = StatusOrcamentoEnum.EmDiagnostico, diagnostico = entrada.DiagnosticoMecanico });
             }
             catch (Exception ex)
             {
-                return new ReturnDefault($"Erro ao informar diagnóstico: {ex.Message}", null);
+                return new ReturnDefault($"Erro ao informar diagnóstico: {ex.Message}", null, 500);
             }
         }
 
@@ -331,22 +343,26 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
                 
                 if (manutence == null)
-                    return new ReturnDefault("Orçamento não encontrado.", null);
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
 
                 if (manutence.StatusOrcamento != StatusOrcamentoEnum.EmDiagnostico)
-                    return new ReturnDefault("Orçamento não está na etapa de Diagnóstico.", null);
+                    return new ReturnDefault("Orçamento não está na etapa de Diagnóstico.", null, 400);
 
                 if (string.IsNullOrEmpty(manutence.DiagnosticoMecanico))
-                    return new ReturnDefault("Diagnóstico não foi informado.", null);
+                    return new ReturnDefault("Diagnóstico não foi informado.", null, 400);
+
+                // ✅ CORRIGIDO: Usa validator
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.AguardandoPreenchimento))
+                    return new ReturnDefault("Não é possível avançar para próximo status.", null, 400);
 
                 _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.AguardandoPreenchimento);
 
                 return new ReturnDefault("Diagnóstico concluído. Aguardando operador criar orçamento.", 
-                    new { status = "DiagnosticoCompleto" });
+                    new { status = StatusOrcamentoEnum.AguardandoPreenchimento });
             }
             catch (Exception ex)
             {
-                return new ReturnDefault($"Erro ao concluir diagnóstico: {ex.Message}", null);
+                return new ReturnDefault($"Erro ao concluir diagnóstico: {ex.Message}", null, 500);
             }
         }
 
@@ -357,22 +373,27 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
                 
                 if (manutence == null)
-                    return new ReturnDefault("Orçamento não encontrado.", null);
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
 
                 if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoPreenchimento)
-                    return new ReturnDefault("Diagnóstico ainda não foi concluído.", null);
+                    return new ReturnDefault("Diagnóstico ainda não foi concluído.", null, 400);
+
+                // ✅ CORRIGIDO: Valida transição
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.PreenchendoOrcamento))
+                    return new ReturnDefault("Não é possível iniciar criação de orçamento neste status.", null, 400);
 
                 manutence.OperadorOrcamentoId = entrada.OperadorId;
+                manutence.DataOrcamentoCriado = DateTime.Now;
                 manutence.StatusOrcamento = StatusOrcamentoEnum.PreenchendoOrcamento;
 
                 _manutenceRepository.UpdateManutence(manutence);
 
                 return new ReturnDefault("Criação de orçamento iniciada.", 
-                    new { status = "CriandoOrcamento", operadorId = entrada.OperadorId });
+                    new { status = StatusOrcamentoEnum.PreenchendoOrcamento, operadorId = entrada.OperadorId });
             }
             catch (Exception ex)
             {
-                return new ReturnDefault($"Erro ao iniciar criação de orçamento: {ex.Message}", null);
+                return new ReturnDefault($"Erro ao iniciar criação de orçamento: {ex.Message}", null, 500);
             }
         }
 
@@ -383,13 +404,17 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
                 
                 if (manutence == null)
-                    return new ReturnDefault("Orçamento não encontrado.", null);
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
 
                 if (manutence.StatusOrcamento != StatusOrcamentoEnum.PreenchendoOrcamento)
-                    return new ReturnDefault("Orçamento não está sendo criado.", null);
+                    return new ReturnDefault("Orçamento não está sendo criado.", null, 400);
 
                 if (entrada.Servicos == null || !entrada.Servicos.Any())
-                    return new ReturnDefault("É necessário adicionar pelo menos um serviço.", null);
+                    return new ReturnDefault("É necessário adicionar pelo menos um serviço.", null, 400);
+
+                // ✅ CORRIGIDO: Valida transição
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.AguardandoAprovacao))
+                    return new ReturnDefault("Não é possível concluir orçamento neste status.", null, 400);
 
                 // Adicionar serviços
                 foreach (var servico in entrada.Servicos)
@@ -400,7 +425,7 @@ namespace GestaoOfficinaProj.Aplicattion.Service
 
                 // Atualizar valores e status
                 manutence.ValorTotal = entrada.ValorTotal;
-                manutence.DataOrcamentoCriado = DateTime.Now;
+                manutence.ValorOrcado = entrada.ValorTotal; // ✅ Salvar valor orçado
                 manutence.StatusOrcamento = StatusOrcamentoEnum.AguardandoAprovacao;
                 
                 if (!string.IsNullOrEmpty(entrada.ObservacoesAdicionais))
@@ -415,14 +440,14 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                 return new ReturnDefault("Orçamento concluído com sucesso.", 
                     new { 
                         id = manutence.Id, 
-                        status = "OrcamentoConcluido", 
+                        status = StatusOrcamentoEnum.AguardandoAprovacao, 
                         valorTotal = entrada.ValorTotal,
                         quantidadeServicos = entrada.Servicos.Count 
                     });
             }
             catch (Exception ex)
             {
-                return new ReturnDefault($"Erro ao concluir orçamento: {ex.Message}", null);
+                return new ReturnDefault($"Erro ao concluir orçamento: {ex.Message}", null, 500);
             }
         }
 
@@ -439,14 +464,144 @@ namespace GestaoOfficinaProj.Aplicattion.Service
                     tipoImagem = f.TipoImagem,
                     descricao = f.Descricao,
                     dataUpload = f.DataUpload,
-                    tamanhoBytes = f.ImagemBytes?.Length ?? 0
+                    tamanhoBytes = f.ImagemBytes?.Length ?? 0,
+                    imagemBase64 = f.ImagemBase64 // ✅ Usa helper
                 }).ToList();
 
                 return new ReturnDefault("Fotos retornadas com sucesso.", fotosResponse);
             }
             catch (Exception ex)
             {
-                return new ReturnDefault($"Erro ao buscar fotos: {ex.Message}", null);
+                return new ReturnDefault($"Erro ao buscar fotos: {ex.Message}", null, 500);
+            }
+        }
+        
+        // ✅ NOVO: Método para aprovar orçamento (lógica movida do controller)
+        public async Task<ReturnDefault> AprovarOrcamento(AprovarOrcamentoDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoAprovacao)
+                    return new ReturnDefault("Orçamento não está aguardando aprovação.", null, 400);
+
+                // ✅ CORRIGIDO: Valida transição
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.AprovadoEmExecucao))
+                {
+                    var erro = StatusOrcamentoValidator.ObterMensagemErro(manutence.StatusOrcamento, StatusOrcamentoEnum.AprovadoEmExecucao);
+                    return new ReturnDefault(erro, null, 400);
+                }
+
+                // Muda status para AprovadoEmExecucao e converte em Ordem de Serviço
+                manutence.ClienteAprovado = true;
+                manutence.DataAprovacao = DateTime.Now;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.AprovadoEmExecucao;
+                manutence.TipoDoc = "OrdemServico";
+                manutence.Status = "Em Andamento";
+                manutence.DataInicioExecucao = DateTime.Now;
+                
+                _manutenceRepository.UpdateManutence(manutence);
+
+                return new ReturnDefault("Orçamento aprovado e convertido em Ordem de Serviço!", 
+                    new { id = entrada.ManutenceId, status = StatusOrcamentoEnum.AprovadoEmExecucao, tipo = "OrdemServico" });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao aprovar orçamento: {ex.Message}", null, 500);
+            }
+        }
+        
+        // ✅ NOVO: Método para rejeitar orçamento (lógica movida do controller)
+        public async Task<ReturnDefault> RejeitarOrcamento(RejeitarOrcamentoDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoAprovacao)
+                    return new ReturnDefault("Orçamento não está aguardando aprovação.", null, 400);
+
+                // ✅ CORRIGIDO: Valida se pode rejeitar
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.Rejeitada))
+                    return new ReturnDefault("Não é possível rejeitar orçamento neste status.", null, 400);
+
+                // Muda status para Rejeitada
+                manutence.ClienteAprovado = false;
+                manutence.MotivoRecusa = entrada.Motivo;
+                manutence.StatusOrcamento = StatusOrcamentoEnum.Rejeitada;
+                manutence.Status = "Cancelada";
+                
+                _manutenceRepository.UpdateManutence(manutence);
+
+                return new ReturnDefault("Orçamento rejeitado pelo cliente.", 
+                    new { id = entrada.ManutenceId, status = StatusOrcamentoEnum.Rejeitada, motivo = entrada.Motivo });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao rejeitar orçamento: {ex.Message}", null, 500);
+            }
+        }
+        
+        // ✅ NOVO: Método para habilitar fotos (lógica movida do controller)
+        public async Task<ReturnDefault> HabilitarCapturaDeFotos(HabilitarFotosDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
+
+                if (manutence.StatusOrcamento != StatusOrcamentoEnum.OrcamentoIniciado)
+                    return new ReturnDefault("Orçamento não está na etapa inicial para habilitar fotos.", null, 400);
+
+                // ✅ CORRIGIDO: Valida transição
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, StatusOrcamentoEnum.AguardandoFotos))
+                    return new ReturnDefault("Não é possível habilitar captura de fotos neste status.", null, 400);
+
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, StatusOrcamentoEnum.AguardandoFotos);
+
+                return new ReturnDefault("Captura de fotos habilitada com sucesso.", 
+                    new { id = entrada.ManutenceId, status = StatusOrcamentoEnum.AguardandoFotos });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao habilitar fotos: {ex.Message}", null, 500);
+            }
+        }
+        
+        // ✅ NOVO: Método para atualizar status genérico (movido do controller)
+        public async Task<ReturnDefault> AtualizarStatus(AtualizarStatusDTO entrada)
+        {
+            try
+            {
+                var manutence = await _manutenceRepository.GetById(entrada.ManutenceId);
+                
+                if (manutence == null)
+                    return new ReturnDefault("Orçamento não encontrado.", null, 404);
+
+                // ✅ VALIDAÇÃO CRÍTICA: Valida transição antes de atualizar
+                if (!StatusOrcamentoValidator.PodeAvancarParaStatus(manutence.StatusOrcamento, entrada.NovoStatus))
+                {
+                    var erro = StatusOrcamentoValidator.ObterMensagemErro(manutence.StatusOrcamento, entrada.NovoStatus);
+                    return new ReturnDefault(erro, null, 400);
+                }
+
+                _manutenceRepository.AtualizarStatusOrcamento(entrada.ManutenceId, entrada.NovoStatus);
+
+                return new ReturnDefault("Status atualizado com sucesso.", 
+                    new { id = entrada.ManutenceId, status = entrada.NovoStatus });
+            }
+            catch (Exception ex)
+            {
+                return new ReturnDefault($"Erro ao atualizar status: {ex.Message}", null, 500);
             }
         }
     }

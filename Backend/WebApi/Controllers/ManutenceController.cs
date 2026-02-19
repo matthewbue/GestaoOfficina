@@ -1,8 +1,6 @@
-﻿
-using GestaoOfficina.Domain.DTO;
+﻿using GestaoOfficina.Domain.DTO;
 using GestaoOfficina.Domain.Model;
 using GestaoOfficina.Infra.Interface;
-using GestaoOfficina.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -16,72 +14,76 @@ namespace GestaoOfficinaProj.Controllers
     public class ManutenceController : ControllerBase
     {
         private readonly IManutenceService _manutenceService;
-        private readonly IManutenceRepository _manutenceRepository;
         
-        public ManutenceController(IManutenceService manutenceService, IManutenceRepository manutenceRepository)
+        // ✅ CORRIGIDO: Removido IManutenceRepository
+        public ManutenceController(IManutenceService manutenceService)
         {
             _manutenceService = manutenceService;
-            _manutenceRepository = manutenceRepository;
         }
+
         [HttpPost("Create")]
         public async Task<IActionResult> Create(ManutenceCreateDTO entrada)
         {
             try
             {
                 var result = await _manutenceService.Create(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpPost("AddServico")]
         public async Task<IActionResult> Create(ManutenceServico entrada)
         {
             try
             {
                 var result = await _manutenceService.CreateManutenceServico(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpPost("Update")] 
         public async Task<IActionResult> UpdateManutence(ManutenceUpdateDTO entrada)
         {
             try
             {
                 var result = await _manutenceService.UpdateManutence(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpPost("UpdateServico")]
         public async Task<IActionResult> UpdateServico(ManutenceUpdateServicoDTO entrada)
         {
             try
             {
                 var result = await _manutenceService.UpdateManutenceServico(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpDelete("Delete")]
         public IActionResult Delete(int entrada)
         {
             try
             {
                 var result = _manutenceService.Delete(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -95,7 +97,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _manutenceService.DeleteManutence(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -103,14 +105,13 @@ namespace GestaoOfficinaProj.Controllers
             }
         }
 
-
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int entrada)
         {
             try
             {
                 var result = await _manutenceService.GetById(entrada);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -124,7 +125,7 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.GetFilterOS(FilterDTO);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
@@ -138,21 +139,22 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = _manutenceService.CheckoutOS(identificadorOS);
-                return  new JsonResult(result);
+                return new JsonResult(result);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpPost("GetRelatorio")]
         public async Task<IActionResult> GetRelatorio(EntryFilterRelatorioDTO entrada)
         {
             var result = await _manutenceService.GetRelatorio(entrada);
-            return  new JsonResult(result);
+            return new JsonResult(result);
         }
 
-        // Novos endpoints para fluxo de orçamento
+        // === ENDPOINTS FLUXO DE ORÇAMENTO ===
 
         [HttpPost("CheckIn")]
         public async Task<IActionResult> RealizarCheckIn(CheckInDTO entrada)
@@ -164,109 +166,92 @@ namespace GestaoOfficinaProj.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro interno: {ex.Message}", null, 500));
             }
         }
 
+        /// <summary>
+        /// ✅ CORRIGIDO: Lógica movida para Service
+        /// Permite atualizar status genérico COM validação de transição
+        /// </summary>
         [HttpPost("AtualizarStatus")]
-        public async Task<IActionResult> AtualizarStatus([FromBody] AtualizarStatusRequest request)
+        public async Task<IActionResult> AtualizarStatus([FromBody] AtualizarStatusDTO request)
         {
             try
             {
-                var manutence = await _manutenceRepository.GetById(request.ManutenceId);
+                var result = await _manutenceService.AtualizarStatus(request);
                 
-                if (manutence == null)
-                    return new JsonResult(new ReturnDefault("Orçamento não encontrado.", null));
-
-                _manutenceRepository.AtualizarStatusOrcamento(request.ManutenceId, request.NovoStatus);
-
-                return new JsonResult(new ReturnDefault("Status atualizado com sucesso.", 
-                    new { id = request.ManutenceId, status = request.NovoStatus }));
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return new JsonResult(new ReturnDefault($"Erro: {ex.Message}", null));
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
+        /// <summary>
+        /// ✅ CORRIGIDO: Lógica movida para Service
+        /// </summary>
         [HttpPost("AprovarOrcamento")]
-        public async Task<IActionResult> AprovarOrcamento([FromBody] AprovarOrcamentoRequest request)
+        public async Task<IActionResult> AprovarOrcamento([FromBody] AprovarOrcamentoDTO request)
         {
             try
             {
-                var manutence = await _manutenceRepository.GetById(request.ManutenceId);
+                var result = await _manutenceService.AprovarOrcamento(request);
                 
-                if (manutence == null)
-                    return new JsonResult(new ReturnDefault("Orçamento não encontrado.", null));
-
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoAprovacao)
-                    return new JsonResult(new ReturnDefault("Orçamento não está aguardando aprovação.", null));
-
-                // Muda status para AprovadoEmExecucao e converte em Ordem de Serviço
-                manutence.StatusOrcamento = StatusOrcamentoEnum.AprovadoEmExecucao;
-                manutence.TipoDoc = "OrdemServico";
-                manutence.Status = "Em Andamento";
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
                 
-                _manutenceRepository.UpdateManutence(manutence);
-
-                return new JsonResult(new ReturnDefault("Orçamento aprovado e convertido em Ordem de Serviço!", 
-                    new { id = request.ManutenceId, status = "AprovadoEmExecucao", tipo = "OrdemServico" }));
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return new JsonResult(new ReturnDefault($"Erro: {ex.Message}", null));
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
+        /// <summary>
+        /// ✅ CORRIGIDO: Lógica movida para Service
+        /// </summary>
         [HttpPost("RejeitarOrcamento")]
-        public async Task<IActionResult> RejeitarOrcamento([FromBody] RejeitarOrcamentoRequest request)
+        public async Task<IActionResult> RejeitarOrcamento([FromBody] RejeitarOrcamentoDTO request)
         {
             try
             {
-                var manutence = await _manutenceRepository.GetById(request.ManutenceId);
+                var result = await _manutenceService.RejeitarOrcamento(request);
                 
-                if (manutence == null)
-                    return new JsonResult(new ReturnDefault("Orçamento não encontrado.", null));
-
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.AguardandoAprovacao)
-                    return new JsonResult(new ReturnDefault("Orçamento não está aguardando aprovação.", null));
-
-                // Muda status para Rejeitada (não pode mais editar)
-                manutence.StatusOrcamento = StatusOrcamentoEnum.Rejeitada;
-                manutence.Status = "Cancelada";
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
                 
-                _manutenceRepository.UpdateManutence(manutence);
-
-                return new JsonResult(new ReturnDefault("Orçamento rejeitado pelo cliente.", 
-                    new { id = request.ManutenceId, status = "Rejeitada" }));
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return new JsonResult(new ReturnDefault($"Erro: {ex.Message}", null));
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
+        /// <summary>
+        /// ✅ CORRIGIDO: Lógica movida para Service
+        /// </summary>
         [HttpPost("HabilitarCapturaDeFotos")]
-        public async Task<IActionResult> HabilitarCapturaDeFotos([FromBody] HabilitarFotosRequest request)
+        public async Task<IActionResult> HabilitarCapturaDeFotos([FromBody] HabilitarFotosDTO request)
         {
             try
             {
-                var manutence = await _manutenceRepository.GetById(request.ManutenceId);
+                var result = await _manutenceService.HabilitarCapturaDeFotos(request);
                 
-                if (manutence == null)
-                    return new JsonResult(new ReturnDefault("Orçamento não encontrado.", null));
-
-                if (manutence.StatusOrcamento != StatusOrcamentoEnum.OrcamentoIniciado)
-                    return new JsonResult(new ReturnDefault("Orçamento não está na etapa inicial para habilitar fotos.", null));
-
-                _manutenceRepository.AtualizarStatusOrcamento(request.ManutenceId, StatusOrcamentoEnum.AguardandoFotos);
-
-                return new JsonResult(new ReturnDefault("Captura de fotos habilitada com sucesso.", 
-                    new { id = request.ManutenceId, status = "AguardandoFotos" }));
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return new JsonResult(new ReturnDefault($"Erro: {ex.Message}", null));
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
@@ -276,11 +261,15 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.AdicionarFotosCheckIn(entrada);
-                return new JsonResult(result);
+                
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
@@ -290,11 +279,15 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.InformarDiagnostico(entrada);
-                return new JsonResult(result);
+                
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
@@ -304,11 +297,15 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.ConcluirDiagnostico(entrada);
-                return new JsonResult(result);
+                
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
@@ -318,11 +315,15 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.IniciarCriacaoOrcamento(entrada);
-                return new JsonResult(result);
+                
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
@@ -332,11 +333,15 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.ConcluirOrcamento(entrada);
-                return new JsonResult(result);
+                
+                if (result.httpStatusCode >= 400)
+                    return StatusCode(result.httpStatusCode, result);
+                
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
 
@@ -346,38 +351,12 @@ namespace GestaoOfficinaProj.Controllers
             try
             {
                 var result = await _manutenceService.GetFotosByOrcamento(manutenceId);
-                return new JsonResult(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                return StatusCode(500, new ReturnDefault($"Erro: {ex.Message}", null, 500));
             }
         }
-    }
-
-    // DTO para request de habilitar fotos
-    public class HabilitarFotosRequest
-    {
-        public int ManutenceId { get; set; }
-        public int OperadorId { get; set; }
-    }
-
-    // DTO para atualizar status genérico
-    public class AtualizarStatusRequest
-    {
-        public int ManutenceId { get; set; }
-        public StatusOrcamentoEnum NovoStatus { get; set; }
-    }
-
-    // DTO para aprovar orçamento
-    public class AprovarOrcamentoRequest
-    {
-        public int ManutenceId { get; set; }
-    }
-
-    // DTO para rejeitar orçamento
-    public class RejeitarOrcamentoRequest
-    {
-        public int ManutenceId { get; set; }
     }
 }

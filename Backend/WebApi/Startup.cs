@@ -124,6 +124,9 @@ namespace GestaoOfficina
 
             app.UseHttpsRedirection();
 
+            // ? NOVO: Habilitar arquivos estáticos (wwwroot)
+            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseCors(x => x
