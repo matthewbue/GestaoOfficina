@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace GestaoOfficina.Domain.Model
@@ -13,8 +14,9 @@ namespace GestaoOfficina.Domain.Model
         public int totalPagina { get; set; }
         public int totalDados { get; set; }
         
-        // ✅ Manter ambas propriedades para compatibilidade total
         public int httpStatusCode { get; set; }
+        
+        [JsonIgnore]
         public int HttpStatusCode 
         { 
             get => httpStatusCode;
