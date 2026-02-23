@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  API: 'https://localhost:44392', //Local
+  API: 'https://brotherdigital-001-site1.atempurl.com', //Local
   production: false,
   useMockAccount: false
 };

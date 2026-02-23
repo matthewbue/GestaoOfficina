@@ -359,10 +359,15 @@
                   </span>
                 </li>
                 <li [class.completed]="ordemServico.statusOrcamento >= 2"
-                    [class.warning]="ordemServico.statusOrcamento === 2">
+                    [class.warning]="ordemServico.statusOrcamento === 2"
+                    style="cursor: pointer;"
+                    (click)="visualizarFotos()">
                   <i class="ft-camera"></i> Fotos do Veículo
                   <span *ngIf="ordemServico.statusOrcamento === 2" class="text-warning">
                     - Aguardando fotos do app
+                  </span>
+                  <span *ngIf="ordemServico.statusOrcamento > 2" class="text-muted">
+                    - Clique para visualizar
                   </span>
                 </li>
                 <li [class.completed]="ordemServico.statusOrcamento >= 3">

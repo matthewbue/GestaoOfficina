@@ -36,6 +36,11 @@ export interface PDFServiceOrder {
   totalValue: number;
   observations?: string;
   status?: string;
+  photos?: Array<{
+    imagemBase64: string;
+    descricao?: string;
+    nomeArquivo?: string;
+  }>;
 }
 
 @Injectable({
@@ -76,6 +81,11 @@ export class PdfGeneratorService {
 
     this.addSignatureSection();
     this.addFooter();
+
+    // Add vehicle photos in separate page at the end if available
+    if (orderData.photos && orderData.photos.length > 0) {
+      this.addVehiclePhotos(orderData.photos);
+    }
 
     // Save the PDF
     const fileName = `${orderData.type} - Nº ${orderData.id}.pdf`;
@@ -197,6 +207,96 @@ export class PdfGeneratorService {
       this.doc.text(`Km Atual: ${vehicle.currentKm}`, this.margins.left + 120, this.currentY);
     }
     this.currentY += this.lineHeight;
+    
+    this.currentY += 5;
+  }
+
+  private addVehiclePhotos(photos: Array<{imagemBase64: string, descricao?: string, nomeArquivo?: string}>): void {
+    if (!photos || photos.length === 0) {
+      return;
+    }
+
+    // Always start photos in a new page
+    this.doc.addPage();
+    this.currentY = this.margins.top;
+
+    // Add section title
+    this.doc.setFont('courier', 'bold');
+    this.doc.setFontSize(14);
+    this.doc.text('FOTOS DO VEÍCULO', this.pageWidth / 2, this.currentY, { align: 'center' });
+    this.currentY += 8;
+
+    const photoWidth = 60;
+    const photoHeight = 45;
+    const photosPerRow = 2;
+    const spacingX = 10;
+    const spacingY = 8;
+    const descriptionHeight = 5;
+
+    let photoIndex = 0;
+    
+    while (photoIndex < photos.length) {
+      // Check if we need a new page
+      const spaceNeeded = photoHeight + descriptionHeight + spacingY + 20;
+      if (this.currentY + spaceNeeded > this.pageHeight - this.margins.bottom) {
+        this.doc.addPage();
+        this.currentY = this.margins.top;
+        
+        // Add continuation header
+        this.doc.setFont('courier', 'bold');
+        this.doc.setFontSize(12);
+        this.doc.text('FERREIRA\'S AUTOMOTIVO - Continuação', this.pageWidth / 2, this.currentY, { align: 'center' });
+        this.currentY += 10;
+        
+        this.doc.setFont('courier', 'bold');
+        this.doc.setFontSize(14);
+        this.doc.text('FOTOS DO VEÍCULO (continuação)', this.pageWidth / 2, this.currentY, { align: 'center' });
+        this.currentY += 8;
+      }
+
+      const rowStartY = this.currentY;
+      
+      // Add photos in row
+      for (let col = 0; col < photosPerRow && photoIndex < photos.length; col++) {
+        const photo = photos[photoIndex];
+        
+        // Calculate X position
+        const totalRowWidth = (photoWidth * photosPerRow) + (spacingX * (photosPerRow - 1));
+        const startX = (this.pageWidth - totalRowWidth) / 2;
+        const xPos = startX + (col * (photoWidth + spacingX));
+        
+        try {
+          // Add image
+          const imageData = photo.imagemBase64.startsWith('data:') 
+            ? photo.imagemBase64 
+            : `data:image/jpeg;base64,${photo.imagemBase64}`;
+          
+          this.doc.addImage(imageData, 'JPEG', xPos, rowStartY, photoWidth, photoHeight);
+          
+          // Add description if available
+          if (photo.descricao) {
+            this.doc.setFont('courier', 'normal');
+            this.doc.setFontSize(9);
+            const descText = photo.descricao.length > 35 
+              ? photo.descricao.substring(0, 32) + '...' 
+              : photo.descricao;
+            this.doc.text(descText, xPos + (photoWidth / 2), rowStartY + photoHeight + 4, { align: 'center' });
+          }
+        } catch (error) {
+          console.warn('Error adding photo to PDF:', error);
+          // Add placeholder if image fails
+          this.doc.setFont('courier', 'normal');
+          this.doc.setFontSize(10);
+          this.doc.rect(xPos, rowStartY, photoWidth, photoHeight);
+          this.doc.text('Imagem não disponível', xPos + (photoWidth / 2), rowStartY + (photoHeight / 2), { align: 'center' });
+        }
+        
+        photoIndex++;
+      }
+      
+      // Move Y position after row
+      this.currentY = rowStartY + photoHeight + descriptionHeight + spacingY;
+    }
     
     this.currentY += 5;
   }

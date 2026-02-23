@@ -88,7 +88,7 @@ export class OrdemdeServicoService {
   }
 
   getFotosOrcamento(manutenceId: number) {
-    return this.httpClient.get<any>(`${environment.API}/Manutence/GetFotosOrcamento/${manutenceId}`);
+    return this.httpClient.get<any>(`${environment.API}/Manutence/GetFotosOrcamento?manutenceId=${manutenceId}`);
   }
 
   habilitarCapturaDeFotos(manutenceId: number, operadorId: number) {

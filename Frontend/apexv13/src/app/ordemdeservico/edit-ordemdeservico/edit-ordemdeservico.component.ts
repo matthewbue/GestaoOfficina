@@ -15,6 +15,7 @@ import { switchMap, take } from 'rxjs/operators';
 import { OrdemdeServicoService } from '../ordemdeservico.service';
 import { StatusOrcamentoHelper } from 'app/shared/helpers/status-orcamento.helper';
 import { StatusOrcamentoEnum } from 'app/shared/Model/StatusOrcamentoEnum';
+import { FotosVeiculoModalComponent } from 'app/shared/fotos-veiculo-modal/fotos-veiculo-modal.component';
 
 @Component({
   selector: 'app-edit-ordemdeservico',
@@ -260,11 +261,31 @@ export class EditOrdemdeservicoComponent implements OnInit {
     this.showLoading = true;
     setTimeout(() => {
       this.gerarPDFInternal();
-      this.showLoading = false;
     }, 100);
   }
 
   gerarPDFInternal() {
+    // Fetch photos first if ordemServico has id
+    if (this.ordemServico.id) {
+      this.osService.getFotosOrcamento(this.ordemServico.id).subscribe(
+        (response: any) => {
+          const photos = response.data || [];
+          this.generatePDFWithPhotos(photos);
+          this.showLoading = false;
+        },
+        (error) => {
+          console.warn('Error fetching photos, generating PDF without them:', error);
+          this.generatePDFWithPhotos([]);
+          this.showLoading = false;
+        }
+      );
+    } else {
+      this.generatePDFWithPhotos([]);
+      this.showLoading = false;
+    }
+  }
+
+  generatePDFWithPhotos(photos: any[]) {
     // Company information
     const companyInfo: PDFCompanyInfo = {
       name: 'FERREIRA\'S AUTOMOTIVO',
@@ -301,7 +322,8 @@ export class EditOrdemdeservicoComponent implements OnInit {
       })),
       totalValue: typeof this.ordemServico.valorTotal === 'string' ? parseFloat(this.ordemServico.valorTotal) || 0 : this.ordemServico.valorTotal || 0,
       observations: this.ordemServico.observacoes,
-      status: this.ordemServico.status
+      status: this.ordemServico.status,
+      photos: photos.length > 0 ? photos : undefined
     };
 
     // Generate PDF using the new service
@@ -457,6 +479,40 @@ export class EditOrdemdeservicoComponent implements OnInit {
 
   podeEditar(status: number): boolean {
     return StatusOrcamentoHelper.podeEditarOrcamento(status);
+  }
+
+  // Métodos para visualização de fotos
+  visualizarFotos() {
+    if (this.ordemServico.statusOrcamento < 2) {
+      this.alertService.showAlertDanger("Ainda não há fotos disponíveis para este orçamento.");
+      return;
+    }
+
+    // Abrir modal
+    const initialState = {
+      fotos: [],
+      loading: true
+    };
+
+    const bsModalRef: BsModalRef = this.modalService.show(FotosVeiculoModalComponent, {
+      initialState,
+      class: 'modal-lg'
+    });
+
+    // Buscar fotos
+    this.osService.getFotosOrcamento(this.ordemServico.id).subscribe(
+      (response: any) => {
+        if (response.data && response.data.length > 0) {
+          bsModalRef.content.fotos = response.data;
+        }
+        bsModalRef.content.loading = false;
+      },
+      (error) => {
+        bsModalRef.content.loading = false;
+        this.alertService.showAlertDanger("Erro ao buscar fotos do veículo.");
+        console.error(error);
+      }
+    );
   }
 
   podeFinalizar(status: number): boolean {

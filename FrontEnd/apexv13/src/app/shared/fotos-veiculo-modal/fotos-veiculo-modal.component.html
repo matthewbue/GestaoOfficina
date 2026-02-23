@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <h5 class="modal-title">
+    <i class="ft-camera"></i> Fotos do Veículo
+  </h5>
+  <button type="button" class="close" aria-label="Close" (click)="fechar()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+  <!-- Loading -->
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Carregando fotos...</span>
+    </div>
+    <p class="mt-2">Carregando fotos...</p>
+  </div>
+
+  <!-- Sem fotos -->
+  <div *ngIf="!loading && fotos && fotos.length === 0" class="text-center">
+    <i class="ft-camera" style="font-size: 48px; color: #ccc;"></i>
+    <p class="mt-2 text-muted">Nenhuma foto disponível</p>
+  </div>
+
+  <!-- Galeria de fotos -->
+  <div *ngIf="!loading && fotos && fotos.length > 0 && !mostrarFotoAmpliada" class="row">
+    <div class="col-md-6 mb-3" *ngFor="let foto of fotos; let i = index">
+      <div class="card">
+        <img 
+          [src]="'data:' + foto.tipoImagem + ';base64,' + foto.imagemBase64" 
+          class="card-img-top" 
+          [alt]="foto.nomeArquivo"
+          style="cursor: pointer; max-height: 250px; object-fit: cover;"
+          (click)="ampliarFoto(i)">
+        <div class="card-body" *ngIf="foto.descricao">
+          <p class="card-text"><small>{{ foto.descricao }}</small></p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">
+            {{ foto.dataUpload | date: 'dd/MM/yyyy HH:mm' }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Foto ampliada -->
+  <div *ngIf="mostrarFotoAmpliada && fotos && fotos[fotoAmpliadaIndex]" class="foto-ampliada">
+    <div class="text-center mb-3">
+      <h6>Foto {{ fotoAmpliadaIndex + 1 }} de {{ fotos.length }}</h6>
+    </div>
+    
+    <div class="text-center">
+      <img 
+        [src]="'data:' + fotos[fotoAmpliadaIndex].tipoImagem + ';base64,' + fotos[fotoAmpliadaIndex].imagemBase64" 
+        class="img-fluid"
+        style="max-height: 60vh; max-width: 100%;">
+      
+      <div class="mt-3" *ngIf="fotos[fotoAmpliadaIndex].descricao">
+        <p><strong>{{ fotos[fotoAmpliadaIndex].descricao }}</strong></p>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3">
+      <button 
+        type="button" 
+        class="btn btn-primary" 
+        [disabled]="fotoAmpliadaIndex === 0"
+        (click)="navegarFoto(-1)">
+        <i class="ft-chevron-left"></i> Anterior
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        (click)="fecharFotoAmpliada()">
+        <i class="ft-grid"></i> Voltar à galeria
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-primary" 
+        [disabled]="fotoAmpliadaIndex === (fotos.length - 1)"
+        (click)="navegarFoto(1)">
+        Próxima <i class="ft-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="fechar()">Fechar</button>
+</div>
