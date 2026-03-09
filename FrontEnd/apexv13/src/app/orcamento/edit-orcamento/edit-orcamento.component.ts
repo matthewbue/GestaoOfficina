@@ -50,7 +50,7 @@ export class EditOrcamentoComponent implements OnInit {
   formCliente: FormGroup;
   formNewServico: FormGroup;
   formOrdemServico: FormGroup;
-  marcaSelecionada: string;
+  veiculoSelecionadoId: number;
   veiculoSelecionado: Automovel;
   servicos: any[] = [];
   servicosList: Servicos[] = []
@@ -319,9 +319,9 @@ export class EditOrcamentoComponent implements OnInit {
     this.servicoSelected = event
   }
 
-  onSelectMarca(event: any) {
-    this.marcaSelecionada = event;
-    this.veiculoSelecionado = this.cliente.automoveis.find(automovel => automovel.marca === this.marcaSelecionada);
+  onSelectVeiculo(event: any) {
+    this.veiculoSelecionadoId = event;
+    this.veiculoSelecionado = this.cliente.automoveis.find(automovel => automovel.id === this.veiculoSelecionadoId);
 
     if (this.veiculoSelecionado) {
       this.formVeiculo.patchValue({
@@ -333,6 +333,11 @@ export class EditOrcamentoComponent implements OnInit {
         km: this.veiculoSelecionado.km,
       });
     }
+  }
+
+  // Mantido para compatibilidade
+  onSelectMarca(event: any) {
+    this.onSelectVeiculo(event);
   }
 
   cadastrarServico() {

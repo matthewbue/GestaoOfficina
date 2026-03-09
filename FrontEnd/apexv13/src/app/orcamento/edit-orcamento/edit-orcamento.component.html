@@ -69,9 +69,9 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label for="marca">Veículo:</label>
-                      <ng-select [(ngModel)]="marcaSelecionada" (change)="onSelectMarca($event)">
-                        <ng-option *ngFor="let automovel of cliente.automoveis" [value]="automovel.marca">
-                          {{ automovel.marca }}
+                      <ng-select [(ngModel)]="veiculoSelecionadoId" (change)="onSelectVeiculo($event)">
+                        <ng-option *ngFor="let automovel of cliente.automoveis" [value]="automovel.id">
+                          {{ automovel.marca }} - {{ automovel.modelo }}
                         </ng-option>
                       </ng-select>
                     </div>
